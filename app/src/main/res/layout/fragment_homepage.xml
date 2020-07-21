@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+
+        <LinearLayout
+            android:id="@+id/Title_Search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.android.liuzhuang.rcimageview.CircleImageView
+                android:id="@+id/user_img"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
+                android:src="@mipmap/top" />
+
+            <TextView
+                android:id="@+id/ed_text"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_35"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_weight="1"
+                android:background="@drawable/file_background_radius_30_gray" />
+
+            <ImageView
+                android:id="@+id/information"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_15"
+                android:src="@mipmap/information" />
+
+            <ImageView
+                android:id="@+id/play"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
+                android:src="@mipmap/play" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

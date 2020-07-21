@@ -1,0 +1,15 @@
+<resources>
+    <!-- Base application theme. -->
+    <!-- 自定义自己的主题样式 -->
+    <style name="AppThemes" parent="XUITheme.Phone">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/pink</item>
+    </style>
+
+    <!--Loading-->
+    <style name="TransparentDialog" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+</resources>
