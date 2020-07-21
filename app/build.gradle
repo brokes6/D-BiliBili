@@ -67,4 +67,8 @@ dependencies {
     implementation 'com.blankj:utilcode:1.22.0'
     //底部导航栏
     implementation 'com.github.Vincent7Wong:EasyNavigation:2.0.5'
+
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
 }
