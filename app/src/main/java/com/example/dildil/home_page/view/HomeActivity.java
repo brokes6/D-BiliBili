@@ -16,6 +16,7 @@ import com.example.dildil.dynamic_page.view.DynamicFragment;
 import com.example.dildil.home_page.fragment.HomePageFragment;
 import com.example.dildil.my_page.view.MyFragment;
 import com.gyf.immersionbar.ImmersionBar;
+import com.next.easynavigation.view.EasyNavigationBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,19 +44,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
-        binding.navigationBar.defaultSetting()
-                .titleItems(tabText)
-                .normalIconItems(normalIcon)
-                .selectIconItems(selectIcon)
-                .fragmentList(fragmentList)
-                .fragmentManager(getSupportFragmentManager())
-                .smoothScroll(true)
-                .build();
-
-    }
-
-    @Override
     protected void initView() {
         fragmentList.add(new HomePageFragment());
         fragmentList.add(new ChannelFragment());
@@ -66,12 +54,54 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
+    protected void initData() {
+        binding.navigationBar.defaultSetting()
+                .titleItems(tabText)
+                .normalIconItems(normalIcon)
+                .selectIconItems(selectIcon)
+                .fragmentList(fragmentList)
+                .fragmentManager(getSupportFragmentManager())
+                .smoothScroll(true)
+                .setOnTabLoadListener(new EasyNavigationBar.OnTabLoadListener() { //Tab加载完毕回调
+                    @Override
+                    public void onTabLoadCompleteEvent() {
+                        binding.navigationBar.setMsgPointCount(2, 7);
+                    }
+                })
+                .build();
+    }
+
+    @Override
     public void onClick(View view) {
 
     }
 
-    public void SwitchPages(int i) {
-        binding.navigationBar.selectTab(i, true);
+    /**
+     * 切换Tab
+     *
+     * @param value
+     */
+    public void SwitchPages(int value) {
+        binding.navigationBar.selectTab(value, true);
+    }
+
+    /**
+     * 设置Tab红点数量
+     *
+     * @param index
+     * @param value
+     */
+    public void SetRedDot(int index, int value) {
+        binding.navigationBar.setMsgPointCount(index, value);
+    }
+
+    /**
+     * 清楚Tab红点
+     *
+     * @param index
+     */
+    public void ClearRedDot(int index) {
+        binding.navigationBar.clearMsgPoint(index);
     }
 
 }

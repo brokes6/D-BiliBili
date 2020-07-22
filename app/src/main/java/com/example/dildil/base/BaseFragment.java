@@ -114,14 +114,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     /**
-     * 初始化数据方法
-     */
-    protected abstract void initData();
-
-    /**
      * 初始化控件
      */
     protected abstract void initView();
+
+    /**
+     * 初始化数据方法
+     */
+    protected abstract void initData();
 
     /**
      * ViewPager联合使用
@@ -183,7 +183,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * 对Loading进行初始化
      */
     private void createDialog() {
-        if (mDialogs == null){
+        if (mDialogs == null) {
             mDialogs = LoadingsDialog.getInstance(getContext());
         }
     }
@@ -220,6 +220,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     /**
      * 设置fragment的标题文字
+     *
      * @param title
      */
     public void setFragmentTitle(String title) {
@@ -228,6 +229,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     /**
      * 获取fragment的标题文字
+     *
      * @return
      */
     public String getTitle() {

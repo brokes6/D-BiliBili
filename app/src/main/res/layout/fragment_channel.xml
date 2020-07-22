@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,10 +9,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/Ch_tab"
+            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="频道页面"/>
+            android:layout_below="@+id/Title_Search"
+            android:layout_marginTop="@dimen/dp_5"
+            app:tl_iconMargin="2dp"
+            app:tl_indicator_bounce_enable="true"
+            app:tl_indicator_color="@color/pink"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_textSelectColor="@color/pink"
+            app:tl_textUnselectColor="#838080"
+            app:tl_textsize="19sp"
+            app:tl_underline_height="1dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/Ch_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab" />
     </RelativeLayout>
 </layout>
