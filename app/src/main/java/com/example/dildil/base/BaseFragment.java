@@ -123,6 +123,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      */
     protected abstract void initData();
 
+
     /**
      * ViewPager联合使用
      * isVisibleToUser表示是否显示出来了

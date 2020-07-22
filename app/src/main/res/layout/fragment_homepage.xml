@@ -53,10 +53,9 @@
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_40"
             android:layout_below="@+id/Title_Search"
             android:layout_marginTop="@dimen/dp_15"
-            app:tl_iconMargin="2dp"
             app:tl_indicator_bounce_enable="true"
             app:tl_indicator_color="@color/pink"
             app:tl_indicator_width_equal_title="true"

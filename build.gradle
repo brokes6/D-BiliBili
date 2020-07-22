@@ -18,6 +18,7 @@ allprojects {
         jcenter()
         //某些原因，需要引入jitpack库，否则会导致有些库无法导入
         maven { url "https://jitpack.io" }
+        maven { url "http://lib.gcssloop.com:8081/repository/gcssloop-central/" }
     }
 }
 

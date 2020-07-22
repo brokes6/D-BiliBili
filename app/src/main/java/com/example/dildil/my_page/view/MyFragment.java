@@ -1,6 +1,7 @@
 package com.example.dildil.my_page.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentMyBinding;
 
 public class MyFragment extends BaseFragment {
+    private static final String TAG = "MyFragment";
     FragmentMyBinding binding;
 
     @Override
@@ -22,13 +24,13 @@ public class MyFragment extends BaseFragment {
     }
 
     @Override
-    protected void initData() {
+    protected void initView() {
 
     }
 
     @Override
-    protected void initView() {
-
+    protected void initData() {
+        Log.e(TAG, "initView: 成功懒加载，舒服舒服舒服");
     }
 
     @Override
