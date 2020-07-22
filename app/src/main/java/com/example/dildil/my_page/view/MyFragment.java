@@ -1,4 +1,4 @@
-package com.example.dildil.homepage.fragment.fragment_tab;
+package com.example.dildil.my_page.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,14 +10,14 @@ import androidx.databinding.DataBindingUtil;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
-import com.example.dildil.databinding.FragmentRapBinding;
+import com.example.dildil.databinding.FragmentMyBinding;
 
-public class RapFragment extends BaseFragment {
-    FragmentRapBinding binding;
+public class MyFragment extends BaseFragment {
+    FragmentMyBinding binding;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_rap,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my, container, false);
         return binding.getRoot();
     }
 
@@ -37,7 +37,7 @@ public class RapFragment extends BaseFragment {
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
 
     }
 }

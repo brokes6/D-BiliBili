@@ -7,15 +7,15 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:maxAspectRatio="2.4"
+        android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:resizeableActivity="true"
-        android:maxAspectRatio="2.4"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
-        <activity android:name=".login.view.LoginActivity" />
+        <activity android:name=".login_page.view.LoginActivity" />
         <activity
-            android:name=".login.view.SplashActivity"
+            android:name=".login_page.view.SplashActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:launchMode="singleTop">
             <intent-filter>
@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".homepage.view.HomeActivity" />
+        <activity android:name=".home_page.view.HomeActivity" />
 
         <meta-data
             android:name="design_width_in_dp"
@@ -40,7 +40,7 @@
         <!--适配华为（huawei）刘海屏-->
         <meta-data
             android:name="android.notch_support"
-            android:value="true"/>
+            android:value="true" />
         <!--适配小米（xiaomi）刘海屏-->
         <meta-data
             android:name="notch.config"

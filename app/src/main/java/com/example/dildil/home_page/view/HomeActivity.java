@@ -1,24 +1,20 @@
-package com.example.dildil.homepage.view;
+package com.example.dildil.home_page.view;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
-import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.ActivityHomeBinding;
-import com.example.dildil.homepage.fragment.ChannelFragment;
-import com.example.dildil.homepage.fragment.DynamicFragment;
-import com.example.dildil.homepage.fragment.HomePageFragment;
-import com.example.dildil.homepage.fragment.MyFragment;
+import com.example.dildil.channel_page.view.ChannelFragment;
+import com.example.dildil.dynamic_page.view.DynamicFragment;
+import com.example.dildil.home_page.fragment.HomePageFragment;
+import com.example.dildil.my_page.view.MyFragment;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
@@ -65,13 +61,17 @@ public class HomeActivity extends BaseActivity {
         fragmentList.add(new ChannelFragment());
         fragmentList.add(new DynamicFragment());
         fragmentList.add(new MyFragment());
-        Log.e(TAG, "initView: ???????????"+getStatusBarHeight(this));
-        setMargins(binding.navigationBar,0,getStatusBarHeight(this)*2,0,0);
+        Log.e(TAG, "initView: ???????????" + getStatusBarHeight(this));
+        setMargins(binding.navigationBar, 0, getStatusBarHeight(this) * 2, 0, 0);
     }
 
     @Override
     public void onClick(View view) {
 
+    }
+
+    public void SwitchPages(int i) {
+        binding.navigationBar.selectTab(i, true);
     }
 
 }

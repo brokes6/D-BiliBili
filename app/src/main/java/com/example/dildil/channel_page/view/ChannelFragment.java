@@ -1,4 +1,4 @@
-package com.example.dildil.homepage.fragment;
+package com.example.dildil.channel_page.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,9 +14,10 @@ import com.example.dildil.databinding.FragmentChannelBinding;
 
 public class ChannelFragment extends BaseFragment {
     FragmentChannelBinding binding;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_channel,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_channel, container, false);
         return binding.getRoot();
     }
 

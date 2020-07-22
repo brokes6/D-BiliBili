@@ -49,26 +49,26 @@
                 android:layout_height="@dimen/dp_30"
                 android:src="@mipmap/play" />
         </LinearLayout>
+
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/tab"
-            android:layout_marginTop="@dimen/dp_15"
-            android:layout_below="@+id/Title_Search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/Title_Search"
+            android:layout_marginTop="@dimen/dp_15"
             app:tl_iconMargin="2dp"
-            app:tl_textSelectColor="@color/pink"
-            app:tl_textUnselectColor="#838080"
-            app:tl_tab_space_equal="true"
-            app:tl_underline_height="1dp"
+            app:tl_indicator_bounce_enable="true"
             app:tl_indicator_color="@color/pink"
             app:tl_indicator_width_equal_title="true"
-            app:tl_indicator_bounce_enable="true"
-            app:tl_textsize="@dimen/afc_15sp"/>
-        
+            app:tl_textSelectColor="@color/pink"
+            app:tl_textUnselectColor="#838080"
+            app:tl_textsize="@dimen/afc_15sp"
+            app:tl_underline_height="1dp" />
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
-            android:layout_below="@+id/tab"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tab" />
     </RelativeLayout>
 </layout>

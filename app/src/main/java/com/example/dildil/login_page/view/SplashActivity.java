@@ -1,4 +1,4 @@
-package com.example.dildil.login.view;
+package com.example.dildil.login_page.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.BasePresenter;
-import com.example.dildil.homepage.view.HomeActivity;
+import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.util.ScreenUtils;
 import com.example.dildil.util.SharePreferenceUtil;
 

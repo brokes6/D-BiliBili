@@ -1,4 +1,4 @@
-package com.example.dildil.homepage.fragment.fragment_tab;
+package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,7 +17,7 @@ public class RecommendedFragment extends BaseFragment {
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recommended,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_recommended, container, false);
         return binding.getRoot();
     }
 

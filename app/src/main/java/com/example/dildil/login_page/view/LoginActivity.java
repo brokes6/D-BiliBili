@@ -1,7 +1,6 @@
-package com.example.dildil.login.view;
+package com.example.dildil.login_page.view;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -12,8 +11,7 @@ import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.ActivityLoginBinding;
-import com.example.dildil.homepage.view.HomeActivity;
-import com.example.dildil.util.SharePreferenceUtil;
+import com.example.dildil.home_page.view.HomeActivity;
 import com.gyf.immersionbar.ImmersionBar;
 
 /**
@@ -38,7 +36,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView(){
+    protected void initView() {
         binding.go.setOnClickListener(this);
 //        setMargins(binding.title,0,getStatusBarHeight(this),0,0);
 //        SettingSPUtils spUtils = new SettingSPUtils(LoginActivity.this);

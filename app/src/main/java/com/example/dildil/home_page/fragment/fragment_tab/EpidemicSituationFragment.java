@@ -1,4 +1,4 @@
-package com.example.dildil.homepage.fragment.fragment_tab;
+package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,14 +10,14 @@ import androidx.databinding.DataBindingUtil;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
-import com.example.dildil.databinding.FragmentHotBinding;
+import com.example.dildil.databinding.FragmentEpidemicsituationBinding;
 
-public class HotFragment extends BaseFragment {
-    FragmentHotBinding binding;
+public class EpidemicSituationFragment extends BaseFragment {
+    FragmentEpidemicsituationBinding binding;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hot,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_epidemicsituation, container, false);
         return binding.getRoot();
     }
 
