@@ -41,6 +41,7 @@ public class DynamicFragment extends BaseFragment {
     @Override
     protected void initData() {
         binding.DyTab.setViewPager(binding.DyViewPager,TabTitle,getActivity(),mFragments);
+        binding.DyTab.setCurrentTab(1);
         ((HomeActivity)getActivity()).ClearRedDot(2);
     }
 

@@ -13,7 +13,7 @@
             android:id="@+id/Ch_tab"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_40"
             android:layout_below="@+id/Title_Search"
             android:layout_marginTop="@dimen/dp_5"
             app:tl_iconMargin="2dp"

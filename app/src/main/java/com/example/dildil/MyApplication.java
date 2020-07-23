@@ -1,6 +1,8 @@
 package com.example.dildil;
 
 import android.app.Application;
+import android.content.Context;
+
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
 
@@ -16,13 +18,13 @@ import com.xuexiang.xui.XUI;
  */
 
 public class MyApplication extends Application {
-    private static MyApplication mContext;
+    private static Context mContext;
     public static final String DATA_BASE_NAME = "MusicPlay";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;
+        mContext = getApplicationContext();
         XUI.init(this);
         XUI.debug(MyApplication.isDebug());
 //        SharedPreferencesUtil.getInstance(this,"SPy");
@@ -32,7 +34,7 @@ public class MyApplication extends Application {
         return BuildConfig.DEBUG;
     }
 
-    public static MyApplication getContext() {
+    public static Context getContext() {
         return mContext;
     }
 

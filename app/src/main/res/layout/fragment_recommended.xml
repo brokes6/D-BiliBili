@@ -6,27 +6,33 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/White_ash">
 
-        <com.youth.banner.Banner
-            android:id="@+id/Re_banner"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            app:banner_layout="@layout/banner"/>
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Re_recy"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5"
-            android:layout_below="@+id/Re_banner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+            <com.youth.banner.Banner
+                android:id="@+id/Re_banner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                app:banner_layout="@layout/banner" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Re_recy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/Re_banner"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_5"
+                android:nestedScrollingEnabled="false"/>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/main_forward"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/forward"/>
+        <TextView
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="转发"
+            android:textSize="15sp"
+            android:textColor="#747474"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_comment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/comment"/>
+
+        <TextView
+            android:id="@+id/comment_number"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="151"
+            android:textSize="15sp"
+            android:textColor="#747474"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_thumbs"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/thumbs_img"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@mipmap/thumbs_up"/>
+
+        <TextView
+            android:id="@+id/thumbs_number"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="654"
+            android:textSize="15sp"
+            android:textColor="#747474"/>
+    </LinearLayout>
+</LinearLayout>

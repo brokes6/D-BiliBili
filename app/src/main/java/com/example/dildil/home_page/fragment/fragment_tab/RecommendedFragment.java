@@ -2,17 +2,20 @@ package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.graphics.Outline;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.dildil.R;
+import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentRecommendedBinding;
@@ -27,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendedFragment extends BaseFragment {
+    private static final String TAG = "RecommendedFragment";
     FragmentRecommendedBinding binding;
     List<URL> bannerImageList = new ArrayList<>();
     RecommendedVideoAdapter adapter;
@@ -54,22 +58,10 @@ public class RecommendedFragment extends BaseFragment {
         }
         initBanner(bannerImageList);
 
-        //垂直方向的2列
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        final int spanCount = 2;
-        binding.ReRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                int[] first = new int[spanCount];
-                layoutManager.findFirstCompletelyVisibleItemPositions(first);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && (first[0] == 1 || first[1] == 1)) {
-                    layoutManager.invalidateSpanAssignments();
-                }
-            }
-        });
+        //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),2);
         adapter = new RecommendedVideoAdapter(getContext());
-        binding.ReRecy.setLayoutManager(layoutManager);
+        binding.ReRecy.setLayoutManager(layoutManager1);
         binding.ReRecy.setAdapter(adapter);
         initDates();
     }
@@ -90,22 +82,8 @@ public class RecommendedFragment extends BaseFragment {
     }
 
     private void initDates(){
-        VideoBean videoBean = new VideoBean();
-        videoBean.setImgurl("https://i0.hdslb.com/bfs/archive/fbbfd0170433ce67fb54f7c7e76a9081705259d6.jpg@257w_145h_1c_100q.webp");
-        videoBean.setBarrage_volume(24+"");
-        videoBean.setPlay_volume(2+"");
-        videoBean.setTitle("这是介绍介绍介绍");
-
-        VideoBean videoBean2 = new VideoBean();
-        videoBean2.setImgurl("https://i2.hdslb.com/bfs/archive/6fa9d164c643f39a7ca8b066a7d84e2205fb568f.jpg@257w_145h_1c_100q.webp");
-        videoBean2.setBarrage_volume(28+"");
-        videoBean2.setPlay_volume(200+"");
-        videoBean2.setTitle("这是介绍介绍介绍2");
-
-        List<VideoBean> beans = new ArrayList<>();
-        beans.add(videoBean);
-        beans.add(videoBean2);
-        adapter.loadMore(beans);
+        ResourcesData resourcesData = new ResourcesData();
+        adapter.loadMore(resourcesData.getData());
     }
 
     @Override

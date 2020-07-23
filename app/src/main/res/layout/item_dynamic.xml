@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:layout_marginBottom="@dimen/dp_15"
+    android:padding="@dimen/dp_15">
+
+    <com.android.liuzhuang.rcimageview.CircleImageView
+        android:id="@+id/Dy_user_img"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50" />
+
+    <TextView
+        android:id="@+id/Dy_user_name"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#fa7296"
+        android:layout_toEndOf="@+id/Dy_user_img"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/Dy_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toEndOf="@+id/Dy_user_img"
+        android:layout_below="@+id/Dy_user_name"
+        android:text=""
+        android:textColor="#a4a4a4"
+        android:textSize="13sp" />
+
+    <ImageView
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignBottom="@+id/Dy_date"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/more_vert_24_black"/>
+
+    <TextView
+        android:id="@+id/Dy_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Dy_user_img"
+        android:layout_marginTop="@dimen/dp_20"
+        android:textSize="18sp"
+        android:textColor="#212121"
+        android:text="正文内容"/>
+
+    <include
+        android:id="@+id/sanlian"
+        layout="@layout/sanlian_layout"
+        android:layout_below="@+id/Dy_text"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/Dividing_line"-->
+<!--        android:layout_below="@+id/sanlian"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/dp_15"-->
+<!--        android:background="#f4f4f4"/>-->
+</RelativeLayout>

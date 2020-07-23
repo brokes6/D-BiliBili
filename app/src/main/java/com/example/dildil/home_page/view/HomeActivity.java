@@ -1,5 +1,6 @@
 package com.example.dildil.home_page.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
