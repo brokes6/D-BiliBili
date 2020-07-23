@@ -25,10 +25,17 @@
             app:tl_textsize="19sp"
             app:tl_underline_height="1dp" />
 
+        <TextView
+            android:id="@+id/xian_1"
+            android:layout_below="@+id/Dy_tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="#e7e7e7" />
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/Dy_viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/Dy_tab" />
+            android:layout_below="@+id/xian_1" />
     </RelativeLayout>
 </layout>

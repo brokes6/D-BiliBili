@@ -106,8 +106,21 @@ public class ResourcesData {
         dynamicBean2.setComment_num(1);
         dynamicBean2.setThumbs_num(0);
 
+        DynamicBean dynamicBean3 = new DynamicBean();
+        dynamicBean3.setUser_img("https://i0.hdslb.com/bfs/face/c43e6cab13c9a0303cf8476cfd405cff61195726.jpg_64x64.jpg");
+        dynamicBean3.setUser_name("STN工作室");
+        dynamicBean3.setRelease_date("5小时前");
+        dynamicBean3.setVideo_cover("https://i1.hdslb.com/bfs/archive/38214b16a2b8b0e1ed38b7467b2e498ad4542c38.jpg@257w_145h_1c_100q.webp");
+        dynamicBean3.setText("竟然是真的新女主持而不是女装口口，不仅拯救了酷报也拯救了观众们的眼睛");
+        dynamicBean3.setVideo_time(13.90+"");
+        dynamicBean3.setVideo_Playback_volume(5320);
+        dynamicBean3.setVideo_bullet_chat(777);
+        dynamicBean3.setComment_num(99);
+        dynamicBean3.setThumbs_num(2386);
+
         dynamicBeans.add(dynamicBean);
         dynamicBeans.add(dynamicBean2);
+        dynamicBeans.add(dynamicBean3);
     }
 
     public List<DynamicBean> getDynamicBeans(){

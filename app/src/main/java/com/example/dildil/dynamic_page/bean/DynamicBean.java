@@ -5,8 +5,44 @@ public class DynamicBean {
     private String user_name;
     private String release_date;
     private String Text;
+    private String video_cover;
+    private String video_time;
+    private int video_bullet_chat;
+    private int video_Playback_volume;
     private int comment_num;
     private int thumbs_num;
+
+    public String getVideo_time() {
+        return video_time;
+    }
+
+    public void setVideo_time(String video_time) {
+        this.video_time = video_time;
+    }
+
+    public int getVideo_bullet_chat() {
+        return video_bullet_chat;
+    }
+
+    public void setVideo_bullet_chat(int video_bullet_chat) {
+        this.video_bullet_chat = video_bullet_chat;
+    }
+
+    public int getVideo_Playback_volume() {
+        return video_Playback_volume;
+    }
+
+    public void setVideo_Playback_volume(int video_Playback_volume) {
+        this.video_Playback_volume = video_Playback_volume;
+    }
+
+    public String getVideo_cover() {
+        return video_cover;
+    }
+
+    public void setVideo_cover(String video_cover) {
+        this.video_cover = video_cover;
+    }
 
     public String getUser_img() {
         return user_img;

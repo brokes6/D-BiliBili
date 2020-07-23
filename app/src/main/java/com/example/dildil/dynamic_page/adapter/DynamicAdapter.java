@@ -2,11 +2,14 @@ package com.example.dildil.dynamic_page.adapter;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.android.liuzhuang.rcimageview.CircleImageView;
+import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
@@ -18,6 +21,8 @@ public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean> {
     private Context mContext;
     private CircleImageView userimg;
     private TextView comment_num,thmbus_num;
+    private RoundCornerImageView video_cover;
+    private RelativeLayout video_introduce;
     public DynamicAdapter(Context context){
         mContext = context;
     }
@@ -30,10 +35,21 @@ public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean> {
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, DynamicBean item) {
         userimg = holder.findViewById(R.id.Dy_user_img);
+        video_cover = holder.findViewById(R.id.Dy_video_cover);
+        video_introduce = holder.findViewById(R.id.video_introduce);
         comment_num = holder.findViewById(R.id.comment_number);
         thmbus_num = holder.findViewById(R.id.thumbs_number);
         if (item != null) {
             Glide.with(mContext).load(item.getUser_img()).into(userimg);
+            if (item.getVideo_cover()==null){
+                video_cover.setVisibility(View.GONE);
+                video_introduce.setVisibility(View.GONE);
+            }else{
+                Glide.with(mContext).load(item.getVideo_cover()).into(video_cover);
+                holder.text(R.id.V_time,item.getVideo_time());
+                holder.text(R.id.V_Playback_volume,item.getVideo_Playback_volume()+"播放量");
+                holder.text(R.id.V_bullet_chat,item.getVideo_bullet_chat()+"弹幕");
+            }
             holder.text(R.id.Dy_user_name,item.getUser_name());
             holder.text(R.id.Dy_date,item.getRelease_date());
             holder.text(R.id.Dy_text,item.getText());
