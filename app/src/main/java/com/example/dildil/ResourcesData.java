@@ -2,6 +2,7 @@ package com.example.dildil;
 
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
+import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.VideoBean;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class ResourcesData {
     private List<VideoBean> beans = new ArrayList<>();
     private List<TopicBean> topicBeans = new ArrayList<>();
     private List<DynamicBean> dynamicBeans = new ArrayList<>();
+    private List<HotRankingBean> hotRankingBeans = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4,videoBean6,videoBean7;
 
     public ResourcesData() {
@@ -125,5 +127,20 @@ public class ResourcesData {
 
     public List<DynamicBean> getDynamicBeans(){
         return dynamicBeans;
+    }
+
+    public void initHotRanking(){
+        HotRankingBean hotRankingBean = new HotRankingBean();
+        hotRankingBean.setVideo_cover("https://i2.hdslb.com/bfs/archive/b1a07a8baefa0694760cd6d99f212bee45d1333d.jpg@143w_88h.webp");
+        hotRankingBean.setVideo_title("敢 杀 我 的 马？！");
+        hotRankingBean.setVideo_up("哦呼w");
+        hotRankingBean.setVideo_play_num("152.6万");
+        hotRankingBean.setVideo_time("2:25");
+
+        hotRankingBeans.add(hotRankingBean);
+    }
+
+    public List<HotRankingBean> getHotRanking(){
+        return hotRankingBeans;
     }
 }

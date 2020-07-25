@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:rc="http://schemas.android.com/apk/res-auto">
+
+    <com.android.liuzhuang.rcimageview.RoundCornerImageView
+        android:id="@+id/Ranking_video_img"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_120"
+        android:scaleType="centerCrop"
+        rc:rciv_radius="5dp"/>
+
+    <TextView
+        android:id="@+id/Ranking_video_time"
+        android:layout_alignBottom="@+id/Ranking_video_img"
+        android:layout_alignRight="@+id/Ranking_video_img"
+        android:layout_margin="@dimen/dp_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:17"
+        android:textColor="#fff"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/Ranking_video_Title"
+        android:layout_toRightOf="@+id/Ranking_video_img"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:textSize="18sp"
+        android:text="文字文字"
+        android:textColor="#000000"/>
+
+    <ImageView
+        android:id="@+id/up_img"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:src="@mipmap/up"
+        android:layout_toRightOf="@+id/Ranking_video_img"
+        android:layout_above="@+id/play_num_img"/>
+
+    <TextView
+        android:id="@+id/Ranking_video_up"
+        android:layout_toRightOf="@+id/up_img"
+        android:layout_alignBottom="@+id/up_img"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#999999"
+        android:text="英雄联盟"/>
+
+
+    <ImageView
+        android:id="@+id/play_num_img"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@+id/Ranking_video_img"
+        android:layout_alignBottom="@+id/Ranking_video_img"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:src="@mipmap/play_num"/>
+    
+    <TextView
+        android:id="@+id/Ranking_video_play_num"
+        android:layout_toRightOf="@+id/play_num_img"
+        android:layout_alignBottom="@+id/play_num_img"
+        android:layout_marginLeft="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#999999"
+        android:text="156.7万观看量"/>
+
+    <View
+        android:layout_below="@+id/Ranking_video_img"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e7e7e7"/>
+
+</RelativeLayout>
