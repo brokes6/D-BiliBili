@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <!-- 自定义自己的主题样式 -->
     <style name="AppThemes" parent="XUITheme.Phone">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/pink</item>
+        <item name="colorPrimary">@color/White</item>
+        <item name="colorPrimaryDark">@color/White</item>
+        <item name="colorAccent">@color/Pink</item>
     </style>
 
     <!--Loading-->

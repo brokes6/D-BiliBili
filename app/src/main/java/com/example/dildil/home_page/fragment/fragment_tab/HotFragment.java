@@ -32,6 +32,7 @@ public class HotFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        showDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapter = new HotRankingAdapter(getContext());
         binding.HotRecy.setLayoutManager(layoutManager);
@@ -54,6 +55,7 @@ public class HotFragment extends BaseFragment {
         ResourcesData resourcesData = new ResourcesData();
         resourcesData.initHotRanking();
 
+        hideDialog();
         adapter.loadMore(resourcesData.getHotRanking());
     }
 }

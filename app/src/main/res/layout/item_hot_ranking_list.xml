@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    android:id="@+id/Hot_video_cover"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:rc="http://schemas.android.com/apk/res-auto">
@@ -18,7 +20,7 @@
         android:layout_margin="@dimen/dp_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10:17"
+        android:text=""
         android:textColor="#fff"
         android:textSize="15sp"/>
 
@@ -30,7 +32,7 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:textSize="18sp"
-        android:text="文字文字"
+        android:text=""
         android:textColor="#000000"/>
 
     <ImageView
@@ -52,7 +54,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textColor="#999999"
-        android:text="英雄联盟"/>
+        android:text=""/>
 
 
     <ImageView
@@ -74,7 +76,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textColor="#999999"
-        android:text="156.7万观看量"/>
+        android:text=""/>
 
     <View
         android:layout_below="@+id/Ranking_video_img"

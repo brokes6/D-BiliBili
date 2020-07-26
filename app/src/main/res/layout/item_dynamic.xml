@@ -106,7 +106,7 @@
 
     <include
         android:id="@+id/sanlian"
-        layout="@layout/sanlian_layout"
+        layout="@layout/item_sanlian_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Dy_video_cover"

@@ -2,7 +2,6 @@ package com.example.dildil.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -49,7 +48,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
         //将导航栏颜色改为白色，按键设为灰色
         ImmersionBar.with(this)
-                .navigationBarColor(R.color.white)
+                .navigationBarColor(R.color.White)
                 .statusBarDarkFont(true)
                 .navigationBarDarkIcon(true)
                 .init();

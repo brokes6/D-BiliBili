@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
         //设置状态栏为白底黑字
         ImmersionBar.with(LoginActivity.this)
-                .statusBarColor(R.color.white)
+                .statusBarColor(R.color.White)
                 .statusBarDarkFont(true);
     }
 

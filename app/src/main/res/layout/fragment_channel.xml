@@ -18,9 +18,9 @@
             android:layout_marginTop="@dimen/dp_5"
             app:tl_iconMargin="2dp"
             app:tl_indicator_bounce_enable="true"
-            app:tl_indicator_color="@color/pink"
+            app:tl_indicator_color="@color/Pink"
             app:tl_indicator_width_equal_title="true"
-            app:tl_textSelectColor="@color/pink"
+            app:tl_textSelectColor="@color/Pink"
             app:tl_textUnselectColor="#838080"
             app:tl_textsize="19sp"
             app:tl_underline_height="1dp" />

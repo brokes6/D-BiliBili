@@ -1,6 +1,5 @@
 package com.example.dildil.home_page.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,8 +10,8 @@ import androidx.fragment.app.Fragment;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.BasePresenter;
-import com.example.dildil.databinding.ActivityHomeBinding;
 import com.example.dildil.channel_page.view.ChannelFragment;
+import com.example.dildil.databinding.ActivityHomeBinding;
 import com.example.dildil.dynamic_page.view.DynamicFragment;
 import com.example.dildil.home_page.fragment.HomePageFragment;
 import com.example.dildil.my_page.view.MyFragment;
@@ -35,7 +34,7 @@ public class HomeActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         ImmersionBar.with(this)
                 .transparentStatusBar()
-                .statusBarColor(R.color.white)
+                .statusBarColor(R.color.White)
                 .init();
     }
 
