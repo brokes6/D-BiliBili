@@ -118,7 +118,7 @@ public class VideoActivity extends BaseActivity {
                 }
             }
         });
-        setMargins(binding.detailPlayer, 0, getStatusBarHeight(this) * 2, 0, 0);
+        setMargins(binding.detailPlayer, 0, getStatusBarHeight(this), 0, 0);
     }
 
     @Override
@@ -154,7 +154,6 @@ public class VideoActivity extends BaseActivity {
         //GSYPreViewManager.instance().releaseMediaPlayer();
         if (orientationUtils != null)
             orientationUtils.releaseListener();
-
         isDestory = true;
     }
 

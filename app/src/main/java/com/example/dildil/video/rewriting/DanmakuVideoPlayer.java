@@ -9,11 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.R;
 import com.example.dildil.util.BiliDanmukuParser;
 import com.example.dildil.video.adapter.DanamakuAdapter;
+import com.example.dildil.video.dialog.DoubleSpeedDialog;
+import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
@@ -40,7 +46,6 @@ import master.flame.danmaku.danmaku.model.android.Danmakus;
 import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.danmaku.parser.IDataSource;
-import master.flame.danmaku.ui.widget.DanmakuView;
 
 public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private static final String TAG = "DanmakuVideoPlayer";
@@ -48,7 +53,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private IDanmakuView mDanmakuView;//弹幕view
     private DanmakuContext mDanmakuContext;
 
-    private TextView mSendDanmaku, mToogleDanmaku;
+    private TextView mSendDanmaku,DoubleSpeed;
 
     private long mDanmakuStartSeekPosition = -1;
 
@@ -58,7 +63,20 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     private LinearLayout Bottom_controller;
 
-    private ImageView Video_play;
+    private ImageView Video_play,mToogleDanmaku;
+
+    //滑动小图预览
+    private RelativeLayout mPreviewLayout;
+
+    private ImageView mPreView;
+
+    //是否因为用户点击
+    private boolean mIsFromUser;
+
+    //是否打开滑动预览
+    private boolean mOpenPreView = true;
+
+    private int mPreProgress = -2;
 
     public DanmakuVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -81,24 +99,33 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     protected void init(Context context) {
         super.init(context);
-        mDanmakuView = (DanmakuView) findViewById(R.id.danmaku_view);
-        mSendDanmaku = (TextView) findViewById(R.id.send_danmaku);
-        mToogleDanmaku = (TextView) findViewById(R.id.toogle_danmaku);
-        Bottom_controller = findViewById(R.id.Bottom_controller);
-        Video_play = findViewById(R.id.Video_play);
+        initView();
         //初始化弹幕显示
         initDanmaku();
+    }
+
+    private void initView() {
+        mDanmakuView = findViewById(R.id.danmaku_view);
+        mSendDanmaku = findViewById(R.id.send_danmaku);
+        mToogleDanmaku = findViewById(R.id.definition_off);
+        Bottom_controller = findViewById(R.id.Bottom_controller);
+        Video_play = findViewById(R.id.Video_play);
+        mPreviewLayout = findViewById(R.id.preview_layout);
+        mPreView = findViewById(R.id.preview_image);
+        DoubleSpeed = findViewById(R.id.Double_speed);
+
+        DoubleSpeed.setOnClickListener(this);
         mSendDanmaku.setOnClickListener(this);
         mToogleDanmaku.setOnClickListener(this);
         Video_play.setOnClickListener(this);
-
-
     }
+
 
     @Override
     public void onPrepared() {
         super.onPrepared();
         onPrepareDanmaku(this);
+        startDownFrame(mOriginUrl);
     }
 
     @Override
@@ -152,12 +179,16 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             case R.id.send_danmaku:
                 addDanmaku(true);
                 break;
-            case R.id.toogle_danmaku:
+            case R.id.definition_off:
                 mDanmaKuShow = !mDanmaKuShow;
                 resolveDanmakuShow();
                 break;
             case R.id.Video_play:
                 clickStartIcon();
+                break;
+            case R.id.Double_speed:
+                DoubleSpeedDialog doubleSpeedDialog = new DoubleSpeedDialog(mContext);
+                doubleSpeedDialog.show();
                 break;
         }
     }
@@ -178,6 +209,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         Bottom_controller.setVisibility(View.VISIBLE);
         if (gsyBaseVideoPlayer != null) {
             DanmakuVideoPlayer gsyVideoPlayer = (DanmakuVideoPlayer) gsyBaseVideoPlayer;
+            gsyVideoPlayer.mOpenPreView = mOpenPreView;
             //对弹幕设置偏移记录
             gsyVideoPlayer.setDanmakuStartSeekPosition(getCurrentPositionWhenPlaying());
             gsyVideoPlayer.setDanmaKuShow(getDanmaKuShow());
@@ -223,7 +255,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         if (!getDanmakuView().isPrepared()) {
             onPrepareDanmaku((DanmakuVideoPlayer) getCurrentPlayer());
             Video_play.setImageResource(R.drawable.pause_24);
-            Log.e(TAG, "setDanmaKuStream: 开始播放开始播放" );
+            Log.e(TAG, "setDanmaKuStream: 开始播放开始播放");
         }
     }
 
@@ -315,12 +347,12 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 if (mDanmaKuShow) {
                     if (!getDanmakuView().isShown())
                         getDanmakuView().show();
-                    mToogleDanmaku.setText("弹幕关");
+                    mToogleDanmaku.setImageResource(R.mipmap.definition);
                 } else {
                     if (getDanmakuView().isShown()) {
                         getDanmakuView().hide();
                     }
-                    mToogleDanmaku.setText("弹幕开");
+                    mToogleDanmaku.setImageResource(R.mipmap.definition_off);
                 }
             }
         });
@@ -418,6 +450,108 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     public boolean getDanmaKuShow() {
         return mDanmaKuShow;
+    }
+
+    /**
+     * 初始化预览图的参数
+     *
+     * @param seekBar
+     * @param progress
+     * @param fromUser
+     */
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        super.onProgressChanged(seekBar, progress, fromUser);
+        if (fromUser && mOpenPreView) {
+            int width = seekBar.getWidth();
+            int time = progress * getDuration() / 100;
+            int offset = (int) (width - (getResources().getDimension(R.dimen.seek_bar_image) / 2)) / 100 * progress;
+            Debuger.printfError("***************** " + progress);
+            Debuger.printfError("***************** " + time);
+            showPreView(mOriginUrl, time);
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mPreviewLayout.getLayoutParams();
+            layoutParams.leftMargin = offset;
+            //设置帧预览图的显示位置
+            mPreviewLayout.setLayoutParams(layoutParams);
+            if (mHadPlay && mOpenPreView) {
+                mPreProgress = progress;
+            }
+        }
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        super.onStartTrackingTouch(seekBar);
+        if (mOpenPreView) {
+            mIsFromUser = true;
+            mPreviewLayout.setVisibility(VISIBLE);
+            mPreProgress = -2;
+        }
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        if (mOpenPreView) {
+            if (mPreProgress >= 0) {
+                seekBar.setProgress(mPreProgress);
+            }
+            super.onStopTrackingTouch(seekBar);
+            mIsFromUser = false;
+            mPreviewLayout.setVisibility(GONE);
+        } else {
+            super.onStopTrackingTouch(seekBar);
+        }
+    }
+
+    @Override
+    protected void setTextAndProgress(int secProgress) {
+        if (mIsFromUser) {
+            return;
+        }
+        super.setTextAndProgress(secProgress);
+    }
+
+    public boolean isOpenPreView() {
+        return mOpenPreView;
+    }
+
+    /**
+     * 如果是需要进度条预览的设置打开，默认关闭
+     */
+    public void setOpenPreView(boolean localFile) {
+        this.mOpenPreView = localFile;
+    }
+
+    private void showPreView(String url, long time) {
+        int width = CommonUtil.dip2px(getContext(), 150);
+        int height = CommonUtil.dip2px(getContext(), 100);
+        Glide.with(getContext())
+                .setDefaultRequestOptions(
+                        new RequestOptions()
+                                //这里限制了只从缓存读取
+                                .onlyRetrieveFromCache(true)
+                                .frame(1000 * time)
+                                .override(width, height)
+                                .dontAnimate()
+                                .centerCrop())
+                .load(url)
+                .into(mPreView);
+    }
+
+    private void startDownFrame(String url) {
+        for (int i = 1; i <= 100; i++) {
+            int time = i * getDuration() / 100;
+            int width = CommonUtil.dip2px(getContext(), 150);
+            int height = CommonUtil.dip2px(getContext(), 100);
+            Glide.with(getContext().getApplicationContext())
+                    .setDefaultRequestOptions(
+                            new RequestOptions()
+                                    .frame(1000 * time)
+                                    .override(width, height)
+                                    .centerCrop())
+                    .load(url).preload(width, height);
+
+        }
     }
 
     /**

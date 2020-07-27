@@ -15,9 +15,9 @@
 
     <master.flame.danmaku.ui.widget.DanmakuView
         android:id="@+id/danmaku_view"
-        android:layout_above="@+id/layout_bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_bottom" />
 
     <RelativeLayout
         android:id="@+id/thumb"
@@ -37,7 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:visibility="invisible">
@@ -46,17 +45,11 @@
             android:id="@+id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:paddingLeft="@dimen/dp_15"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_10">
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/current"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginLeft="16dp"-->
-            <!--                android:text="00:00"-->
-            <!--                android:textColor="#ffffff" />-->
 
             <SeekBar
                 android:id="@+id/progress"
@@ -73,52 +66,46 @@
                 android:progressDrawable="@drawable/video_seek_progress"
                 android:thumb="@drawable/video_seek_thumb" />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/total"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginRight="16dp"-->
-            <!--                android:text="00:00"-->
-            <!--                android:textColor="#ffffff" />-->
 
             <ImageView
                 android:id="@+id/fullscreen"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
-                android:scaleType="center"
-                android:layout_marginRight="@dimen/dp_5"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:src="@drawable/custom_enlarge" />
+                android:layout_marginRight="@dimen/dp_5"
+                android:scaleType="center"
+                android:src="@drawable/crop_free_24" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/Bottom_controller"
-            android:layout_alignLeft="@+id/seekbar"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_alignLeft="@+id/seekbar"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dp_5"
+            android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_15"
-            android:orientation="horizontal">
+            android:paddingRight="@dimen/dp_15">
 
             <ImageView
                 android:id="@+id/Video_play"
-                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:src="@drawable/play_circle_outline_24" />
 
             <ImageView
-                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:src="@drawable/skip_next_24" />
 
             <TextView
                 android:id="@+id/current"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:text="00:00"
                 android:textColor="#ffffff" />
 
@@ -134,9 +121,16 @@
                 android:id="@+id/total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="@dimen/dp_10"
                 android:text="00:00"
                 android:textColor="#ffffff" />
+
+            <ImageView
+                android:id="@+id/definition_off"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:src="@mipmap/definition" />
 
             <com.gcssloop.widget.RCRelativeLayout
                 android:id="@+id/Re_video_cover"
@@ -153,10 +147,10 @@
 
                 <TextView
                     android:id="@+id/send_danmaku"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:gravity="center"
                     android:text="发送弹幕"
                     android:textColor="#ffffff" />
@@ -164,12 +158,21 @@
             </com.gcssloop.widget.RCRelativeLayout>
 
             <TextView
-                android:id="@+id/toogle_danmaku"
+                android:id="@+id/Double_speed"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
-                android:text="弹幕关"
+                android:text="倍速"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:id="@+id/definition"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="1080p"
                 android:textColor="#ffffff" />
 
         </LinearLayout>
@@ -253,4 +256,22 @@
         android:scaleType="centerInside"
         android:src="@drawable/unlock"
         android:visibility="gone" />
+
+
+    //小图预览
+
+    <RelativeLayout
+        android:id="@+id/preview_layout"
+        android:layout_width="@dimen/seek_bar_image"
+        android:layout_height="100dp"
+        android:layout_above="@+id/layout_bottom"
+        android:layout_marginBottom="@dimen/dp_15"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/preview_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000" />
+    </RelativeLayout>
 </RelativeLayout>

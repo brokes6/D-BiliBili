@@ -49,8 +49,8 @@ public class HomeActivity extends BaseActivity {
         fragmentList.add(new ChannelFragment());
         fragmentList.add(new DynamicFragment());
         fragmentList.add(new MyFragment());
-        Log.e(TAG, "initView: ???????????" + getStatusBarHeight(this));
-        setMargins(binding.navigationBar, 0, getStatusBarHeight(this) * 2, 0, 0);
+        Log.e(TAG, "当前流海高度为:" + getStatusBarHeight(this));
+        setMargins(binding.navigationBar, 0, getStatusBarHeight(this), 0, 0);
     }
 
     @Override

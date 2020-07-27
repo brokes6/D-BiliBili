@@ -46,7 +46,9 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<VideoBean> impl
     }
 
     private void initData( int position, VideoBean item){
-        Glide.with(mContext).load(item.getImgurl()).into(cover);
+        Glide.with(mContext)
+                .load(item.getImgurl())
+                .into(cover);
         play_volume.setText(item.getPlay_volume()+"");
         barrage_volume.setText(item.getBarrage_volume()+"");
         title.setText(item.getTitle());
