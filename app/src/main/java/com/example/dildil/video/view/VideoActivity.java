@@ -8,11 +8,14 @@ import android.view.View;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.ActivityVideoBinding;
+import com.example.dildil.video.fragment_tab.CommentFragment;
+import com.example.dildil.video.fragment_tab.IntroductionFragment;
 import com.example.dildil.video.rewriting.DanmakuVideoPlayer;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
@@ -21,19 +24,25 @@ import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class VideoActivity extends BaseActivity {
+    private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;
+    private String[] TabTitle = {"简介", "评论"};
+    private ArrayList<Fragment> mFragments;
     //假地址
-    String path = "http://vjs.zencdn.net/v/oceans.mp4";
-    OrientationUtils orientationUtils;
+    private String path = "http://vjs.zencdn.net/v/oceans.mp4";
+    private String url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
+    private OrientationUtils orientationUtils;
     boolean isPlay;
     boolean isPause;
     boolean isDestory;
+    private boolean isDanmaku = false;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_video);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_video);
         ImmersionBar.with(this)
                 .transparentStatusBar()
                 .statusBarDarkFont(false)
@@ -48,6 +57,14 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        showDialog();
+        mFragments = new ArrayList<>();
+        mFragments.add(new IntroductionFragment());
+        mFragments.add(new CommentFragment());
+
+        binding.VDanmakuShow.setOnClickListener(this);
+        binding.VDefinitionText.setOnClickListener(this);
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
@@ -123,21 +140,42 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        String url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
+        binding.VTab.setViewPager(binding.VViewPager, TabTitle, this, mFragments);
         binding.detailPlayer.setUp(url, true, null, "测试视频");
+        hideDialog();
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.V_DanmakuShow:
+                DanmakuShow();
+                break;
+            case R.id.V_definition_text:
+                binding.detailPlayer.addDanmaku(true);
+                break;
+        }
+    }
 
+    private void DanmakuShow() {
+        if (isDanmaku == false) {
+            binding.VDanmakuShow.setImageResource(R.mipmap.definition_off);
+            binding.detailPlayer.offDanmaku();
+            isDanmaku = true;
+        } else {
+            binding.VDanmakuShow.setImageResource(R.mipmap.definition);
+            binding.detailPlayer.openDanmaku();
+            isDanmaku = false;
+        }
     }
 
     //获取弹幕
     private void getDanmu() {
-        DanmakuVideoPlayer currentPlayer = (DanmakuVideoPlayer)binding.detailPlayer.getCurrentPlayer();
+        DanmakuVideoPlayer currentPlayer = (DanmakuVideoPlayer) binding.detailPlayer.getCurrentPlayer();
         File file = new File("text");
         currentPlayer.setDanmaKuStream(file);
     }
+
     private void resolveNormalVideoUI() {
         //增加title
         binding.detailPlayer.getTitleTextView().setVisibility(View.GONE);
@@ -159,7 +197,7 @@ public class VideoActivity extends BaseActivity {
 
     private GSYVideoPlayer getCurPlay() {
         if (binding.detailPlayer.getFullWindowPlayer() != null) {
-            return  binding.detailPlayer.getFullWindowPlayer();
+            return binding.detailPlayer.getFullWindowPlayer();
         }
         return binding.detailPlayer;
     }

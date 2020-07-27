@@ -53,7 +53,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private IDanmakuView mDanmakuView;//弹幕view
     private DanmakuContext mDanmakuContext;
 
-    private TextView mSendDanmaku,DoubleSpeed;
+    private TextView mSendDanmaku, DoubleSpeed;
 
     private long mDanmakuStartSeekPosition = -1;
 
@@ -63,7 +63,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     private LinearLayout Bottom_controller;
 
-    private ImageView Video_play,mToogleDanmaku;
+    private ImageView Video_play, mToogleDanmaku;
 
     //滑动小图预览
     private RelativeLayout mPreviewLayout;
@@ -124,6 +124,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     public void onPrepared() {
         super.onPrepared();
+        Bottom_controller.setVisibility(View.GONE);
         onPrepareDanmaku(this);
         startDownFrame(mOriginUrl);
     }
@@ -330,9 +331,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             instream.close();
             return new ByteArrayInputStream(sb1.toString().getBytes());
         } catch (java.io.FileNotFoundException e) {
-            Log.d("TestFile", "The File doesn't not exist.");
+//            Log.d("TestFile", "The File doesn't not exist.");
         } catch (IOException e) {
-            Log.d("TestFile", e.getMessage());
+//            Log.d("TestFile", e.getMessage());
         }
         return null;
     }
@@ -356,6 +357,14 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 }
             }
         });
+    }
+
+    public void offDanmaku() {
+        getDanmakuView().hide();
+    }
+
+    public void openDanmaku(){
+        getDanmakuView().show();
     }
 
     /**
@@ -557,7 +566,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 模拟添加弹幕数据
      */
-    private void addDanmaku(boolean islive) {
+    public void addDanmaku(boolean islive) {
         BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         if (danmaku == null || mDanmakuView == null) {
             return;

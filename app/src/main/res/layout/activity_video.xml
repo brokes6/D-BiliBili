@@ -10,12 +10,97 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/White"
         tools:context=".video.view.VideoActivity">
 
         <com.example.dildil.video.rewriting.DanmakuVideoPlayer
             android:id="@+id/detail_player"
-            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            android:layout_height="230dp" />
+            android:layout_height="230dp"
+            android:layout_alignParentTop="true" />
+
+        <LinearLayout
+            android:id="@+id/Tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_below="@+id/detail_player"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:layout_height="match_parent">
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/V_tab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:tl_indicator_bounce_enable="true"
+                    app:tl_indicator_color="@color/Pink"
+                    app:tl_indicator_width_equal_title="true"
+                    app:tl_textSelectColor="@color/Pink"
+                    app:tl_textUnselectColor="#838080"
+                    app:tl_textsize="@dimen/afc_15sp"
+                    app:tl_underline_height="1dp" />
+            </LinearLayout>
+
+            <com.gcssloop.widget.RCRelativeLayout
+                android:id="@+id/V_barrage"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:layout_width="@dimen/dp_140"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp_20"
+                app:stroke_width="@dimen/dp_1"
+                app:stroke_color="#e7e7e7"
+                app:round_corner="20dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/V_definition_off"
+                    android:background="@color/White_ash"/>
+
+                <TextView
+                    android:id="@+id/V_definition_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:text="点我发送弹幕"
+                    android:textColor="#999999" />
+
+                <RelativeLayout
+                    android:id="@+id/V_definition_off"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/V_definition_text">
+
+                    <ImageView
+                        android:id="@+id/V_DanmakuShow"
+                        android:layout_margin="@dimen/dp_5"
+                        android:layout_centerInParent="true"
+                        android:layout_width="@dimen/dp_24"
+                        android:layout_height="@dimen/dp_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/definition" />
+                </RelativeLayout>
+            </com.gcssloop.widget.RCRelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/xian_1"
+            android:layout_below="@+id/Tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="#e7e7e7" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/V_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/Tabs" />
     </RelativeLayout>
 </layout>

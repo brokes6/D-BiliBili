@@ -25,6 +25,10 @@ public class DoubleSpeedDialog extends Dialog {
         mContext = context;
         init();
     }
+
+    /**
+     * 初始化控件，初始化高度，宽度
+     */
     private void init(){
         Context = (Activity) mContext;
         view = Context.getLayoutInflater().inflate(R.layout.dialog_double_speed, null);
@@ -47,10 +51,12 @@ public class DoubleSpeedDialog extends Dialog {
         dialogWindow.setAttributes(lp);
     }
 
+    /**
+     * 重写show方法，将高度设置为全屏高度，取消谈起虚拟按键
+     */
     public void show() {
         if (this.getWindow() != null) {
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
             this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             super.show();
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
