@@ -3,6 +3,7 @@ package com.example.dildil.video.rewriting;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -12,13 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.R;
 import com.example.dildil.util.BiliDanmukuParser;
 import com.example.dildil.video.adapter.DanamakuAdapter;
+import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.dialog.DoubleSpeedDialog;
+import com.example.dildil.video.dialog.SwitchVideoTypeDialog;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -32,7 +36,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import master.flame.danmaku.controller.IDanmakuView;
 import master.flame.danmaku.danmaku.loader.ILoader;
@@ -53,7 +59,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private IDanmakuView mDanmakuView;//弹幕view
     private DanmakuContext mDanmakuContext;
 
-    private TextView mSendDanmaku, DoubleSpeed;
+    private TextView mSendDanmaku,DoubleSpeed,mSwitchSize;
 
     private long mDanmakuStartSeekPosition = -1;
 
@@ -78,6 +84,17 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     private int mPreProgress = -2;
 
+    private List<SwitchVideoBean> mUrlList = new ArrayList<>();
+
+    //数据源
+    private int mSourcePosition = 0;
+
+    private String mTypeText = "标准";
+
+    private boolean isFirstload = true;
+
+    private FullScreenStatusMonitoring listener;
+
     public DanmakuVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
@@ -94,7 +111,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     public int getLayoutId() {
         return R.layout.danmaku_layout;
     }
-
 
     @Override
     protected void init(Context context) {
@@ -113,7 +129,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mPreviewLayout = findViewById(R.id.preview_layout);
         mPreView = findViewById(R.id.preview_image);
         DoubleSpeed = findViewById(R.id.Double_speed);
+        mSwitchSize = (TextView) findViewById(R.id.definition);
 
+        mSwitchSize.setOnClickListener(this);
         DoubleSpeed.setOnClickListener(this);
         mSendDanmaku.setOnClickListener(this);
         mToogleDanmaku.setOnClickListener(this);
@@ -124,7 +142,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     public void onPrepared() {
         super.onPrepared();
-        Bottom_controller.setVisibility(View.GONE);
+        if (isFirstload){
+            Bottom_controller.setVisibility(View.GONE);
+        }
         onPrepareDanmaku(this);
         startDownFrame(mOriginUrl);
     }
@@ -191,6 +211,10 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 DoubleSpeedDialog doubleSpeedDialog = new DoubleSpeedDialog(mContext);
                 doubleSpeedDialog.show();
                 break;
+            case R.id.definition:
+                isFirstload = false;
+                showSwitchDialog();
+                break;
         }
     }
 
@@ -201,17 +225,47 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     /**
+     * 设置播放URL
+     *
+     * @param url           播放url
+     * @param cacheWithPlay 是否边播边缓存
+     * @param title         title
+     * @return
+     */
+    public boolean setUp(List<SwitchVideoBean> url, boolean cacheWithPlay, String title) {
+        mUrlList = url;
+        return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, title);
+    }
+
+    /**
+     * 设置播放URL
+     *
+     * @param url           播放url
+     * @param cacheWithPlay 是否边播边缓存
+     * @param cachePath     缓存路径，如果是M3U8或者HLS，请设置为false
+     * @param title         title
+     * @return
+     */
+    public boolean setUp(List<SwitchVideoBean> url, boolean cacheWithPlay, File cachePath, String title) {
+        mUrlList = url;
+        return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, cachePath, title);
+    }
+
+    /**
      * 处理播放器在全屏切换时，弹幕显示的逻辑
      * 需要格外注意的是，因为全屏和小屏，是切换了播放器，所以需要同步之间的弹幕状态
      */
     @Override
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         GSYBaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
-        Bottom_controller.setVisibility(View.VISIBLE);
+        Log.e(TAG, "进入全屏~~~~" );
+        listener.StateChange(true);
         if (gsyBaseVideoPlayer != null) {
+            Bottom_controller.setVisibility(View.VISIBLE);
             DanmakuVideoPlayer gsyVideoPlayer = (DanmakuVideoPlayer) gsyBaseVideoPlayer;
             gsyVideoPlayer.mOpenPreView = mOpenPreView;
             //对弹幕设置偏移记录
+            gsyVideoPlayer.mUrlList = mUrlList;
             gsyVideoPlayer.setDanmakuStartSeekPosition(getCurrentPositionWhenPlaying());
             gsyVideoPlayer.setDanmaKuShow(getDanmaKuShow());
             onPrepareDanmaku(gsyVideoPlayer);
@@ -226,12 +280,13 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     protected void resolveNormalVideoShow(View oldF, ViewGroup vp, GSYVideoPlayer gsyVideoPlayer) {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
-        Bottom_controller.setVisibility(View.GONE);
+        Log.e(TAG, "退出全屏~~~~" );
+        listener.StateChange(false);
         if (gsyVideoPlayer != null) {
+            Bottom_controller.setVisibility(View.GONE);
             DanmakuVideoPlayer gsyDanmaVideoPlayer = (DanmakuVideoPlayer) gsyVideoPlayer;
             setDanmaKuShow(gsyDanmaVideoPlayer.getDanmaKuShow());
-            if (gsyDanmaVideoPlayer.getDanmakuView() != null &&
-                    gsyDanmaVideoPlayer.getDanmakuView().isPrepared()) {
+            if (gsyDanmaVideoPlayer.getDanmakuView() != null && gsyDanmaVideoPlayer.getDanmakuView().isPrepared()) {
                 resolveDanmakuSeek(this, gsyDanmaVideoPlayer.getCurrentPositionWhenPlaying());
                 resolveDanmakuShow();
                 releaseDanmaku(gsyDanmaVideoPlayer);
@@ -360,11 +415,13 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public void offDanmaku() {
-        getDanmakuView().hide();
+        mDanmaKuShow = !mDanmaKuShow;
+        resolveDanmakuShow();
     }
 
     public void openDanmaku(){
-        getDanmakuView().show();
+        mDanmaKuShow = !mDanmaKuShow;
+        resolveDanmakuShow();
     }
 
     /**
@@ -457,8 +514,22 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mDanmaKuShow = danmaKuShow;
     }
 
+    public void setResolvingPower(int value) {
+        mSourcePosition = value;
+    }
+
     public boolean getDanmaKuShow() {
         return mDanmaKuShow;
+    }
+
+    public void setListener(FullScreenStatusMonitoring listener) {
+        this.listener = listener;
+    }
+
+    public interface FullScreenStatusMonitoring{
+
+        void StateChange(boolean isFullScreen);
+
     }
 
     /**
@@ -561,6 +632,49 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                     .load(url).preload(width, height);
 
         }
+    }
+
+    /**
+     * 弹出切换清晰度
+     */
+    private void showSwitchDialog() {
+        if (!mHadPlay) {
+            return;
+        }
+        SwitchVideoTypeDialog switchVideoTypeDialog = new SwitchVideoTypeDialog(getContext());
+        switchVideoTypeDialog.initList(mUrlList, new SwitchVideoTypeDialog.OnListItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                final String name = mUrlList.get(position).getName();
+                if (mSourcePosition != position) {
+                    if ((mCurrentState == GSYVideoPlayer.CURRENT_STATE_PLAYING
+                            || mCurrentState == GSYVideoPlayer.CURRENT_STATE_PAUSE)) {
+                        final String url = mUrlList.get(position).getUrl();
+                        onVideoPause();
+                        final long currentPosition = mCurrentPosition;
+                        getGSYVideoManager().releaseMediaPlayer();
+                        cancelProgressTimer();
+//                        hideAllWidget();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setUp(url, mCache, mCachePath, mTitle);
+                                setSeekOnStart(currentPosition);
+                                startPlayLogic();
+                                cancelProgressTimer();
+//                                hideAllWidget();
+                            }
+                        }, 500);
+                        mTypeText = name;
+                        mSwitchSize.setText(name);
+                        mSourcePosition = position;
+                    }
+                } else {
+                    Toast.makeText(getContext(), "已经是 " + name, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        switchVideoTypeDialog.show();
     }
 
     /**

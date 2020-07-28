@@ -2,7 +2,6 @@ package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.graphics.Outline;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +9,6 @@ import android.view.ViewOutlineProvider;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
@@ -20,7 +16,6 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentRecommendedBinding;
 import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
-import com.example.dildil.home_page.bean.VideoBean;
 import com.example.dildil.home_page.other.GlideImageLoader;
 import com.youth.banner.BannerConfig;
 
@@ -32,8 +27,8 @@ import java.util.List;
 public class RecommendedFragment extends BaseFragment {
     private static final String TAG = "RecommendedFragment";
     FragmentRecommendedBinding binding;
-    List<URL> bannerImageList = new ArrayList<>();
-    RecommendedVideoAdapter adapter;
+    private List<URL> bannerImageList = new ArrayList<>();
+    private RecommendedVideoAdapter adapter;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

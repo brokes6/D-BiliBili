@@ -4,6 +4,7 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
 import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.VideoBean;
+import com.example.dildil.video.bean.SwitchVideoBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class ResourcesData {
     private List<TopicBean> topicBeans = new ArrayList<>();
     private List<DynamicBean> dynamicBeans = new ArrayList<>();
     private List<HotRankingBean> hotRankingBeans = new ArrayList<>();
+    private List<SwitchVideoBean> urls = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4,videoBean6,videoBean7;
 
     public ResourcesData() {
@@ -142,5 +144,18 @@ public class ResourcesData {
 
     public List<HotRankingBean> getHotRanking(){
         return hotRankingBeans;
+    }
+
+    public void initVideo(){
+        SwitchVideoBean switchVideoBean = new SwitchVideoBean("480p","http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        SwitchVideoBean switchVideoBean2 = new SwitchVideoBean("720p","http://vjs.zencdn.net/v/oceans.mp4");
+        SwitchVideoBean switchVideoBean3 = new SwitchVideoBean("1080p","http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        urls.add(switchVideoBean);
+        urls.add(switchVideoBean2);
+        urls.add(switchVideoBean3);
+    }
+
+    public List<SwitchVideoBean> getVideoData(){
+        return urls;
     }
 }

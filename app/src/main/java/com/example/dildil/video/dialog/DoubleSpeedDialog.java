@@ -13,8 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.dildil.R;
+import com.example.dildil.video.rewriting.DanmakuVideoPlayer;
 
-public class DoubleSpeedDialog extends Dialog {
+public class DoubleSpeedDialog extends Dialog implements View.OnClickListener{
     private Context mContext;
     private Activity Context;
     private View view;
@@ -39,6 +40,13 @@ public class DoubleSpeedDialog extends Dialog {
         x0_75 = view.findViewById(R.id.x0_75);
         x0_5 = view.findViewById(R.id.x0_5);
         setContentView(view);
+        x2.setOnClickListener(this);
+        x1_5.setOnClickListener(this);
+        x1_25.setOnClickListener(this);
+        x1.setOnClickListener(this);
+        x0_75.setOnClickListener(this);
+        x0_5.setOnClickListener(this);
+
         Window dialogWindow = getWindow();
         dialogWindow.setGravity(Gravity.RIGHT);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
@@ -60,6 +68,37 @@ public class DoubleSpeedDialog extends Dialog {
             this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             super.show();
             this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        DanmakuVideoPlayer danmakuVideoPlayer = new DanmakuVideoPlayer(mContext);
+        switch (v.getId()){
+            case R.id.x2:
+                danmakuVideoPlayer.setSpeed(2f);
+                dismiss();
+                break;
+            case R.id.x1_5:
+                danmakuVideoPlayer.setSpeed(1.5f);
+                dismiss();
+                break;
+            case R.id.x1_25:
+                danmakuVideoPlayer.setSpeed(1.25f);
+                dismiss();
+                break;
+            case R.id.x1:
+                danmakuVideoPlayer.setSpeed(1f);
+                dismiss();
+                break;
+            case R.id.x0_75:
+                danmakuVideoPlayer.setSpeed(0.75f);
+                dismiss();
+                break;
+            case R.id.x0_5:
+                danmakuVideoPlayer.setSpeed(0.5f);
+                dismiss();
+                break;
         }
     }
 }

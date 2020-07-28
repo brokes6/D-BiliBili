@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.example.dildil.R;
+import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.ActivityVideoBinding;
@@ -84,6 +85,7 @@ public class VideoActivity extends BaseActivity {
         binding.detailPlayer.setLockLand(false);
         binding.detailPlayer.setShowFullAnimation(false);
         binding.detailPlayer.setNeedLockFull(true);
+        binding.detailPlayer.setListener(listener);
 
         //detailPlayer.setOpenPreView(true);
         binding.detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
@@ -96,6 +98,7 @@ public class VideoActivity extends BaseActivity {
                 binding.detailPlayer.startWindowFullscreen(VideoActivity.this, true, true);
             }
         });
+
 
         binding.detailPlayer.setVideoAllCallBack(new GSYSampleCallBack() {
             @Override
@@ -126,6 +129,7 @@ public class VideoActivity extends BaseActivity {
             }
         });
 
+
         binding.detailPlayer.setLockClickListener(new LockClickListener() {
             @Override
             public void onClick(View view, boolean lock) {
@@ -138,10 +142,25 @@ public class VideoActivity extends BaseActivity {
         setMargins(binding.detailPlayer, 0, getStatusBarHeight(this), 0, 0);
     }
 
+    DanmakuVideoPlayer.FullScreenStatusMonitoring listener = new DanmakuVideoPlayer.FullScreenStatusMonitoring() {
+        @Override
+        public void StateChange(boolean isFullScreen) {
+            if (binding.detailPlayer.getDanmaKuShow()) {
+                binding.VDanmakuShow.setImageResource(R.mipmap.definition_off);
+            } else {
+                binding.VDanmakuShow.setImageResource(R.mipmap.definition);
+            }
+        }
+    };
+
     @Override
     protected void initData() {
+        ResourcesData resourcesData = new ResourcesData();
+        resourcesData.initVideo();
         binding.VTab.setViewPager(binding.VViewPager, TabTitle, this, mFragments);
-        binding.detailPlayer.setUp(url, true, null, "测试视频");
+        binding.detailPlayer.setShrinkImageRes(R.drawable.crop_free_24);
+        binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
+        binding.detailPlayer.setUp(resourcesData.getVideoData(), true, null, "测试视频");
         hideDialog();
     }
 
@@ -158,7 +177,7 @@ public class VideoActivity extends BaseActivity {
     }
 
     private void DanmakuShow() {
-        if (isDanmaku == false) {
+        if (binding.detailPlayer.getDanmaKuShow()) {
             binding.VDanmakuShow.setImageResource(R.mipmap.definition_off);
             binding.detailPlayer.offDanmaku();
             isDanmaku = true;
