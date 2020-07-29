@@ -39,7 +39,6 @@ public class VideoActivity extends BaseActivity {
     boolean isPlay;
     boolean isPause;
     boolean isDestory;
-    private boolean isDanmaku = false;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -145,7 +144,7 @@ public class VideoActivity extends BaseActivity {
     DanmakuVideoPlayer.FullScreenStatusMonitoring listener = new DanmakuVideoPlayer.FullScreenStatusMonitoring() {
         @Override
         public void StateChange(boolean isFullScreen) {
-            if (binding.detailPlayer.getDanmaKuShow()) {
+            if (isFullScreen) {
                 binding.VDanmakuShow.setImageResource(R.mipmap.definition_off);
             } else {
                 binding.VDanmakuShow.setImageResource(R.mipmap.definition);
@@ -180,11 +179,9 @@ public class VideoActivity extends BaseActivity {
         if (binding.detailPlayer.getDanmaKuShow()) {
             binding.VDanmakuShow.setImageResource(R.mipmap.definition_off);
             binding.detailPlayer.offDanmaku();
-            isDanmaku = true;
         } else {
             binding.VDanmakuShow.setImageResource(R.mipmap.definition);
             binding.detailPlayer.openDanmaku();
-            isDanmaku = false;
         }
     }
 

@@ -15,7 +15,7 @@ public class ResourcesData {
     private List<DynamicBean> dynamicBeans = new ArrayList<>();
     private List<HotRankingBean> hotRankingBeans = new ArrayList<>();
     private List<SwitchVideoBean> urls = new ArrayList<>();
-    private VideoBean videoBean, videoBean2, videoBean3, videoBean4,videoBean6,videoBean7;
+    private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
 
     public ResourcesData() {
         initData();
@@ -70,7 +70,7 @@ public class ResourcesData {
         return beans;
     }
 
-    public void initTopicData(){
+    public void initTopicData() {
 
         TopicBean topicBean = new TopicBean();
         topicBean.setTopicType("话题");
@@ -89,11 +89,11 @@ public class ResourcesData {
         topicBeans.add(topicBean3);
     }
 
-    public List<TopicBean> getTopicData(){
+    public List<TopicBean> getTopicData() {
         return topicBeans;
     }
 
-    public void initDynamic(){
+    public void initDynamic() {
         DynamicBean dynamicBean = new DynamicBean();
         dynamicBean.setUser_img("https://i0.hdslb.com/bfs/face/d0f7a7ee34a4a45c8390eb3a07e4d7f2d70bae91.jpg_64x64.jpg");
         dynamicBean.setUser_name("极客湾Geekerwan");
@@ -116,7 +116,7 @@ public class ResourcesData {
         dynamicBean3.setRelease_date("5小时前");
         dynamicBean3.setVideo_cover("https://i1.hdslb.com/bfs/archive/38214b16a2b8b0e1ed38b7467b2e498ad4542c38.jpg@257w_145h_1c_100q.webp");
         dynamicBean3.setText("竟然是真的新女主持而不是女装口口，不仅拯救了酷报也拯救了观众们的眼睛");
-        dynamicBean3.setVideo_time(13.90+"");
+        dynamicBean3.setVideo_time(13.90 + "");
         dynamicBean3.setVideo_Playback_volume(5320);
         dynamicBean3.setVideo_bullet_chat(777);
         dynamicBean3.setComment_num(99);
@@ -127,11 +127,11 @@ public class ResourcesData {
         dynamicBeans.add(dynamicBean3);
     }
 
-    public List<DynamicBean> getDynamicBeans(){
+    public List<DynamicBean> getDynamicBeans() {
         return dynamicBeans;
     }
 
-    public void initHotRanking(){
+    public void initHotRanking() {
         HotRankingBean hotRankingBean = new HotRankingBean();
         hotRankingBean.setVideo_cover("https://i2.hdslb.com/bfs/archive/b1a07a8baefa0694760cd6d99f212bee45d1333d.jpg@143w_88h.webp");
         hotRankingBean.setVideo_title("敢 杀 我 的 马？！");
@@ -139,23 +139,39 @@ public class ResourcesData {
         hotRankingBean.setVideo_play_num("152.6万");
         hotRankingBean.setVideo_time("2:25");
 
+        HotRankingBean hotRankingBean2 = new HotRankingBean();
+        hotRankingBean2.setVideo_cover("https://i0.hdslb.com/bfs/archive/c1e48e6aaf5e2eb430de9e9c635cb626103c0bef.jpg@412w_232h_1c_100q.jpg");
+        hotRankingBean2.setVideo_title("有⚡茅⚡台");
+        hotRankingBean2.setVideo_up("晏策去月光林地了");
+        hotRankingBean2.setVideo_play_num("152.6万");
+        hotRankingBean2.setVideo_time("2:25");
+
+        HotRankingBean hotRankingBean3 = new HotRankingBean();
+        hotRankingBean3.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
+        hotRankingBean3.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
+        hotRankingBean3.setVideo_up("全能大鹏");
+        hotRankingBean3.setVideo_play_num("46.4万");
+        hotRankingBean3.setVideo_time("2:25");
+
         hotRankingBeans.add(hotRankingBean);
+        hotRankingBeans.add(hotRankingBean2);
+        hotRankingBeans.add(hotRankingBean3);
     }
 
-    public List<HotRankingBean> getHotRanking(){
+    public List<HotRankingBean> getHotRanking() {
         return hotRankingBeans;
     }
 
-    public void initVideo(){
-        SwitchVideoBean switchVideoBean = new SwitchVideoBean("480p","http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
-        SwitchVideoBean switchVideoBean2 = new SwitchVideoBean("720p","http://vjs.zencdn.net/v/oceans.mp4");
-        SwitchVideoBean switchVideoBean3 = new SwitchVideoBean("1080p","http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+    public void initVideo() {
+        SwitchVideoBean switchVideoBean = new SwitchVideoBean("480p", "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        SwitchVideoBean switchVideoBean2 = new SwitchVideoBean("720p", "http://vjs.zencdn.net/v/oceans.mp4");
+        SwitchVideoBean switchVideoBean3 = new SwitchVideoBean("1080p", "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
         urls.add(switchVideoBean);
         urls.add(switchVideoBean2);
         urls.add(switchVideoBean3);
     }
 
-    public List<SwitchVideoBean> getVideoData(){
+    public List<SwitchVideoBean> getVideoData() {
         return urls;
     }
 }

@@ -3,6 +3,7 @@ package com.example.dildil;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
 
@@ -27,7 +28,7 @@ public class MyApplication extends Application {
         mContext = getApplicationContext();
         XUI.init(this);
         XUI.debug(MyApplication.isDebug());
-//        SharedPreferencesUtil.getInstance(this,"SPy");
+        SharedPreferencesUtil.getInstance(this,"SPy");
     }
 
     public static boolean isDebug() {

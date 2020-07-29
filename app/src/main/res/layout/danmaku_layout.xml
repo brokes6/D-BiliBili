@@ -38,8 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/seekbar"
@@ -81,7 +80,6 @@
             android:id="@+id/Bottom_controller"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_alignLeft="@+id/seekbar"
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dp_5"
             android:orientation="horizontal"

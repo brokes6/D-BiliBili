@@ -20,13 +20,8 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowCloseOnTouchOutside">true</item> <!-- 点外边可以消失  -->
-        <item name="android:windowEnterAnimation">@anim/dialog_right_in</item>     <!-- 引用淡出淡入效果  -->
+        <item name="android:windowEnterAnimation">@anim/dialog_right_in</item> <!-- 引用淡出淡入效果  -->
         <item name="android:windowExitAnimation">@anim/dialog_right_out</item>
-    </style>
-
-    <style name="dialog_style" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>
