@@ -65,7 +65,7 @@ public class HomeActivity extends BaseActivity {
                 .setOnTabLoadListener(new EasyNavigationBar.OnTabLoadListener() { //Tab加载完毕回调
                     @Override
                     public void onTabLoadCompleteEvent() {
-                        binding.navigationBar.setMsgPointCount(2, 7);
+                        binding.navigationBar.setMsgPointCount(2, 3);
                     }
                 })
                 .build();

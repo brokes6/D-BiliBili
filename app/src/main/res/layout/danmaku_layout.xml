@@ -46,9 +46,15 @@
             android:layout_height="40dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_15"
+            android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10">
 
+            <ImageView
+                android:id="@+id/Video_SeekBar_play"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:visibility="gone"
+                android:src="@mipmap/play" />
 
             <SeekBar
                 android:id="@+id/progress"
@@ -62,8 +68,8 @@
                 android:minHeight="4dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:progressDrawable="@drawable/video_seek_progress"
-                android:thumb="@drawable/video_seek_thumb" />
+                android:progressDrawable="@drawable/seekbar_color"
+                android:thumb="@mipmap/seekbar_img" />
 
 
             <ImageView
@@ -83,15 +89,15 @@
             android:layout_gravity="center"
             android:layout_marginBottom="@dimen/dp_5"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_15"
-            android:paddingRight="@dimen/dp_15">
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10">
 
             <ImageView
                 android:id="@+id/Video_play"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:src="@drawable/play_circle_outline_24" />
+                android:layout_marginLeft="@dimen/dp_8"
+                android:src="@mipmap/play" />
 
             <ImageView
                 android:layout_width="@dimen/dp_24"
@@ -140,7 +146,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:alpha="0.2"
+                    android:alpha="0.3"
                     android:src="#fff" />
 
                 <TextView
@@ -148,10 +154,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="发送弹幕"
-                    android:textColor="#ffffff" />
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:gravity="center|left"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:text="发个友善的弹幕见证当下"
+                    android:textColor="#b1b0b5" />
 
             </com.gcssloop.widget.RCRelativeLayout>
 
@@ -263,7 +270,6 @@
         android:layout_width="@dimen/seek_bar_image"
         android:layout_height="100dp"
         android:layout_above="@+id/layout_bottom"
-        android:layout_marginBottom="@dimen/dp_15"
         android:visibility="gone">
 
         <ImageView

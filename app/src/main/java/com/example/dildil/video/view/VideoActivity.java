@@ -3,6 +3,7 @@ package com.example.dildil.video.view;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.app.ActivityCompat;
@@ -21,11 +22,14 @@ import com.example.dildil.video.rewriting.DanmakuVideoPlayer;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
+import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAUSE;
 
 public class VideoActivity extends BaseActivity {
     private static final String TAG = "VideoActivity";
@@ -39,6 +43,7 @@ public class VideoActivity extends BaseActivity {
     boolean isPlay;
     boolean isPause;
     boolean isDestory;
+    private int mWhenPlaying;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -68,10 +73,8 @@ public class VideoActivity extends BaseActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
-        //使用自定义的全屏切换图片，!!!注意xml布局中也需要设置为一样的
-        //必须在setUp之前设置
-        binding.detailPlayer.setShrinkImageRes(R.drawable.custom_shrink);
-        binding.detailPlayer.setEnlargeImageRes(R.drawable.custom_enlarge);
+        //使用自定义的全屏切换图片，!!!注意xml布局中也需要设置为一样的(已取消)
+        //必须在setUp之前设置(已取消)
         resolveNormalVideoUI();
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, binding.detailPlayer);
@@ -82,6 +85,7 @@ public class VideoActivity extends BaseActivity {
         //关闭自动旋转
         binding.detailPlayer.setRotateViewAuto(false);
         binding.detailPlayer.setLockLand(false);
+        GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_16_9);
         binding.detailPlayer.setShowFullAnimation(false);
         binding.detailPlayer.setNeedLockFull(true);
         binding.detailPlayer.setListener(listener);
@@ -198,6 +202,20 @@ public class VideoActivity extends BaseActivity {
         binding.detailPlayer.getBackButton().setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int play = binding.detailPlayer.getCurrentState();
+        if (play == CURRENT_STATE_PAUSE){
+            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
+            binding.detailPlayer.startPlayLogic();
+        }
+    }
+
+    public void getPlayPosition(){
+        mWhenPlaying = binding.detailPlayer.getCurrentPositionWhenPlaying();
+        Log.e(TAG, "当前播放位置为:"+mWhenPlaying);
+    }
 
     @Override
     protected void onDestroy() {
@@ -211,7 +229,7 @@ public class VideoActivity extends BaseActivity {
         isDestory = true;
     }
 
-    private GSYVideoPlayer getCurPlay() {
+    public GSYVideoPlayer getCurPlay() {
         if (binding.detailPlayer.getFullWindowPlayer() != null) {
             return binding.detailPlayer.getFullWindowPlayer();
         }

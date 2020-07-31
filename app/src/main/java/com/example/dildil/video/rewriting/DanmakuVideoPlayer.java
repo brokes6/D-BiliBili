@@ -6,9 +6,9 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -75,7 +75,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     //滑动小图预览
     private RelativeLayout mPreviewLayout;
 
-    private ImageView mPreView;
+    private ImageView mPreView,mSeekBar_play;
 
     //是否因为用户点击
     private boolean mIsFromUser;
@@ -133,7 +133,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mPreView = findViewById(R.id.preview_image);
         DoubleSpeed = findViewById(R.id.Double_speed);
         mResolvingPower = findViewById(R.id.definition);
+        mSeekBar_play = findViewById(R.id.Video_SeekBar_play);
 
+        mSeekBar_play.setOnClickListener(this);
         mResolvingPower.setOnClickListener(this);
         DoubleSpeed.setOnClickListener(this);
         mSendDanmaku.setOnClickListener(this);
@@ -148,6 +150,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         super.onPrepared();
         if (isFirstload) {
             Bottom_controller.setVisibility(View.GONE);
+            mSeekBar_play.setVisibility(View.VISIBLE);
         }
         onPrepareDanmaku(this);
         startDownFrame(mOriginUrl);
@@ -170,11 +173,13 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         super.clickStartIcon();
         if (mCurrentState == CURRENT_STATE_PLAYING) {
             danmakuOnResume();
-            Video_play.setImageResource(R.drawable.pause_24);
+            Video_play.setImageResource(R.mipmap.pause);
+            mSeekBar_play.setImageResource(R.mipmap.pause);
             Log.e(TAG, "恢复播放");
         } else if (mCurrentState == CURRENT_STATE_PAUSE) {
             danmakuOnPause();
-            Video_play.setImageResource(R.drawable.play_circle_outline_24);
+            Video_play.setImageResource(R.mipmap.play);
+            mSeekBar_play.setImageResource(R.mipmap.play);
             Log.e(TAG, "暂停视频");
         }
     }
@@ -209,6 +214,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 resolveDanmakuShow();
                 break;
             case R.id.Video_play:
+            case R.id.Video_SeekBar_play:
                 clickStartIcon();
                 break;
             case R.id.Double_speed:
@@ -233,6 +239,13 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
 
     private void resolveTypeUI(){
+        if (getCurrentState() == CURRENT_STATE_PREPAREING){
+            mSeekBar_play.setImageResource(R.mipmap.play);
+            Video_play.setImageResource(R.mipmap.play);
+        }else{
+            mSeekBar_play.setImageResource(R.mipmap.pause);
+            Video_play.setImageResource(R.mipmap.pause);
+        }
         mResolvingPower.setText(mTypeText);
     }
 
@@ -270,7 +283,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         GSYBaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
-        Bottom_controller.setVisibility(View.VISIBLE);
         if (gsyBaseVideoPlayer != null) {
             DanmakuVideoPlayer gsyVideoPlayer = (DanmakuVideoPlayer) gsyBaseVideoPlayer;
             gsyVideoPlayer.mOpenPreView = mOpenPreView;
@@ -295,7 +307,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     protected void resolveNormalVideoShow(View oldF, ViewGroup vp, GSYVideoPlayer gsyVideoPlayer) {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         listener.StateChange(mDanmaKuShow);
-        Bottom_controller.setVisibility(View.GONE);
         if (gsyVideoPlayer != null) {
             DanmakuVideoPlayer gsyDanmaVideoPlayer = (DanmakuVideoPlayer) gsyVideoPlayer;
             gsyDanmaVideoPlayer.mOpenPreView = mOpenPreView;
@@ -327,7 +338,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mDumakuFile = is;
         if (!getDanmakuView().isPrepared()) {
             onPrepareDanmaku((DanmakuVideoPlayer) getCurrentPlayer());
-            Video_play.setImageResource(R.drawable.pause_24);
+            Video_play.setImageResource(R.mipmap.pause);
         }
     }
 
@@ -742,6 +753,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                         mTypeText = name;
                         mResolvingPower.setText(mTypeText);
                         mSourcePosition = position;
+                        Toast toast = Toast.makeText(getContext(), "已切换到"+mTypeText, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.LEFT|Gravity.BOTTOM,0,220);
+                        toast.show();
                         Log.e(TAG, "当前分辨率改变,为："+ mTypeText);
                     }
                 } else {
@@ -772,50 +786,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mDanmakuView.addDanmaku(danmaku);
     }
 
-    /**
-     * 退出window层播放全屏效果
-     */
-    @SuppressWarnings("ResourceType")
-    @Override
-    protected void clearFullscreenLayout() {
-        if (!mFullAnimEnd) {
-            return;
-        }
-        mIfCurrentIsFullscreen = false;
-        int delay = 0;
-        if (mOrientationUtils != null) {
-            delay = mOrientationUtils.backToProtVideo();
-            mOrientationUtils.setEnable(false);
-            if (mOrientationUtils != null) {
-                mOrientationUtils.releaseListener();
-                mOrientationUtils = null;
-            }
-        }
-
-        if (!mShowFullAnimation) {
-            delay = 0;
-        }
-
-        final ViewGroup vp = (CommonUtil.scanForActivity(getContext())).findViewById(Window.ID_ANDROID_CONTENT);
-        final View oldF = vp.findViewById(getFullId());
-        if (oldF != null) {
-            //此处fix bug#265，推出全屏的时候，虚拟按键问题
-            DanmakuVideoPlayer gsyVideoPlayer = (DanmakuVideoPlayer) oldF;
-            gsyVideoPlayer.mIfCurrentIsFullscreen = false;
-        }
-
-        if (delay == 0) {
-            backToNormal();
-        } else {
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    backToNormal();
-                }
-            }, delay);
-        }
-
-    }
 }
 
 

@@ -47,7 +47,7 @@
                 android:id="@+id/play"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
-                android:src="@mipmap/play" />
+                android:src="@mipmap/play_game" />
         </LinearLayout>
 
         <com.flyco.tablayout.SlidingTabLayout

@@ -9,8 +9,8 @@
 
     <com.android.liuzhuang.rcimageview.RoundCornerImageView
         android:id="@+id/Ranking_video_img"
-        android:layout_width="@dimen/dp_200"
-        android:layout_height="@dimen/dp_120"
+        android:layout_width="@dimen/dp_180"
+        android:layout_height="@dimen/dp_100"
         android:scaleType="centerCrop"
         rc:rciv_radius="5dp"/>
 

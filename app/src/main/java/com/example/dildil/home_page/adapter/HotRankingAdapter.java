@@ -7,18 +7,18 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
-import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.HotRankingBean;
-import com.example.dildil.video.view.VideoActivity;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 public class HotRankingAdapter extends BaseRecyclerAdapter<HotRankingBean> implements View.OnClickListener{
+    private static final String TAG = "HotRankingAdapter";
     private Context mContext;
     private RoundCornerImageView video_cover;
     private RelativeLayout hot_video_cover;
+    private ItemOnClickListener listener;
     public HotRankingAdapter(Context context){
         mContext = context;
     }
@@ -45,8 +45,18 @@ public class HotRankingAdapter extends BaseRecyclerAdapter<HotRankingBean> imple
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.Hot_video_cover:
-                ActivityUtils.startActivity(VideoActivity.class);
+                listener.onClick(getSelectPosition());
                 break;
         }
+    }
+
+    public void setListener(ItemOnClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface ItemOnClickListener {
+
+        void onClick(int position);
+
     }
 }
