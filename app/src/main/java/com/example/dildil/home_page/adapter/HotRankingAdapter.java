@@ -1,6 +1,7 @@
 package com.example.dildil.home_page.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -27,6 +28,12 @@ public class HotRankingAdapter extends BaseRecyclerAdapter<HotRankingBean> imple
         return R.layout.item_hot_ranking_list;
     }
 
+
+    public void setListener(ItemOnClickListener listener) {
+        this.listener = listener;
+        Log.e(TAG, "onClick: 当前的listener为"+listener );
+    }
+
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, HotRankingBean item) {
         video_cover = holder.findViewById(R.id.Ranking_video_img);
@@ -45,13 +52,12 @@ public class HotRankingAdapter extends BaseRecyclerAdapter<HotRankingBean> imple
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.Hot_video_cover:
-                listener.onClick(getSelectPosition());
+                Log.e(TAG, "onClick: 当前的listener为"+listener );
+                if (listener != null) {
+                    listener.onClick(getSelectPosition());
+                }
                 break;
         }
-    }
-
-    public void setListener(ItemOnClickListener listener) {
-        this.listener = listener;
     }
 
     public interface ItemOnClickListener {

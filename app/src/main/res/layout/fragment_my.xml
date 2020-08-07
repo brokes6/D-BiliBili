@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -7,12 +8,155 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/White">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/function_top"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="我的页面"/>
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal|right"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/M_sweep"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@mipmap/sweep" />
+
+            <ImageView
+                android:id="@+id/M_palette"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/palette" />
+
+            <ImageView
+                android:id="@+id/M_moon"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@mipmap/moon" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/function_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/function_top"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10">
+
+            <com.android.liuzhuang.rcimageview.CircleImageView
+                android:id="@+id/M_user_img"
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60" />
+
+            <TextView
+                android:id="@+id/M_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@+id/M_user_img"
+                android:textColor="@color/Pink"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/Right_more"
+                android:text="空间"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/Right_more"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/arrow_forward" />
+        </RelativeLayout>
+
+        <com.gcssloop.widget.RCRelativeLayout
+            android:id="@+id/M_video_cover"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_60"
+            android:layout_below="@+id/function_data"
+            android:layout_margin="@dimen/dp_10"
+            app:round_corner_top_left="5dp"
+            app:round_corner_top_right="5dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/Pink" />
+
+            <TextView
+                android:id="@+id/member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textColor="@color/White"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_toLeftOf="@+id/Member_Right_more"
+                android:text="2021-01-19到期"
+                android:textColor="@color/White"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/Member_Right_more"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:src="@drawable/arrow_forward_white" />
+        </com.gcssloop.widget.RCRelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/function_data"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/function_user"
+            android:orientation="horizontal">
+
+            <com.example.customcontrollibs.TopTextView
+                android:id="@+id/dynamic"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_70"
+                app:Bottom_Text="动态"
+                app:Text_Spacing="20" />
+
+            <com.example.customcontrollibs.TopTextView
+                android:id="@+id/follow"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_70"
+                app:Bottom_Text="关注"
+                app:Text_Spacing="20" />
+
+            <com.example.customcontrollibs.TopTextView
+                android:id="@+id/fans"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_70"
+                app:Bottom_Text="粉丝"
+                app:Text_Spacing="20" />
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>

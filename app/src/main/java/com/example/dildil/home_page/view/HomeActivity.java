@@ -79,10 +79,10 @@ public class HomeActivity extends BaseActivity {
     /**
      * 切换Tab
      *
-     * @param value
+     * @param index
      */
-    public void SwitchPages(int value) {
-        binding.navigationBar.selectTab(value, true);
+    public void SwitchPages(int index) {
+        binding.navigationBar.selectTab(index, true);
     }
 
     /**
@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     /**
-     * 清楚Tab红点
+     * 清除Tab红点
      *
      * @param index
      */

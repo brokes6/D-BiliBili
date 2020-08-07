@@ -19,7 +19,6 @@ import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
 import com.example.dildil.home_page.other.GlideImageLoader;
 import com.youth.banner.BannerConfig;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,22 +42,19 @@ public class RecommendedFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        try {
-            URL url = new URL("https://i0.hdslb.com/bfs/archive/20a25dc84739a3852c125d55b9223d6bd70c34bb.png@880w_388h_1c_95q");
-            URL url2 = new URL("https://i0.hdslb.com/bfs/sycp/creative_img/202007/82e1e1a0fd91537c6d1c30c80fe60e6c.jpg@880w_388h_1c_95q");
-            bannerImageList.add(url);
-            bannerImageList.add(url2);
-        }catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        initBanner(bannerImageList);
-
         //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),2);
         adapter = new RecommendedVideoAdapter(getContext());
         binding.ReRecy.setLayoutManager(layoutManager1);
         binding.ReRecy.setAdapter(adapter);
         initDates();
+    }
+
+    private void initDates(){
+        ResourcesData resourcesData = new ResourcesData();
+        resourcesData.initBanner();
+        initBanner(resourcesData.getBeannerUrl());
+        adapter.loadMore(resourcesData.getData());
     }
 
     private void initBanner(List<?> imageUrls){
@@ -74,11 +70,6 @@ public class RecommendedFragment extends BaseFragment {
         });
         binding.ReBanner.setClipToOutline(true);
         binding.ReBanner.start();
-    }
-
-    private void initDates(){
-        ResourcesData resourcesData = new ResourcesData();
-        adapter.loadMore(resourcesData.getData());
     }
 
     @Override

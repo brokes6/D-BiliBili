@@ -4,8 +4,11 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
 import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.VideoBean;
+import com.example.dildil.my_page.bean.MyDataBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,9 @@ public class ResourcesData {
     private List<DynamicBean> dynamicBeans = new ArrayList<>();
     private List<HotRankingBean> hotRankingBeans = new ArrayList<>();
     private List<SwitchVideoBean> urls = new ArrayList<>();
+    private List<URL> bannerImageList = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
+    private MyDataBean mMyDataBean;
 
     public ResourcesData() {
         initData();
@@ -173,5 +178,34 @@ public class ResourcesData {
 
     public List<SwitchVideoBean> getVideoData() {
         return urls;
+    }
+
+    public void initBanner(){
+        try {
+            URL url = new URL("https://i0.hdslb.com/bfs/archive/20a25dc84739a3852c125d55b9223d6bd70c34bb.png@880w_388h_1c_95q");
+            URL url2 = new URL("https://i0.hdslb.com/bfs/sycp/creative_img/202007/82e1e1a0fd91537c6d1c30c80fe60e6c.jpg@880w_388h_1c_95q");
+            bannerImageList.add(url);
+            bannerImageList.add(url2);
+        }catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<URL> getBeannerUrl(){
+        return bannerImageList;
+    }
+
+    public void initMyData(){
+        mMyDataBean = new MyDataBean();
+        mMyDataBean.setUsername("Fracture6");
+        mMyDataBean.setUserImg("https://i1.hdslb.com/bfs/face/acc7a0e97bf9f6c4d047777e40270a39bc7f4f7d.jpg");
+        mMyDataBean.setDynamic(36);
+        mMyDataBean.setFollow(33);
+        mMyDataBean.setFans(0);
+        mMyDataBean.setMember(true);
+    }
+
+    public MyDataBean getMyDataBeans(){
+        return mMyDataBean;
     }
 }

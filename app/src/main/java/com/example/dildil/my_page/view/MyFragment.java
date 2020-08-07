@@ -1,21 +1,24 @@
 package com.example.dildil.my_page.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.bumptech.glide.Glide;
 import com.example.dildil.R;
+import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentMyBinding;
+import com.example.dildil.my_page.bean.MyDataBean;
 
 public class MyFragment extends BaseFragment {
     private static final String TAG = "MyFragment";
     FragmentMyBinding binding;
+    private MyDataBean MyDataBean;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,7 +33,22 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        Log.e(TAG, "initView: 成功懒加载，舒服舒服舒服");
+        showDialog();
+        ResourcesData resourcesData = new ResourcesData();
+        resourcesData.initMyData();
+        MyDataBean = resourcesData.getMyDataBeans();
+
+        Glide.with(getContext()).load(MyDataBean.getUserImg()).into(binding.MUserImg);
+        binding.MUserName.setText(MyDataBean.getUsername());
+        binding.dynamic.setTop_Text(MyDataBean.getDynamic()+"");
+        binding.follow.setTop_Text(MyDataBean.getFollow()+"");
+        binding.fans.setTop_Text(MyDataBean.getFans()+"");
+        if (MyDataBean.isMember()){
+            binding.member.setText("年度大会员");
+        }else{
+            binding.member.setText("普通会员");
+        }
+        hideDialog();
     }
 
     @Override
