@@ -82,5 +82,5 @@ dependencies {
     implementation 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-x86:0.9.21'
     //自己的控件库
-    implementation 'com.github.brokes6:CustomControl:v1.0.5'
+    implementation 'com.github.brokes6:CustomControl:v1.0.6'
 }
