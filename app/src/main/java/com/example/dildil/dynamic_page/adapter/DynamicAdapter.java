@@ -1,7 +1,6 @@
 package com.example.dildil.dynamic_page.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,13 +15,13 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
-public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean> {
+public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean> implements View.OnClickListener{
     private static final String TAG = "DynamicAdapter";
     private Context mContext;
     private CircleImageView userimg;
     private TextView comment_num,thmbus_num;
     private RoundCornerImageView video_cover;
-    private RelativeLayout video_introduce;
+    private RelativeLayout video_introduce,main;
     public DynamicAdapter(Context context){
         mContext = context;
     }
@@ -38,7 +37,10 @@ public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean> {
         video_cover = holder.findViewById(R.id.Dy_video_cover);
         video_introduce = holder.findViewById(R.id.video_introduce);
         comment_num = holder.findViewById(R.id.comment_number);
+        main = holder.findViewById(R.id.Dy_main);
         thmbus_num = holder.findViewById(R.id.thumbs_number);
+
+        main.setOnClickListener(this);
         if (item != null) {
             Glide.with(mContext).load(item.getUser_img()).into(userimg);
             if (item.getVideo_cover()==null){
@@ -55,6 +57,15 @@ public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean> {
             holder.text(R.id.Dy_text,item.getText());
             comment_num.setText(item.getComment_num()+"");
             thmbus_num.setText(item.getThumbs_num()+"");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.Dy_main:
+
+                break;
         }
     }
 }

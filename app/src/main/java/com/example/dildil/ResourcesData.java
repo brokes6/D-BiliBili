@@ -5,6 +5,7 @@ import com.example.dildil.dynamic_page.bean.TopicBean;
 import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.VideoBean;
 import com.example.dildil.my_page.bean.MyDataBean;
+import com.example.dildil.search.bean.HotSearchBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 
 import java.net.MalformedURLException;
@@ -19,6 +20,7 @@ public class ResourcesData {
     private List<HotRankingBean> hotRankingBeans = new ArrayList<>();
     private List<SwitchVideoBean> urls = new ArrayList<>();
     private List<URL> bannerImageList = new ArrayList<>();
+    private List<HotSearchBean> hotSearchBeans = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
     private MyDataBean mMyDataBean;
 
@@ -208,4 +210,57 @@ public class ResourcesData {
     public MyDataBean getMyDataBeans(){
         return mMyDataBean;
     }
+
+    public String[] getSearchTag(){
+        String[] text = {"兰博基尼自私","柯南","空军一号","华为GT2","iphoneXr","iphone11"};
+        return text;
+    }
+
+    public void initHotSearch(){
+        HotSearchBean bean = new HotSearchBean();
+        bean.setHotSearchTitle("雾山五行");
+        bean.setDegree(1);
+
+        HotSearchBean bean1 = new HotSearchBean();
+        bean1.setHotSearchTitle("小米10至尊版评测");
+        bean1.setDegree(2);
+
+        HotSearchBean bean2 = new HotSearchBean();
+        bean2.setHotSearchTitle("小米透明电视");
+        bean2.setDegree(2);
+
+        HotSearchBean bean3 = new HotSearchBean();
+        bean3.setHotSearchTitle("雷军直播回应赌约");
+        bean3.setDegree(0);
+
+        HotSearchBean bean4 = new HotSearchBean();
+        bean4.setHotSearchTitle("芝加哥大规模抢劫");
+        bean4.setDegree(0);
+
+        HotSearchBean bean5 = new HotSearchBean();
+        bean5.setHotSearchTitle("糖豆人");
+        bean5.setDegree(2);
+
+        HotSearchBean bean6 = new HotSearchBean();
+        bean6.setHotSearchTitle("棘刺");
+        bean6.setDegree(0);
+
+        HotSearchBean bean7 = new HotSearchBean();
+        bean7.setHotSearchTitle("元龙");
+        bean7.setDegree(0);
+
+        hotSearchBeans.add(bean);
+        hotSearchBeans.add(bean1);
+        hotSearchBeans.add(bean2);
+        hotSearchBeans.add(bean3);
+        hotSearchBeans.add(bean4);
+        hotSearchBeans.add(bean5);
+        hotSearchBeans.add(bean6);
+        hotSearchBeans.add(bean7);
+    }
+
+    public List<HotSearchBean> getHotSearchBeans(){
+        return hotSearchBeans;
+    }
+
 }

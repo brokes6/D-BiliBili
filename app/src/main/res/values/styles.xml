@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/White</item>
         <item name="colorPrimaryDark">@color/White</item>
         <item name="colorAccent">@color/Pink</item>
+        <item name = "android:colorControlHighlight">@color/Grey_9</item>
     </style>
 
     <!--Loading-->

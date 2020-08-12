@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_5"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/HS_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@color/Black"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/HS_Title"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="雾山五行"
+        android:textColor="@color/Black"
+        android:textSize="17sp"/>
+
+    <ImageView
+        android:id="@+id/HS_degree"
+        android:layout_width="@dimen/dp_30"
+        android:layout_height="@dimen/dp_30" />
+</LinearLayout>

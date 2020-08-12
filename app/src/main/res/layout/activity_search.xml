@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/White">
+
+        <include
+            android:id="@+id/Se_search"
+            layout="@layout/item_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+             />
+
+        <TextView
+            android:id="@+id/Text_HotSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Se_search"
+            android:layout_margin="@dimen/dp_10"
+            android:text="热搜"
+            android:textColor="@color/Black"
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/Se_HotSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Text_HotSearch"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10" />
+
+        <TextView
+            android:id="@+id/Se_SearchHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Se_HotSearch"
+            android:layout_margin="@dimen/dp_10"
+            android:text="搜索历史"
+            android:textColor="@color/Black"
+            android:textSize="18sp" />
+
+        <com.xuexiang.xui.widget.flowlayout.FlowTagLayout
+            android:id="@+id/Se_normal_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Se_SearchHistory" />
+    </RelativeLayout>
+</layout>

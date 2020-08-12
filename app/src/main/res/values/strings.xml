@@ -2,4 +2,12 @@
     <string name="app_name">搭理搭理</string>
     <string name="language_cn">中文</string>
     <string name="language_en">English</string>
+    <string name="search">搜索</string>
+
+    //颜色
+    <string name="colorWhite">#ffffff</string>
+    <string name="colorTransWithe">#ccffffff</string>
+    <string name="colorBlack">#000000</string>
+    <string name="colorAsh">#535353</string>
+
 </resources>

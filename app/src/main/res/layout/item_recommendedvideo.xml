@@ -68,7 +68,7 @@
             android:layout_below="@+id/volume"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_65"
-            android:background="#fff">
+            android:background="@drawable/btn_bg">
 
             <TextView
                 android:id="@+id/Re_title"

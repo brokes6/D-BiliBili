@@ -158,5 +158,145 @@
                 app:Text_Spacing="20" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/function_three"
+            android:layout_below="@+id/M_video_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="离线缓存"
+                app:Image_Text_Spacing="20"
+                app:Text_Color="@color/Ash"/>
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="历史记录"
+                app:Text_Color="@color/Ash"
+                app:Image_Text_Spacing="20"/>
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="我的收藏"
+                app:Text_Color="@color/Ash"
+                app:Image_Text_Spacing="20"/>
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="稍后再看"
+                app:Text_Color="@color/Ash"
+                app:Image_Text_Spacing="20"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/function_four"
+            android:layout_below="@+id/function_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="创作中心"
+                android:textSize="16sp"
+                android:textColor="#212121"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/function_five"
+            android:layout_below="@+id/function_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="离线缓存"
+                app:Text_Color="@color/Ash"
+                app:Image_Text_Spacing="20"/>
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="历史记录"
+                app:Text_Color="@color/Ash"
+                app:Image_Text_Spacing="20"/>
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="我的收藏"
+                app:Text_Color="@color/Ash"
+                app:Image_Text_Spacing="20"/>
+
+            <com.example.customcontrollibs.ImageTopView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="@dimen/dp_80"
+                android:layout_margin="@dimen/dp_10"
+                app:Image_Drawable="@mipmap/offline_caching"
+                app:Image_Text="稍后再看"
+                app:Text_Color="@color/Ash"
+                app:Image_Text_Spacing="20"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/function_six"
+            android:layout_below="@+id/function_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐服务"
+                android:textSize="16sp"
+                android:textColor="#212121"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/M_recy"
+            android:layout_below="@+id/function_six"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 </layout>

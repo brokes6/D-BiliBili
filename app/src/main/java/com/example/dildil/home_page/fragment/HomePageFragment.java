@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
@@ -20,9 +21,9 @@ import com.example.dildil.home_page.fragment.fragment_tab.PursueFramgment;
 import com.example.dildil.home_page.fragment.fragment_tab.RapFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
+import com.example.dildil.search.view.SearchActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomePageFragment extends BaseFragment {
     FragmentHomepageBinding binding;
@@ -47,6 +48,7 @@ public class HomePageFragment extends BaseFragment {
         mFragments.add(new EpidemicSituationFragment());
 
         binding.userImg.setOnClickListener(this);
+        binding.edText.setOnClickListener(this);
     }
 
     @Override
@@ -66,6 +68,9 @@ public class HomePageFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.user_img:
                 ((HomeActivity) getActivity()).SwitchPages(4);
+                break;
+            case R.id.ed_text:
+                ActivityUtils.startActivity(SearchActivity.class);
                 break;
         }
     }
