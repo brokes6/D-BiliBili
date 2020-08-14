@@ -1,5 +1,7 @@
 package com.example.dildil;
 
+import com.example.dildil.channel_page.bean.BeInterestedBean;
+import com.example.dildil.channel_page.bean.HaveViewedBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
 import com.example.dildil.home_page.bean.HotRankingBean;
@@ -21,6 +23,8 @@ public class ResourcesData {
     private List<SwitchVideoBean> urls = new ArrayList<>();
     private List<URL> bannerImageList = new ArrayList<>();
     private List<HotSearchBean> hotSearchBeans = new ArrayList<>();
+    private List<BeInterestedBean> beInterestedBeans = new ArrayList<>();
+    private List<HaveViewedBean> haveViewedBeans = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
     private MyDataBean mMyDataBean;
 
@@ -129,9 +133,20 @@ public class ResourcesData {
         dynamicBean3.setComment_num(99);
         dynamicBean3.setThumbs_num(2386);
 
+        DynamicBean dynamicBean4 = new DynamicBean();
+        dynamicBean4.setUser_img("https://i1.hdslb.com/bfs/face/816b2f8c9eb9bcc2784e923cd75dd42ec2c087a5.jpg_64x64.jpg");
+        dynamicBean4.setUser_name("笔吧评测室");
+        dynamicBean4.setRelease_date("08-12");
+        dynamicBean4.setText("\u200D本来筹备了一期“大机机”的评测，预计这个月发的\n" +
+                "结果，跑游戏就开始闪退...\n" +
+                "哎，只能延期（被动） 一段时间了 ");
+        dynamicBean4.setComment_num(191);
+        dynamicBean4.setThumbs_num(1752);
+
         dynamicBeans.add(dynamicBean);
         dynamicBeans.add(dynamicBean2);
         dynamicBeans.add(dynamicBean3);
+        dynamicBeans.add(dynamicBean4);
     }
 
     public List<DynamicBean> getDynamicBeans() {
@@ -249,6 +264,14 @@ public class ResourcesData {
         bean7.setHotSearchTitle("元龙");
         bean7.setDegree(0);
 
+        HotSearchBean bean8 = new HotSearchBean();
+        bean8.setHotSearchTitle("以家人之名");
+        bean8.setDegree(0);
+
+        HotSearchBean bean9 = new HotSearchBean();
+        bean9.setHotSearchTitle("光遇红狐狸");
+        bean9.setDegree(0);
+
         hotSearchBeans.add(bean);
         hotSearchBeans.add(bean1);
         hotSearchBeans.add(bean2);
@@ -257,10 +280,81 @@ public class ResourcesData {
         hotSearchBeans.add(bean5);
         hotSearchBeans.add(bean6);
         hotSearchBeans.add(bean7);
+        hotSearchBeans.add(bean8);
+        hotSearchBeans.add(bean9);
     }
 
     public List<HotSearchBean> getHotSearchBeans(){
         return hotSearchBeans;
     }
 
+
+    public void initBeInterestedData(){
+        BeInterestedBean beInterestedBean = new BeInterestedBean();
+        beInterestedBean.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/a92c19dbc4335fd553e50e187d759b2fafee9a64.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean.setBeInterestedTitle("COSPLAY");
+
+        BeInterestedBean beInterestedBean1 = new BeInterestedBean();
+        beInterestedBean1.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/c47710d730162f1e1c49d23e68aa0bf42b83b0e9.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean1.setBeInterestedTitle("游戏集锦");
+
+        BeInterestedBean beInterestedBean2 = new BeInterestedBean();
+        beInterestedBean2.setBeInterestedImage("https://i0.hdslb.com/bfs/archive/4afb90b88597f226d22fdaed28a5c4769b372fdc.png@115w_115h_1c_100q.webp");
+        beInterestedBean2.setBeInterestedTitle("搞笑");
+
+        BeInterestedBean beInterestedBean3 = new BeInterestedBean();
+        beInterestedBean3.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/db30d74add4aafeaf4faa1d2ddca120d1d89c52a.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean3.setBeInterestedTitle("风暴英雄");
+
+        BeInterestedBean beInterestedBean4 = new BeInterestedBean();
+        beInterestedBean4.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/0f7b6c8c3d38382e677c1d137986a11fed8075ac.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean4.setBeInterestedTitle("星际争霸2");
+
+        beInterestedBeans.add(beInterestedBean);
+        beInterestedBeans.add(beInterestedBean1);
+        beInterestedBeans.add(beInterestedBean2);
+        beInterestedBeans.add(beInterestedBean3);
+        beInterestedBeans.add(beInterestedBean4);
+    }
+
+    public List<BeInterestedBean> getBeInterestedBeans(){
+        return beInterestedBeans;
+    }
+
+    public void initHaveViewedData(){
+        HaveViewedBean haveViewedBean = new HaveViewedBean();
+        haveViewedBean.setMiddle_Image("https://i0.hdslb.com/bfs/tag/c044d70d3c5f8e5920e19b8f5ef64d1bbcee625d.jpg@60w_60h_1c_100q.webp");
+        haveViewedBean.setTitle("是在下输了");
+        haveViewedBean.setTitle_time("07-31浏览");
+
+        HaveViewedBean haveViewedBean1 = new HaveViewedBean();
+        haveViewedBean1.setMiddle_Image("https://i0.hdslb.com/bfs/tag/a938e55152c022f381223490ca3547c1b29de438.jpg@60w_60h_1c_100q.webp");
+        haveViewedBean1.setTitle("雷军");
+        haveViewedBean1.setTitle_time("07-31浏览");
+
+        HaveViewedBean haveViewedBean2 = new HaveViewedBean();
+        haveViewedBean2.setMiddle_Image("https://i0.hdslb.com/bfs/tag/ea51d78fa24f69bfff2d21a2e99f9fc4680a3871.png@60w_60h_1c_100q.webp");
+        haveViewedBean2.setTitle("vlog");
+        haveViewedBean2.setTitle_time("07-08浏览");
+
+        HaveViewedBean haveViewedBean3 = new HaveViewedBean();
+        haveViewedBean3.setMiddle_Image("https://i0.hdslb.com/bfs/tag/caee81ee21fa1d830398442166be53d388ecb2ea.jpg@60w_60h_1c_100q.webp");
+        haveViewedBean3.setTitle("乐高");
+        haveViewedBean3.setTitle_time("07-07浏览");
+
+        HaveViewedBean haveViewedBean4 = new HaveViewedBean();
+        haveViewedBean4.setMiddle_Image("https://i0.hdslb.com/bfs/archive/f29372839c6265f38617c46c21da44feb36255b3.png@60w_60h_1c_100q.webp");
+        haveViewedBean4.setTitle("明日方舟");
+        haveViewedBean4.setTitle_time("06-30浏览");
+
+        haveViewedBeans.add(haveViewedBean);
+        haveViewedBeans.add(haveViewedBean1);
+        haveViewedBeans.add(haveViewedBean2);
+        haveViewedBeans.add(haveViewedBean3);
+        haveViewedBeans.add(haveViewedBean4);
+    }
+
+    public List<HaveViewedBean> getHaveViewedBeans(){
+        return haveViewedBeans;
+    }
 }

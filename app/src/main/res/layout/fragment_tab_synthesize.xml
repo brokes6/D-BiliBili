@@ -64,7 +64,7 @@
                     android:id="@+id/Text_topic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="话题"
+                    android:text="@string/topic_of_conversation"
                     android:textStyle="bold"
                     android:textColor="#202020"
                     android:textSize="18sp" />

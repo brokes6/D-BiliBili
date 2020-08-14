@@ -9,5 +9,12 @@
     <string name="colorTransWithe">#ccffffff</string>
     <string name="colorBlack">#000000</string>
     <string name="colorAsh">#535353</string>
+    <string name="Ranking_List">排行榜</string>
+    <string name="see_every_week">每周必看</string>
+    <string name="Must_brush_when_entering_the_station">入站必刷</string>
+    <string name="topic_of_conversation">话题</string>
+    <string name="Search_for_heat">热搜</string>
+    <string name="Search_history">搜索历史</string>
+    <string name="forward">转发</string>
 
 </resources>

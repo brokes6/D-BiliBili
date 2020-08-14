@@ -31,7 +31,7 @@
             android:layout_below="@+id/Ranking_List"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="排行榜"
+            android:text="@string/Ranking_List"
             android:textColor="#757575"
             android:textSize="15sp" />
     </RelativeLayout>
@@ -63,7 +63,7 @@
             android:layout_below="@+id/Notice"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="每周必看"
+            android:text="@string/see_every_week"
             android:textColor="#757575"
             android:textSize="15sp" />
     </RelativeLayout>
@@ -94,7 +94,7 @@
             android:layout_below="@+id/Medal"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_5"
-            android:text="入站必刷"
+            android:text="@string/Must_brush_when_entering_the_station"
             android:textColor="#757575"
             android:textSize="15sp" />
     </RelativeLayout>

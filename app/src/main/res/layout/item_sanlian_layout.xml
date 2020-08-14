@@ -20,7 +20,7 @@
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="转发"
+            android:text="@string/forward"
             android:textSize="15sp"
             android:textColor="#747474"/>
     </LinearLayout>
@@ -42,7 +42,6 @@
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="151"
             android:textSize="15sp"
             android:textColor="#747474"/>
     </LinearLayout>
@@ -65,7 +64,6 @@
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="654"
             android:textSize="15sp"
             android:textColor="#747474"/>
     </LinearLayout>

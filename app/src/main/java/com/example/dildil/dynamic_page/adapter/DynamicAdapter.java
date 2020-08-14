@@ -42,22 +42,26 @@ public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean> implements 
 
         main.setOnClickListener(this);
         if (item != null) {
-            Glide.with(mContext).load(item.getUser_img()).into(userimg);
-            if (item.getVideo_cover()==null){
-                video_cover.setVisibility(View.GONE);
-                video_introduce.setVisibility(View.GONE);
-            }else{
-                Glide.with(mContext).load(item.getVideo_cover()).into(video_cover);
-                holder.text(R.id.V_time,item.getVideo_time());
-                holder.text(R.id.V_Playback_volume,item.getVideo_Playback_volume()+"播放量");
-                holder.text(R.id.V_bullet_chat,item.getVideo_bullet_chat()+"弹幕");
-            }
-            holder.text(R.id.Dy_user_name,item.getUser_name());
-            holder.text(R.id.Dy_date,item.getRelease_date());
-            holder.text(R.id.Dy_text,item.getText());
-            comment_num.setText(item.getComment_num()+"");
-            thmbus_num.setText(item.getThumbs_num()+"");
+            initData(holder, item);
         }
+    }
+
+    private void initData(@NonNull RecyclerViewHolder holder, DynamicBean item) {
+        Glide.with(mContext).load(item.getUser_img()).into(userimg);
+        if (item.getVideo_cover()==null){
+            video_cover.setVisibility(View.GONE);
+            video_introduce.setVisibility(View.GONE);
+        }else{
+            Glide.with(mContext).load(item.getVideo_cover()).into(video_cover);
+            holder.text(R.id.V_time,item.getVideo_time());
+            holder.text(R.id.V_Playback_volume,item.getVideo_Playback_volume()+"播放量");
+            holder.text(R.id.V_bullet_chat,item.getVideo_bullet_chat()+"弹幕");
+        }
+        holder.text(R.id.Dy_user_name,item.getUser_name());
+        holder.text(R.id.Dy_date,item.getRelease_date());
+        holder.text(R.id.Dy_text,item.getText());
+        comment_num.setText(item.getComment_num()+"");
+        thmbus_num.setText(item.getThumbs_num()+"");
     }
 
     @Override

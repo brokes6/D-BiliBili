@@ -14,7 +14,7 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 public class HotSearchAdapter extends BaseRecyclerAdapter<HotSearchBean> {
     private Context mContext;
-    private TextView num,title;
+    private TextView num;
     private ImageView img;
 
     public HotSearchAdapter(Context context){
@@ -31,25 +31,28 @@ public class HotSearchAdapter extends BaseRecyclerAdapter<HotSearchBean> {
         img = holder.findViewById(R.id.HS_degree);
         num = holder.findViewById(R.id.HS_num);
         if (item != null) {
-            holder.text(R.id.HS_num,(position+1)+"");
-            holder.text(R.id.HS_Title,item.getHotSearchTitle());
-            if (position>3){
-                num.setTextColor(R.color.White_ash);
-            }
-            switch (item.getDegree()){
-                case 0:
-                    img.setVisibility(View.GONE);
-                    break;
-                case 1:
-                    //hot
-                    img.setImageResource(R.mipmap.hot);
-                    break;
-                case 2:
-                    //new
-                    img.setImageResource(R.mipmap.snew);
-                    break;
-            }
+            initData(holder, position, item);
+        }
+    }
 
+    private void initData(@NonNull RecyclerViewHolder holder, int position, HotSearchBean item) {
+        holder.text(R.id.HS_num,(position+1)+"");
+        holder.text(R.id.HS_Title,item.getHotSearchTitle());
+        if (position>3){
+            num.setTextColor(mContext.getResources().getColor(R.color.Text_gray));
+        }
+        switch (item.getDegree()){
+            case 0:
+                img.setVisibility(View.GONE);
+                break;
+            case 1:
+                //hot
+                img.setImageResource(R.mipmap.hot);
+                break;
+            case 2:
+                //new
+                img.setImageResource(R.mipmap.snew);
+                break;
         }
     }
 }

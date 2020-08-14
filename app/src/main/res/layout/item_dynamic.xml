@@ -48,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/Dy_user_img"
         android:layout_marginTop="@dimen/dp_20"
-        android:text="正文内容"
         android:textColor="#212121"
         android:textSize="18sp" />
 
@@ -114,11 +113,4 @@
         android:layout_below="@+id/Dy_video_cover"
         android:layout_marginTop="@dimen/dp_10" />
 
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/Dividing_line"-->
-    <!--        android:layout_below="@+id/sanlian"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="@dimen/dp_15"-->
-    <!--        android:background="#f4f4f4"/>-->
 </RelativeLayout>
