@@ -1,6 +1,7 @@
 package com.example.dildil.video.view;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,7 @@ import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAU
 public class VideoActivity extends BaseActivity {
     private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;
+    private static final String OPTION_VIEW = "view";
     private String[] TabTitle = {"简介", "评论"};
     private ArrayList<Fragment> mFragments;
     //假地址
@@ -53,6 +55,16 @@ public class VideoActivity extends BaseActivity {
                 .statusBarDarkFont(false)
                 .statusBarColor(R.color.Black)
                 .init();
+
+        ifGO();
+    }
+
+    private void ifGO() {
+        Intent intent = getIntent();
+        int playtime = intent.getIntExtra("playtime",0);
+        if (playtime!=0){
+            mWhenPlaying = playtime;
+        }
     }
 
     @Override
@@ -101,7 +113,6 @@ public class VideoActivity extends BaseActivity {
                 binding.detailPlayer.startWindowFullscreen(VideoActivity.this, true, true);
             }
         });
-
 
         binding.detailPlayer.setVideoAllCallBack(new GSYSampleCallBack() {
             @Override
@@ -167,6 +178,7 @@ public class VideoActivity extends BaseActivity {
         hideDialog();
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -206,15 +218,15 @@ public class VideoActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         int play = binding.detailPlayer.getCurrentState();
-        if (play == CURRENT_STATE_PAUSE){
+        if (play == CURRENT_STATE_PAUSE) {
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
             binding.detailPlayer.startPlayLogic();
         }
     }
 
-    public void getPlayPosition(){
+    public void getPlayPosition() {
         mWhenPlaying = binding.detailPlayer.getCurrentPositionWhenPlaying();
-        Log.e(TAG, "当前播放位置为:"+mWhenPlaying);
+        Log.e(TAG, "当前播放位置为:" + mWhenPlaying);
     }
 
     @Override

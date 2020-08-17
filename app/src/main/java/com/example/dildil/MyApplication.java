@@ -7,6 +7,7 @@ import com.example.dildil.util.SharedPreferencesUtil;
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
 
+import cn.alien95.resthttp.request.RestHttp;
 
 
 /**
@@ -29,6 +30,10 @@ public class MyApplication extends Application {
         XUI.init(this);
         XUI.debug(MyApplication.isDebug());
         SharedPreferencesUtil.getInstance(this,"SPy");
+        RestHttp.initialize(this);
+        if(BuildConfig.DEBUG){
+            RestHttp.setDebug(true,"network");
+        }
     }
 
     public static boolean isDebug() {

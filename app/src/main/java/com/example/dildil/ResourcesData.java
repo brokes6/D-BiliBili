@@ -3,7 +3,9 @@ package com.example.dildil;
 import com.example.dildil.channel_page.bean.BeInterestedBean;
 import com.example.dildil.channel_page.bean.HaveViewedBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.PursueBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
+import com.example.dildil.dynamic_page.bean.VideoNewsBean;
 import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.VideoBean;
 import com.example.dildil.my_page.bean.MyDataBean;
@@ -25,6 +27,8 @@ public class ResourcesData {
     private List<HotSearchBean> hotSearchBeans = new ArrayList<>();
     private List<BeInterestedBean> beInterestedBeans = new ArrayList<>();
     private List<HaveViewedBean> haveViewedBeans = new ArrayList<>();
+    private List<PursueBean> pursueBeans = new ArrayList<>();
+    private List<VideoNewsBean> videoNewsBeans = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
     private MyDataBean mMyDataBean;
 
@@ -105,11 +109,23 @@ public class ResourcesData {
     }
 
     public void initDynamic() {
+        List<String> data = new ArrayList<>();
+        data.add("http://img03.sogoucdn.com/app/a/100520093/39ccc87f3e85c326-d833987af7322860-4ce19032c3b0f23baadb92fbb834ca57.jpg");
+        data.add("http://img03.sogoucdn.com/app/a/100520093/ff997748674109a3-a39fb229dd0dbda7-694fe393ad45dc0aa9ea5a22823a4a89.jpg");
+        data.add("http://img02.sogoucdn.com/app/a/100520093/398e25e72e0c6d43-69bdc558c3bd67b0-cfe3bbc83b1b97766b1f563b5a2ca7f7.jpg");
+        data.add("http://img03.sogoucdn.com/app/a/100520093/11388287d0e56ad7-53b51a5be5b5a2db-9e20f21c3413f36b211a6543ad164d1f.jpg");
+        data.add("http://img03.sogoucdn.com/app/a/100520093/11388287d0e56ad7-53b51a5be5b5a2db-0d4a965d46d4436ed1c7053eccb6fe70.jpg");
+        data.add("http://img03.sogoucdn.com/app/a/100520093/33707f33b97c03ef-e989d519207501fc-417f0b65c0bd38f89fa860dc6e331204.jpg");
+        data.add("http://img03.sogoucdn.com/app/a/100520093/ea54b1c5225b5b8f-1f7d693ce5c84217-c3bf467271f05ac7fb1b65bcd04075df.jpg");
+        data.add("http://img01.sogoucdn.com/app/a/100520093/ea54b1c5225b5b8f-1f7d693ce5c84217-29186a9893391156126abf6b88edb947.jpg");
+
+
         DynamicBean dynamicBean = new DynamicBean();
         dynamicBean.setUser_img("https://i0.hdslb.com/bfs/face/d0f7a7ee34a4a45c8390eb3a07e4d7f2d70bae91.jpg_64x64.jpg");
         dynamicBean.setUser_name("极客湾Geekerwan");
         dynamicBean.setRelease_date("12分钟前");
         dynamicBean.setText("哈哈，你们会错意了，不是说b站的事");
+        dynamicBean.setPictureStatus(1);
         dynamicBean.setComment_num(256);
         dynamicBean.setThumbs_num(2174);
 
@@ -118,6 +134,7 @@ public class ResourcesData {
         dynamicBean2.setUser_name("Fracture6");
         dynamicBean2.setRelease_date("43分钟前");
         dynamicBean2.setText("抽奖抽奖");
+        dynamicBean2.setPictureStatus(1);
         dynamicBean2.setComment_num(1);
         dynamicBean2.setThumbs_num(0);
 
@@ -125,6 +142,7 @@ public class ResourcesData {
         dynamicBean3.setUser_img("https://i0.hdslb.com/bfs/face/c43e6cab13c9a0303cf8476cfd405cff61195726.jpg_64x64.jpg");
         dynamicBean3.setUser_name("STN工作室");
         dynamicBean3.setRelease_date("5小时前");
+        dynamicBean3.setPictureStatus(2);
         dynamicBean3.setVideo_cover("https://i1.hdslb.com/bfs/archive/38214b16a2b8b0e1ed38b7467b2e498ad4542c38.jpg@257w_145h_1c_100q.webp");
         dynamicBean3.setText("竟然是真的新女主持而不是女装口口，不仅拯救了酷报也拯救了观众们的眼睛");
         dynamicBean3.setVideo_time(13.90 + "");
@@ -137,6 +155,9 @@ public class ResourcesData {
         dynamicBean4.setUser_img("https://i1.hdslb.com/bfs/face/816b2f8c9eb9bcc2784e923cd75dd42ec2c087a5.jpg_64x64.jpg");
         dynamicBean4.setUser_name("笔吧评测室");
         dynamicBean4.setRelease_date("08-12");
+        dynamicBean4.setVideo_cover("https://i0.hdslb.com/bfs/album/ebaf069d1f3827da19618123a3635a276087939b.jpg@518w_1e_1c.jpg");
+        dynamicBean4.setPictureStatus(3);
+        dynamicBean4.setShowPictures(data);
         dynamicBean4.setText("\u200D本来筹备了一期“大机机”的评测，预计这个月发的\n" +
                 "结果，跑游戏就开始闪退...\n" +
                 "哎，只能延期（被动） 一段时间了 ");
@@ -324,16 +345,19 @@ public class ResourcesData {
     public void initHaveViewedData(){
         HaveViewedBean haveViewedBean = new HaveViewedBean();
         haveViewedBean.setMiddle_Image("https://i0.hdslb.com/bfs/tag/c044d70d3c5f8e5920e19b8f5ef64d1bbcee625d.jpg@60w_60h_1c_100q.webp");
+        haveViewedBean.setTop_Image("http://i0.hdslb.com/bfs/tag/186e0cef45b86ea1f5c8062c7f93bb7d0ecc2b71.jpg@.webp");
         haveViewedBean.setTitle("是在下输了");
         haveViewedBean.setTitle_time("07-31浏览");
 
         HaveViewedBean haveViewedBean1 = new HaveViewedBean();
         haveViewedBean1.setMiddle_Image("https://i0.hdslb.com/bfs/tag/a938e55152c022f381223490ca3547c1b29de438.jpg@60w_60h_1c_100q.webp");
+        haveViewedBean1.setTop_Image("http://i0.hdslb.com/bfs/tag/9c3541ab7e955c3ab6fa44387be10f85e922ad1a.png@.webp");
         haveViewedBean1.setTitle("雷军");
         haveViewedBean1.setTitle_time("07-31浏览");
 
         HaveViewedBean haveViewedBean2 = new HaveViewedBean();
         haveViewedBean2.setMiddle_Image("https://i0.hdslb.com/bfs/tag/ea51d78fa24f69bfff2d21a2e99f9fc4680a3871.png@60w_60h_1c_100q.webp");
+        haveViewedBean2.setTop_Image("http://i0.hdslb.com/bfs/tag/0189156a9a7c1ad39d840a32e69a11a881d6ba7b.png@.webp");
         haveViewedBean2.setTitle("vlog");
         haveViewedBean2.setTitle_time("07-08浏览");
 
@@ -356,5 +380,57 @@ public class ResourcesData {
 
     public List<HaveViewedBean> getHaveViewedBeans(){
         return haveViewedBeans;
+    }
+
+    public void initRecentVisit(){
+
+    }
+
+    public void initPursue(){
+        PursueBean pursueBean = new PursueBean();
+        pursueBean.setPursueImage("https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp");
+        pursueBean.setPursueName("刀剑神域 爱丽丝篇 异界战争 -终章-");
+        pursueBean.setToUpdate_word(18);
+
+        PursueBean pursueBean1 = new PursueBean();
+        pursueBean1.setPursueImage("https://i0.hdslb.com/bfs/archive/5894df7f7e8ccea3acbc33f124b0cbc9a24f1f22.jpg@120w_75h.webp");
+        pursueBean1.setPursueName("某科学的超电磁炮T");
+        pursueBean1.setToUpdate_word(19);
+
+        PursueBean pursueBean3 = new PursueBean();
+        pursueBean3.setPursueImage("https://i0.hdslb.com/bfs/archive/89c839e9be005ed074a8efb2afeb1e0fb53c7850.jpg@120w_75h.webp");
+        pursueBean3.setPursueName("关于我转生变成史莱姆这档事");
+        pursueBean3.setToUpdate_word(28);
+
+        PursueBean pursueBean4 = new PursueBean();
+        pursueBean4.setPursueImage("https://i0.hdslb.com/bfs/bangumi/3883837b7458fe93799591a59175d3fb26497b06.png@120w_75h.webp");
+        pursueBean4.setPursueName("我的脑内选项正在全力妨碍学园恋爱喜剧");
+        pursueBean4.setToUpdate_word(10);
+
+        pursueBeans.add(pursueBean);
+        pursueBeans.add(pursueBean1);
+        pursueBeans.add(pursueBean3);
+        pursueBeans.add(pursueBean4);
+    }
+    public List<PursueBean> getPursueBeans(){
+        return pursueBeans;
+    }
+
+    public void initVideoList(){
+        VideoNewsBean videoNewsBean = new VideoNewsBean();
+        videoNewsBean.setVideo_Url("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        videoNewsBean.setVideo_UserName("天ノ落");
+        videoNewsBean.setVideo_UserImage("https://i0.hdslb.com/bfs/face/ac12f392c2892d582521012e06f39dc8586dcc57.jpg_64x64.jpg");
+        videoNewsBean.setVideo_Time("1 小时前");
+        videoNewsBean.setVideo_Cover("https://i0.hdslb.com/bfs/archive/de782a6126ae697a6806a40d0e5722d572090447.jpg@412w_232h_1c_100q.jpg");
+        videoNewsBean.setVideo_Title("猫咪Haburu：这纷乱复杂的世界与我无关");
+//        videoNewsBean.setVideo_forward(0);
+//        videoNewsBean.setVideo_thumbsUp(0);
+//        videoNewsBean.setVideo_collection(0);
+
+        videoNewsBeans.add(videoNewsBean);
+    }
+    public List<VideoNewsBean> getVideoNewsBeans(){
+        return videoNewsBeans;
     }
 }

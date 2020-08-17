@@ -1,5 +1,7 @@
 package com.example.dildil.dynamic_page.bean;
 
+import java.util.List;
+
 public class DynamicBean {
     private String user_img;
     private String user_name;
@@ -7,10 +9,28 @@ public class DynamicBean {
     private String Text;
     private String video_cover;
     private String video_time;
+    private List<String> ShowPictures;
+    private int PictureStatus;
     private int video_bullet_chat;
     private int video_Playback_volume;
     private int comment_num;
     private int thumbs_num;
+
+    public List<String> getShowPictures() {
+        return ShowPictures;
+    }
+
+    public void setShowPictures(List<String> showPictures) {
+        ShowPictures = showPictures;
+    }
+
+    public int getPictureStatus() {
+        return PictureStatus;
+    }
+
+    public void setPictureStatus(int pictureStatus) {
+        PictureStatus = pictureStatus;
+    }
 
     public String getVideo_time() {
         return video_time;

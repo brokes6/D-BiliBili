@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.base.BasePresenter;
-import com.example.dildil.channel_page.fragment_tab.ChannelTabFragment;
-import com.example.dildil.channel_page.fragment_tab.PartitionTabFragment;
 import com.example.dildil.databinding.FragmentDynamicBinding;
 import com.example.dildil.dynamic_page.fragment_tab.SynthesizeTabFragment;
 import com.example.dildil.dynamic_page.fragment_tab.VideoTabFragment;
@@ -54,4 +52,5 @@ public class DynamicFragment extends BaseFragment {
     public void onClick(View view) {
 
     }
+
 }

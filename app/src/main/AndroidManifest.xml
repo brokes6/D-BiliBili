@@ -25,6 +25,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:screenOrientation="portrait" />
         <activity android:name=".login_page.view.LoginActivity" />
+        <activity android:name="cn.lemon.multi.ui.ViewImageActivity"/>
         <activity android:name=".search.view.SearchActivity"/>
         <activity android:name=".home_page.view.HomeActivity" />
         <activity

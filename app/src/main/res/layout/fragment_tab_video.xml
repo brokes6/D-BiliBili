@@ -5,14 +5,110 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="视频页面"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/Sy_text"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_35"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_weight="1"
+                android:background="@drawable/file_background_radius_30_while_gray"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:src="@drawable/search_24" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_weight="1"
+                    android:text="查找精彩动态内容"
+                    android:textColor="#c1bfc0"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/xian_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_below="@+id/Sy_text"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="#e7e7e7" />
+
+            <TextView
+                android:id="@+id/text_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/xian_1"
+                android:layout_margin="@dimen/dp_15"
+                android:text="最近访问"
+                android:textColor="@color/Black"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/VT_RecentVisit"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_1" />
+
+            <TextView
+                android:id="@+id/Ch_Dividing_1"
+                android:layout_below="@+id/VT_RecentVisit"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_7"
+                android:layout_height="@dimen/dp_10"
+                android:background="#f4f4f4"/>
+
+            <TextView
+                android:id="@+id/text_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Ch_Dividing_1"
+                android:layout_margin="@dimen/dp_15"
+                android:text="我的追番:追剧"
+                android:textColor="@color/Black"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/VT_Chasing_fans"
+                android:layout_below="@+id/text_2"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/Ch_Dividing_2"
+                android:layout_below="@+id/VT_Chasing_fans"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp_7"
+                android:layout_height="@dimen/dp_10"
+                android:background="#f4f4f4"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/VT_Video"
+                android:layout_below="@+id/Ch_Dividing_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>
