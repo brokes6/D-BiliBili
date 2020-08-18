@@ -1,6 +1,7 @@
 package com.example.dildil.dynamic_page.fragment_tab;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.dildil.dynamic_page.adapter.DynamicAdapter;
 import com.example.dildil.dynamic_page.adapter.TopicAdapter;
 
 public class SynthesizeTabFragment extends BaseFragment {
+    private static final String TAG = "SynthesizeTabFragment";
     FragmentTabSynthesizeBinding binding;
     private TopicAdapter adapter_topic;
     private DynamicAdapter adapter_dynamic;
@@ -29,11 +31,12 @@ public class SynthesizeTabFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        Log.e(TAG, "SynthesizeTabFragment: 初始化View已运行" );
     }
 
     @Override
     protected void initData() {
+        Log.e(TAG, "VideoTabFragment: 初始化Data已运行" );
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),2);
         adapter_topic = new TopicAdapter(getContext());
         binding.RecyTopic.setLayoutManager(layoutManager1);

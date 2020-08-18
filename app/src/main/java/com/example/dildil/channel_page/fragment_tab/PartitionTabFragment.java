@@ -22,12 +22,12 @@ public class PartitionTabFragment extends BaseFragment {
     }
 
     @Override
-    protected void initData() {
+    protected void initView() {
 
     }
 
     @Override
-    protected void initView() {
+    protected void initData() {
 
     }
 

@@ -61,7 +61,7 @@ public class HomeActivity extends BaseActivity {
                 .selectIconItems(selectIcon)
                 .fragmentList(fragmentList)
                 .fragmentManager(getSupportFragmentManager())
-                .smoothScroll(true)
+                .smoothScroll(false)
                 .setOnTabLoadListener(new EasyNavigationBar.OnTabLoadListener() { //Tab加载完毕回调
                     @Override
                     public void onTabLoadCompleteEvent() {

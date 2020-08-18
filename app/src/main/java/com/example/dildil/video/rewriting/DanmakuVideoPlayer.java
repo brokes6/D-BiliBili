@@ -2,7 +2,6 @@ package com.example.dildil.video.rewriting;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -25,7 +24,6 @@ import com.example.dildil.video.adapter.DanamakuAdapter;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.dialog.DoubleSpeedDialog;
 import com.example.dildil.video.dialog.SwitchVideoTypeDialog;
-import com.example.dildil.video.view.VideoActivity;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -75,7 +73,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private ImageView Video_play, mToogleDanmaku;
 
     //滑动小图预览
-    private RelativeLayout mPreviewLayout,thumb;
+    private RelativeLayout mPreviewLayout;
 
     private ImageView mPreView,mSeekBar_play;
 
@@ -99,8 +97,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     protected boolean byStartedClick;
 
     private FullScreenStatusMonitoring listener;
-
-    private  boolean isofList = false;
 
     public DanmakuVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -127,12 +123,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         initDanmaku();
     }
 
-    public void setIsofList(boolean value){
-        isofList = value;
-    }
-
     private void initView() {
-        thumb = findViewById(R.id.thumb);
         mDanmakuView = findViewById(R.id.danmaku_view);
         mSendDanmaku = findViewById(R.id.send_danmaku);
         mToogleDanmaku = findViewById(R.id.definition_off);
@@ -144,7 +135,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mResolvingPower = findViewById(R.id.definition);
         mSeekBar_play = findViewById(R.id.Video_SeekBar_play);
 
-        thumb.setOnClickListener(this);
         mSeekBar_play.setOnClickListener(this);
         mResolvingPower.setOnClickListener(this);
         DoubleSpeed.setOnClickListener(this);
@@ -162,10 +152,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             Bottom_controller.setVisibility(View.GONE);
             mSeekBar_play.setVisibility(View.VISIBLE);
         }
-//        if (isofList){
-//            layout_bottom.setVisibility(View.GONE);
-//            layout_top.setVisibility(View.GONE);
-//        }
         onPrepareDanmaku(this);
         startDownFrame(mOriginUrl);
     }
@@ -238,14 +224,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             case R.id.definition:
                 isFirstload = false;
                 showSwitchDialog();
-                break;
-            case R.id.thumb:
-                if (isofList){
-                    int Playingtime = getCurrentPositionWhenPlaying();
-                    Intent intent = new Intent(mContext, VideoActivity.class);
-                    intent.putExtra("playtime",Playingtime);
-                    mContext.startActivity(intent);
-                }
                 break;
         }
     }

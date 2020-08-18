@@ -424,11 +424,35 @@ public class ResourcesData {
         videoNewsBean.setVideo_Time("1 小时前");
         videoNewsBean.setVideo_Cover("https://i0.hdslb.com/bfs/archive/de782a6126ae697a6806a40d0e5722d572090447.jpg@412w_232h_1c_100q.jpg");
         videoNewsBean.setVideo_Title("猫咪Haburu：这纷乱复杂的世界与我无关");
-//        videoNewsBean.setVideo_forward(0);
-//        videoNewsBean.setVideo_thumbsUp(0);
-//        videoNewsBean.setVideo_collection(0);
+
+        VideoNewsBean videoNewsBean1 = new VideoNewsBean();
+        videoNewsBean1.setVideo_Url("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        videoNewsBean1.setVideo_UserName("天ノ落");
+        videoNewsBean1.setVideo_UserImage("https://i0.hdslb.com/bfs/face/ac12f392c2892d582521012e06f39dc8586dcc57.jpg_64x64.jpg");
+        videoNewsBean1.setVideo_Time("1 小时前");
+        videoNewsBean1.setVideo_Cover("https://i0.hdslb.com/bfs/archive/de782a6126ae697a6806a40d0e5722d572090447.jpg@412w_232h_1c_100q.jpg");
+        videoNewsBean1.setVideo_Title("猫咪Haburu：这纷乱复杂的世界与我无关");
+
+        VideoNewsBean videoNewsBean2 = new VideoNewsBean();
+        videoNewsBean2.setVideo_Url("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        videoNewsBean2.setVideo_UserName("天ノ落");
+        videoNewsBean2.setVideo_UserImage("https://i0.hdslb.com/bfs/face/ac12f392c2892d582521012e06f39dc8586dcc57.jpg_64x64.jpg");
+        videoNewsBean2.setVideo_Time("1 小时前");
+        videoNewsBean2.setVideo_Cover("https://i0.hdslb.com/bfs/archive/de782a6126ae697a6806a40d0e5722d572090447.jpg@412w_232h_1c_100q.jpg");
+        videoNewsBean2.setVideo_Title("猫咪Haburu：这纷乱复杂的世界与我无关");
+
+        VideoNewsBean videoNewsBean3 = new VideoNewsBean();
+        videoNewsBean3.setVideo_Url("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
+        videoNewsBean3.setVideo_UserName("天ノ落");
+        videoNewsBean3.setVideo_UserImage("https://i0.hdslb.com/bfs/face/ac12f392c2892d582521012e06f39dc8586dcc57.jpg_64x64.jpg");
+        videoNewsBean3.setVideo_Time("1 小时前");
+        videoNewsBean3.setVideo_Cover("https://i0.hdslb.com/bfs/archive/de782a6126ae697a6806a40d0e5722d572090447.jpg@412w_232h_1c_100q.jpg");
+        videoNewsBean3.setVideo_Title("猫咪Haburu：这纷乱复杂的世界与我无关");
 
         videoNewsBeans.add(videoNewsBean);
+        videoNewsBeans.add(videoNewsBean1);
+        videoNewsBeans.add(videoNewsBean2);
+        videoNewsBeans.add(videoNewsBean3);
     }
     public List<VideoNewsBean> getVideoNewsBeans(){
         return videoNewsBeans;

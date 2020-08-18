@@ -64,6 +64,8 @@ public class VideoActivity extends BaseActivity {
         int playtime = intent.getIntExtra("playtime",0);
         if (playtime!=0){
             mWhenPlaying = playtime;
+//            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
+//            binding.detailPlayer.startPlayLogic();
         }
     }
 

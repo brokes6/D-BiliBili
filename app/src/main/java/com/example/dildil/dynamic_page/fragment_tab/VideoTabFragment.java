@@ -1,6 +1,9 @@
 package com.example.dildil.dynamic_page.fragment_tab;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,29 +21,38 @@ import com.example.dildil.channel_page.adapter.BeInterestedChannerAdapter;
 import com.example.dildil.databinding.FragmentTabVideoBinding;
 import com.example.dildil.dynamic_page.adapter.PursueAdapter;
 import com.example.dildil.dynamic_page.adapter.VideoNewsAdapter;
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.example.dildil.util.ScrollCalculatorHelper;
+import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 public class VideoTabFragment extends BaseFragment {
     private static final String TAG = "VideoTabFragment";
-    FragmentTabVideoBinding binding;
-    BeInterestedChannerAdapter adapter;
-    PursueAdapter mPAdapter;
-    VideoNewsAdapter mVAdapter;
+    private FragmentTabVideoBinding binding;
+    private BeInterestedChannerAdapter adapter;
+    private PursueAdapter mPAdapter;
+    private VideoNewsAdapter mVAdapter;
     private LinearLayoutManager layoutManager2;
+    private ScrollCalculatorHelper scrollCalculatorHelper;
+    private boolean mFull = false;
+    private int firstVisibleItem;
+    private int lastVisibleItem;
+    private int visibleCount;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_video,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_video, container, false);
         return binding.getRoot();
     }
 
     @Override
     protected void initView() {
+        Log.e(TAG, "VideoTabFragment: 初始化View已运行" );
 
     }
 
     @Override
     protected void initData() {
+        Log.e(TAG, "VideoTabFragment: 初始化Data已运行" );
+        showDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         adapter = new BeInterestedChannerAdapter(getContext());
@@ -58,34 +70,31 @@ public class VideoTabFragment extends BaseFragment {
         binding.VTVideo.setLayoutManager(layoutManager2);
         binding.VTVideo.setAdapter(mVAdapter);
 
+        //限定范围为屏幕一半的上下偏移180
+        int playTop = CommonUtil.getScreenHeight(getContext()) / 2 - CommonUtil.dip2px(getContext(), 180);
+        int playBottom = CommonUtil.getScreenHeight(getContext()) / 2 + CommonUtil.dip2px(getContext(), 180);
+
+        //自定播放帮助类
+        scrollCalculatorHelper = new ScrollCalculatorHelper(R.id.video_item_player, playTop, playBottom);
+
         binding.VTVideo.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int firstVisibleItem, lastVisibleItem;
 
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                scrollCalculatorHelper.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                firstVisibleItem   = layoutManager2.findFirstVisibleItemPosition();
+                firstVisibleItem = layoutManager2.findFirstVisibleItemPosition();
                 lastVisibleItem = layoutManager2.findLastVisibleItemPosition();
-                //大于0说明有播放
-                if (GSYVideoManager.instance().getPlayPosition() >= 0) {
-                    //当前播放的位置
-                    int position = GSYVideoManager.instance().getPlayPosition();
-                    //对应的播放列表TAG
-                    if (GSYVideoManager.instance().getPlayTag().equals(VideoNewsAdapter.TAG)
-                            && (position < firstVisibleItem || position > lastVisibleItem)) {
 
-                        //如果滑出去了上面和下面就是否，和今日头条一样
-                        //是否全屏
-                        if(!GSYVideoManager.isFullState(getActivity())) {
-                            GSYVideoManager.releaseAllVideos();
-                            mVAdapter.notifyItemChanged(position);
-                        }
-                    }
+                //这是滑动自动播放的代码
+                if (!mFull) {
+                    scrollCalculatorHelper.onScroll(recyclerView, firstVisibleItem, lastVisibleItem, lastVisibleItem - firstVisibleItem);
                 }
             }
         });
@@ -103,7 +112,7 @@ public class VideoTabFragment extends BaseFragment {
 
     }
 
-    private void initDatas(){
+    private void initDatas() {
         ResourcesData resourcesData = new ResourcesData();
         resourcesData.initBeInterestedData();
         resourcesData.initPursue();
@@ -111,6 +120,18 @@ public class VideoTabFragment extends BaseFragment {
         adapter.loadMore(resourcesData.getBeInterestedBeans());
         mPAdapter.loadMore(resourcesData.getPursueBeans());
         mVAdapter.loadMore(resourcesData.getVideoNewsBeans());
+        hideDialog();
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //如果旋转了就全屏
+        if (newConfig.orientation != ActivityInfo.SCREEN_ORIENTATION_USER) {
+            mFull = false;
+        } else {
+            mFull = true;
+        }
     }
 
 }

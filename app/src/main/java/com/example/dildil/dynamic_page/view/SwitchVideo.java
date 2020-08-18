@@ -3,13 +3,11 @@ package com.example.dildil.dynamic_page.view;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 
 import com.bumptech.glide.Glide;
@@ -21,13 +19,12 @@ import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
-public class SwitchVideo extends StandardGSYVideoPlayer {
+public class SwitchVideo extends StandardGSYVideoPlayer{
     private static final String TAG = "SwitchVideo";
     ImageView mCoverImage,volume_off;
     String mCoverOriginUrl;
     int mDefaultRes;
     int  mCoverOriginId = 0;
-    private RelativeLayout thumb;
 
     public SwitchVideo(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -46,9 +43,6 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
         super.init(context);
         mCoverImage =  findViewById(R.id.thumbImage);
         volume_off = findViewById(R.id.volume_off);
-        thumb = findViewById(R.id.thumb);
-
-        thumb.setOnClickListener(this);
         volume_off.setOnClickListener(this);
         if (mThumbImageViewLayout != null &&
                 (mCurrentState == -1 || mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR)) {
@@ -60,16 +54,6 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
     @Override
     public int getLayoutId() {
         return R.layout.switch_video;
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.thumb:
-                Log.e(TAG, "onClick: ssssssssssssssssssss");
-                break;
-        }
     }
 
     public void loadCoverImage(String url, int res) {
@@ -91,6 +75,11 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
         mDefaultRes = res;
         mCoverImage.setImageResource(id);
     }
+
+    public void loadCoverUrl(String url){
+        Glide.with(mContext).load(url).into(mCoverImage);
+    }
+
     @Override
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         GSYBaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
@@ -111,6 +100,11 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
         sampleCoverVideo.mStartButton.setVisibility(GONE);
         sampleCoverVideo.mStartButton = null;
         return sampleCoverVideo;
+    }
+
+    @Override
+    public void onVideoPause() {
+        super.onVideoPause();
     }
 
     @Override

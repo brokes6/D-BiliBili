@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
@@ -19,6 +20,7 @@ import com.example.dildil.home_page.view.HomeActivity;
 import java.util.ArrayList;
 
 public class DynamicFragment extends BaseFragment {
+    private static final String TAG = "DynamicFragment";
     FragmentDynamicBinding binding;
     private String[] TabTitle = {"视频", "综合"};
     private ArrayList<Fragment> mFragments;
@@ -38,9 +40,25 @@ public class DynamicFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        binding.DyTab.setViewPager(binding.DyViewPager,TabTitle,getActivity(),mFragments);
-        binding.DyTab.setCurrentTab(1);
-        ((HomeActivity)getActivity()).ClearRedDot(2);
+        binding.DyTab.setViewPager(binding.DyViewPager, TabTitle, getActivity(), mFragments);
+        binding.DyTab.setCurrentTab(0);
+        ((HomeActivity) getActivity()).ClearRedDot(2);
+        binding.DyViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                SwitchVideo switchVideo = new SwitchVideo(getContext());
+                switchVideo.onVideoPause();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
