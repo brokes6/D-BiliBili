@@ -23,7 +23,7 @@ implementation 'com.github.brokes6:CustomControl:1.1.7'
 6..暂时想到这么多....
 ```
 
-## 视频介绍:（JIG的效果会没这么好，实际效果更棒）<br>
+## 视频介绍:（GIF的效果会没这么好，实际效果更棒）<br>
 ### 主页:<br>
 ![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/home.gif)<br>
 ### 视频详情页面:<br>
