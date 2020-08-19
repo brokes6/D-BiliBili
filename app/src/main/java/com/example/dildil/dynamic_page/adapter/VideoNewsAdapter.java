@@ -28,7 +28,7 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
     private CircleImageView VNImage;
     private TextView VN_userName, VN_Title, VN_date;
     private ImageView VN_more, imageView;
-    private RelativeLayout IT_main;
+    private RelativeLayout VN_main;
 
     public VideoNewsAdapter(Context context) {
         mContext = context;
@@ -41,7 +41,7 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
 
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, VideoNewsBean item) {
-        IT_main = holder.findViewById(R.id.IT_main);
+        VN_main = holder.findViewById(R.id.IT_main);
         VNideo = holder.findViewById(R.id.video_item_player);
         VNImage = holder.findViewById(R.id.VN_user_img);
         VN_userName = holder.findViewById(R.id.VN_user_name);
@@ -49,7 +49,7 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
         VN_date = holder.findViewById(R.id.VN_date);
         imageView = new ImageView(mContext);
 
-        IT_main.setOnClickListener(this);
+        VN_main.setOnClickListener(this);
         if (item != null) {
             initData(position, item);
         }
@@ -87,11 +87,11 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
             case R.id.IT_main:
                 GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
                 gsyVideoManager.onPause();
-                int playtime = VNideo.getCurrentPositionWhenPlaying();
+                int playtime = VNideo.getVideoTime();
                 Intent intent = new Intent(mContext, VideoActivity.class);
                 intent.putExtra("playtime", playtime);
+                Log.e(TAG, "onClick: 能否获取到当前播放的进度?"+playtime );
                 mContext.startActivity(intent);
-                Log.e(TAG, "onClick: ???????????????"+playtime);
                 break;
         }
     }

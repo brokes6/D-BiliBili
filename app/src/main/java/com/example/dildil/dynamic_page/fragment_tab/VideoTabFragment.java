@@ -3,7 +3,6 @@ package com.example.dildil.dynamic_page.fragment_tab;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import com.example.dildil.util.ScrollCalculatorHelper;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 public class VideoTabFragment extends BaseFragment {
-    private static final String TAG = "VideoTabFragment";
     private FragmentTabVideoBinding binding;
     private BeInterestedChannerAdapter adapter;
     private PursueAdapter mPAdapter;
@@ -33,9 +31,6 @@ public class VideoTabFragment extends BaseFragment {
     private LinearLayoutManager layoutManager2;
     private ScrollCalculatorHelper scrollCalculatorHelper;
     private boolean mFull = false;
-    private int firstVisibleItem;
-    private int lastVisibleItem;
-    private int visibleCount;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,13 +40,11 @@ public class VideoTabFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        Log.e(TAG, "VideoTabFragment: 初始化View已运行" );
 
     }
 
     @Override
     protected void initData() {
-        Log.e(TAG, "VideoTabFragment: 初始化Data已运行" );
         showDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);

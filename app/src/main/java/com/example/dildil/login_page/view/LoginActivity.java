@@ -93,14 +93,4 @@ public class LoginActivity extends BaseActivity {
 //                break;
         }
     }
-
-    @Override
-    public void showDialog() {
-
-    }
-
-    @Override
-    public void hideDialog() {
-
-    }
 }

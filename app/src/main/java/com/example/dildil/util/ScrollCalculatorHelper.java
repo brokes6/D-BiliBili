@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,7 +76,6 @@ public class ScrollCalculatorHelper {
                 //说明第一个完全可视
                 if (rect.top == 0 && rect.bottom == height) {
                     gsyBaseVideoPlayer = player;
-                    Log.e(TAG, "playVideo: ???????????????"+player.getCurrentPlayer().getCurrentState() );
                     if ((player.getCurrentPlayer().getCurrentState() == GSYBaseVideoPlayer.CURRENT_STATE_NORMAL
                             || player.getCurrentPlayer().getCurrentState() == GSYBaseVideoPlayer.CURRENT_STATE_ERROR)) {
                         needPlay = true;
@@ -128,7 +126,6 @@ public class ScrollCalculatorHelper {
                 }
                 if (inPosition) {
                     startPlayLogic(gsyBaseVideoPlayer, gsyBaseVideoPlayer.getContext());
-                    Log.e(TAG, "run: 开始自动播放？？？" );
                     //gsyBaseVideoPlayer.startPlayLogic();
                 }
             }

@@ -3,6 +3,7 @@ package com.example.dildil.dynamic_page.view;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.SeekBar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.R;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
@@ -25,6 +27,7 @@ public class SwitchVideo extends StandardGSYVideoPlayer{
     String mCoverOriginUrl;
     int mDefaultRes;
     int  mCoverOriginId = 0;
+    private boolean isMute = false;
 
     public SwitchVideo(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -43,10 +46,33 @@ public class SwitchVideo extends StandardGSYVideoPlayer{
         super.init(context);
         mCoverImage =  findViewById(R.id.thumbImage);
         volume_off = findViewById(R.id.volume_off);
-        volume_off.setOnClickListener(this);
+        volume_off.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isMute){
+                    isMute = true;
+                    volume_off.setImageResource(R.drawable.volume_down_24);
+                    GSYVideoManager.instance().setNeedMute(true);
+                }else{
+                    isMute = false;
+                    volume_off.setImageResource(R.drawable.volume_off_24);
+                    GSYVideoManager.instance().setNeedMute(false);
+                }
+
+            }
+        });
         if (mThumbImageViewLayout != null &&
                 (mCurrentState == -1 || mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR)) {
             mThumbImageViewLayout.setVisibility(VISIBLE);
+        }
+    }
+
+    public int getVideoTime(){
+        Log.e(TAG, "getVideoTime: 当前播放状态为"+getCurrentState() );
+        if (getCurrentState()==CURRENT_STATE_NORMAL){
+            return (int) getGSYVideoManager().getCurrentPosition();
+        }else{
+            return 0;
         }
     }
 

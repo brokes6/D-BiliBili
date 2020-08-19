@@ -17,9 +17,11 @@ import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.ActivityVideoBinding;
+import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.fragment_tab.CommentFragment;
 import com.example.dildil.video.fragment_tab.IntroductionFragment;
 import com.example.dildil.video.rewriting.DanmakuVideoPlayer;
+import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
@@ -46,6 +48,12 @@ public class VideoActivity extends BaseActivity {
     boolean isPause;
     boolean isDestory;
     private int mWhenPlaying;
+    private CollapsingToolbarLayoutState state;
+    private enum CollapsingToolbarLayoutState {
+        EXPANDED,
+        COLLAPSED,
+        INTERNEDIATE
+    }
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -64,8 +72,9 @@ public class VideoActivity extends BaseActivity {
         int playtime = intent.getIntExtra("playtime",0);
         if (playtime!=0){
             mWhenPlaying = playtime;
-//            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
-//            binding.detailPlayer.startPlayLogic();
+            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
+            binding.detailPlayer.startPlayLogic();
+            XToastUtils.info("已为您保存播放进度");
         }
     }
 
@@ -81,6 +90,7 @@ public class VideoActivity extends BaseActivity {
         mFragments.add(new IntroductionFragment());
         mFragments.add(new CommentFragment());
 
+        binding.playButton.setOnClickListener(this);
         binding.VDanmakuShow.setOnClickListener(this);
         binding.VDefinitionText.setOnClickListener(this);
 
@@ -143,6 +153,26 @@ public class VideoActivity extends BaseActivity {
                     orientationUtils.backToProtVideo();
                 }
             }
+
+            @Override
+            public void onClickStartIcon(String url, Object... objects) {
+                super.onClickStartIcon(url, objects);
+                banAppBarScroll(false);
+            }
+
+            @Override
+            public void onClickStop(String url, Object... objects) {
+                super.onClickStop(url, objects);
+                banAppBarScroll(true);
+            }
+
+            @Override
+            public void onClickResume(String url, Object... objects) {
+                super.onClickResume(url, objects);
+                binding.playButton.setVisibility(View.GONE);
+                binding.appbar.setExpanded(true);
+                banAppBarScroll(false);
+            }
         });
 
 
@@ -155,7 +185,31 @@ public class VideoActivity extends BaseActivity {
                 }
             }
         });
-        setMargins(binding.detailPlayer, 0, getStatusBarHeight(this), 0, 0);
+        binding.appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (verticalOffset == 0) {
+                    if (state != CollapsingToolbarLayoutState.EXPANDED) {
+                        state = CollapsingToolbarLayoutState.EXPANDED;//修改状态标记为展开
+                    }
+                } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                    if (state != CollapsingToolbarLayoutState.COLLAPSED) {
+                        binding.coll.setContentScrimColor(getResources().getColor(R.color.Pink));
+                        binding.playButton.setVisibility(View.VISIBLE);//隐藏播放按钮
+                        state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
+                    }
+                } else {
+                    if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
+                        if(state == CollapsingToolbarLayoutState.COLLAPSED){
+                            binding.playButton.setVisibility(View.GONE);//由折叠变为中间状态时隐藏播放按钮
+                        }
+                        state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
+                    }
+                }
+            }
+        });
+        setMargins(binding.toolbar, 0, getStatusBarHeight(this)-5, 0, 0);
     }
 
     DanmakuVideoPlayer.FullScreenStatusMonitoring listener = new DanmakuVideoPlayer.FullScreenStatusMonitoring() {
@@ -189,6 +243,11 @@ public class VideoActivity extends BaseActivity {
                 break;
             case R.id.V_definition_text:
                 binding.detailPlayer.addDanmaku(true);
+                break;
+            case R.id.playButton:
+                binding.detailPlayer.onVideoResume();
+                binding.appbar.setExpanded(true);
+                banAppBarScroll(false);
                 break;
         }
     }
@@ -248,5 +307,21 @@ public class VideoActivity extends BaseActivity {
             return binding.detailPlayer.getFullWindowPlayer();
         }
         return binding.detailPlayer;
+    }
+
+    /**
+     * 控制appbar的滑动
+     * @param isScroll true 允许滑动 false 禁止滑动
+     */
+    private void banAppBarScroll(boolean isScroll){
+        View mAppBarChildAt = binding.appbar.getChildAt(0);
+        AppBarLayout.LayoutParams  mAppBarParams = (AppBarLayout.LayoutParams)mAppBarChildAt.getLayoutParams();
+        if (isScroll) {
+            mAppBarParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+            mAppBarChildAt.setLayoutParams(mAppBarParams);
+        } else {
+            mAppBarParams.setScrollFlags(0);
+        }
+
     }
 }
