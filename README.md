@@ -15,7 +15,7 @@ implementation 'com.github.brokes6:CustomControl:1.1.7'
 ```
 ## 细节介绍<br>
 ```HTML
-1.全局（任何页面）都并没有使用 NestedScrollView 嵌套 RecyclerView
+1.全局（任何页面）都极少使用 NestedScrollView 嵌套 RecyclerView（除了明确RecyclerView子类个数较少）
 2.所有的Fragment都采取的懒加载
 3.全片都采用DataBinding
 4.基于AndroidX
