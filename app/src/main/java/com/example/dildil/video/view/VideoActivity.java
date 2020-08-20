@@ -49,6 +49,7 @@ public class VideoActivity extends BaseActivity {
     boolean isDestory;
     private int mWhenPlaying;
     private CollapsingToolbarLayoutState state;
+
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
         COLLAPSED,
@@ -69,8 +70,8 @@ public class VideoActivity extends BaseActivity {
 
     private void ifGO() {
         Intent intent = getIntent();
-        int playtime = intent.getIntExtra("playtime",0);
-        if (playtime!=0){
+        int playtime = intent.getIntExtra("playtime", 0);
+        if (playtime != 0) {
             mWhenPlaying = playtime;
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
             binding.detailPlayer.startPlayLogic();
@@ -192,6 +193,7 @@ public class VideoActivity extends BaseActivity {
                 if (verticalOffset == 0) {
                     if (state != CollapsingToolbarLayoutState.EXPANDED) {
                         state = CollapsingToolbarLayoutState.EXPANDED;//修改状态标记为展开
+                        binding.playButton.setVisibility(View.GONE);//由折叠变为中间状态时隐藏播放按钮
                     }
                 } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
                     if (state != CollapsingToolbarLayoutState.COLLAPSED) {
@@ -201,7 +203,7 @@ public class VideoActivity extends BaseActivity {
                     }
                 } else {
                     if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
-                        if(state == CollapsingToolbarLayoutState.COLLAPSED){
+                        if (state == CollapsingToolbarLayoutState.COLLAPSED) {
                             binding.playButton.setVisibility(View.GONE);//由折叠变为中间状态时隐藏播放按钮
                         }
                         state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
@@ -209,7 +211,7 @@ public class VideoActivity extends BaseActivity {
                 }
             }
         });
-        setMargins(binding.toolbar, 0, getStatusBarHeight(this)-5, 0, 0);
+        setMargins(binding.toolbar, 0, getStatusBarHeight(this), 0, 0);
     }
 
     DanmakuVideoPlayer.FullScreenStatusMonitoring listener = new DanmakuVideoPlayer.FullScreenStatusMonitoring() {
@@ -311,11 +313,12 @@ public class VideoActivity extends BaseActivity {
 
     /**
      * 控制appbar的滑动
+     *
      * @param isScroll true 允许滑动 false 禁止滑动
      */
-    private void banAppBarScroll(boolean isScroll){
+    private void banAppBarScroll(boolean isScroll) {
         View mAppBarChildAt = binding.appbar.getChildAt(0);
-        AppBarLayout.LayoutParams  mAppBarParams = (AppBarLayout.LayoutParams)mAppBarChildAt.getLayoutParams();
+        AppBarLayout.LayoutParams mAppBarParams = (AppBarLayout.LayoutParams) mAppBarChildAt.getLayoutParams();
         if (isScroll) {
             mAppBarParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
             mAppBarChildAt.setLayoutParams(mAppBarParams);

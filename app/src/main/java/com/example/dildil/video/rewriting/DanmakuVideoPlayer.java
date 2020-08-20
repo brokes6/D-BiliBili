@@ -144,6 +144,14 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         resolveTypeUI();
     }
 
+    /**
+     * 恢复暂停状态
+     */
+    @Override
+    public void onVideoResume() {
+        onVideoResume(true);
+        mSeekBar_play.setImageResource(R.mipmap.pause);
+    }
 
     @Override
     public void onPrepared() {

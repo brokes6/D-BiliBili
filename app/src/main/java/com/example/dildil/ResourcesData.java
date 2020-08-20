@@ -10,7 +10,10 @@ import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.VideoBean;
 import com.example.dildil.my_page.bean.MyDataBean;
 import com.example.dildil.search.bean.HotSearchBean;
+import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
+import com.google.gson.Gson;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -29,6 +32,8 @@ public class ResourcesData {
     private List<HaveViewedBean> haveViewedBeans = new ArrayList<>();
     private List<PursueBean> pursueBeans = new ArrayList<>();
     private List<VideoNewsBean> videoNewsBeans = new ArrayList<>();
+    private CommentBean commentBean;
+    private List<CommentDetailBean> commentsList = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
     private MyDataBean mMyDataBean;
 
@@ -196,9 +201,33 @@ public class ResourcesData {
         hotRankingBean3.setVideo_play_num("46.4万");
         hotRankingBean3.setVideo_time("2:25");
 
+        HotRankingBean hotRankingBean4 = new HotRankingBean();
+        hotRankingBean4.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
+        hotRankingBean4.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
+        hotRankingBean4.setVideo_up("全能大鹏");
+        hotRankingBean4.setVideo_play_num("46.4万");
+        hotRankingBean4.setVideo_time("2:25");
+
+        HotRankingBean hotRankingBean5 = new HotRankingBean();
+        hotRankingBean5.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
+        hotRankingBean5.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
+        hotRankingBean5.setVideo_up("全能大鹏");
+        hotRankingBean5.setVideo_play_num("46.4万");
+        hotRankingBean5.setVideo_time("2:25");
+
+        HotRankingBean hotRankingBean6 = new HotRankingBean();
+        hotRankingBean6.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
+        hotRankingBean6.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
+        hotRankingBean6.setVideo_up("全能大鹏");
+        hotRankingBean6.setVideo_play_num("46.4万");
+        hotRankingBean6.setVideo_time("2:25");
+
         hotRankingBeans.add(hotRankingBean);
         hotRankingBeans.add(hotRankingBean2);
         hotRankingBeans.add(hotRankingBean3);
+        hotRankingBeans.add(hotRankingBean4);
+        hotRankingBeans.add(hotRankingBean5);
+        hotRankingBeans.add(hotRankingBean6);
     }
 
     public List<HotRankingBean> getHotRanking() {
@@ -457,4 +486,103 @@ public class ResourcesData {
     public List<VideoNewsBean> getVideoNewsBeans(){
         return videoNewsBeans;
     }
+
+    private String testJson = "{\n" +
+            "\t\"code\": 1000,\n" +
+            "\t\"message\": \"查看评论成功\",\n" +
+            "\t\"data\": {\n" +
+            "\t\t\"total\": 3,\n" +
+            "\t\t\"list\": [{\n" +
+            "\t\t\t\t\"id\": 42,\n" +
+            "\t\t\t\t\"nickName\": \"程序猿\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"时间是一切财富中最宝贵的财富。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 1,\n" +
+            "\t\t\t\t\"createDate\": \"三分钟前\",\n" +
+            "\t\t\t\t\"replyList\": [{\n" +
+            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"id\": 40,\n" +
+            "\t\t\t\t\t\"commentId\": \"42\",\n" +
+            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
+            "\t\t\t\t\t\"status\": \"01\",\n" +
+            "\t\t\t\t\t\"createDate\": \"一个小时前\"\n" +
+            "\t\t\t\t}]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"id\": 41,\n" +
+            "\t\t\t\t\"nickName\": \"设计狗\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 1,\n" +
+            "\t\t\t\t\"createDate\": \"一天前\",\n" +
+            "\t\t\t\t\"replyList\": [{\n" +
+            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"commentId\": \"41\",\n" +
+            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
+            "\t\t\t\t\t\"status\": \"01\",\n" +
+            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
+            "\t\t\t\t}]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"id\": 39,\n" +
+            "\t\t\t\t\"nickName\": \"用户1\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 1,\n" +
+            "\t\t\t\t\"createDate\": \"一天前\",\n" +
+            "\t\t\t\t\"replyList\": [{\n" +
+            "\t\t\t\t\t\"nickName\": \"用户2\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"commentId\": \"41\",\n" +
+            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹sssss.\",\n" +
+            "\t\t\t\t\t\"status\": \"01\",\n" +
+            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
+            "\t\t\t\t}]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"nickName\": \"用户1\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 1,\n" +
+            "\t\t\t\t\"createDate\": \"一天前\",\n" +
+            "\t\t\t\t\"replyList\": [{\n" +
+            "\t\t\t\t\t\"nickName\": \"用户2\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"commentId\": \"41\",\n" +
+            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹sssss.\",\n" +
+            "\t\t\t\t\t\"status\": \"01\",\n" +
+            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
+            "\t\t\t\t}]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"id\": 40,\n" +
+            "\t\t\t\t\"nickName\": \"产品喵\",\n" +
+            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"content\": \"笨蛋自以为聪明，聪明人才知道自己是笨蛋。\",\n" +
+            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
+            "\t\t\t\t\"replyTotal\": 0,\n" +
+            "\t\t\t\t\"createDate\": \"三天前\",\n" +
+            "\t\t\t\t\"replyList\": []\n" +
+            "\t\t\t}\n" +
+            "\t\t]\n" +
+            "\t}\n" +
+            "}";
+    /**
+     * by moos on 2018/04/20
+     * func:生成测试数据
+     * @return 评论数据
+     */
+    public List<CommentDetailBean> generateTestData(){
+        Gson gson = new Gson();
+        commentBean = gson.fromJson(testJson, CommentBean.class);
+        List<CommentDetailBean> commentList = commentBean.getData().getList();
+        return commentList;
+    }
+
 }

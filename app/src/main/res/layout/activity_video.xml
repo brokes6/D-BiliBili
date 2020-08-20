@@ -21,7 +21,7 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/coll"
                 android:layout_width="match_parent"
-                android:layout_height="275dp"
+                android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
@@ -46,7 +46,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="230dp"
                         android:layout_alignParentTop="true"
-                        android:layout_marginTop="@dimen/dp_45"
+                        android:layout_marginTop="@dimen/dp_32"
                         android:fitsSystemWindows="true" />
 
                 </FrameLayout>
@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_5"
                             android:text="立即播放"
-                            android:textColor="#ffffff"
+                            android:textColor="@color/White"
                             android:textSize="18sp" />
                     </LinearLayout>
                 </androidx.appcompat.widget.Toolbar>

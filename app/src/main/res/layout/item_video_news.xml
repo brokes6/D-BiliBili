@@ -47,7 +47,7 @@
         android:layout_marginTop="@dimen/dp_10"
         android:layout_below="@+id/VN_user_img"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_160"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/dp_5">
 
         <com.example.dildil.dynamic_page.view.SwitchVideo

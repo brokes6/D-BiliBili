@@ -1,86 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:layout_scrollFlags="scroll">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.android.liuzhuang.rcimageview.CircleImageView
+                    android:id="@+id/In_user_img"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_margin="@dimen/dp_20" />
+
+                <TextView
+                    android:id="@+id/In_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_toEndOf="@+id/In_user_img"
+                    android:text=""
+                    android:textColor="#fa7296"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/In_fans"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/In_user_name"
+                    android:layout_toEndOf="@+id/In_user_img"
+                    android:text=""
+                    android:textColor="#a4a4a4"
+                    android:textSize="13sp" />
+
+
+                <TextView
+                    android:id="@+id/In_Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/In_user_img"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:text="标题文字"
+                    android:textColor="@color/Black"
+                    android:textSize="18sp" />
+
+                <include
+                    android:id="@+id/In_video_data"
+                    layout="@layout/item_video_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/In_Title"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10" />
+
+                <include
+                    android:id="@+id/Sanlian"
+                    layout="@layout/item_sanlian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/In_video_data"
+                    android:layout_marginTop="@dimen/dp_10" />
+
+                <TextView
+                    android:id="@+id/xian_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_below="@+id/Sanlian"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="#e7e7e7" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.android.liuzhuang.rcimageview.CircleImageView
-                android:id="@+id/In_user_img"
-                android:layout_width="@dimen/dp_50"
-                android:layout_height="@dimen/dp_50"
-                android:layout_margin="@dimen/dp_20" />
-
-            <TextView
-                android:id="@+id/In_user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_toEndOf="@+id/In_user_img"
-                android:text=""
-                android:textColor="#fa7296"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/In_fans"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/In_user_name"
-                android:layout_toEndOf="@+id/In_user_img"
-                android:text=""
-                android:textColor="#a4a4a4"
-                android:textSize="13sp" />
-
-
-            <TextView
-                android:id="@+id/In_Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/In_user_img"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:text="标题文字"
-                android:textColor="@color/Black"
-                android:textSize="18sp" />
-
-            <include
-                android:id="@+id/In_video_data"
-                layout="@layout/item_video_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/In_Title"
-                android:layout_marginLeft="@dimen/dp_20"
-                android:layout_marginTop="@dimen/dp_10" />
-
-            <include
-                android:id="@+id/Sanlian"
-                layout="@layout/item_sanlian"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/In_video_data"
-                android:layout_marginTop="@dimen/dp_10" />
-
-            <TextView
-                android:id="@+id/xian_1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
-                android:layout_below="@+id/Sanlian"
-                android:layout_marginTop="@dimen/dp_10"
-                android:background="#e7e7e7" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/In_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/xian_1"
-                android:layout_marginTop="@dimen/dp_10" />
+                android:layout_height="match_parent" />
         </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
