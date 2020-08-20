@@ -12,7 +12,8 @@ public class CommentDetailBean {
     private String createDate;
     private List<ReplyDetailBean> replyList;
 
-    public CommentDetailBean(String nickName,  String content, String createDate) {
+    public CommentDetailBean(String userimag,String nickName, String content, String createDate) {
+        this.userLogo = userimag;
         this.nickName = nickName;
         this.content = content;
         this.createDate = createDate;
@@ -21,6 +22,7 @@ public class CommentDetailBean {
     public void setId(int id) {
         this.id = id;
     }
+
     public int getId() {
         return id;
     }
@@ -28,6 +30,7 @@ public class CommentDetailBean {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+
     public String getNickName() {
         return nickName;
     }
@@ -35,6 +38,7 @@ public class CommentDetailBean {
     public void setUserLogo(String userLogo) {
         this.userLogo = userLogo;
     }
+
     public String getUserLogo() {
         return userLogo;
     }
@@ -42,6 +46,7 @@ public class CommentDetailBean {
     public void setContent(String content) {
         this.content = content;
     }
+
     public String getContent() {
         return content;
     }
@@ -49,6 +54,7 @@ public class CommentDetailBean {
     public void setImgId(String imgId) {
         this.imgId = imgId;
     }
+
     public String getImgId() {
         return imgId;
     }
@@ -56,6 +62,7 @@ public class CommentDetailBean {
     public void setReplyTotal(int replyTotal) {
         this.replyTotal = replyTotal;
     }
+
     public int getReplyTotal() {
         return replyTotal;
     }
@@ -63,6 +70,7 @@ public class CommentDetailBean {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
+
     public String getCreateDate() {
         return createDate;
     }
@@ -70,6 +78,7 @@ public class CommentDetailBean {
     public void setReplyList(List<ReplyDetailBean> replyList) {
         this.replyList = replyList;
     }
+
     public List<ReplyDetailBean> getReplyList() {
         return replyList;
     }

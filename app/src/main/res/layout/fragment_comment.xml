@@ -15,10 +15,6 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <com.example.dildil.video.rewriting.CommentExpandableListView
                 android:id="@+id/FC_commentList"
                 android:layout_width="match_parent"
@@ -27,7 +23,6 @@
                 android:listSelector="@android:color/transparent"
                 android:scrollbars="vertical" />
 
-        </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
 
         <LinearLayout

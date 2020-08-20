@@ -39,20 +39,24 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int position) {
+        //判断此评论是否右回复
         if (commentBeanList.get(position).getReplyList() == null) {
             return 0;
         } else {
-            return commentBeanList.get(position).getReplyList().size() > 0 ? commentBeanList.get(position).getReplyList().size() : 0;
+            //如果回复不为空，则取最大值（getReplyList().size()和0）
+            return Math.max(commentBeanList.get(position).getReplyList().size(), 0);
         }
     }
 
     @Override
     public Object getGroup(int groupPosition) {
+        //获取有几组
         return commentBeanList.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
+        //获取有几个子回复
         return commentBeanList.get(groupPosition).getReplyList().get(childPosition);
     }
 
@@ -73,22 +77,33 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
 
     boolean isLike = false;
 
+
+    /**
+     * 设置主评论的数据
+     * @param groupPosition
+     * @param isExpanded
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         final GroupHolder groupHolder;
-
+        //判断是否绑定了View
         if (convertView == null) {
+            //绑定View
             convertView = LayoutInflater.from(mContext).inflate(R.layout.comment_item_layout, parent, false);
             groupHolder = new GroupHolder(convertView);
+            //类似于给View绑定ViewHolder
             convertView.setTag(groupHolder);
         } else {
+            //否则就返回一个当前的View实例
             groupHolder = (GroupHolder) convertView.getTag();
         }
+        //将数据展示设置上去
         ResourcesData resourcesData = new ResourcesData();
         resourcesData.initMyData();
-        Glide.with(mContext).load(resourcesData.getMyDataBeans().getUserImg())
-                .centerCrop()
-                .into(groupHolder.logo);
+        Glide.with(mContext).load(commentBeanList.get(groupPosition).getUserLogo()).into(groupHolder.logo);
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickName());
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
@@ -108,24 +123,34 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+    /**
+     * 设置子评论的数据
+     * @param groupPosition
+     * @param childPosition
+     * @param isLastChild
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final ChildHolder childHolder;
         if (convertView == null) {
+            //也是一样的给子评论绑定View
             convertView = LayoutInflater.from(mContext).inflate(R.layout.comment_reply_item_layout, parent, false);
             childHolder = new ChildHolder(convertView);
             convertView.setTag(childHolder);
+            //绑定ViewHolder
         } else {
             childHolder = (ChildHolder) convertView.getTag();
         }
 
+        //设置数据
         String replyUser = commentBeanList.get(groupPosition).getReplyList().get(childPosition).getNickName();
         if (!TextUtils.isEmpty(replyUser)) {
             childHolder.tv_name.setText(replyUser + ":");
         }
-
         childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyList().get(childPosition).getContent());
-
         return convertView;
     }
 
@@ -134,6 +159,10 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+
+    /**
+     * 主评论的ViewHolder
+     */
     private class GroupHolder {
         private CircleImageView logo;
         private TextView tv_name, tv_content, tv_time;
@@ -148,6 +177,10 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
     }
 
+
+    /**
+     * 二级评论的ViewHolder
+     */
     private class ChildHolder {
         private TextView tv_name, tv_content;
 
@@ -158,36 +191,41 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     }
 
     /**
-     * by moos on 2018/04/20
      * func:评论成功后插入一条数据
      * @param commentDetailBean 新的评论数据
      */
     public void addTheCommentData(CommentDetailBean commentDetailBean){
         if(commentDetailBean!=null){
-
+            //每次评论成功之后，将当前的评论传递进来
             commentBeanList.add(commentDetailBean);
+            //通知适配器进行刷新
             notifyDataSetChanged();
         }else {
+            //如果传递进来的评论为空，则提示
             throw new IllegalArgumentException("评论数据为空!");
         }
 
     }
 
     /**
-     * by moos on 2018/04/20
      * func:回复成功后插入一条数据
      * @param replyDetailBean 新的回复数据
      */
     public void addTheReplyData(ReplyDetailBean replyDetailBean, int groupPosition){
+        //每次回复成功之后，都要将回复的评论传递进来
         if(replyDetailBean!=null){
             Log.e(TAG, "addTheReplyData: >>>>该刷新回复列表了:"+replyDetailBean.toString() );
+            //首先判断此主评论是否有二级评论
             if(commentBeanList.get(groupPosition).getReplyList() != null ){
+                //如果有，则将当前的回复添加进去
                 commentBeanList.get(groupPosition).getReplyList().add(replyDetailBean);
             }else {
+                //如果没有，则新建二级评论，并添加
                 List<ReplyDetailBean> replyList = new ArrayList<>();
                 replyList.add(replyDetailBean);
                 commentBeanList.get(groupPosition).setReplyList(replyList);
             }
+            //通知适配器进行刷新
             notifyDataSetChanged();
         }else {
             throw new IllegalArgumentException("回复数据为空!");
@@ -202,14 +240,17 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      * @param groupPosition 当前的评论
      */
     private void addReplyList(List<ReplyDetailBean> replyBeanList, int groupPosition){
+        //首先判断二级评论是否存在
         if(commentBeanList.get(groupPosition).getReplyList() != null ){
+            //清空当前的二级评论
             commentBeanList.get(groupPosition).getReplyList().clear();
+            //重新将现在的二级评论添加进来
             commentBeanList.get(groupPosition).getReplyList().addAll(replyBeanList);
         }else {
-
+            //如果二级评论不存在，则直接设置二级评论
             commentBeanList.get(groupPosition).setReplyList(replyBeanList);
         }
-
+        //通知适配器进行刷新
         notifyDataSetChanged();
     }
 

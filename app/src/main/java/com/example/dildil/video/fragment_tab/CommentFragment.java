@@ -37,6 +37,7 @@ public class CommentFragment extends BaseFragment {
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
+    private ResourcesData mResourcesData;
 
 
     @Override
@@ -53,8 +54,8 @@ public class CommentFragment extends BaseFragment {
     @Override
     protected void initData() {
         showDialog();
-        ResourcesData resourcesData = new ResourcesData();
-        commentsList = resourcesData.generateTestData();
+        mResourcesData = new ResourcesData();
+        commentsList = mResourcesData.generateTestData();
         initExpandableListView(commentsList);
     }
 
@@ -77,12 +78,15 @@ public class CommentFragment extends BaseFragment {
      */
     private void initExpandableListView(final List<CommentDetailBean> commentList){
         binding.FCCommentList.setGroupIndicator(null);
+        //初始化适配器
         adapter = new CommentExpandAdapter(getContext(), commentList);
         binding.FCCommentList.setAdapter(adapter);
         for(int i = 0; i<commentList.size(); i++){
+            //遍历所有评论，都设置为展开（默认是不展开的）
             binding.FCCommentList.expandGroup(i);
         }
         hideDialog();
+        //设置分组单击监听事件(就是一个是主评论的点击事件监听，一个是二级评论的点击事件监听)
         binding.FCCommentList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
@@ -105,7 +109,7 @@ public class CommentFragment extends BaseFragment {
                 return false;
             }
         });
-
+        //监听展开情况
         binding.FCCommentList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -121,10 +125,11 @@ public class CommentFragment extends BaseFragment {
      * func:弹出回复框
      */
     private void showReplyDialog(final int position){
+        //本质上就是弹出一个输入框（使用了系统自带的底部弹窗）
         dialog = new BottomSheetDialog(getContext());
         View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout,null);
-        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
-        final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
+        final EditText commentText =  commentView.findViewById(R.id.dialog_comment_et);
+        final Button bt_comment =  commentView.findViewById(R.id.dialog_comment_bt);
         commentText.setHint("回复 " + commentsList.get(position).getNickName() + " 的评论:");
         dialog.setContentView(commentView);
         bt_comment.setOnClickListener(new View.OnClickListener() {
@@ -132,9 +137,8 @@ public class CommentFragment extends BaseFragment {
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(replyContent)){
-
                     dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean("小红",replyContent);
+                    ReplyDetailBean detailBean = new ReplyDetailBean(mResourcesData.getUserData().getUsername(),replyContent);
                     adapter.addTheReplyData(detailBean, position);
                     binding.FCCommentList.expandGroup(position);
                     XToastUtils.toast("回复成功");
@@ -144,6 +148,7 @@ public class CommentFragment extends BaseFragment {
             }
         });
         commentText.addTextChangedListener(new TextWatcher() {
+            //这里就是判断输入框里是否输入了字符，如果没有则改变输入框的背景颜色
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -173,8 +178,8 @@ public class CommentFragment extends BaseFragment {
     private void showCommentDialog(){
         dialog = new BottomSheetDialog(getContext());
         View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout,null);
-        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
-        final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
+        final EditText commentText =  commentView.findViewById(R.id.dialog_comment_et);
+        final Button bt_comment =  commentView.findViewById(R.id.dialog_comment_bt);
         dialog.setContentView(commentView);
         /**
          * 解决bsd显示不全的情况
@@ -190,10 +195,9 @@ public class CommentFragment extends BaseFragment {
             public void onClick(View view) {
                 String commentContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(commentContent)){
-
                     //commentOnWork(commentContent);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean("小明", commentContent,"刚刚");
+                    CommentDetailBean detailBean = new CommentDetailBean(mResourcesData.getUserData().getUserImg(),mResourcesData.getUserData().getUsername(), commentContent,"刚刚");
                     adapter.addTheCommentData(detailBean);
                     XToastUtils.toast("评论成功");
 

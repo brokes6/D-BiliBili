@@ -272,6 +272,17 @@ public class ResourcesData {
         mMyDataBean.setMember(true);
     }
 
+    public MyDataBean getUserData(){
+        MyDataBean mMyDataBean = new MyDataBean();
+        mMyDataBean.setUsername("Fracture6");
+        mMyDataBean.setUserImg("https://i1.hdslb.com/bfs/face/acc7a0e97bf9f6c4d047777e40270a39bc7f4f7d.jpg");
+        mMyDataBean.setDynamic(36);
+        mMyDataBean.setFollow(33);
+        mMyDataBean.setFans(0);
+        mMyDataBean.setMember(true);
+        return mMyDataBean;
+    }
+
     public MyDataBean getMyDataBeans(){
         return mMyDataBean;
     }
@@ -494,15 +505,15 @@ public class ResourcesData {
             "\t\t\"total\": 3,\n" +
             "\t\t\"list\": [{\n" +
             "\t\t\t\t\"id\": 42,\n" +
-            "\t\t\t\t\"nickName\": \"程序猿\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"nickName\": \"逆风笑\",\n" +
+            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/f7cb40c40b013eebbbde6eaacd977c042f1a199f.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\"content\": \"时间是一切财富中最宝贵的财富。\",\n" +
             "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
             "\t\t\t\t\"replyTotal\": 1,\n" +
             "\t\t\t\t\"createDate\": \"三分钟前\",\n" +
             "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"nickName\": \"阿狸才不是受\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/ae89ae056d631cbb7ff7ea759ce8876e757e52ef.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\t\"id\": 40,\n" +
             "\t\t\t\t\t\"commentId\": \"42\",\n" +
             "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
@@ -512,15 +523,15 @@ public class ResourcesData {
             "\t\t\t},\n" +
             "\t\t\t{\n" +
             "\t\t\t\t\"id\": 41,\n" +
-            "\t\t\t\t\"nickName\": \"设计狗\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"nickName\": \"视角姬\",\n" +
+            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/851025ed4bc57ad6ae82a6314e72e249fd21d604.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\"content\": \"这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。\",\n" +
             "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
             "\t\t\t\t\"replyTotal\": 1,\n" +
             "\t\t\t\t\"createDate\": \"一天前\",\n" +
             "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"nickName\": \"用户1\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\t\"commentId\": \"41\",\n" +
             "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
             "\t\t\t\t\t\"status\": \"01\",\n" +
@@ -530,14 +541,14 @@ public class ResourcesData {
             "\t\t\t{\n" +
             "\t\t\t\t\"id\": 39,\n" +
             "\t\t\t\t\"nickName\": \"用户1\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\"content\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx。\",\n" +
             "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
             "\t\t\t\t\"replyTotal\": 1,\n" +
             "\t\t\t\t\"createDate\": \"一天前\",\n" +
             "\t\t\t\t\"replyList\": [{\n" +
             "\t\t\t\t\t\"nickName\": \"用户2\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\t\"commentId\": \"41\",\n" +
             "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹sssss.\",\n" +
             "\t\t\t\t\t\"status\": \"01\",\n" +
@@ -546,14 +557,14 @@ public class ResourcesData {
             "\t\t\t},\n" +
             "\t\t\t{\n" +
             "\t\t\t\t\"nickName\": \"用户1\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\"content\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx。\",\n" +
             "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
             "\t\t\t\t\"replyTotal\": 1,\n" +
             "\t\t\t\t\"createDate\": \"一天前\",\n" +
             "\t\t\t\t\"replyList\": [{\n" +
             "\t\t\t\t\t\"nickName\": \"用户2\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\t\"commentId\": \"41\",\n" +
             "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹sssss.\",\n" +
             "\t\t\t\t\t\"status\": \"01\",\n" +
@@ -562,8 +573,8 @@ public class ResourcesData {
             "\t\t\t},\n" +
             "\t\t\t{\n" +
             "\t\t\t\t\"id\": 40,\n" +
-            "\t\t\t\t\"nickName\": \"产品喵\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
+            "\t\t\t\t\"nickName\": \"用户1\",\n" +
+            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
             "\t\t\t\t\"content\": \"笨蛋自以为聪明，聪明人才知道自己是笨蛋。\",\n" +
             "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
             "\t\t\t\t\"replyTotal\": 0,\n" +
