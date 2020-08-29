@@ -3,8 +3,8 @@
 个人学习，练习制作的软件
 ## 项目介绍<br>
 apk在Releases附件里<br>
-这是一款仿造B站的软件，后期会与 "chenzijia12300"的 仿哔哩哔哩的后台系统 连接上（ https://github.com/chenzijia12300/dalidali ） <br>
-目前使用的数据，都是采用本地数据<br>
+这是一款仿造B站的软件，现在正在与 "chenzijia12300"的 仿哔哩哔哩的后台系统 对接（ https://github.com/chenzijia12300/dalidali ） <br>
+目前使用的数据，都来自chenzijia12300的 仿哔哩哔哩的后台系统 <br>
 <br>
 ## 自产自销（xswl）<br>
 [![](https://jitpack.io/v/brokes6/CustomControl.svg)](https://jitpack.io/#brokes6/CustomControl)<br>
@@ -20,7 +20,8 @@ implementation 'com.github.brokes6:CustomControl:1.1.7'
 3.全片都采用DataBinding
 4.基于AndroidX
 5.屏幕完全适配
-6..暂时想到这么多....
+6.使用了RxJava+Retrofit2
+7.使用了依赖注入（Dagger2）
 ```
 
 ## 视频介绍:（GIF的效果会没这么好，实际效果更棒）<br>
