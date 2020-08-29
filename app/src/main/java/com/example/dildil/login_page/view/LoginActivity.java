@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.ActivityLoginBinding;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.gyf.immersionbar.ImmersionBar;
@@ -30,10 +29,10 @@ public class LoginActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
     }
 
-    @Override
-    protected BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    protected BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     protected void initView() {

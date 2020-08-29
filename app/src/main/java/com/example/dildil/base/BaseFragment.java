@@ -21,8 +21,8 @@ import com.example.dildil.util.LoadingsDialog;
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements View.OnClickListener {
     private static final String TAG = "BaseFragment";
 
-    //网络请求接口
-    protected P mPresenter;
+//    //网络请求接口
+//    protected P mPresenter;
 
     //Loading加载类
     protected LoadingsDialog mDialogs;
@@ -58,7 +58,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mPresenter = onCreatePresenter();
+//        mPresenter = onCreatePresenter();
         isFirstLoad = true;
         isPrepared = true;
         View view = initView(inflater, container, savedInstanceState);
@@ -91,9 +91,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mPresenter != null) {
-            mPresenter = null;
-        }
+//        if (mPresenter != null) {
+//            mPresenter = null;
+//        }
         isPrepared = false;
     }
 
@@ -167,7 +167,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
-    public abstract P onCreatePresenter();
+//    public abstract P onCreatePresenter();
 
 
     /**

@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentRapBinding;
 
 public class RapFragment extends BaseFragment {
@@ -31,10 +30,10 @@ public class RapFragment extends BaseFragment {
 
     }
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View v) {

@@ -75,7 +75,11 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     //滑动小图预览
     private RelativeLayout mPreviewLayout;
 
-    private ImageView mPreView,mSeekBar_play;
+    private ImageView mPreView,mSeekBar_play,mCoverImage;
+
+    String mCoverOriginUrl;
+    int mDefaultRes;
+    int  mCoverOriginId = 0;
 
     //是否因为用户点击
     private boolean mIsFromUser;
@@ -124,6 +128,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     private void initView() {
+        mCoverImage =  findViewById(R.id.thumbImage);
         mDanmakuView = findViewById(R.id.danmaku_view);
         mSendDanmaku = findViewById(R.id.send_danmaku);
         mToogleDanmaku = findViewById(R.id.definition_off);
@@ -293,6 +298,11 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         GSYBaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
         if (gsyBaseVideoPlayer != null) {
             DanmakuVideoPlayer gsyVideoPlayer = (DanmakuVideoPlayer) gsyBaseVideoPlayer;
+            if(mCoverOriginUrl != null) {
+                gsyVideoPlayer.loadCoverImage(mCoverOriginUrl, mDefaultRes);
+            } else  if(mCoverOriginId != 0) {
+                gsyVideoPlayer.loadCoverImageBy(mCoverOriginId, mDefaultRes);
+            }
             gsyVideoPlayer.mOpenPreView = mOpenPreView;
             gsyVideoPlayer.mUrlList = mUrlList;
             gsyVideoPlayer.mSourcePosition = mSourcePosition;
@@ -328,6 +338,25 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             }
         }
         resolveTypeUI();
+    }
+
+    public void loadCoverImage(String url, int res) {
+        mCoverOriginUrl = url;
+        mDefaultRes = res;
+        Glide.with(getContext().getApplicationContext())
+                .setDefaultRequestOptions(
+                        new RequestOptions()
+                                .frame(1000000)
+                                .centerCrop()
+                                .error(res)
+                                .placeholder(res))
+                .load(url)
+                .into(mCoverImage);
+    }
+    public void loadCoverImageBy(int id, int res) {
+        mCoverOriginId = id;
+        mDefaultRes = res;
+        mCoverImage.setImageResource(id);
     }
 
     protected void danmakuOnPause() {

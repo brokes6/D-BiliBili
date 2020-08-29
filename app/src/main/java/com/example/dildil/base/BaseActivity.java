@@ -28,7 +28,7 @@ import com.gyf.immersionbar.ImmersionBar;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "BaseActivity";
 
-    protected P mPresenter;
+//    protected P mPresenter;
 
     protected LoadingsDialog mDialogs;
 
@@ -43,9 +43,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (onCreatePresenter() != null) {
-            mPresenter = onCreatePresenter();
-        }
+//        if (onCreatePresenter() != null) {
+//            mPresenter = onCreatePresenter();
+//        }
         //将导航栏颜色改为白色，按键设为灰色
         ImmersionBar.with(this)
                 .navigationBarColor(R.color.White)
@@ -72,9 +72,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         System.gc();
-        if (mPresenter != null) {
-            mPresenter = null;
-        }
+//        if (mPresenter != null) {
+//            mPresenter = null;
+//        }
         super.onDestroy();
     }
 
@@ -91,7 +91,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract void onCreateView(Bundle savedInstanceState);
 
-    protected abstract P onCreatePresenter();
+//    protected abstract P onCreatePresenter();
 
     protected abstract void initView();
 

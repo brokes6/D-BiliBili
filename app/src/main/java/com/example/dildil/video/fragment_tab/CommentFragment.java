@@ -18,7 +18,6 @@ import androidx.databinding.DataBindingUtil;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentCommentBinding;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.CommentExpandAdapter;
@@ -59,10 +58,10 @@ public class CommentFragment extends BaseFragment {
         initExpandableListView(commentsList);
     }
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View v) {

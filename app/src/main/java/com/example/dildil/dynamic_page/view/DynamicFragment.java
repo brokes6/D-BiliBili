@@ -11,7 +11,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentDynamicBinding;
 import com.example.dildil.dynamic_page.fragment_tab.SynthesizeTabFragment;
 import com.example.dildil.dynamic_page.fragment_tab.VideoTabFragment;
@@ -61,14 +60,21 @@ public class DynamicFragment extends BaseFragment {
         });
     }
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View view) {
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser){
+            VideoTabFragment.VideoSuspend();
+        }
+    }
 }

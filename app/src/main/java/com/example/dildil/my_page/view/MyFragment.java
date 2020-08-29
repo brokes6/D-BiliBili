@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentMyBinding;
 import com.example.dildil.my_page.bean.MyDataBean;
 
@@ -51,10 +50,10 @@ public class MyFragment extends BaseFragment {
         hideDialog();
     }
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View view) {

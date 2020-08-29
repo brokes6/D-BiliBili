@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.channel_page.view.ChannelFragment;
 import com.example.dildil.databinding.ActivityHomeBinding;
 import com.example.dildil.dynamic_page.view.DynamicFragment;
@@ -38,10 +37,10 @@ public class HomeActivity extends BaseActivity {
                 .init();
     }
 
-    @Override
-    protected BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    protected BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     protected void initView() {

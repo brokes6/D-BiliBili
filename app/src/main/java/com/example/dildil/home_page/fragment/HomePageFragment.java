@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentHomepageBinding;
 import com.example.dildil.home_page.fragment.fragment_tab.EpidemicSituationFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.HotFragment;
@@ -58,10 +57,10 @@ public class HomePageFragment extends BaseFragment {
     }
 
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View view) {

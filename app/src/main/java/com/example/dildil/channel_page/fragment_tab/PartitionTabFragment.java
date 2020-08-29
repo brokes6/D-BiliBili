@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentTabPartitionBinding;
 
 public class PartitionTabFragment extends BaseFragment {
@@ -31,10 +30,10 @@ public class PartitionTabFragment extends BaseFragment {
 
     }
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View v) {

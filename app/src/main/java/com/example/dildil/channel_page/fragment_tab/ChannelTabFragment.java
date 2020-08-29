@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.channel_page.adapter.BeInterestedChannerAdapter;
 import com.example.dildil.channel_page.adapter.HaveViewedAdapter;
 import com.example.dildil.databinding.FragmentTabChannelBinding;
@@ -50,10 +49,10 @@ public class ChannelTabFragment extends BaseFragment {
 
     }
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View v) {

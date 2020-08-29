@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.channel_page.adapter.BeInterestedChannerAdapter;
 import com.example.dildil.databinding.FragmentTabVideoBinding;
 import com.example.dildil.dynamic_page.adapter.PursueAdapter;
 import com.example.dildil.dynamic_page.adapter.VideoNewsAdapter;
 import com.example.dildil.util.ScrollCalculatorHelper;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 public class VideoTabFragment extends BaseFragment {
@@ -95,10 +95,10 @@ public class VideoTabFragment extends BaseFragment {
         initDatas();
     }
 
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View v) {
@@ -114,6 +114,13 @@ public class VideoTabFragment extends BaseFragment {
         mPAdapter.loadMore(resourcesData.getPursueBeans());
         mVAdapter.loadMore(resourcesData.getVideoNewsBeans());
         hideDialog();
+    }
+
+    public static void VideoSuspend(){
+        GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
+        if (gsyVideoManager.isPlaying()){
+            gsyVideoManager.onPause();
+        }
     }
 
     @Override

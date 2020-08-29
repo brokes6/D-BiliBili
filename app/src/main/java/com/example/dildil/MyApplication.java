@@ -3,6 +3,9 @@ package com.example.dildil;
 import android.app.Application;
 import android.content.Context;
 
+import com.example.dildil.component.app.AppComponent;
+import com.example.dildil.component.app.AppModule;
+import com.example.dildil.component.app.DaggerAppComponent;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
@@ -22,10 +25,13 @@ import cn.alien95.resthttp.request.RestHttp;
 public class MyApplication extends Application {
     private static Context mContext;
     public static final String DATA_BASE_NAME = "MusicPlay";
+    public static MyApplication instance;
+    public static AppComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         mContext = getApplicationContext();
         XUI.init(this);
         XUI.debug(MyApplication.isDebug());
@@ -34,6 +40,19 @@ public class MyApplication extends Application {
         if(BuildConfig.DEBUG){
             RestHttp.setDebug(true,"network");
         }
+    }
+
+    public static synchronized MyApplication getInstance() {
+        return instance;
+    }
+
+    public static AppComponent getAppComponent() {
+        if (appComponent == null) {
+            appComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(instance))
+                    .build();
+        }
+        return appComponent;
     }
 
     public static boolean isDebug() {

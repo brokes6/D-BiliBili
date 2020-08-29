@@ -40,7 +40,7 @@
                 android:layout_marginTop="3dp"
                 android:text="1小时前"
                 android:textColor="#989898"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
         </LinearLayout>
 
         <ImageView
@@ -62,7 +62,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="8dp"
-        android:text="从前有座山，山里有座庙，庙里有个老和尚"
+        android:text=""
         android:textColor="#484848"
         android:textSize="14sp" />
 

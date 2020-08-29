@@ -1,6 +1,7 @@
 package com.example.dildil.video.bean;
 
 public class SwitchVideoBean {
+    private String img;
     private String url;
     private String name;
 
@@ -11,6 +12,14 @@ public class SwitchVideoBean {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public void setUrl(String url) {

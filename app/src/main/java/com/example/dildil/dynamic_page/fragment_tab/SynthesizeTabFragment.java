@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.FragmentTabSynthesizeBinding;
 import com.example.dildil.dynamic_page.adapter.DynamicAdapter;
 import com.example.dildil.dynamic_page.adapter.TopicAdapter;
@@ -44,10 +43,10 @@ public class SynthesizeTabFragment extends BaseFragment {
         binding.RecyDynamic.setAdapter(adapter_dynamic);
         initDatas();
     }
-    @Override
-    public BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    public BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     public void onClick(View v) {

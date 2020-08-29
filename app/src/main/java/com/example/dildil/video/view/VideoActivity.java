@@ -6,20 +6,27 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseActivity;
-import com.example.dildil.base.BasePresenter;
+import com.example.dildil.component.activity.ActivityModule;
+import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityVideoBinding;
 import com.example.dildil.util.XToastUtils;
+import com.example.dildil.video.bean.SwitchVideoBean;
+import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.fragment_tab.CommentFragment;
 import com.example.dildil.video.fragment_tab.IntroductionFragment;
+import com.example.dildil.video.presenter.VideoDetailsPresenter;
 import com.example.dildil.video.rewriting.DanmakuVideoPlayer;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
@@ -31,30 +38,36 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAUSE;
 
-public class VideoActivity extends BaseActivity {
+public class VideoActivity extends BaseActivity implements VideoDetailsContract.View {
     private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;
-    private static final String OPTION_VIEW = "view";
     private String[] TabTitle = {"简介", "评论"};
     private ArrayList<Fragment> mFragments;
-    //假地址
-    private String path = "http://vjs.zencdn.net/v/oceans.mp4";
-    private String url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
     private OrientationUtils orientationUtils;
     boolean isPlay;
     boolean isPause;
     boolean isDestory;
     private int mWhenPlaying;
     private CollapsingToolbarLayoutState state;
+    private ImageView imageView;
+    private int id,uid;
+    private List<SwitchVideoBean> urls = new ArrayList<>();
+    String[] definition = {"360p","480p","720p","1080p"};
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
         COLLAPSED,
         INTERNEDIATE
     }
+
+    @Inject
+    VideoDetailsPresenter mPresenter;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -64,6 +77,12 @@ public class VideoActivity extends BaseActivity {
                 .statusBarDarkFont(false)
                 .statusBarColor(R.color.Black)
                 .init();
+        DaggerActivityComponent.builder()
+                .appComponent(MyApplication.getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build()
+                .inject(this);
+        mPresenter.attachView(this);
 
         ifGO();
     }
@@ -71,6 +90,8 @@ public class VideoActivity extends BaseActivity {
     private void ifGO() {
         Intent intent = getIntent();
         int playtime = intent.getIntExtra("playtime", 0);
+        id = intent.getIntExtra("id",0);
+        uid = intent.getIntExtra("uid",0);
         if (playtime != 0) {
             mWhenPlaying = playtime;
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
@@ -79,14 +100,15 @@ public class VideoActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    protected BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     protected void initView() {
         showDialog();
+        imageView = new ImageView(mContext);
         mFragments = new ArrayList<>();
         mFragments.add(new IntroductionFragment());
         mFragments.add(new CommentFragment());
@@ -94,6 +116,7 @@ public class VideoActivity extends BaseActivity {
         binding.playButton.setOnClickListener(this);
         binding.VDanmakuShow.setOnClickListener(this);
         binding.VDefinitionText.setOnClickListener(this);
+        binding.keyboard.setOnClickListener(this);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -227,13 +250,14 @@ public class VideoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initVideo();
+//        ResourcesData resourcesData = new ResourcesData();
+//        resourcesData.initVideo();
         binding.VTab.setViewPager(binding.VViewPager, TabTitle, this, mFragments);
         binding.detailPlayer.setShrinkImageRes(R.drawable.crop_free_24);
         binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
-        binding.detailPlayer.setUp(resourcesData.getVideoData(), true, null, "测试视频");
-        hideDialog();
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        mPresenter.getVideoDetails(id,uid);
     }
 
 
@@ -250,6 +274,9 @@ public class VideoActivity extends BaseActivity {
                 binding.detailPlayer.onVideoResume();
                 binding.appbar.setExpanded(true);
                 banAppBarScroll(false);
+                break;
+            case R.id.keyboard:
+                finish();
                 break;
         }
     }
@@ -295,6 +322,7 @@ public class VideoActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mPresenter.detachView();
         if (isPlay) {
             getCurPlay().release();
         }
@@ -325,6 +353,23 @@ public class VideoActivity extends BaseActivity {
         } else {
             mAppBarParams.setScrollFlags(0);
         }
+    }
 
+    @Override
+    public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
+        Glide.with(mContext).load(videoDetailsBean.getCover()).into(imageView);
+        binding.detailPlayer.setThumbImageView(imageView);
+        String[] urlList=videoDetailsBean.getUrls().split(",");
+        for (int i = 0; i < urlList.length; i++) {
+            SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i],urlList[i]);
+            urls.add(switchVideoBean);
+        }
+        binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
+        hideDialog();
+    }
+
+    @Override
+    public void onGetVideoDetailsFail(String e) {
+        XToastUtils.error(e);
     }
 }

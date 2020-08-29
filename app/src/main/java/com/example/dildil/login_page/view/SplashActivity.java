@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.util.ScreenUtils;
 import com.example.dildil.util.SharePreferenceUtil;
@@ -30,10 +29,10 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
     }
 
-    @Override
-    protected BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    protected BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     protected void onResume() {

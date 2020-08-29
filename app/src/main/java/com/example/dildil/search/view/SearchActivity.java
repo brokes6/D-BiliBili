@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseActivity;
-import com.example.dildil.base.BasePresenter;
 import com.example.dildil.databinding.ActivitySearchBinding;
 import com.example.dildil.search.adapter.HistoryFlowTagAdapter;
 import com.example.dildil.search.adapter.HotSearchAdapter;
@@ -28,10 +27,10 @@ public class SearchActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
     }
 
-    @Override
-    protected BasePresenter onCreatePresenter() {
-        return null;
-    }
+//    @Override
+//    protected BasePresenter onCreatePresenter() {
+//        return null;
+//    }
 
     @Override
     protected void initView() {

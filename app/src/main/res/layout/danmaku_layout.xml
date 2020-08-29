@@ -30,7 +30,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:background="#000000"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter">
+
+        <ImageView
+            android:id="@+id/thumbImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/layout_bottom"
@@ -53,8 +60,8 @@
                 android:id="@+id/Video_SeekBar_play"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
-                android:visibility="gone"
-                android:src="@mipmap/play" />
+                android:src="@mipmap/play"
+                android:visibility="gone" />
 
             <SeekBar
                 android:id="@+id/progress"
