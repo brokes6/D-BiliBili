@@ -60,7 +60,7 @@ public class VideoDetailsBean {
         this.message = message;
     }
 
-    public class BeanData{
+    public static class BeanData{
         private int id;
         private int uid;
         private int playNum;

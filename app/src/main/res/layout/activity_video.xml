@@ -29,12 +29,13 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:background="@drawable/gradient"
                     android:fitsSystemWindows="true" />
 
                 <FrameLayout
                     android:id="@+id/video_danmu"
+                    android:layout_marginTop="@dimen/dp_45"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
@@ -46,10 +47,7 @@
                     <com.example.dildil.video.rewriting.DanmakuVideoPlayer
                         android:id="@+id/detail_player"
                         android:layout_width="match_parent"
-                        android:layout_height="230dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="@dimen/dp_45"
-                        android:fitsSystemWindows="true" />
+                        android:layout_height="230dp" />
 
                 </FrameLayout>
 
@@ -58,7 +56,6 @@
                     style="@style/AppTheme.PopupOverlay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"
-                    android:elevation="0dp"
                     app:layout_collapseMode="pin">
 
                     <ImageView

@@ -25,11 +25,10 @@
                     android:layout_height="24dp"
                     android:src="@mipmap/like"/>
                 <TextView
-                    android:id="@+id/song_comment"
+                    android:id="@+id/praise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#757575"
-                    android:text="11.5万"/>
+                    android:textColor="#757575" />
             </LinearLayout>
 
             <LinearLayout
@@ -50,6 +49,7 @@
                     android:text="不喜欢"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/main_coin"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -59,11 +59,12 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@mipmap/coin"/>
+
                 <TextView
+                    android:id="@+id/coin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#757575"
-                    android:text="1.4万"/>
+                    android:textColor="#757575" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"

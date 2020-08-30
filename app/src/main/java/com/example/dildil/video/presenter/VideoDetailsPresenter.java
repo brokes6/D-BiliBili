@@ -1,6 +1,8 @@
 package com.example.dildil.video.presenter;
 
+import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.dto;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.model.VideoDetailsModel;
 
@@ -39,12 +41,39 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
 
                     @Override
                     public void onNext(VideoDetailsBean videoDetailsBean) {
-                        mView.onGetVideoDetailsSuccess((VideoDetailsBean.BeanData) videoDetailsBean.getData());
+                        mView.onGetVideoDetailsSuccess(videoDetailsBean.getData());
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetVideoDetailsFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getCoinOperated(dto bean, int uid) {
+        mModel.getCoinOperated(bean,uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CoinBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CoinBean coinBean) {
+                        mView.onGetCoinOperatedSuccess(coinBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetCoinOperatedFail(e.getMessage());
                     }
 
                     @Override

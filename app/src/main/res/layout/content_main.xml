@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/page_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <!--RelativeLayout和自定义的ClipViewPager都各自添加了一个属性android:clipChildren=”false”，
+    clipChildren的意思是是否限制子View在其范围内，这个默认是true，
+    也就是默认是限制子view在其范围的-->
+
+    <rewriting_view.ClipViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        android:clipChildren="false"
+        android:overScrollMode="never" />
+
+    <TextView
+        android:id="@+id/Da_Tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/viewpager"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="点击进行投币"
+        android:textColor="#c2c2c2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/Da_CoicNum"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Da_Tips"
+        android:layout_centerHorizontal="true"
+        android:text="银币余额：24.0"
+        android:textColor="#c2c2c2"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_marginTop="@dimen/dp_40"
+        android:layout_below="@+id/Da_CoicNum"
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/dp_35"
+        android:layout_height="@dimen/dp_35"
+        android:src="@drawable/baseline_close"/>
+
+</RelativeLayout>

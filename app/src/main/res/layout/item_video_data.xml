@@ -2,83 +2,104 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
-    
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_10"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-            android:src="@mipmap/play_num"/>
+            android:src="@mipmap/play_num" />
+
         <TextView
             android:id="@+id/It_play_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="112.3万"
-            android:textSize="12sp"
-            android:textColor="#999999"/>
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text=""
+            android:textColor="#999999"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dp_10"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
-            android:src="@mipmap/barrage_volume_ash"/>
+            android:src="@mipmap/barrage_volume_ash" />
+
         <TextView
             android:id="@+id/It_barrage_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4641"
-            android:textSize="12sp"
-            android:textColor="#999999"/>
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text=""
+            android:textColor="#999999"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/It_video_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="@dimen/dp_10"
-        android:text="7-21"
-        android:textSize="12sp"
-        android:textColor="#999999"/>
+        android:text=""
+        android:textColor="#999999"
+        android:textSize="12sp" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/It_video_id"-->
-<!--        android:layout_marginRight="@dimen/dp_10"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="BV1wz4y1Q7J5"-->
-<!--        android:textSize="12sp"-->
-<!--        android:textColor="#999999"/>-->
+    <TextView
+        android:id="@+id/It_video_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="BV1wz4y1Q7J5"
+        android:textColor="#999999"
+        android:textSize="12sp" />
 
     <LinearLayout
-        android:id="@+id/In_not_interested"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_marginRight="@dimen/dp_5"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:layout_weight="1"
+        android:gravity="right|center">
 
         <ImageView
-            android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_20"
-            android:src="@drawable/not_interested"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="未经作者授权禁止转载"
-            android:textSize="12sp"
-            android:textColor="#999999"/>
+            android:id="@+id/open_warning"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@drawable/arrow_down" />
     </LinearLayout>
+
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/In_not_interested"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:gravity="center_vertical">-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="@dimen/dp_20"-->
+    <!--            android:layout_height="@dimen/dp_20"-->
+    <!--            android:src="@drawable/not_interested"/>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/warning"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:maxLines="1"-->
+    <!--            android:text="未经作者授权禁止转载"-->
+    <!--            android:textSize="12sp"-->
+    <!--            android:textColor="#999999"/>-->
+    <!--    </LinearLayout>-->
 </LinearLayout>

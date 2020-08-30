@@ -20,7 +20,9 @@ import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityVideoBinding;
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
+import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.contract.VideoDetailsContract;
@@ -92,6 +94,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         int playtime = intent.getIntExtra("playtime", 0);
         id = intent.getIntExtra("id",0);
         uid = intent.getIntExtra("uid",0);
+        SharedPreferencesUtil.putData("id",id);
+        SharedPreferencesUtil.putData("uid",uid);
         if (playtime != 0) {
             mWhenPlaying = playtime;
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
@@ -99,11 +103,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             XToastUtils.info("已为您保存播放进度");
         }
     }
-
-//    @Override
-//    protected BasePresenter onCreatePresenter() {
-//        return null;
-//    }
 
     @Override
     protected void initView() {
@@ -250,8 +249,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     protected void initData() {
-//        ResourcesData resourcesData = new ResourcesData();
-//        resourcesData.initVideo();
         binding.VTab.setViewPager(binding.VViewPager, TabTitle, this, mFragments);
         binding.detailPlayer.setShrinkImageRes(R.drawable.crop_free_24);
         binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
@@ -371,5 +368,15 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     public void onGetVideoDetailsFail(String e) {
         XToastUtils.error(e);
+    }
+
+    @Override
+    public void onGetCoinOperatedSuccess(CoinBean coinBean) {
+
+    }
+
+    @Override
+    public void onGetCoinOperatedFail(String e) {
+
     }
 }
