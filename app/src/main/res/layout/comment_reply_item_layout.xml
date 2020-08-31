@@ -21,8 +21,6 @@
             android:id="@+id/reply_item_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:text="沐风:"
             android:textSize="14sp"
             android:textColor="#626262"/>
         <TextView
@@ -34,8 +32,7 @@
             android:maxLines="10"
             android:ellipsize="end"
             android:textColor="#949494"
-            android:textSize="14sp"
-            android:text="世上本没有路，走的人多了，也就成了路"/>
+            android:textSize="14sp"/>
     </LinearLayout>
 
 </LinearLayout>

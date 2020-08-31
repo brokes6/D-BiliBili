@@ -2,12 +2,15 @@ package com.example.dildil.api;
 
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
-import com.example.dildil.video.bean.dto;
+import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.dto;
+import com.example.dildil.video.bean.str;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -24,4 +27,7 @@ public interface ApiService {
 
     @POST("video/coin")
     Observable<CoinBean> coin_Operated(@Body dto coinBean, @Query("uid") int id);
+
+    @POST("video/dynamic_like")
+    Observable<ThumbsUpBean> thumbsUp(@Header("token") String url, @Body str str);
 }

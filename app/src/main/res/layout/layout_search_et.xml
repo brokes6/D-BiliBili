@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:background="@drawable/bg_edit_title"
-        android:hint="大家都在搜"
+        android:hint="@string/EverybodySearching"
         android:maxLines="1"
         android:textSize="@dimen/sp_16"
         android:paddingStart="@dimen/dp_5"

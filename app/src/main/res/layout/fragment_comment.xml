@@ -45,7 +45,7 @@
                 android:background="@drawable/comment_bt_selector"
                 android:gravity="center_vertical"
                 android:paddingLeft="18dp"
-                android:text="说点什么吧..."
+                android:text="@string/SaySomething"
                 android:textColor="#B6B6B6"
                 android:textSize="12sp" />
 

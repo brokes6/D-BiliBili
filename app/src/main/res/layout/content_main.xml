@@ -26,16 +26,26 @@
         android:layout_below="@+id/viewpager"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="点击进行投币"
-        android:textColor="#c2c2c2"
-        android:textSize="16sp" />
+        android:text="@string/conductCoin"
+        android:textColor="@color/White"
+        android:textSize="18sp" />
+
+    <CheckBox
+        android:id="@+id/CB_thumbsUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Da_Tips"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/White"
+        android:text="@string/isThumbsUp" />
 
     <TextView
         android:id="@+id/Da_CoicNum"
         android:layout_marginTop="@dimen/dp_5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Da_Tips"
+        android:layout_below="@+id/CB_thumbsUp"
         android:layout_centerHorizontal="true"
         android:text="银币余额：24.0"
         android:textColor="#c2c2c2"

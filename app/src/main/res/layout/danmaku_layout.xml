@@ -164,7 +164,7 @@
                     android:layout_marginLeft="@dimen/dp_20"
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/dp_5"
-                    android:text="发个友善的弹幕见证当下"
+                    android:text="@string/BulletScreenTips"
                     android:textColor="#b1b0b5" />
 
             </com.gcssloop.widget.RCRelativeLayout>
@@ -175,7 +175,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
-                android:text="倍速"
+                android:text="@string/DoubleSpeed"
                 android:textColor="#ffffff" />
 
             <TextView
@@ -184,7 +184,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
-                android:text="1080p"
+                android:text="@string/Automatic"
                 android:textColor="#ffffff" />
 
         </LinearLayout>

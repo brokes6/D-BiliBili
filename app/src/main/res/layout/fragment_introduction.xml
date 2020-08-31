@@ -54,7 +54,6 @@
                     android:layout_below="@+id/In_user_img"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:layout_marginRight="@dimen/dp_15"
-                    android:text="标题文字"
                     android:textColor="@color/Black"
                     android:textSize="18sp" />
 
@@ -94,7 +93,7 @@
                             android:id="@+id/In_warning"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="未经作者授权禁止转载"
+                            android:text="@string/warning"
                             android:textColor="#999999"
                             android:textSize="12sp" />
                     </LinearLayout>

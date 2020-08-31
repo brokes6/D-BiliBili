@@ -24,7 +24,9 @@ import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
+import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.str;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.dialog.CoinDialog;
 import com.example.dildil.video.presenter.VideoDetailsPresenter;
@@ -39,10 +41,11 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     HotRankingAdapter adapter;
     private int id;
     private int uid;
-    private TextView mTime,mDanmu,mPlayNum,mPraise,mCoin;
+    private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin;
     private ImageView mOpen;
     private boolean isOpen = false;
-    private LinearLayout mMainCoin;
+    private LinearLayout mMainCoin,thumbsUp;
+    private boolean isLoad = false;
 
     @Inject
     VideoDetailsPresenter mPresenter;
@@ -68,7 +71,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mPraise = binding.Sanlian.findViewById(R.id.praise);
         mCoin = binding.Sanlian.findViewById(R.id.coin);
         mMainCoin = binding.Sanlian.findViewById(R.id.main_coin);
+        thumbsUp = binding.Sanlian.findViewById(R.id.thumbsUp);
 
+        thumbsUp.setOnClickListener(this);
         mOpen.setOnClickListener(this);
         mMainCoin.setOnClickListener(this);
 
@@ -82,33 +87,67 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     protected void initData() {
         showDialog();
-        id = (int) SharedPreferencesUtil.getData("id",0);
-        uid = (int) SharedPreferencesUtil.getData("uid",0);
-        mPresenter.getVideoDetails(id,uid);
+        id = (int) SharedPreferencesUtil.getData("id", 0);
+        uid = (int) SharedPreferencesUtil.getData("uid", 0);
+        mPresenter.getVideoDetails(id, uid);
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.open_warning:
-                if (!isOpen){
+                if (!isOpen) {
                     binding.InNotInterested.setVisibility(View.VISIBLE);
                     mOpen.setImageResource(R.drawable.arrow_up);
                     isOpen = true;
-                }else{
+                } else {
                     binding.InNotInterested.setVisibility(View.GONE);
                     mOpen.setImageResource(R.drawable.arrow_down);
                     isOpen = false;
                 }
                 break;
             case R.id.main_coin:
-                CoinDialog coinDialog = new CoinDialog(getContext());
+                CoinDialog coinDialog = new CoinDialog(getContext(), id);
+                coinDialog.setListener(resultListener);
                 coinDialog.show();
+                break;
+            case R.id.thumbsUp:
+                str str = new str(id);
+                mPresenter.getThumbsUp("http://116.196.105.203/videoservice/",str);
                 break;
         }
     }
 
+    /**
+     * 投币外部监听
+     */
+    CoinDialog.throwCoinResultListener resultListener = new CoinDialog.throwCoinResultListener() {
+        @Override
+        public void throwCoinSuccess(CoinBean coinBean) {
+            XToastUtils.success(coinBean.getMessage());
+            mPresenter.getVideoDetails(id, uid);
+            showDialog();
+        }
+
+        @Override
+        public void throwCoinFail(String e) {
+            XToastUtils.error("操作失败：" + e);
+        }
+
+        @Override
+        public void ThumbsUpSuccess(ThumbsUpBean bean) {
+
+        }
+
+        @Override
+        public void ThumbsUpFail(String e) {
+        }
+    };
+
+    /**
+     * 适配器item点击外部监听
+     */
     HotRankingAdapter.ItemOnClickListener listener = new HotRankingAdapter.ItemOnClickListener() {
         @Override
         public void onClick(int position) {
@@ -126,13 +165,15 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         Glide.with(this).load(videoDetailsBean.getUpImg()).into(binding.InUserImg);
         binding.InUserName.setText(videoDetailsBean.getUpName());
         binding.InWarning.setText(videoDetailsBean.getDescription());
-        mPlayNum.setText(videoDetailsBean.getPlayNum()+"");
-        mDanmu.setText(videoDetailsBean.getDanmuNum()+"");
-        mPraise.setText(videoDetailsBean.getPlayNum()+"");
-        mCoin.setText(videoDetailsBean.getCoinNum()+"");
+        mPlayNum.setText(videoDetailsBean.getPlayNum() + "");
+        mDanmu.setText(videoDetailsBean.getDanmuNum() + "");
+        mPraise.setText(videoDetailsBean.getPlayNum() + "");
+        mCoin.setText(videoDetailsBean.getCoinNum() + "");
         String times = videoDetailsBean.getUpdateTime();
-        mTime.setText(times.substring(5,10));
-        initDatas();
+        mTime.setText(times.substring(5, 10));
+        if (!isLoad) initDatas();
+
+        isLoad = true;
         hideDialog();
     }
 
@@ -157,5 +198,15 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetCoinOperatedFail(String e) {
 
+    }
+
+    @Override
+    public void onGetThumbsUpSuccess(ThumbsUpBean thumbsUpBean) {
+        XToastUtils.success(thumbsUpBean.getMessage());
+    }
+
+    @Override
+    public void onGetThumbsUpFail(String e) {
+        XToastUtils.error("发生错误:"+e);
     }
 }

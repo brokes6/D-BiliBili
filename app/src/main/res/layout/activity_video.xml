@@ -81,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp_5"
-                            android:text="立即播放"
+                            android:text="@string/PlayNow"
                             android:textColor="@color/White"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -147,7 +147,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
-                        android:text="点我发送弹幕"
+                        android:text="@string/SendTheBarrage"
                         android:textColor="#999999" />
 
                     <RelativeLayout

@@ -4,6 +4,11 @@ public class dto {
     private int num;
     private int vid;
 
+    public dto(int num,int vid){
+        this.num = num;
+        this.vid = vid;
+    }
+
     public int getNum() {
         return num;
     }

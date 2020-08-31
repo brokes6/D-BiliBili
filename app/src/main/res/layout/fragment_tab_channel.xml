@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textColor="@color/Black"
-            android:text="最近看过的频道"/>
+            android:text="@string/RecentChannels"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/CH_have_viewed"

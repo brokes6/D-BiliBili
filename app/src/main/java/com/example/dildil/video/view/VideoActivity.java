@@ -24,6 +24,7 @@ import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
+import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.fragment_tab.CommentFragment;
@@ -60,7 +61,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private ImageView imageView;
     private int id,uid;
     private List<SwitchVideoBean> urls = new ArrayList<>();
-    String[] definition = {"360p","480p","720p","1080p"};
+    String[] definition = {"1080p","360p","480p","720p"};
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -377,6 +378,16 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetCoinOperatedFail(String e) {
+
+    }
+
+    @Override
+    public void onGetThumbsUpSuccess(ThumbsUpBean thumbsUpBean) {
+
+    }
+
+    @Override
+    public void onGetThumbsUpFail(String e) {
 
     }
 }
