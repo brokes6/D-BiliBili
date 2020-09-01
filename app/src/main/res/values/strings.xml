@@ -1,4 +1,11 @@
 <resources>
+    //颜色
+    <string name="colorWhite">#ffffff</string>
+    <string name="colorTransWithe">#ccffffff</string>
+    <string name="colorBlack">#000000</string>
+    <string name="colorAsh">#535353</string>
+
+
     <string name="app_name">搭理搭理</string>
     <string name="language_cn">中文</string>
     <string name="language_en">English</string>
@@ -26,11 +33,24 @@
     <string name="MyPursuit_Drama">我的追番:追剧</string>
     <string name="cancel">取消</string>
     <string name="EverybodySearching">大家都在搜</string>
-    //颜色
-    <string name="colorWhite">#ffffff</string>
-    <string name="colorTransWithe">#ccffffff</string>
-    <string name="colorBlack">#000000</string>
-    <string name="colorAsh">#535353</string>
+    <string name="PasswordLogin">密码登录</string>
+    <string name="MessageLogin">短信登陆</string>
+    <string name="Account">账号</string>
+    <string name="LoginPrompt">请输入账号或邮箱</string>
+    <string name="Password">密码</string>
+    <string name="LoginPromptPassword">请输入密码</string>
+    <string name="ForgetThePassword">忘记密码？</string>
+    <string name="Register">注册</string>
+    <string name="Login">登录</string>
+    <string name="Tips_one">登录即代表你同意用户协议和隐私政策</string>
+    <string name="Tips_two">遇到问题？查看帮助</string>
+    <string name="please_input_phonenumber">请输入手机号码</string>
+    <string name="please_input_phonenumber_correctly">请输入有效的电话号码</string>
+    <string name="please_input_pwd">请输入密码</string>
+    <string name="pwd_must_less_than_30">请输入小于30位的密码</string>
+    <string name="login_fail">登录失败，请稍后重试</string>
+    <string name="pwd_wrong">密码输入错误，请重试</string>
+
 
 
 </resources>

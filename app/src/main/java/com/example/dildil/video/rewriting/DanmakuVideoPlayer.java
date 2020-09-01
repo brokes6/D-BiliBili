@@ -165,7 +165,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             Bottom_controller.setVisibility(View.GONE);
             mSeekBar_play.setVisibility(View.VISIBLE);
         }
-        onPrepareDanmaku(this);
         startDownFrame(mOriginUrl);
     }
 

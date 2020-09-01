@@ -7,13 +7,214 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/White">
 
-        <Button
-            android:id="@+id/go"
+        <RelativeLayout
+            android:id="@+id/top1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_15">
+
+            <ImageView
+                android:id="@+id/Lo_back"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
+                android:src="@drawable/keyboard_backspace_24_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_15"
+                android:layout_toEndOf="@+id/Lo_back"
+                android:text="@string/PasswordLogin"
+                android:textColor="@color/Black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dp_15"
+                android:text="@string/MessageLogin"
+                android:textColor="@color/Text_gray"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/xian1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_2"
+            android:layout_below="@+id/top1"
+            android:background="@drawable/lowershadow" />
+
+        <RelativeLayout
+            android:id="@+id/top2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_90"
+            android:layout_below="@+id/xian1">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ECE8E8" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/twotwoniang" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/bilibili" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/threethreeniang" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/Lo_accountLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top2"
+            android:padding="@dimen/dp_15">
+
+            <TextView
+                android:id="@+id/Lo_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/Account"
+                android:textColor="@color/Black"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/Lo_userAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_toRightOf="@+id/Lo_account"
+                android:background="@null"
+                android:hint="@string/LoginPrompt"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/xian2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@id/Lo_accountLogin"
+            android:background="#CDCBC9" />
+
+        <RelativeLayout
+            android:id="@+id/Lo_passwordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/xian2"
+            android:padding="@dimen/dp_15">
+
+            <TextView
+                android:id="@+id/Lo_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/Password"
+                android:textColor="@color/Black"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/Lo_userPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_toLeftOf="@+id/Lo_forgetThePassword"
+                android:layout_toRightOf="@+id/Lo_password"
+                android:background="@null"
+                android:hint="@string/LoginPromptPassword"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/Lo_forgetThePassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/ForgetThePassword"
+                android:textColor="@color/Pink"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/xian3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_below="@id/Lo_passwordLogin"
+            android:background="#CDCBC9" />
+
+        <LinearLayout
+            android:id="@+id/top3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/xian3"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/Lo_register"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/buttonstyle_hollow"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/Register"
+                android:textColor="@color/Pink" />
+
+            <Button
+                android:id="@+id/Lo_login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/buttonstyle_solid"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/Login"
+                android:textColor="@color/White" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/Lo_Tips1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="进入主页"/>
+            android:layout_below="@+id/top3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="@string/Tips_one"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/Lo_Tips2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Lo_Tips1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="@string/Tips_two"
+            android:textSize="14sp" />
+
     </RelativeLayout>
 </layout>

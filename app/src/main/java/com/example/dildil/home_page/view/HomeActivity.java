@@ -16,6 +16,7 @@ import com.example.dildil.home_page.fragment.HomePageFragment;
 import com.example.dildil.my_page.view.MyFragment;
 import com.gyf.immersionbar.ImmersionBar;
 import com.next.easynavigation.view.EasyNavigationBar;
+import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,7 @@ public class HomeActivity extends BaseActivity {
     private int[] normalIcon = {R.mipmap.home, R.mipmap.channel, R.mipmap.dynamic, R.mipmap.my};
     private int[] selectIcon = {R.mipmap.home_select, R.mipmap.channel_select, R.mipmap.dynamic_select, R.mipmap.my_select};
     private List<Fragment> fragmentList = new ArrayList<>();
+    private long firstTime = 0;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -103,4 +105,16 @@ public class HomeActivity extends BaseActivity {
         binding.navigationBar.clearMsgPoint(index);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - firstTime > 2000) {
+            SnackbarUtils.Short(binding.main, "再按一次退出").info().show();
+            firstTime = secondTime;
+        } else{
+//            ActivityUtils.finishAllActivities();
+            System.exit(0);// 完全退出应用
+        }
+    }
 }

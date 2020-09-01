@@ -9,17 +9,18 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.dildil.R;
 import com.example.dildil.video.rewriting.DanmakuVideoPlayer;
 
-public class DoubleSpeedDialog extends Dialog implements View.OnClickListener{
+public class DoubleSpeedDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private Activity Context;
     private View view;
-    private TextView x2,x1_5,x1_25,x1,x0_75,x0_5;
+    private TextView x2, x1_5, x1_25, x1, x0_75, x0_5;
 
     public DoubleSpeedDialog(@NonNull Context context) {
         super(context, R.style.dialog_FadeIn);
@@ -30,7 +31,7 @@ public class DoubleSpeedDialog extends Dialog implements View.OnClickListener{
     /**
      * 初始化控件，初始化高度，宽度
      */
-    private void init(){
+    private void init() {
         Context = (Activity) mContext;
         view = Context.getLayoutInflater().inflate(R.layout.dialog_double_speed, null);
         x2 = view.findViewById(R.id.x2);
@@ -74,29 +75,48 @@ public class DoubleSpeedDialog extends Dialog implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         DanmakuVideoPlayer danmakuVideoPlayer = new DanmakuVideoPlayer(mContext);
-        switch (v.getId()){
+        Toast toast;
+        switch (v.getId()) {
             case R.id.x2:
                 danmakuVideoPlayer.setSpeed(2f);
+                toast = Toast.makeText(getContext(), "当前倍速为:" + 2f, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.LEFT|Gravity.BOTTOM,0,220);
+                toast.show();
                 dismiss();
                 break;
             case R.id.x1_5:
                 danmakuVideoPlayer.setSpeed(1.5f);
+                toast = Toast.makeText(getContext(), "当前倍速为:" + 1.5f, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.LEFT|Gravity.BOTTOM,0,220);
+                toast.show();
                 dismiss();
                 break;
             case R.id.x1_25:
                 danmakuVideoPlayer.setSpeed(1.25f);
+                toast = Toast.makeText(getContext(), "当前倍速为:" + 1.25f, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.LEFT|Gravity.BOTTOM,0,220);
+                toast.show();
                 dismiss();
                 break;
             case R.id.x1:
                 danmakuVideoPlayer.setSpeed(1f);
+                toast = Toast.makeText(getContext(), "当前倍速正常" , Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.LEFT|Gravity.BOTTOM,0,220);
+                toast.show();
                 dismiss();
                 break;
             case R.id.x0_75:
                 danmakuVideoPlayer.setSpeed(0.75f);
+                toast = Toast.makeText(getContext(), "当前倍速为:" + 0.75f, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.LEFT|Gravity.BOTTOM,0,220);
+                toast.show();
                 dismiss();
                 break;
             case R.id.x0_5:
                 danmakuVideoPlayer.setSpeed(0.5f);
+                toast = Toast.makeText(getContext(), "当前倍速为:" + 0.5f, Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.LEFT|Gravity.BOTTOM,0,220);
+                toast.show();
                 dismiss();
                 break;
         }

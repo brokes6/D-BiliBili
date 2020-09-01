@@ -1,6 +1,7 @@
 package com.example.dildil.login_page.view;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -11,6 +12,8 @@ import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.databinding.ActivityLoginBinding;
 import com.example.dildil.home_page.view.HomeActivity;
+import com.example.dildil.util.InputUtil;
+import com.example.dildil.util.SharePreferenceUtil;
 import com.gyf.immersionbar.ImmersionBar;
 
 /**
@@ -23,21 +26,15 @@ public class LoginActivity extends BaseActivity {
     String phoneNumber;
     String password;
 
-
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
     }
 
-//    @Override
-//    protected BasePresenter onCreatePresenter() {
-//        return null;
-//    }
-
     @Override
     protected void initView() {
-        binding.go.setOnClickListener(this);
-//        setMargins(binding.title,0,getStatusBarHeight(this),0,0);
+        binding.LoLogin.setOnClickListener(this);
+        setMargins(binding.top1,0,getStatusBarHeight(this),0,0);
 //        SettingSPUtils spUtils = new SettingSPUtils(LoginActivity.this);
 //        if (!spUtils.isAgreePrivacy()) {
 //            PrivacyUtils.showPrivacyDialog(this, (dialog, which) -> {
@@ -49,12 +46,10 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-//        setBackBtn(getString(R.string.colorBlack));
-//        setLeftTitleText(R.string.login_phone_number);
-//        if (!TextUtils.isEmpty(SharePreferenceUtil.getInstance(this).getAccountNum())) {
-//            phoneNumber = SharePreferenceUtil.getInstance(this).getAccountNum();
-//            binding.etPhone.setText(phoneNumber);
-//        }
+        if (!TextUtils.isEmpty(SharePreferenceUtil.getInstance(this).getAccountNum())) {
+            phoneNumber = SharePreferenceUtil.getInstance(this).getAccountNum();
+            binding.LoUserAccount.setText(phoneNumber);
+        }
     }
 
     @Override
@@ -69,23 +64,20 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-
 //        if (ClickUtil.isFastClick(1000, v)) {
 //            return;
 //        }
         switch (v.getId()) {
-            case R.id.go:
-                ActivityUtils.startActivity(HomeActivity.class);
-                break;
-//            case R.id.btn_login:
-//                phoneNumber = binding.etPhone.getText().toString().trim();
-//                password = binding.etPwd.getText().toString().trim();
-//                if (InputUtil.checkMobileLegal(phoneNumber) && InputUtil.checkPasswordLegal(password)) {
-//                    showDialog();
-//                    Log.d(TAG, "login账号密码 : " + phoneNumber + " ," + password);
+            case R.id.Lo_login:
+                phoneNumber = binding.LoUserAccount.getText().toString().trim();
+                password = binding.LoUserPassword.getText().toString().trim();
+                if (InputUtil.checkMobileLegal(phoneNumber) && InputUtil.checkPasswordLegal(password)) {
+                    showDialog();
+                    Log.d(TAG, "login账号密码 : " + phoneNumber + " ," + password);
 //                    mPresenter.login(phoneNumber, password);
-//                }
-//                break;
+                    ActivityUtils.startActivity(HomeActivity.class);
+                }
+                break;
 //            case R.id.register:
 //            case R.id.forget_pwd:
 //                XToastUtils.info(R.string.in_developing);

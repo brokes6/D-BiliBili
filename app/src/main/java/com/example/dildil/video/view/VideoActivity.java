@@ -181,18 +181,21 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             @Override
             public void onClickStartIcon(String url, Object... objects) {
                 super.onClickStartIcon(url, objects);
+                binding.keyboard.setVisibility(View.GONE);
                 banAppBarScroll(false);
             }
 
             @Override
             public void onClickStop(String url, Object... objects) {
                 super.onClickStop(url, objects);
+                binding.keyboard.setVisibility(View.VISIBLE);
                 banAppBarScroll(true);
             }
 
             @Override
             public void onClickResume(String url, Object... objects) {
                 super.onClickResume(url, objects);
+                binding.keyboard.setVisibility(View.GONE);
                 binding.playButton.setVisibility(View.GONE);
                 binding.appbar.setExpanded(true);
                 banAppBarScroll(false);
@@ -234,7 +237,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 }
             }
         });
-        setMargins(binding.toolbar, 0, getStatusBarHeight(this), 0, 0);
+      setMargins(binding.main, 0, getStatusBarHeight(this), 0, 0);
     }
 
     DanmakuVideoPlayer.FullScreenStatusMonitoring listener = new DanmakuVideoPlayer.FullScreenStatusMonitoring() {
@@ -271,6 +274,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             case R.id.playButton:
                 binding.detailPlayer.onVideoResume();
                 binding.appbar.setExpanded(true);
+                binding.keyboard.setVisibility(View.GONE);
                 banAppBarScroll(false);
                 break;
             case R.id.keyboard:

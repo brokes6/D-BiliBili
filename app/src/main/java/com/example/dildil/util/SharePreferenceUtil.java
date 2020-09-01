@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.dildil.abstractclass.Constants;
+import com.example.dildil.login_page.bean.LoginBean;
 
 import java.util.Locale;
 
@@ -62,13 +63,13 @@ public class SharePreferenceUtil {
      * 所以 新账号会无法保存登录状态
      * @param
      */
-//    public void saveUserInfo(LoginBean bean, String phoneNumber) {
+    public void saveUserInfo(LoginBean bean, String phoneNumber) {
 //        if (bean.getBindings().size() > 0) {
 //            saveAuthToken(bean.getBindings().get(0).getTokenJsonStr());
 //        }
-//        saveAccountNum(phoneNumber);
-//        saveString(Constants.SpKey.USER_INFO, GsonUtil.toJson(bean));
-//    }
+        saveAccountNum(phoneNumber);
+        saveString(Constants.SpKey.USER_INFO, GsonUtil.toJson(bean));
+    }
 
     public String getUserInfo(String defaultValue) {
         return getString(Constants.SpKey.USER_INFO, defaultValue);
