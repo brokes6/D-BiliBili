@@ -5,6 +5,7 @@ import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.login_page.bean.RegisterBean;
 import com.example.dildil.login_page.bean.inputDto;
 import com.example.dildil.video.bean.CoinBean;
+import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -39,4 +40,6 @@ public interface ApiService {
     @POST("userservice/user")
     Observable<RegisterBean> Register(@Body inputDto inputDto);
 
+    @POST("videoservice/video/dynamic_like")
+    Observable<CollectionBean> CollectionVideo(@Body dto dto);
 }

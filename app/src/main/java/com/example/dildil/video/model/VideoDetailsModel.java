@@ -2,6 +2,7 @@ package com.example.dildil.video.model;
 
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.video.bean.CoinBean;
+import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -23,5 +24,10 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
     @Override
     public Observable<ThumbsUpBean> getThumbsUp(String url, dto dto) {
         return ApiEngine.getInstance().getApiService().thumbsUp(url,dto);
+    }
+
+    @Override
+    public Observable<CollectionBean> CollectionVideo(dto dto) {
+        return ApiEngine.getInstance().getApiService().CollectionVideo(dto);
     }
 }

@@ -24,6 +24,7 @@ import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
+import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -41,14 +42,17 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     HotRankingAdapter adapter;
     private int id;
     private int uid;
-    private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin;
-    private ImageView mOpen,like_img;
+    private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
+    private ImageView mOpen, like_img,Collection,coinImg;
     private boolean isOpen = false;
-    private LinearLayout mMainCoin,thumbsUp;
+    private LinearLayout mMainCoin, thumbsUp, CollectionMain, ForwardMain;
     private boolean isLoad = false;
 
     @Inject
     VideoDetailsPresenter mPresenter;
+    private boolean mIsPraise;
+    private int mCoinNum;
+    private boolean isCollection;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +68,15 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     protected void initView() {
+        getIncludeView();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        adapter = new HotRankingAdapter(getContext());
+        adapter.setListener(listener);
+        binding.InRecyclerView.setLayoutManager(layoutManager);
+        binding.InRecyclerView.setAdapter(adapter);
+    }
+
+    private void getIncludeView() {
         mTime = binding.InVideoData.findViewById(R.id.It_video_time);
         mDanmu = binding.InVideoData.findViewById(R.id.It_barrage_num);
         mPlayNum = binding.InVideoData.findViewById(R.id.It_play_num);
@@ -73,16 +86,17 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mMainCoin = binding.Sanlian.findViewById(R.id.main_coin);
         thumbsUp = binding.Sanlian.findViewById(R.id.thumbsUp);
         like_img = binding.Sanlian.findViewById(R.id.like_img);
+        CollectionMain = binding.Sanlian.findViewById(R.id.CollectionMain);
+        Collection = binding.Sanlian.findViewById(R.id.Collection);
+        CollectionNum = binding.Sanlian.findViewById(R.id.CollectionNum);
+        ForwardMain = binding.Sanlian.findViewById(R.id.ForwardMain);
+        coinImg = binding.Sanlian.findViewById(R.id.coinImg);
 
         thumbsUp.setOnClickListener(this);
         mOpen.setOnClickListener(this);
         mMainCoin.setOnClickListener(this);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        adapter = new HotRankingAdapter(getContext());
-        adapter.setListener(listener);
-        binding.InRecyclerView.setLayoutManager(layoutManager);
-        binding.InRecyclerView.setAdapter(adapter);
+        CollectionMain.setOnClickListener(this);
+        ForwardMain.setOnClickListener(this);
     }
 
     @Override
@@ -109,13 +123,29 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 }
                 break;
             case R.id.main_coin:
+                if (mCoinNum==2){
+                    XToastUtils.toast("已经投过币拉~");
+                    return;
+                }
                 CoinDialog coinDialog = new CoinDialog(getContext(), id);
                 coinDialog.setListener(resultListener);
                 coinDialog.show();
                 break;
             case R.id.thumbsUp:
+                if (mIsPraise){
+                    XToastUtils.toast("已经点过赞拉~");
+                    return;
+                }
                 dto str = new dto(id);
-                mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like",str);
+                mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like", str);
+                break;
+            case R.id.CollectionMain:
+                if (isCollection){
+                    XToastUtils.toast("已经收藏过拉~");
+                    return;
+                }
+                dto str1 = new dto(id);
+                mPresenter.CollectionVideo(str1);
                 break;
         }
     }
@@ -172,7 +202,13 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mCoin.setText(videoDetailsBean.getCoinNum() + "");
         String times = videoDetailsBean.getUpdateTime();
         mTime.setText(times.substring(5, 10));
+        mIsPraise = videoDetailsBean.getLog().isPraise();
+        mCoinNum = videoDetailsBean.getLog().getCoinNum();
+        isCollection = videoDetailsBean.getLog().isCollection();
         if (!isLoad) initDatas();
+        if (videoDetailsBean.getLog().isPraise())   like_img.setImageResource(R.drawable.thumb_up_24);
+        if (videoDetailsBean.getLog().isCollection()) Collection.setImageResource(R.mipmap.collect_on);
+        if (videoDetailsBean.getLog().getCoinNum()==2) coinImg.setImageResource(R.mipmap.coin_on);
 
         isLoad = true;
         hideDialog();
@@ -203,6 +239,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetThumbsUpSuccess(ThumbsUpBean thumbsUpBean) {
+        mIsPraise = true;
         XToastUtils.success(thumbsUpBean.getMessage());
         like_img.setImageResource(R.drawable.thumb_up_24);
         mPresenter.getVideoDetails(id, uid);
@@ -211,6 +248,18 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetThumbsUpFail(String e) {
-        XToastUtils.error("发生错误:"+e);
+        XToastUtils.error("发生错误:" + e);
+    }
+
+    @Override
+    public void onGetCollectionVideoSuccess(CollectionBean collectionBean) {
+        isCollection = true;
+        Collection.setImageResource(R.mipmap.collect_on);
+        XToastUtils.success("收藏成功！");
+    }
+
+    @Override
+    public void onGetCollectionVideoFail(String e) {
+        XToastUtils.error("发生错误:" + e);
     }
 }

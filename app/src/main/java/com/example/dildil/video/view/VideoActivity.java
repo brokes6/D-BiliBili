@@ -23,6 +23,7 @@ import com.example.dildil.databinding.ActivityVideoBinding;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
+import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
@@ -392,6 +393,16 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetThumbsUpFail(String e) {
+
+    }
+
+    @Override
+    public void onGetCollectionVideoSuccess(CollectionBean collectionBean) {
+
+    }
+
+    @Override
+    public void onGetCollectionVideoFail(String e) {
 
     }
 }

@@ -1,6 +1,7 @@
 package com.example.dildil.video.presenter;
 
 import com.example.dildil.video.bean.CoinBean;
+import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -102,6 +103,33 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetThumbsUpFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void CollectionVideo(dto dto) {
+        mModel.CollectionVideo(dto).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CollectionBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CollectionBean collectionBean) {
+                        mView.onGetCollectionVideoSuccess(collectionBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetCoinOperatedFail(e.getMessage());
                     }
 
                     @Override

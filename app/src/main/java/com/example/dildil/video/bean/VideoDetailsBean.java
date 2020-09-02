@@ -82,6 +82,15 @@ public class VideoDetailsBean {
         private String tags;
         private String resolutionState;
         private String updateTime;
+        private LogData log;
+
+        public LogData getLog() {
+            return log;
+        }
+
+        public void setLog(LogData log) {
+            this.log = log;
+        }
 
         public int getId() {
             return id;
@@ -249,6 +258,63 @@ public class VideoDetailsBean {
 
         public void setUpdateTime(String updateTime) {
             this.updateTime = updateTime;
+        }
+
+        public class LogData{
+            private int id;
+            private int uid;
+            private int vid;
+            private boolean isPraise;
+            private boolean isCollection;
+            private int coinNum;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public int getUid() {
+                return uid;
+            }
+
+            public void setUid(int uid) {
+                this.uid = uid;
+            }
+
+            public int getVid() {
+                return vid;
+            }
+
+            public void setVid(int vid) {
+                this.vid = vid;
+            }
+
+            public boolean isPraise() {
+                return isPraise;
+            }
+
+            public void setPraise(boolean praise) {
+                isPraise = praise;
+            }
+
+            public boolean isCollection() {
+                return isCollection;
+            }
+
+            public void setCollection(boolean collection) {
+                isCollection = collection;
+            }
+
+            public int getCoinNum() {
+                return coinNum;
+            }
+
+            public void setCoinNum(int coinNum) {
+                this.coinNum = coinNum;
+            }
         }
     }
 }
