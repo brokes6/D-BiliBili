@@ -26,7 +26,7 @@ import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
-import com.example.dildil.video.bean.str;
+import com.example.dildil.video.bean.dto;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.dialog.CoinDialog;
 import com.example.dildil.video.presenter.VideoDetailsPresenter;
@@ -42,7 +42,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private int id;
     private int uid;
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin;
-    private ImageView mOpen;
+    private ImageView mOpen,like_img;
     private boolean isOpen = false;
     private LinearLayout mMainCoin,thumbsUp;
     private boolean isLoad = false;
@@ -72,6 +72,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mCoin = binding.Sanlian.findViewById(R.id.coin);
         mMainCoin = binding.Sanlian.findViewById(R.id.main_coin);
         thumbsUp = binding.Sanlian.findViewById(R.id.thumbsUp);
+        like_img = binding.Sanlian.findViewById(R.id.like_img);
 
         thumbsUp.setOnClickListener(this);
         mOpen.setOnClickListener(this);
@@ -113,8 +114,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 coinDialog.show();
                 break;
             case R.id.thumbsUp:
-                str str = new str(id);
-                mPresenter.getThumbsUp("http://116.196.105.203/videoservice/",str);
+                dto str = new dto(id);
+                mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like",str);
                 break;
         }
     }
@@ -126,8 +127,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         @Override
         public void throwCoinSuccess(CoinBean coinBean) {
             XToastUtils.success(coinBean.getMessage());
-            mPresenter.getVideoDetails(id, uid);
             showDialog();
+            mPresenter.getVideoDetails(id, uid);
         }
 
         @Override
@@ -203,6 +204,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetThumbsUpSuccess(ThumbsUpBean thumbsUpBean) {
         XToastUtils.success(thumbsUpBean.getMessage());
+        like_img.setImageResource(R.drawable.thumb_up_24);
+        mPresenter.getVideoDetails(id, uid);
+        showDialog();
     }
 
     @Override

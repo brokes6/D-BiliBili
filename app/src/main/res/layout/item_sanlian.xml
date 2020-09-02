@@ -23,9 +23,10 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/like_img"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@mipmap/like" />
+                android:src="@drawable/thumb_up_no" />
 
             <TextView
                 android:id="@+id/praise"
@@ -43,9 +44,9 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/step_on" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/thumb_down_no" />
 
             <TextView
                 android:layout_width="wrap_content"

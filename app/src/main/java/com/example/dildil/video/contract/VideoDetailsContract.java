@@ -7,7 +7,6 @@ import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
-import com.example.dildil.video.bean.str;
 
 import io.reactivex.Observable;
 
@@ -35,7 +34,7 @@ public interface VideoDetailsContract {
 
         Observable<CoinBean> getCoinOperated(dto bean, int uid);
 
-        Observable<ThumbsUpBean> getThumbsUp(String url, str str);
+        Observable<ThumbsUpBean> getThumbsUp(String url, dto dto);
 
     }
 
@@ -45,7 +44,7 @@ public interface VideoDetailsContract {
 
         public abstract void getCoinOperated(dto bean, int uid);
 
-        public abstract void getThumbsUp(String url, str str);
+        public abstract void getThumbsUp(String url, dto dto);
 
     }
 }

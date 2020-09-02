@@ -63,11 +63,11 @@ public class SharePreferenceUtil {
      * 所以 新账号会无法保存登录状态
      * @param
      */
-    public void saveUserInfo(LoginBean bean, String phoneNumber) {
+    public void saveUserInfo(LoginBean bean, String account) {
 //        if (bean.getBindings().size() > 0) {
 //            saveAuthToken(bean.getBindings().get(0).getTokenJsonStr());
 //        }
-        saveAccountNum(phoneNumber);
+        saveAccountNum(account);
         saveString(Constants.SpKey.USER_INFO, GsonUtil.toJson(bean));
     }
 

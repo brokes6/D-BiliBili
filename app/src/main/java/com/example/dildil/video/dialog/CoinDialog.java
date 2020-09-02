@@ -22,7 +22,6 @@ import com.example.dildil.video.adapter.TubatuAdapter;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.dto;
-import com.example.dildil.video.bean.str;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +46,7 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
     private throwCoinResultListener CoinListener;
     private boolean isThumbsUp = false;
     private ApiService mService;
+    private String url = "http://116.196.105.203/videoservice/video/dynamic_like";
 
     public CoinDialog(@NonNull Context context, int vid) {
         super(context);
@@ -108,9 +108,9 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
                 case 0:
                     dto = new dto(1, vid);
                     if (key){
-                        str str = new str(vid);
+                        dto str = new dto(vid);
                         throwCoin(dto, 1);
-                        ThumbsUp("http://116.196.105.203/videoservice",str);
+                        ThumbsUp(url,str);
                     }else{
                         throwCoin(dto, 1);
                     }
@@ -118,9 +118,9 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
                 case 1:
                     dto = new dto(2, vid);
                     if (key){
-                        str str = new str(vid);
+                        dto str = new dto(vid);
                         throwCoin(dto, 1);
-                        ThumbsUp("http://116.196.105.203/videoservice",str);
+                        ThumbsUp(url,str);
                     }else{
                         throwCoin(dto, 1);
                     }
@@ -172,7 +172,7 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
 
     }
 
-    private void ThumbsUp(String url, str str) {
+    private void ThumbsUp(String url, dto str) {
         mService.thumbsUp(url, str).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ThumbsUpBean>() {

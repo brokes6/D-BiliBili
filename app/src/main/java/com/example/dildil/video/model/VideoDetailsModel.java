@@ -5,7 +5,6 @@ import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
-import com.example.dildil.video.bean.str;
 import com.example.dildil.video.contract.VideoDetailsContract;
 
 import io.reactivex.Observable;
@@ -22,7 +21,7 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
     }
 
     @Override
-    public Observable<ThumbsUpBean> getThumbsUp(String url, str str) {
-        return ApiEngine.getInstance().getApiService().thumbsUp(url,str);
+    public Observable<ThumbsUpBean> getThumbsUp(String url, dto dto) {
+        return ApiEngine.getInstance().getApiService().thumbsUp(url,dto);
     }
 }

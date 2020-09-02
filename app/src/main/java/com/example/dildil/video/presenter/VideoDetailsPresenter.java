@@ -4,7 +4,6 @@ import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
-import com.example.dildil.video.bean.str;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.model.VideoDetailsModel;
 
@@ -86,8 +85,8 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
     }
 
     @Override
-    public void getThumbsUp(String url, str str) {
-        mModel.getThumbsUp(url,str).subscribeOn(Schedulers.io())
+    public void getThumbsUp(String url, dto dto) {
+        mModel.getThumbsUp(url,dto).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ThumbsUpBean>() {
                     @Override

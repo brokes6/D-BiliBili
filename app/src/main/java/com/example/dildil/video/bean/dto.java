@@ -8,6 +8,9 @@ public class dto {
         this.num = num;
         this.vid = vid;
     }
+    public dto(int vid){
+        this.vid = vid;
+    }
 
     public int getNum() {
         return num;

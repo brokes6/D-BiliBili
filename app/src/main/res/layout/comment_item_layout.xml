@@ -47,7 +47,7 @@
             android:layout_height="34dp"
             android:layout_margin="10dp"
             android:padding="8dp"
-            android:src="@mipmap/like"
+            android:src="@drawable/thumb_up_no"
             android:theme="?android:selectableItemBackgroundBorderless" />
 
     </LinearLayout>
