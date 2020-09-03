@@ -9,9 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -29,6 +29,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
 
+import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
+import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
+
 public class CommentFragment extends BaseFragment {
     private static final String TAG = "CommentFragment";
     FragmentCommentBinding binding;
@@ -37,11 +40,12 @@ public class CommentFragment extends BaseFragment {
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
     private ResourcesData mResourcesData;
+    private EmojIconActions emojIcon;
 
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment, container, false);
         return binding.getRoot();
     }
 
@@ -65,7 +69,7 @@ public class CommentFragment extends BaseFragment {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.detail_page_do_comment:
                 showCommentDialog();
                 break;
@@ -75,12 +79,12 @@ public class CommentFragment extends BaseFragment {
     /**
      * 初始化评论和回复列表
      */
-    private void initExpandableListView(final List<CommentDetailBean> commentList){
+    private void initExpandableListView(final List<CommentDetailBean> commentList) {
         binding.FCCommentList.setGroupIndicator(null);
         //初始化适配器
         adapter = new CommentExpandAdapter(getContext(), commentList);
         binding.FCCommentList.setAdapter(adapter);
-        for(int i = 0; i<commentList.size(); i++){
+        for (int i = 0; i < commentList.size(); i++) {
             //遍历所有评论，都设置为展开（默认是不展开的）
             binding.FCCommentList.expandGroup(i);
         }
@@ -90,7 +94,7 @@ public class CommentFragment extends BaseFragment {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
                 boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>"+commentList.get(groupPosition).getId());
+                Log.e(TAG, "onGroupClick: 当前的评论id>>>" + commentList.get(groupPosition).getId());
 //                if(isExpanded){
 //                    expandableListView.collapseGroup(groupPosition);
 //                }else {
@@ -123,25 +127,36 @@ public class CommentFragment extends BaseFragment {
      * by moos on 2018/04/20
      * func:弹出回复框
      */
-    private void showReplyDialog(final int position){
+    private void showReplyDialog(final int position) {
         //本质上就是弹出一个输入框（使用了系统自带的底部弹窗）
-        dialog = new BottomSheetDialog(getContext());
-        View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout,null);
-        final EditText commentText =  commentView.findViewById(R.id.dialog_comment_et);
-        final Button bt_comment =  commentView.findViewById(R.id.dialog_comment_bt);
-        commentText.setHint("回复 " + commentsList.get(position).getNickName() + " 的评论:");
+        dialog = new BottomSheetDialog(getContext(), R.style.BottomSheetEdit);
+        View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout, null);
+        final EmojiconEditText commentText = commentView.findViewById(R.id.dialog_comment_et);
+        final TextView bt_comment = commentView.findViewById(R.id.dialog_comment_bt);
+        final ImageView emoji = commentView.findViewById(R.id.CB_emoji);
+        commentText.setFocusable(true);
+        commentText.setFocusableInTouchMode(true);
+        commentText.requestFocus();
         dialog.setContentView(commentView);
+        emojIcon = new EmojIconActions(getContext(), commentView, commentText, emoji);
+        emojIcon.ShowEmojIcon();
+        emojIcon.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
+        View parent = (View) commentView.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        commentText.setHint("回复 @" + commentsList.get(position).getNickName() + " 的评论:");
+        commentView.measure(0, 0);
+        behavior.setPeekHeight(commentView.getMeasuredHeight());
         bt_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
-                if(!TextUtils.isEmpty(replyContent)){
+                if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean(mResourcesData.getUserData().getUsername(),replyContent);
+                    ReplyDetailBean detailBean = new ReplyDetailBean(mResourcesData.getUserData().getUsername(), replyContent);
                     adapter.addTheReplyData(detailBean, position);
                     binding.FCCommentList.expandGroup(position);
                     XToastUtils.toast("回复成功");
-                }else {
+                } else {
                     XToastUtils.toast("回复内容不能为空");
                 }
             }
@@ -155,10 +170,10 @@ public class CommentFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!TextUtils.isEmpty(charSequence) && charSequence.length()>2){
-                    bt_comment.setBackgroundColor(Color.parseColor("#FFB568"));
-                }else {
-                    bt_comment.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                if (!TextUtils.isEmpty(charSequence) && charSequence.length() > 2) {
+                    bt_comment.setTextColor(Color.parseColor("#fa7298"));
+                } else {
+                    bt_comment.setTextColor(Color.parseColor("#c0c0c0"));
                 }
             }
 
@@ -174,18 +189,25 @@ public class CommentFragment extends BaseFragment {
      * by moos on 2018/04/20
      * func:弹出评论框
      */
-    private void showCommentDialog(){
-        dialog = new BottomSheetDialog(getContext());
-        View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout,null);
-        final EditText commentText =  commentView.findViewById(R.id.dialog_comment_et);
-        final Button bt_comment =  commentView.findViewById(R.id.dialog_comment_bt);
+    private void showCommentDialog() {
+        dialog = new BottomSheetDialog(getContext(), R.style.BottomSheetEdit);
+        View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout, null);
+        final EmojiconEditText commentText = commentView.findViewById(R.id.dialog_comment_et);
+        final TextView bt_comment = commentView.findViewById(R.id.dialog_comment_bt);
+        final ImageView emoji = commentView.findViewById(R.id.CB_emoji);
+        commentText.setFocusable(true);
+        commentText.setFocusableInTouchMode(true);
+        commentText.requestFocus();
         dialog.setContentView(commentView);
+        emojIcon = new EmojIconActions(getContext(), commentView, commentText, emoji);
+        emojIcon.ShowEmojIcon();
+        emojIcon.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
         /**
          * 解决bsd显示不全的情况
          */
         View parent = (View) commentView.getParent();
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-        commentView.measure(0,0);
+        commentView.measure(0, 0);
         behavior.setPeekHeight(commentView.getMeasuredHeight());
 
         bt_comment.setOnClickListener(new View.OnClickListener() {
@@ -193,14 +215,14 @@ public class CommentFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 String commentContent = commentText.getText().toString().trim();
-                if(!TextUtils.isEmpty(commentContent)){
+                if (!TextUtils.isEmpty(commentContent)) {
                     //commentOnWork(commentContent);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean(mResourcesData.getUserData().getUserImg(),mResourcesData.getUserData().getUsername(), commentContent,"刚刚");
+                    CommentDetailBean detailBean = new CommentDetailBean(mResourcesData.getUserData().getUserImg(), mResourcesData.getUserData().getUsername(), commentContent, "刚刚");
                     adapter.addTheCommentData(detailBean);
                     XToastUtils.toast("评论成功");
 
-                }else {
+                } else {
                     XToastUtils.toast("评论内容不能为空");
                 }
             }
@@ -213,10 +235,10 @@ public class CommentFragment extends BaseFragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(!TextUtils.isEmpty(charSequence) && charSequence.length()>2){
-                    bt_comment.setBackgroundColor(Color.parseColor("#FFB568"));
-                }else {
-                    bt_comment.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                if (!TextUtils.isEmpty(charSequence) && charSequence.length() > 2) {
+                    bt_comment.setTextColor(Color.parseColor("#fa7298"));
+                } else {
+                    bt_comment.setTextColor(Color.parseColor("#c0c0c0"));
                 }
             }
 

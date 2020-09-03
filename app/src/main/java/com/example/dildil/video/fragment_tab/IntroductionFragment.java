@@ -1,6 +1,7 @@
 package com.example.dildil.video.fragment_tab;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private int id;
     private int uid;
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
-    private ImageView mOpen, like_img,Collection,coinImg;
+    private ImageView mOpen, like_img, Collection, coinImg;
     private boolean isOpen = false;
     private LinearLayout mMainCoin, thumbsUp, CollectionMain, ForwardMain;
     private boolean isLoad = false;
@@ -123,7 +124,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 }
                 break;
             case R.id.main_coin:
-                if (mCoinNum==2){
+                if (mCoinNum == 2) {
                     XToastUtils.toast("已经投过币拉~");
                     return;
                 }
@@ -132,7 +133,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 coinDialog.show();
                 break;
             case R.id.thumbsUp:
-                if (mIsPraise){
+                if (mIsPraise) {
                     XToastUtils.toast("已经点过赞拉~");
                     return;
                 }
@@ -140,7 +141,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like", str);
                 break;
             case R.id.CollectionMain:
-                if (isCollection){
+                if (isCollection) {
                     XToastUtils.toast("已经收藏过拉~");
                     return;
                 }
@@ -198,7 +199,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         binding.InWarning.setText(videoDetailsBean.getDescription());
         mPlayNum.setText(videoDetailsBean.getPlayNum() + "");
         mDanmu.setText(videoDetailsBean.getDanmuNum() + "");
-        mPraise.setText(videoDetailsBean.getPlayNum() + "");
+        mPraise.setText(videoDetailsBean.getPraiseNum() + "");
         mCoin.setText(videoDetailsBean.getCoinNum() + "");
         String times = videoDetailsBean.getUpdateTime();
         mTime.setText(times.substring(5, 10));
@@ -206,9 +207,10 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mCoinNum = videoDetailsBean.getLog().getCoinNum();
         isCollection = videoDetailsBean.getLog().isCollection();
         if (!isLoad) initDatas();
-        if (videoDetailsBean.getLog().isPraise())   like_img.setImageResource(R.drawable.thumb_up_24);
+        Log.e(TAG, "onGetVideoDetailsSuccess: ?????"+ videoDetailsBean.getLog().isPraise()+"......"+videoDetailsBean.getLog().isCollection());
+        if (videoDetailsBean.getLog().isPraise()) like_img.setImageResource(R.drawable.thumb_up_24);
         if (videoDetailsBean.getLog().isCollection()) Collection.setImageResource(R.mipmap.collect_on);
-        if (videoDetailsBean.getLog().getCoinNum()==2) coinImg.setImageResource(R.mipmap.coin_on);
+        if (videoDetailsBean.getLog().getCoinNum() == 2) coinImg.setImageResource(R.mipmap.coin_on);
 
         isLoad = true;
         hideDialog();
@@ -240,6 +242,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetThumbsUpSuccess(ThumbsUpBean thumbsUpBean) {
         mIsPraise = true;
+        XToastUtils.success("点赞成功！");
         XToastUtils.success(thumbsUpBean.getMessage());
         like_img.setImageResource(R.drawable.thumb_up_24);
         mPresenter.getVideoDetails(id, uid);

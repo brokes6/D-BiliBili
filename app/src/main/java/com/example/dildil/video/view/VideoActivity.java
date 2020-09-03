@@ -4,8 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.core.app.ActivityCompat;
@@ -33,6 +36,8 @@ import com.example.dildil.video.fragment_tab.IntroductionFragment;
 import com.example.dildil.video.presenter.VideoDetailsPresenter;
 import com.example.dildil.video.rewriting.DanmakuVideoPlayer;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
@@ -60,9 +65,11 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private int mWhenPlaying;
     private CollapsingToolbarLayoutState state;
     private ImageView imageView;
-    private int id,uid;
+    private int id, uid;
     private List<SwitchVideoBean> urls = new ArrayList<>();
-    String[] definition = {"1080p","360p","480p","720p"};
+    private BottomSheetDialog dialog;
+    String[] definition = {"1080p", "360p", "480p", "720p"};
+
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -94,10 +101,10 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private void ifGO() {
         Intent intent = getIntent();
         int playtime = intent.getIntExtra("playtime", 0);
-        id = intent.getIntExtra("id",0);
-        uid = intent.getIntExtra("uid",0);
-        SharedPreferencesUtil.putData("id",id);
-        SharedPreferencesUtil.putData("uid",uid);
+        id = intent.getIntExtra("id", 0);
+        uid = intent.getIntExtra("uid", 0);
+        SharedPreferencesUtil.putData("id", id);
+        SharedPreferencesUtil.putData("uid", uid);
         if (playtime != 0) {
             mWhenPlaying = playtime;
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
@@ -238,7 +245,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 }
             }
         });
-      setMargins(binding.main, 0, getStatusBarHeight(this), 0, 0);
+        setMargins(binding.main, 0, getStatusBarHeight(this), 0, 0);
     }
 
     DanmakuVideoPlayer.FullScreenStatusMonitoring listener = new DanmakuVideoPlayer.FullScreenStatusMonitoring() {
@@ -259,7 +266,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        mPresenter.getVideoDetails(id,uid);
+        mPresenter.getVideoDetails(id, uid);
     }
 
 
@@ -270,7 +277,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 DanmakuShow();
                 break;
             case R.id.V_definition_text:
-                binding.detailPlayer.addDanmaku(true);
+                sendOutDanMu();
                 break;
             case R.id.playButton:
                 binding.detailPlayer.onVideoResume();
@@ -282,6 +289,36 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 finish();
                 break;
         }
+    }
+
+    private void sendOutDanMu() {
+        dialog = new BottomSheetDialog(this, R.style.BottomSheetEdit);
+        View commentView = LayoutInflater.from(this).inflate(R.layout.danmu_comment, null);
+        final EditText commentText = commentView.findViewById(R.id.DM_dialog_comment_et);
+        final ImageView send = commentView.findViewById(R.id.DM_send);
+        final ImageView rotation = commentView.findViewById(R.id.DM_text_rotation);
+        commentText.setFocusable(true);
+        commentText.setFocusableInTouchMode(true);
+        commentText.requestFocus();
+        dialog.setContentView(commentView);
+        View parent = (View) commentView.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        commentView.measure(0, 0);
+        behavior.setPeekHeight(commentView.getMeasuredHeight());
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String replyContent = commentText.getText().toString().trim();
+                if (!TextUtils.isEmpty(replyContent)) {
+                    dialog.dismiss();
+                    binding.detailPlayer.addDanmaku(true, replyContent);
+                } else {
+                    XToastUtils.toast("弹幕内容不能为空");
+                }
+            }
+        });
+        dialog.show();
+
     }
 
     private void DanmakuShow() {
@@ -362,9 +399,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
         Glide.with(mContext).load(videoDetailsBean.getCover()).into(imageView);
         binding.detailPlayer.setThumbImageView(imageView);
-        String[] urlList=videoDetailsBean.getUrls().split(",");
+        String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {
-            SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i],urlList[i]);
+            SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i], urlList[i]);
             urls.add(switchVideoBean);
         }
         binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());

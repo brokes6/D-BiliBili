@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/White"
     android:orientation="vertical">
 
     <LinearLayout
@@ -61,8 +62,7 @@
         android:layout_marginRight="24dp"
         android:layout_marginBottom="8dp"
         android:text=""
-        android:textColor="#484848"
-        android:textSize="14sp" />
-
+        android:textColor="@color/Black"
+        android:textSize="13sp" />
 
 </LinearLayout>

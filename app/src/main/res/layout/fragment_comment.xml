@@ -42,10 +42,10 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="22dp"
                 android:layout_weight="1"
-                android:background="@drawable/comment_bt_selector"
+                android:background="@drawable/et_botten_grey"
                 android:gravity="center_vertical"
                 android:paddingLeft="18dp"
-                android:text="@string/SaySomething"
+                android:text="@string/EnterComments"
                 android:textColor="#B6B6B6"
                 android:textSize="12sp" />
 

@@ -17,6 +17,7 @@ public class ReplyDetailBean {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+
     public String getNickName() {
         return nickName;
     }
@@ -24,6 +25,7 @@ public class ReplyDetailBean {
     public void setUserLogo(String userLogo) {
         this.userLogo = userLogo;
     }
+
     public String getUserLogo() {
         return userLogo;
     }
@@ -31,6 +33,7 @@ public class ReplyDetailBean {
     public void setId(int id) {
         this.id = id;
     }
+
     public int getId() {
         return id;
     }
@@ -38,6 +41,7 @@ public class ReplyDetailBean {
     public void setCommentId(String commentId) {
         this.commentId = commentId;
     }
+
     public String getCommentId() {
         return commentId;
     }
@@ -45,6 +49,7 @@ public class ReplyDetailBean {
     public void setContent(String content) {
         this.content = content;
     }
+
     public String getContent() {
         return content;
     }
@@ -52,6 +57,7 @@ public class ReplyDetailBean {
     public void setStatus(String status) {
         this.status = status;
     }
+
     public String getStatus() {
         return status;
     }
@@ -59,6 +65,7 @@ public class ReplyDetailBean {
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
+
     public String getCreateDate() {
         return createDate;
     }
