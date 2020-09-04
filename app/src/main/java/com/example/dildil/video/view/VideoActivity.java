@@ -27,6 +27,7 @@ import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
@@ -39,6 +40,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gyf.immersionbar.ImmersionBar;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
@@ -68,7 +70,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private int id, uid;
     private List<SwitchVideoBean> urls = new ArrayList<>();
     private BottomSheetDialog dialog;
-    String[] definition = {"1080p", "360p", "480p", "720p"};
+    String[] definition = {"360p", "480p", "720p", "1080p"};
 
 
     private enum CollapsingToolbarLayoutState {
@@ -370,6 +372,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         if (orientationUtils != null)
             orientationUtils.releaseListener();
         isDestory = true;
+        GSYVideoManager.releaseAllVideos();
     }
 
     public GSYVideoPlayer getCurPlay() {
@@ -377,6 +380,14 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             return binding.detailPlayer.getFullWindowPlayer();
         }
         return binding.detailPlayer;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return;
+        }
+        super.onBackPressed();
     }
 
     /**
@@ -440,6 +451,16 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetCollectionVideoFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentSuccess(CommentDetailBean commentDetailBean) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentFail(String e) {
 
     }
 }

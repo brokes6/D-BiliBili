@@ -6,6 +6,7 @@ import com.example.dildil.component.app.AppComponent;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.login_page.view.LoginActivity;
+import com.example.dildil.video.fragment_tab.CommentFragment;
 import com.example.dildil.video.fragment_tab.IntroductionFragment;
 import com.example.dildil.video.view.VideoActivity;
 
@@ -26,10 +27,12 @@ public interface ActivityComponent {
 
     void inject(LoginActivity loginActivity);//用于注入LoginActivity
 
-    void inject(RecommendedFragment recommendedFragment);//
+    void inject(RecommendedFragment recommendedFragment);
 
-    void inject(VideoActivity videoActivity);//
+    void inject(VideoActivity videoActivity);
 
-    void inject(IntroductionFragment introductionFragment);//
+    void inject(IntroductionFragment ntroductionFragment);
+
+    void inject(CommentFragment commentFragment);
     //TODO 后续需要注入的Activity类都可以在这里添加 中像上面一样写就好了
 }

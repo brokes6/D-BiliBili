@@ -3,83 +3,218 @@ package com.example.dildil.video.bean;
 import java.util.List;
 
 public class CommentDetailBean {
-    private int id;
-    private String nickName;
-    private String userLogo;
-    private String content;
-    private String imgId;
-    private int replyTotal;
-    private String createDate;
-    private List<ReplyDetailBean> replyList;
+   private int code;
+   private List<CommentData> data;
+   private String message;
 
-    public CommentDetailBean(String userimag,String nickName, String content, String createDate) {
-        this.userLogo = userimag;
-        this.nickName = nickName;
-        this.content = content;
-        this.createDate = createDate;
+    public int getCode() {
+        return code;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public int getId() {
-        return id;
+    public List<CommentData> getData() {
+        return data;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setData(List<CommentData> data) {
+        this.data = data;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getMessage() {
+        return message;
     }
 
-    public void setUserLogo(String userLogo) {
-        this.userLogo = userLogo;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getUserLogo() {
-        return userLogo;
-    }
+    public static class CommentData{
+       private int id;
+       private int uid;
+       private int praiseNum;
+       private int replyNum;
+       private String content;
+       private String username;
+       private String img;
+       private long createTime;
+       private List<replyData> replyList;
+       private int flag;
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+       public int getId() {
+           return id;
+       }
 
-    public String getContent() {
-        return content;
-    }
+       public void setId(int id) {
+           this.id = id;
+       }
 
-    public void setImgId(String imgId) {
-        this.imgId = imgId;
-    }
+       public int getUid() {
+           return uid;
+       }
 
-    public String getImgId() {
-        return imgId;
-    }
+       public void setUid(int uid) {
+           this.uid = uid;
+       }
 
-    public void setReplyTotal(int replyTotal) {
-        this.replyTotal = replyTotal;
-    }
+       public int getPraiseNum() {
+           return praiseNum;
+       }
 
-    public int getReplyTotal() {
-        return replyTotal;
-    }
+       public void setPraiseNum(int praiseNum) {
+           this.praiseNum = praiseNum;
+       }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
+       public int getReplyNum() {
+           return replyNum;
+       }
 
-    public String getCreateDate() {
-        return createDate;
-    }
+       public void setReplyNum(int replyNum) {
+           this.replyNum = replyNum;
+       }
 
-    public void setReplyList(List<ReplyDetailBean> replyList) {
-        this.replyList = replyList;
-    }
+       public String getContent() {
+           return content;
+       }
 
-    public List<ReplyDetailBean> getReplyList() {
-        return replyList;
-    }
+       public void setContent(String content) {
+           this.content = content;
+       }
+
+       public String getUsername() {
+           return username;
+       }
+
+       public void setUsername(String username) {
+           this.username = username;
+       }
+
+       public String getImg() {
+           return img;
+       }
+
+       public void setImg(String img) {
+           this.img = img;
+       }
+
+       public long getCreateTime() {
+           return createTime;
+       }
+
+       public void setCreateTime(long createTime) {
+           this.createTime = createTime;
+       }
+
+        public List<replyData> getReplyList() {
+            return replyList;
+        }
+
+        public void setReplyList(List<replyData> replyList) {
+            this.replyList = replyList;
+        }
+
+        public int getFlag() {
+           return flag;
+       }
+
+       public void setFlag(int flag) {
+           this.flag = flag;
+       }
+
+       public static class replyData{
+           private int id;
+           private int cid;
+           private int ruid;
+           private int uid;
+           private int praiseNum;
+           private String username;
+           private String img;
+           private String rusername;
+           private String content;
+           private int flag;
+
+           public int getId() {
+               return id;
+           }
+
+           public void setId(int id) {
+               this.id = id;
+           }
+
+           public int getCid() {
+               return cid;
+           }
+
+           public void setCid(int cid) {
+               this.cid = cid;
+           }
+
+           public int getRuid() {
+               return ruid;
+           }
+
+           public void setRuid(int ruid) {
+               this.ruid = ruid;
+           }
+
+           public int getUid() {
+               return uid;
+           }
+
+           public void setUid(int uid) {
+               this.uid = uid;
+           }
+
+           public int getPraiseNum() {
+               return praiseNum;
+           }
+
+           public void setPraiseNum(int praiseNum) {
+               this.praiseNum = praiseNum;
+           }
+
+           public String getUsername() {
+               return username;
+           }
+
+           public void setUsername(String username) {
+               this.username = username;
+           }
+
+           public String getImg() {
+               return img;
+           }
+
+           public void setImg(String img) {
+               this.img = img;
+           }
+
+           public String getRusername() {
+               return rusername;
+           }
+
+           public void setRusername(String rusername) {
+               this.rusername = rusername;
+           }
+
+           public String getContent() {
+               return content;
+           }
+
+           public void setContent(String content) {
+               this.content = content;
+           }
+
+           public int getFlag() {
+               return flag;
+           }
+
+           public void setFlag(int flag) {
+               this.flag = flag;
+           }
+       }
+   }
+
 }

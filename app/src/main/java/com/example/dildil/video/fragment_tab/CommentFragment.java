@@ -15,37 +15,57 @@ import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
+import com.example.dildil.component.activity.ActivityModule;
+import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentCommentBinding;
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.CommentExpandAdapter;
+import com.example.dildil.video.bean.CoinBean;
+import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
-import com.example.dildil.video.bean.ReplyDetailBean;
+import com.example.dildil.video.bean.ThumbsUpBean;
+import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.contract.VideoDetailsContract;
+import com.example.dildil.video.presenter.VideoDetailsPresenter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 
-public class CommentFragment extends BaseFragment {
+public class CommentFragment extends BaseFragment implements VideoDetailsContract.View {
     private static final String TAG = "CommentFragment";
     FragmentCommentBinding binding;
     private CommentExpandAdapter adapter;
     private CommentBean commentBean;
-    private List<CommentDetailBean> commentsList;
+    private List<CommentDetailBean.CommentData> commentsList;
     private BottomSheetDialog dialog;
     private ResourcesData mResourcesData;
     private EmojIconActions emojIcon;
+    private int id,uid;
+
+    @Inject
+    VideoDetailsPresenter mPresenter;
 
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment, container, false);
+
+        DaggerActivityComponent.builder().appComponent(MyApplication.getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .build().inject(this);
+        mPresenter.attachView(this);
         return binding.getRoot();
     }
 
@@ -57,15 +77,11 @@ public class CommentFragment extends BaseFragment {
     @Override
     protected void initData() {
         showDialog();
+        id = (int) SharedPreferencesUtil.getData("id", 0);
+        uid = (int) SharedPreferencesUtil.getData("uid", 0);
+        mPresenter.getVideoComment(id,1,10,uid);
         mResourcesData = new ResourcesData();
-        commentsList = mResourcesData.generateTestData();
-        initExpandableListView(commentsList);
     }
-
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
 
     @Override
     public void onClick(View v) {
@@ -79,12 +95,12 @@ public class CommentFragment extends BaseFragment {
     /**
      * 初始化评论和回复列表
      */
-    private void initExpandableListView(final List<CommentDetailBean> commentList) {
+    private void initExpandableListView(final CommentDetailBean commentList) {
         binding.FCCommentList.setGroupIndicator(null);
         //初始化适配器
         adapter = new CommentExpandAdapter(getContext(), commentList);
         binding.FCCommentList.setAdapter(adapter);
-        for (int i = 0; i < commentList.size(); i++) {
+        for (int i = 0; i < commentList.getData().size(); i++) {
             //遍历所有评论，都设置为展开（默认是不展开的）
             binding.FCCommentList.expandGroup(i);
         }
@@ -94,7 +110,7 @@ public class CommentFragment extends BaseFragment {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
                 boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
-                Log.e(TAG, "onGroupClick: 当前的评论id>>>" + commentList.get(groupPosition).getId());
+                Log.e(TAG, "onGroupClick: 当前的评论id>>>" + commentList.getData().get(groupPosition).getId());
 //                if(isExpanded){
 //                    expandableListView.collapseGroup(groupPosition);
 //                }else {
@@ -143,7 +159,7 @@ public class CommentFragment extends BaseFragment {
         emojIcon.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
         View parent = (View) commentView.getParent();
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-        commentText.setHint("回复 @" + commentsList.get(position).getNickName() + " 的评论:");
+        commentText.setHint("回复 @" + commentsList.get(position).getUsername() + " 的评论:");
         commentView.measure(0, 0);
         behavior.setPeekHeight(commentView.getMeasuredHeight());
         bt_comment.setOnClickListener(new View.OnClickListener() {
@@ -152,8 +168,11 @@ public class CommentFragment extends BaseFragment {
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean(mResourcesData.getUserData().getUsername(), replyContent);
-                    adapter.addTheReplyData(detailBean, position);
+                    CommentDetailBean.CommentData.replyData replyData = new  CommentDetailBean.CommentData.replyData();
+                    replyData.setContent(replyContent);
+                    replyData.setImg(mResourcesData.getUserData().getUserImg());
+                    replyData.setUsername(mResourcesData.getUserData().getUsername());
+                    adapter.addTheReplyData(replyData, position);
                     binding.FCCommentList.expandGroup(position);
                     XToastUtils.toast("回复成功");
                 } else {
@@ -218,7 +237,10 @@ public class CommentFragment extends BaseFragment {
                 if (!TextUtils.isEmpty(commentContent)) {
                     //commentOnWork(commentContent);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean(mResourcesData.getUserData().getUserImg(), mResourcesData.getUserData().getUsername(), commentContent, "刚刚");
+                    CommentDetailBean.CommentData detailBean = new CommentDetailBean.CommentData();
+                    detailBean.setUsername(mResourcesData.getUserData().getUsername());
+                    detailBean.setImg(mResourcesData.getUserData().getUserImg());
+                    detailBean.setContent(commentContent);
                     adapter.addTheCommentData(detailBean);
                     XToastUtils.toast("评论成功");
 
@@ -251,4 +273,57 @@ public class CommentFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
+
+    }
+
+    @Override
+    public void onGetVideoDetailsFail(String e) {
+
+    }
+
+    @Override
+    public void onGetCoinOperatedSuccess(CoinBean coinBean) {
+
+    }
+
+    @Override
+    public void onGetCoinOperatedFail(String e) {
+
+    }
+
+    @Override
+    public void onGetThumbsUpSuccess(ThumbsUpBean thumbsUpBean) {
+
+    }
+
+    @Override
+    public void onGetThumbsUpFail(String e) {
+
+    }
+
+    @Override
+    public void onGetCollectionVideoSuccess(CollectionBean collectionBean) {
+
+    }
+
+    @Override
+    public void onGetCollectionVideoFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentSuccess(CommentDetailBean commentDetailBean) {
+        initExpandableListView(commentDetailBean);
+        commentsList = commentDetailBean.getData();
+        hideDialog();
+    }
+
+    @Override
+    public void onGetVideoCommentFail(String e) {
+        hideDialog();
+        Log.e(TAG, "onGetVideoCommentFail: ???????????"+e );
+        XToastUtils.error("出现错误:"+e);
+    }
 }

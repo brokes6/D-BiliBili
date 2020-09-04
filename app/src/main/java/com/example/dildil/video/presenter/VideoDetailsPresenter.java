@@ -2,6 +2,7 @@ package com.example.dildil.video.presenter;
 
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -18,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
 
     @Inject
-    public VideoDetailsPresenter(){
+    public VideoDetailsPresenter() {
 
     }
 
@@ -33,7 +34,7 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
 
     @Override
     public void getVideoDetails(int id, int uid) {
-        mModel.getVideoDetails(id,uid).subscribeOn(Schedulers.io())
+        mModel.getVideoDetails(id, uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<VideoDetailsBean>() {
                     @Override
@@ -60,7 +61,7 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
 
     @Override
     public void getCoinOperated(dto bean, int uid) {
-        mModel.getCoinOperated(bean,uid).subscribeOn(Schedulers.io())
+        mModel.getCoinOperated(bean, uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CoinBean>() {
                     @Override
@@ -87,7 +88,7 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
 
     @Override
     public void getThumbsUp(String url, dto dto) {
-        mModel.getThumbsUp(url,dto).subscribeOn(Schedulers.io())
+        mModel.getThumbsUp(url, dto).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ThumbsUpBean>() {
                     @Override
@@ -130,6 +131,33 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetCoinOperatedFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getVideoComment(int id, int num, int size, int uid) {
+        mModel.getVideoComment(id, num, size, uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CommentDetailBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(CommentDetailBean commentDetailBean) {
+                        mView.onGetVideoCommentSuccess(commentDetailBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetVideoCommentFail(e.getMessage());
                     }
 
                     @Override

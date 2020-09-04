@@ -23,13 +23,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.R;
 import com.example.dildil.util.BiliDanmukuParser;
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.DanamakuAdapter;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.dialog.DoubleSpeedDialog;
 import com.example.dildil.video.dialog.SwitchVideoTypeDialog;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -105,7 +105,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private boolean isFirstload = true;
 
     protected boolean byStartedClick;
-    private BottomSheetDialog dialog;
+    private BottomVideoDialog dialog;
 
     private FullScreenStatusMonitoring listener;
 
@@ -249,7 +249,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     private void sendOutDanMu() {
         onVideoPause();
-        dialog = new BottomSheetDialog(mContext, R.style.BottomSheetEdit);
+        dialog = new BottomVideoDialog(mContext, R.style.BottomSheetEdit);
         View commentView = LayoutInflater.from(mContext).inflate(R.layout.danmu_comment, null);
         final EditText commentText = commentView.findViewById(R.id.DM_dialog_comment_et);
         final ImageView send = commentView.findViewById(R.id.DM_send);
@@ -327,6 +327,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
      */
     public boolean setUp(List<SwitchVideoBean> url, boolean cacheWithPlay, File cachePath, String title) {
         mUrlList = url;
+        mSourcePosition = (int) SharedPreferencesUtil.getData("index",0);
+        mTypeText = mUrlList.get(mSourcePosition).getName();
+        mResolvingPower.setText(mTypeText);
         return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, cachePath, title);
     }
 
@@ -832,6 +835,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                         mTypeText = name;
                         mResolvingPower.setText(mTypeText);
                         mSourcePosition = position;
+                        SharedPreferencesUtil.putData("index",position);
                         Toast toast = Toast.makeText(getContext(), "已切换到" + mTypeText, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.LEFT | Gravity.BOTTOM, 0, 220);
                         toast.show();

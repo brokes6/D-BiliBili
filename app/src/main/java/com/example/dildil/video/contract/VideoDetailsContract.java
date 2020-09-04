@@ -5,6 +5,7 @@ import com.example.dildil.abstractclass.BaseView;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -31,6 +32,10 @@ public interface VideoDetailsContract {
 
         void onGetCollectionVideoFail(String e);
 
+        void onGetVideoCommentSuccess(CommentDetailBean commentDetailBean);
+
+        void onGetVideoCommentFail(String e);
+
     }
 
     interface Model extends BaseModel {
@@ -43,6 +48,8 @@ public interface VideoDetailsContract {
 
         Observable<CollectionBean> CollectionVideo(dto dto);
 
+        Observable<CommentDetailBean> getVideoComment(int id,int num,int size,int uid);
+
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -54,5 +61,7 @@ public interface VideoDetailsContract {
         public abstract void getThumbsUp(String url, dto dto);
 
         public abstract void CollectionVideo(dto dto);
+
+        public abstract void getVideoComment(int id,int num,int size,int uid);
     }
 }

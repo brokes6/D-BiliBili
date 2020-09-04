@@ -26,6 +26,7 @@ import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -264,5 +265,15 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetCollectionVideoFail(String e) {
         XToastUtils.error("发生错误:" + e);
+    }
+
+    @Override
+    public void onGetVideoCommentSuccess(CommentDetailBean commentDetailBean) {
+
+    }
+
+    @Override
+    public void onGetVideoCommentFail(String e) {
+
     }
 }

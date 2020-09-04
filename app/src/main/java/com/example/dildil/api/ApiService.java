@@ -6,6 +6,7 @@ import com.example.dildil.login_page.bean.RegisterBean;
 import com.example.dildil.login_page.bean.inputDto;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -42,4 +43,7 @@ public interface ApiService {
 
     @POST("videoservice/video/dynamic_like")
     Observable<CollectionBean> CollectionVideo(@Body dto dto);
+
+    @GET("commentservice/comment/list/praise/VIDEO/{id}/{pageNum}/{pageSize}")
+    Observable<CommentDetailBean> getVideoComment(@Path("id") int vid,@Path("pageNum") int num,@Path("pageSize") int size,@Query("uid") int uid);
 }
