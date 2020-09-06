@@ -121,7 +121,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void onGetLoginFail(String e) {
         hideDialog();
-        if (e.equals("HTTP 502 Bad Gateway")) {
+        if (e.equals("HTTP 500 ")) {
             XToastUtils.error(R.string.enter_correct_password);
         } else {
             XToastUtils.error(e);

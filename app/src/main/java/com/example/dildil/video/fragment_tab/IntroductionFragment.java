@@ -45,7 +45,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private int id;
     private int uid;
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
-    private ImageView mOpen, like_img, Collection, coinImg;
+    private ImageView like_img, Collection, coinImg;
     private boolean isOpen = false;
     private LinearLayout mMainCoin, thumbsUp, CollectionMain, ForwardMain;
     private boolean isLoad = false;
@@ -82,7 +82,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mTime = binding.InVideoData.findViewById(R.id.It_video_time);
         mDanmu = binding.InVideoData.findViewById(R.id.It_barrage_num);
         mPlayNum = binding.InVideoData.findViewById(R.id.It_play_num);
-        mOpen = binding.InVideoData.findViewById(R.id.open_warning);
         mPraise = binding.Sanlian.findViewById(R.id.praise);
         mCoin = binding.Sanlian.findViewById(R.id.coin);
         mMainCoin = binding.Sanlian.findViewById(R.id.main_coin);
@@ -94,8 +93,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         ForwardMain = binding.Sanlian.findViewById(R.id.ForwardMain);
         coinImg = binding.Sanlian.findViewById(R.id.coinImg);
 
+        binding.function1.setOnClickListener(this);
         thumbsUp.setOnClickListener(this);
-        mOpen.setOnClickListener(this);
         mMainCoin.setOnClickListener(this);
         CollectionMain.setOnClickListener(this);
         ForwardMain.setOnClickListener(this);
@@ -113,14 +112,16 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.open_warning:
+            case R.id.function1:
                 if (!isOpen) {
+                    binding.InTitle.setMaxLines(2);
                     binding.InNotInterested.setVisibility(View.VISIBLE);
-                    mOpen.setImageResource(R.drawable.arrow_up);
+                    binding.openWarning.setImageResource(R.drawable.arrow_up);
                     isOpen = true;
                 } else {
+                    binding.InTitle.setMaxLines(1);
                     binding.InNotInterested.setVisibility(View.GONE);
-                    mOpen.setImageResource(R.drawable.arrow_down);
+                    binding.openWarning.setImageResource(R.drawable.arrow_down);
                     isOpen = false;
                 }
                 break;
@@ -208,9 +209,10 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mCoinNum = videoDetailsBean.getLog().getCoinNum();
         isCollection = videoDetailsBean.getLog().isCollection();
         if (!isLoad) initDatas();
-        Log.e(TAG, "onGetVideoDetailsSuccess: ?????"+ videoDetailsBean.getLog().isPraise()+"......"+videoDetailsBean.getLog().isCollection());
+        Log.e(TAG, "onGetVideoDetailsSuccess: ?????" + videoDetailsBean.getLog().isPraise() + "......" + videoDetailsBean.getLog().isCollection());
         if (videoDetailsBean.getLog().isPraise()) like_img.setImageResource(R.drawable.thumb_up_24);
-        if (videoDetailsBean.getLog().isCollection()) Collection.setImageResource(R.mipmap.collect_on);
+        if (videoDetailsBean.getLog().isCollection())
+            Collection.setImageResource(R.mipmap.collect_on);
         if (videoDetailsBean.getLog().getCoinNum() == 2) coinImg.setImageResource(R.mipmap.coin_on);
 
         isLoad = true;

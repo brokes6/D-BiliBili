@@ -50,7 +50,7 @@
         <LinearLayout
             android:id="@+id/seekbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_10"
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_10"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10">
@@ -184,7 +184,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
-
                 android:textColor="#ffffff" />
 
         </LinearLayout>

@@ -133,6 +133,7 @@
                 android:id="@+id/Lo_userPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:layout_marginLeft="@dimen/dp_30"
                 android:layout_toLeftOf="@+id/Lo_forgetThePassword"
                 android:layout_toRightOf="@+id/Lo_password"

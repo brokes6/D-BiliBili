@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="@dimen/dp_10"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/White"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/DM_text_rotation"
-        android:layout_marginLeft="@dimen/dp_7"
-        android:layout_marginRight="@dimen/dp_7"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
-        android:src="@drawable/text_rotation_none"/>
-
-    <EditText
-        android:id="@+id/DM_dialog_comment_et"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@drawable/et_botten_grey"
-        android:hint="@string/EnterComments"
-        android:paddingStart="15dp"
-        android:paddingTop="@dimen/dp_7"
-        android:paddingBottom="@dimen/dp_7"
-        android:textColor="@color/Black"
-        android:textColorHint="#c0c0c0"
-        android:textSize="14sp"/>
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
 
-    <ImageView
-        android:id="@+id/DM_send"
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_7"
-        android:src="@drawable/baseline_send" />
+        <ImageView
+            android:id="@+id/DM_text_rotation"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_marginLeft="@dimen/dp_7"
+            android:layout_marginRight="@dimen/dp_7"
+            android:src="@drawable/text_rotation_none" />
+
+        <EditText
+            android:id="@+id/DM_dialog_comment_et"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/et_botten_grey"
+            android:hint="@string/EnterComments"
+            android:paddingStart="15dp"
+            android:paddingTop="@dimen/dp_7"
+            android:paddingBottom="@dimen/dp_7"
+            android:textColor="@color/Black"
+            android:textColorHint="#c0c0c0"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/DM_send"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_7"
+            android:src="@drawable/baseline_send" />
+
+    </LinearLayout>
 
 </LinearLayout>

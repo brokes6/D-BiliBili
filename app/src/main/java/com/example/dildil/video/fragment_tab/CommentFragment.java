@@ -109,13 +109,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         binding.FCCommentList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
-                boolean isExpanded = expandableListView.isGroupExpanded(groupPosition);
                 Log.e(TAG, "onGroupClick: 当前的评论id>>>" + commentList.getData().get(groupPosition).getId());
-//                if(isExpanded){
-//                    expandableListView.collapseGroup(groupPosition);
-//                }else {
-//                    expandableListView.expandGroup(groupPosition, true);
-//                }
                 showReplyDialog(groupPosition);
                 return true;
             }
@@ -124,7 +118,10 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         binding.FCCommentList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                XToastUtils.toast("点击了回复");
+                if (childPosition == 4){
+                    XToastUtils.toast("点击了查看更多");
+                }
+//                XToastUtils.toast("点击了回复");
                 return false;
             }
         });

@@ -7,13 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.view.VideoActivity;
-import com.gcssloop.widget.RCRelativeLayout;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
@@ -22,7 +22,7 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
     private ImageView cover,more;
     private TextView play_volume,barrage_volume,title;
     private Context mContext;
-    private RCRelativeLayout Re_video;
+    private CardView Re_video;
     private RecommendVideoBean videoBean;
     private int id,uid;
     public RecommendedVideoAdapter(Context context){

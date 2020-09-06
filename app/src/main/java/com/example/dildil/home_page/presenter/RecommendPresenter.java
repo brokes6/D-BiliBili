@@ -51,4 +51,31 @@ public class RecommendPresenter extends RecommendContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void getRefreshRecommendVideo() {
+        mModel.getRefreshRecommendVideo().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RecommendVideoBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(RecommendVideoBean videoBean) {
+                        mView.onGetRefreshRecommendVideoSuccess(videoBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetRefreshRecommendVideoFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

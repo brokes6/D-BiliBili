@@ -11,4 +11,9 @@ public class RecommendModel implements RecommendContract.Model {
     public Observable<RecommendVideoBean> getRandomRecommendation() {
         return ApiEngine.getInstance().getApiService().randomRecommendation();
     }
+
+    @Override
+    public Observable<RecommendVideoBean> getRefreshRecommendVideo() {
+        return ApiEngine.getInstance().getApiService().randomRecommendation();
+    }
 }

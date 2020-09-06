@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -108,7 +109,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         resourcesData.initMyData();
         Glide.with(mContext).load(commentBeanList.get(groupPosition).getImg()).into(groupHolder.logo);
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
-        String data = TimeDateUtils.long2String(commentBeanList.get(groupPosition).getCreateTime(),FORMAT_TYPE_2);
+        String data = TimeDateUtils.long2String(commentBeanList.get(groupPosition).getCreateTime(), FORMAT_TYPE_2);
         groupHolder.tv_time.setText(data);
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());
         groupHolder.iv_like.setOnClickListener(new View.OnClickListener() {
@@ -149,13 +150,28 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         } else {
             childHolder = (ChildHolder) convertView.getTag();
         }
-
-        //设置数据
-        String replyUser = commentBeanList.get(groupPosition).getReplyList().get(childPosition).getUsername();
-        if (!TextUtils.isEmpty(replyUser)) {
-            childHolder.tv_name.setText(replyUser + ":");
+        if (childPosition == 0) {
+            childHolder.secondLevel.setBackgroundResource(R.drawable.file_background_radius_top_grey);
+            childHolder.secondLevel.setPadding(30,25,0,0);
+        } else if (isLastChild) {
+            childHolder.secondLevel.setBackgroundResource(R.drawable.file_background_radius_bottom_grey);
+            childHolder.secondLevel.setPadding(30,0,0,25);
+        } else {
+            childHolder.secondLevel.setBackgroundColor(mContext.getResources().getColor(R.color.White_ash));
+            childHolder.secondLevel.setPadding(30,15,0,15);
         }
-        childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyList().get(childPosition).getContent());
+        if (childPosition>3){
+            childHolder.tv_name.setText("查看更多评论 >");
+            childHolder.tv_content.setVisibility(View.GONE);
+        }else{
+            //设置数据
+            String replyUser = commentBeanList.get(groupPosition).getReplyList().get(childPosition).getUsername();
+            if (!TextUtils.isEmpty(replyUser)) {
+                childHolder.tv_name.setText(replyUser + ":");
+            }
+            childHolder.tv_content.setText(commentBeanList.get(groupPosition).getReplyList().get(childPosition).getContent());
+        }
+
         return convertView;
     }
 
@@ -188,10 +204,12 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      */
     private class ChildHolder {
         private TextView tv_name, tv_content;
+        private LinearLayout secondLevel;
 
         public ChildHolder(View view) {
-            tv_name = (TextView) view.findViewById(R.id.reply_item_user);
-            tv_content = (TextView) view.findViewById(R.id.reply_item_content);
+            tv_name = view.findViewById(R.id.reply_item_user);
+            tv_content = view.findViewById(R.id.reply_item_content);
+            secondLevel = view.findViewById(R.id.secondLevel);
         }
     }
 

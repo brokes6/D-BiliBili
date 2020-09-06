@@ -46,4 +46,5 @@ public interface ApiService {
 
     @GET("commentservice/comment/list/praise/VIDEO/{id}/{pageNum}/{pageSize}")
     Observable<CommentDetailBean> getVideoComment(@Path("id") int vid,@Path("pageNum") int num,@Path("pageSize") int size,@Query("uid") int uid);
+
 }

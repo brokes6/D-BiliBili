@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -23,6 +24,10 @@ import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.other.GlideImageLoader;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
+import com.google.android.material.appbar.AppBarLayout;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.BannerConfig;
 
 import java.net.URL;
@@ -58,10 +63,36 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     protected void initView() {
         //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
-        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),2);
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         adapter = new RecommendedVideoAdapter(getContext());
         binding.ReRecy.setLayoutManager(layoutManager1);
         binding.ReRecy.setAdapter(adapter);
+
+        binding.appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                if (verticalOffset >= 0) {
+                    binding.swipe.setEnabled(true);
+                } else {
+                    binding.swipe.setEnabled(false);
+                }
+            }
+        });
+        //设置 Header式
+        binding.swipe.setRefreshHeader(new MaterialHeader(getContext()));
+        //取消Footer
+        binding.swipe.setEnableLoadMore(false);
+        binding.swipe.setDisableContentWhenRefresh(true);
+
+        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "onRefresh: 开始刷新");
+                mPresenter.getRefreshRecommendVideo();
+            }
+        });
     }
 
     @Override
@@ -72,14 +103,14 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         initBanner(resourcesData.getBeannerUrl());
     }
 
-    private void initDates(){
+    private void initDates() {
         ResourcesData resourcesData = new ResourcesData();
         resourcesData.initBanner();
         initBanner(resourcesData.getBeannerUrl());
 
     }
 
-    private void initBanner(List<?> imageUrls){
+    private void initBanner(List<?> imageUrls) {
         binding.ReBanner.setImageLoader(new GlideImageLoader());
         binding.ReBanner.setImages(imageUrls);
         binding.ReBanner.setDelayTime(4000);
@@ -106,7 +137,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
-        Log.e(TAG, "RecommendVideoBean有："+videoBean.getData());
+        Log.e(TAG, "RecommendVideoBean有：" + videoBean.getData());
         adapter.setData(videoBean);
         adapter.loadMore(videoBean.getData());
     }
@@ -114,5 +145,19 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     public void onGetRecommendVideoFail(String e) {
 
+    }
+
+    @Override
+    public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
+        Log.e(TAG, "onGetRefreshRecommendVideoSuccess: 刷新成功" );
+        binding.ReBanner.setVisibility(View.GONE);
+        adapter.refresh(videoBean.getData());
+        adapter.setData(videoBean);
+        binding.swipe.finishRefresh(true);
+    }
+
+    @Override
+    public void onGetRefreshRecommendVideoFail(String e) {
+        Log.e(TAG, "onGetRefreshRecommendVideoFail: ??????????"+e );
     }
 }

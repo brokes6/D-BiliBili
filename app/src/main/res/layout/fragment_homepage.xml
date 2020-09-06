@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:layout_below="@+id/Title_Search"
-            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_10"
             app:tl_indicator_bounce_enable="true"
             app:tl_indicator_color="@color/Pink"
             app:tl_indicator_width_equal_title="true"

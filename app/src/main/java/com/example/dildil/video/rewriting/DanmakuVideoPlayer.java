@@ -271,7 +271,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 //                    onVideoResume();
                     getGSYVideoManager().start();
                     danmakuOnResume();
-                    addDanmaku(true, replyContent);
+                    addDanmaku(true, replyContent,0);
                     setStateAndUi(CURRENT_STATE_PLAYING);
                     Video_play.setImageResource(R.mipmap.pause);
                 } else {
@@ -852,7 +852,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 模拟添加弹幕数据
      */
-    public void addDanmaku(boolean islive, String content) {
+    public void addDanmaku(boolean islive, String content,int textSize) {
         BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         if (danmaku == null || mDanmakuView == null) {
             return;
@@ -862,9 +862,15 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级
         danmaku.isLive = islive;
         danmaku.setTime(mDanmakuView.getCurrentTime() + 500);
-        danmaku.textSize = 25f * (mParser.getDisplayer().getDensity() - 0.6f);
+        if (textSize == 1){
+            danmaku.textSize = 25f * (mParser.getDisplayer().getDensity() - 0.6f);
+        }else if (textSize == 0){
+            danmaku.textSize = 20f * (mParser.getDisplayer().getDensity() - 0.6f);
+        }else{
+            danmaku.textSize = 15f * (mParser.getDisplayer().getDensity() - 0.6f);
+        }
         danmaku.textColor = Color.RED;
-        danmaku.textShadowColor = Color.WHITE;
+//        danmaku.textShadowColor = Color.WHITE;
         danmaku.underlineColor = Color.GREEN;
         mDanmakuView.addDanmaku(danmaku);
     }

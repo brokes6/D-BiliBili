@@ -15,14 +15,22 @@ public interface RecommendContract {
 
         void onGetRecommendVideoFail(String e);
 
+        void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean);
+
+        void onGetRefreshRecommendVideoFail(String e);
+
     }
     interface Model extends BaseModel {
 
         Observable<RecommendVideoBean> getRandomRecommendation();
 
+        Observable<RecommendVideoBean> getRefreshRecommendVideo();
+
     }
     abstract class Presenter extends BasePresenter<View, Model> {
 
         public abstract void getRandomRecommendation();
+
+        public abstract void getRefreshRecommendVideo();
     }
 }

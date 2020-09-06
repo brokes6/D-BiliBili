@@ -42,8 +42,6 @@
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7">
 
-                    <!-- 这里的marginTop在实机上测试，发先如果写45dp，手机顶部会流出一道白，不清楚啥原因··· -->
-
                     <com.example.dildil.video.rewriting.DanmakuVideoPlayer
                         android:id="@+id/detail_player"
                         android:layout_width="match_parent"
@@ -68,9 +66,9 @@
                         android:id="@+id/playButton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="gone"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="@dimen/dp_35"
@@ -119,7 +117,7 @@
                         app:tl_indicator_width_equal_title="true"
                         app:tl_textSelectColor="@color/Pink"
                         app:tl_textUnselectColor="#838080"
-                        app:tl_textsize="@dimen/afc_15sp"
+                        app:tl_textsize="15sp"
                         app:tl_underline_height="1dp" />
                 </LinearLayout>
 
@@ -178,7 +176,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/V_viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

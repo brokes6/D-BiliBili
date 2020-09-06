@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/White">
+    android:background="@color/White"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/secondLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:layout_marginLeft="48dp"
         android:layout_marginRight="32dp"
         android:orientation="horizontal"
-        android:background="@drawable/file_background_radius_grey">
+        android:paddingLeft="@dimen/dp_10">
+
         <TextView
             android:id="@+id/reply_item_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="#1c86b8"/>
+            android:textColor="#1c86b8"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/reply_item_content"
@@ -29,7 +30,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="8dp"
             android:textColor="@color/Black"
-            android:textSize="13sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

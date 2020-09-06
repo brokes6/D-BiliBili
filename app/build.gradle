@@ -93,7 +93,7 @@ dependencies {
     implementation 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-x86:0.9.21'
     //自己的控件库
-    implementation 'com.github.brokes6:CustomControl:1.1.7'
+    implementation 'com.github.brokes6:CustomControl:1.1.9'
     //Android九宫格显示多图或item
     implementation 'cn.lemon:multiview:1.0.2'
 
@@ -107,4 +107,8 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.24'
     //Emoji表情
     implementation 'com.github.hani-momanii:SuperNova-Emoji:1.1'
+
+    //下拉刷新
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'
 }

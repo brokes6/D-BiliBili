@@ -57,8 +57,8 @@ public class SplashActivity extends BaseActivity {
             public void onFinish() {
                 String authToken = SharePreferenceUtil.getInstance(SplashActivity.this).getAuthToken("");
                 if (TextUtils.isEmpty(authToken)) {
-//                    ActivityUtils.startActivity(LoginActivity.class);
-                    ActivityUtils.startActivity(HomeActivity.class);
+                    ActivityUtils.startActivity(LoginActivity.class);
+//                    ActivityUtils.startActivity(HomeActivity.class);
                 } else {
                     ActivityUtils.startActivity(HomeActivity.class);
                 }

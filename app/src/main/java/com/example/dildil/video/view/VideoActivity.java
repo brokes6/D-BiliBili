@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -17,6 +18,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.customcontrollibs.Selector;
+import com.example.customcontrollibs.SelectorGroup;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
@@ -55,7 +58,7 @@ import javax.inject.Inject;
 
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAUSE;
 
-public class VideoActivity extends BaseActivity implements VideoDetailsContract.View {
+public class VideoActivity extends BaseActivity implements VideoDetailsContract.View, Selector.OnSelectorStateListener {
     private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;
     private String[] TabTitle = {"简介", "评论"};
@@ -70,8 +73,11 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private int id, uid;
     private List<SwitchVideoBean> urls = new ArrayList<>();
     private BottomSheetDialog dialog;
+    private SelectorGroup selectorGroup = new SelectorGroup();
+    private int textSize;
+    private int LARGEFONT = 1, FINEPRINT = 2;
+    private boolean isFunction = true;
     String[] definition = {"360p", "480p", "720p", "1080p"};
-
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -295,10 +301,15 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     private void sendOutDanMu() {
         dialog = new BottomSheetDialog(this, R.style.BottomSheetEdit);
-        View commentView = LayoutInflater.from(this).inflate(R.layout.danmu_comment, null);
+        View commentView = LayoutInflater.from(this).inflate(R.layout.danmu_comment_out, null);
         final EditText commentText = commentView.findViewById(R.id.DM_dialog_comment_et);
         final ImageView send = commentView.findViewById(R.id.DM_send);
         final ImageView rotation = commentView.findViewById(R.id.DM_text_rotation);
+        final RelativeLayout function = commentView.findViewById(R.id.function);
+        final Selector teenageSelector = commentView.findViewById(R.id.text_up);
+        final Selector manSelector = commentView.findViewById(R.id.text_no);
+        teenageSelector.setOnSelectorStateListener(this).setSelectorGroup(selectorGroup);
+        manSelector.setOnSelectorStateListener(this).setSelectorGroup(selectorGroup);
         commentText.setFocusable(true);
         commentText.setFocusableInTouchMode(true);
         commentText.requestFocus();
@@ -307,13 +318,25 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
         commentView.measure(0, 0);
         behavior.setPeekHeight(commentView.getMeasuredHeight());
+        rotation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isFunction) {
+                    function.setVisibility(View.VISIBLE);
+                    isFunction = true;
+                } else {
+                    function.setVisibility(View.GONE);
+                    isFunction = false;
+                }
+            }
+        });
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
-                    binding.detailPlayer.addDanmaku(true, replyContent);
+                    binding.detailPlayer.addDanmaku(true, replyContent, textSize);
                 } else {
                     XToastUtils.toast("弹幕内容不能为空");
                 }
@@ -321,6 +344,19 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         });
         dialog.show();
 
+    }
+
+    @Override
+    public void onStateChange(Selector selector, boolean isSelect) {
+        String tag = selector.getTag();
+        switch (tag) {
+            case "text_up":
+                textSize = LARGEFONT;
+                break;
+            case "text_no":
+                textSize = FINEPRINT;
+                break;
+        }
     }
 
     private void DanmakuShow() {
@@ -422,6 +458,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     public void onGetVideoDetailsFail(String e) {
         XToastUtils.error(e);
+        hideDialog();
     }
 
     @Override
