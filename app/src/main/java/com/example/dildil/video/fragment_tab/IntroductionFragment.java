@@ -1,7 +1,6 @@
 package com.example.dildil.video.fragment_tab;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,9 +51,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Inject
     VideoDetailsPresenter mPresenter;
-    private boolean mIsPraise;
-    private int mCoinNum;
-    private boolean isCollection;
+    private boolean mIsPraise = false;
+    private int mCoinNum = 0;
+    private boolean isCollection = false;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -205,16 +204,15 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mCoin.setText(videoDetailsBean.getCoinNum() + "");
         String times = videoDetailsBean.getUpdateTime();
         mTime.setText(times.substring(5, 10));
-        mIsPraise = videoDetailsBean.getLog().isPraise();
-        mCoinNum = videoDetailsBean.getLog().getCoinNum();
-        isCollection = videoDetailsBean.getLog().isCollection();
+        if (videoDetailsBean.getLog() != null) {
+            mIsPraise = videoDetailsBean.getLog().isPraise();
+            mCoinNum = videoDetailsBean.getLog().getCoinNum();
+            isCollection = videoDetailsBean.getLog().isCollection();
+            if (videoDetailsBean.getLog().isPraise()) like_img.setImageResource(R.drawable.thumb_up_24);
+            if (videoDetailsBean.getLog().isCollection()) Collection.setImageResource(R.mipmap.collect_on);
+            if (videoDetailsBean.getLog().getCoinNum() == 2) coinImg.setImageResource(R.mipmap.coin_on);
+        }
         if (!isLoad) initDatas();
-        Log.e(TAG, "onGetVideoDetailsSuccess: ?????" + videoDetailsBean.getLog().isPraise() + "......" + videoDetailsBean.getLog().isCollection());
-        if (videoDetailsBean.getLog().isPraise()) like_img.setImageResource(R.drawable.thumb_up_24);
-        if (videoDetailsBean.getLog().isCollection())
-            Collection.setImageResource(R.mipmap.collect_on);
-        if (videoDetailsBean.getLog().getCoinNum() == 2) coinImg.setImageResource(R.mipmap.coin_on);
-
         isLoad = true;
         hideDialog();
     }

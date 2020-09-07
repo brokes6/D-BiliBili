@@ -4,6 +4,7 @@ import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.login_page.bean.RegisterBean;
 import com.example.dildil.login_page.bean.inputDto;
+import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
@@ -46,5 +47,8 @@ public interface ApiService {
 
     @GET("commentservice/comment/list/praise/VIDEO/{id}/{pageNum}/{pageSize}")
     Observable<CommentDetailBean> getVideoComment(@Path("id") int vid,@Path("pageNum") int num,@Path("pageSize") int size,@Query("uid") int uid);
+
+    @GET("userservice/logout")
+    Observable<LogoutBean> Logout();
 
 }

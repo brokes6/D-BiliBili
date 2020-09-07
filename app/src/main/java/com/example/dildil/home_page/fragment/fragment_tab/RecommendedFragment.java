@@ -24,6 +24,7 @@ import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.other.GlideImageLoader;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
+import com.example.dildil.util.XToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -158,6 +159,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRefreshRecommendVideoFail(String e) {
-        Log.e(TAG, "onGetRefreshRecommendVideoFail: ??????????"+e );
+        XToastUtils.error("出现错误:"+e);
+        binding.swipe.finishRefresh(true);
     }
 }

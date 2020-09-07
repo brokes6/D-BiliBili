@@ -444,7 +444,11 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
-        Glide.with(mContext).load(videoDetailsBean.getCover()).into(imageView);
+        if (videoDetailsBean.getCover() == null) {
+            imageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.file_background_circular_orange));
+        } else {
+            Glide.with(mContext).load(videoDetailsBean.getCover()).into(imageView);
+        }
         binding.detailPlayer.setThumbImageView(imageView);
         String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {

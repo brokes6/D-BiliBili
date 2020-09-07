@@ -5,7 +5,9 @@
     <solid android:color="#f4f4f4" />
 
     <!-- 设置几何图形四个角的弧度 -->
-    <corners android:radius="5dp"/>
+    <corners
+        android:topRightRadius="@dimen/dp_5"
+        android:topLeftRadius="@dimen/dp_5"/>
 
 
 </shape>

@@ -39,11 +39,6 @@ public class HomeActivity extends BaseActivity {
                 .init();
     }
 
-//    @Override
-//    protected BasePresenter onCreatePresenter() {
-//        return null;
-//    }
-
     @Override
     protected void initView() {
         fragmentList.add(new HomePageFragment());

@@ -93,7 +93,7 @@ dependencies {
     implementation 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-x86:0.9.21'
     //自己的控件库
-    implementation 'com.github.brokes6:CustomControl:1.1.9'
+    implementation 'com.github.brokes6:CustomControl:1.2.1'
     //Android九宫格显示多图或item
     implementation 'cn.lemon:multiview:1.0.2'
 

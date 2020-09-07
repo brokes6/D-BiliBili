@@ -42,6 +42,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
+        //设置状态栏为白底黑字
+        ImmersionBar.with(LoginActivity.this)
+                .statusBarColor(R.color.White)
+                .statusBarDarkFont(true);
+
         DaggerActivityComponent.builder()
                 .appComponent(MyApplication.getAppComponent())
                 .activityModule(new ActivityModule(this))
@@ -74,10 +79,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     protected void onResume() {
         Log.d(TAG, "onResume");
         super.onResume();
-        //设置状态栏为白底黑字
-        ImmersionBar.with(LoginActivity.this)
-                .statusBarColor(R.color.White)
-                .statusBarDarkFont(true);
     }
 
     @Override
@@ -110,6 +111,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
+    public void onBackPressed() {
+        System.exit(0);// 完全退出应用
+    }
+
+    @Override
     public void onGetLoginSuccess(LoginBean loginBean) {
         SharePreferenceUtil.getInstance(this).saveUserInfo(loginBean, account);
         hideDialog();
@@ -125,6 +131,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             XToastUtils.error(R.string.enter_correct_password);
         } else {
             XToastUtils.error(e);
+            Log.e(TAG, "onGetLoginFail: ？？？？"+e );
         }
     }
 }

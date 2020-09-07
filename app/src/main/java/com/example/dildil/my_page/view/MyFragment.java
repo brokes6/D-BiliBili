@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
@@ -27,7 +28,7 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        binding.MSetting.setOnClickListener(this);
     }
 
     @Override
@@ -50,13 +51,13 @@ public class MyFragment extends BaseFragment {
         hideDialog();
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()){
+            case R.id.M_setting:
+                ActivityUtils.startActivity(SettingActivity.class);
+                break;
+        }
     }
 }

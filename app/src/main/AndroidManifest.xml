@@ -20,13 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
+        <activity android:name=".my_page.view.SettingActivity"></activity>
         <activity
             android:name=".video.view.VideoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:screenOrientation="portrait" />
         <activity android:name=".login_page.view.LoginActivity" />
-        <activity android:name="cn.lemon.multi.ui.ViewImageActivity"/>
-        <activity android:name=".search.view.SearchActivity"/>
+        <activity android:name="cn.lemon.multi.ui.ViewImageActivity" />
+        <activity android:name=".search.view.SearchActivity" />
         <activity android:name=".home_page.view.HomeActivity" />
         <activity
             android:name=".login_page.view.SplashActivity"
@@ -38,18 +39,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="design_width_in_dp"
-            android:value="400"/>
+            android:value="400" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="640"/>
-<!--        <meta-data-->
-<!--            android:name="android.max_aspect"-->
-<!--            android:value="2.4" /> &lt;!&ndash; 适配华为（huawei）刘海屏 &ndash;&gt;-->
-<!--        <meta-data-->
-<!--            android:name="android.notch_support"-->
-<!--            android:value="true" /> &lt;!&ndash; 适配小米（xiaomi）刘海屏 &ndash;&gt;-->
+            android:value="640" /> <!-- <meta-data -->
+        <!-- android:name="android.max_aspect" -->
+        <!-- android:value="2.4" /> &lt;!&ndash; 适配华为（huawei）刘海屏 &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="android.notch_support" -->
+        <!-- android:value="true" /> &lt;!&ndash; 适配小米（xiaomi）刘海屏 &ndash;&gt; -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />

@@ -3,7 +3,6 @@ package com.example.dildil.login_page.view;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -13,6 +12,8 @@ import com.example.dildil.base.BaseActivity;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.util.ScreenUtils;
 import com.example.dildil.util.SharePreferenceUtil;
+
+import java.util.HashSet;
 
 /**
  * 启动页
@@ -55,13 +56,20 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                String authToken = SharePreferenceUtil.getInstance(SplashActivity.this).getAuthToken("");
-                if (TextUtils.isEmpty(authToken)) {
+                HashSet<String > authTokens = SharePreferenceUtil.getInstance(SplashActivity.this).getCookies("cookie");
+//                String authToken = SharePreferenceUtil.getInstance(SplashActivity.this).getAuthToken("");
+                if (authTokens ==null){
                     ActivityUtils.startActivity(LoginActivity.class);
 //                    ActivityUtils.startActivity(HomeActivity.class);
                 } else {
                     ActivityUtils.startActivity(HomeActivity.class);
                 }
+//                if (TextUtils.isEmpty(authToken)) {
+//                    ActivityUtils.startActivity(LoginActivity.class);
+////                    ActivityUtils.startActivity(HomeActivity.class);
+//                } else {
+//                    ActivityUtils.startActivity(HomeActivity.class);
+//                }
                 SplashActivity.this.finish();
             }
         };

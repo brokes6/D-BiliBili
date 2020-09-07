@@ -291,12 +291,17 @@
                 android:textColor="#212121"/>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/M_recy"
-            android:layout_below="@+id/function_six"
+        <com.example.customcontrollibs.MenuItemLayout
+            android:id="@+id/M_setting"
             android:layout_marginTop="@dimen/dp_10"
+            android:layout_below="@+id/function_six"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:ImageLeftMargin="50"
+            app:TitleImg="@mipmap/setting"
+            app:TitleText="设置"
+            app:TitleSize="14"
+            app:Underline="false" />
 
     </RelativeLayout>
 </layout>

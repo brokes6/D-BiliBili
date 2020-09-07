@@ -45,6 +45,8 @@ public class ApiEngine {
                 .writeTimeout(20, TimeUnit.SECONDS)
                 .addNetworkInterceptor(netWorkInterceptor)
                 .addInterceptor(responseInterceptor)
+                .addInterceptor(new AddCookiesInterceptor())
+                .addInterceptor(new ReceivedCookiesInterceptor())
                 .cookieJar(cookieJar)
 //                .cache(cache)
                 .build();

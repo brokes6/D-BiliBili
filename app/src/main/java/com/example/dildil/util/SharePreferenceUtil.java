@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import com.example.dildil.abstractclass.Constants;
 import com.example.dildil.login_page.bean.LoginBean;
 
+import java.util.HashSet;
 import java.util.Locale;
 
 import static com.example.dildil.abstractclass.Constants.SpKey.TAG_LANGUAGE;
@@ -87,6 +88,17 @@ public class SharePreferenceUtil {
         saveString(Constants.SpKey.AUTH_TOKEN, token);
     }
 
+    public void setCookies(String name, HashSet<String> cookies){
+        saveHashSet(name,cookies);
+    }
+
+    public HashSet<String> getCookies(String key){
+        return (HashSet<String>) sp.getStringSet(key,null);
+    }
+
+    public void remove(String key){
+        editor.remove(key).apply();
+    }
     /**
      * 获取AuthToken
      *
@@ -116,5 +128,8 @@ public class SharePreferenceUtil {
 
     private void saveString(String key, String value) {
         editor.putString(key, value).apply();
+    }
+    private void saveHashSet(String name, HashSet<String> cookies){
+        editor.putStringSet(name,cookies).apply();
     }
 }

@@ -327,7 +327,8 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
      */
     public boolean setUp(List<SwitchVideoBean> url, boolean cacheWithPlay, File cachePath, String title) {
         mUrlList = url;
-        mSourcePosition = (int) SharedPreferencesUtil.getData("index",0);
+//        mSourcePosition = (int) SharedPreferencesUtil.getData("index",0);
+        mSourcePosition = mUrlList.size()-1;
         mTypeText = mUrlList.get(mSourcePosition).getName();
         mResolvingPower.setText(mTypeText);
         return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, cachePath, title);
