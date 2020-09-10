@@ -4,8 +4,11 @@ import com.example.dildil.api.ApiEngine;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
+import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.danmu;
 import com.example.dildil.video.bean.dto;
 import com.example.dildil.video.contract.VideoDetailsContract;
 
@@ -35,5 +38,15 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
     @Override
     public Observable<CommentDetailBean> getVideoComment(int id, int num, int size, int uid) {
         return ApiEngine.getInstance().getApiService().getVideoComment(id,num,size,uid);
+    }
+
+    @Override
+    public Observable<DanmuBean> getDanMu(int value, int uid) {
+        return ApiEngine.getInstance().getApiService().getDanMu(value,uid);
+    }
+
+    @Override
+    public Observable<SeadDanmuBean> seadDanMu(danmu danmu, int uid) {
+        return ApiEngine.getInstance().getApiService().seadDanMu(danmu);
     }
 }

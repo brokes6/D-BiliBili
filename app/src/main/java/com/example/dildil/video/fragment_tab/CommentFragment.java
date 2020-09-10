@@ -29,6 +29,8 @@ import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
+import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.contract.VideoDetailsContract;
@@ -322,5 +324,25 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         hideDialog();
         Log.e(TAG, "onGetVideoCommentFail: ???????????"+e );
         XToastUtils.error("出现错误:"+e);
+    }
+
+    @Override
+    public void onGetDanMuSuccess(DanmuBean danmuBean) {
+
+    }
+
+    @Override
+    public void onGetDanMuFail(String e) {
+
+    }
+
+    @Override
+    public void onGetSeadDanMuSuccess(SeadDanmuBean seadDanmuBean) {
+
+    }
+
+    @Override
+    public void onGetSedaDanMuFail(String e) {
+
     }
 }

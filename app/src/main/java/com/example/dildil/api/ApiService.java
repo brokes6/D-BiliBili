@@ -8,8 +8,11 @@ import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
+import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.danmu;
 import com.example.dildil.video.bean.dto;
 
 import io.reactivex.Observable;
@@ -50,5 +53,11 @@ public interface ApiService {
 
     @GET("userservice/logout")
     Observable<LogoutBean> Logout();
+
+    @GET("commentservice/danmu/{vid}/{second}")
+    Observable<DanmuBean> getDanMu(@Path("second") int second, @Path("vid") int vid );
+
+    @POST("commentservice/danmu")
+    Observable<SeadDanmuBean> seadDanMu(@Body danmu danmu);
 
 }

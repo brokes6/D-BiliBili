@@ -56,8 +56,13 @@
                     android:layout_height="@dimen/dp_45"
                     app:layout_collapseMode="pin">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
                     <ImageView
                         android:id="@+id/keyboard"
+                        android:layout_centerVertical="true"
                         android:layout_width="@dimen/dp_24"
                         android:layout_height="@dimen/dp_24"
                         android:src="@drawable/keyboard_backspace_24" />
@@ -83,6 +88,16 @@
                             android:textColor="@color/White"
                             android:textSize="18sp" />
                     </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/more"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:layout_width="@dimen/dp_24"
+                            android:layout_height="@dimen/dp_24"
+                            android:src="@drawable/more_vert_24"/>
+                    </RelativeLayout>
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

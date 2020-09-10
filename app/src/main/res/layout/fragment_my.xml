@@ -82,12 +82,47 @@
                 android:src="@drawable/arrow_forward" />
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/function_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/function_user"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="horizontal">
+
+            <com.example.customcontrollibs.TopTextView
+                android:id="@+id/dynamic"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_70"
+                android:layout_weight="1"
+                app:Bottom_Text="动态"
+                app:Text_Spacing="20" />
+
+            <com.example.customcontrollibs.TopTextView
+                android:id="@+id/follow"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_70"
+                android:layout_weight="1"
+                app:Bottom_Text="关注"
+                app:Text_Spacing="20" />
+
+            <com.example.customcontrollibs.TopTextView
+                android:id="@+id/fans"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_70"
+                android:layout_weight="1"
+                app:Bottom_Text="粉丝"
+                app:Text_Spacing="20" />
+        </LinearLayout>
+
         <com.gcssloop.widget.RCRelativeLayout
             android:id="@+id/M_video_cover"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
             android:layout_below="@+id/function_data"
-            android:layout_margin="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             app:round_corner_top_left="5dp"
             app:round_corner_top_right="5dp">
 
@@ -125,183 +160,195 @@
                 android:src="@drawable/arrow_forward_white" />
         </com.gcssloop.widget.RCRelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/function_data"
-            android:layout_marginTop="@dimen/dp_10"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/function_user"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/M_video_cover">
 
-            <com.example.customcontrollibs.TopTextView
-                android:id="@+id/dynamic"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_70"
-                app:Bottom_Text="动态"
-                app:Text_Spacing="20" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <com.example.customcontrollibs.TopTextView
-                android:id="@+id/follow"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_70"
-                app:Bottom_Text="关注"
-                app:Text_Spacing="20" />
+                <LinearLayout
+                    android:id="@+id/function_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-            <com.example.customcontrollibs.TopTextView
-                android:id="@+id/fans"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_70"
-                app:Bottom_Text="粉丝"
-                app:Text_Spacing="20" />
-        </LinearLayout>
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="离线缓存"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-        <LinearLayout
-            android:id="@+id/function_three"
-            android:layout_below="@+id/M_video_cover"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="历史记录"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="离线缓存"
-                app:Image_Text_Spacing="20"
-                app:Text_Color="@color/Ash"/>
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="我的收藏"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="历史记录"
-                app:Text_Color="@color/Ash"
-                app:Image_Text_Spacing="20"/>
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="稍后再看"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="我的收藏"
-                app:Text_Color="@color/Ash"
-                app:Image_Text_Spacing="20"/>
+                </LinearLayout>
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="稍后再看"
-                app:Text_Color="@color/Ash"
-                app:Image_Text_Spacing="20"/>
+                <LinearLayout
+                    android:id="@+id/function_four"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/function_three"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:orientation="horizontal">
 
-        </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="创作中心"
+                        android:textColor="#212121"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/function_four"
-            android:layout_below="@+id/function_three"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:orientation="horizontal">
+                <LinearLayout
+                    android:id="@+id/function_five"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/function_four"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="创作中心"
-                android:textSize="16sp"
-                android:textColor="#212121"/>
-        </LinearLayout>
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="离线缓存"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-        <LinearLayout
-            android:id="@+id/function_five"
-            android:layout_below="@+id/function_four"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="历史记录"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="离线缓存"
-                app:Text_Color="@color/Ash"
-                app:Image_Text_Spacing="20"/>
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="我的收藏"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="历史记录"
-                app:Text_Color="@color/Ash"
-                app:Image_Text_Spacing="20"/>
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_80"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="稍后再看"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="我的收藏"
-                app:Text_Color="@color/Ash"
-                app:Image_Text_Spacing="20"/>
+                </LinearLayout>
 
-            <com.example.customcontrollibs.ImageTopView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="@dimen/dp_80"
-                android:layout_margin="@dimen/dp_10"
-                app:Image_Drawable="@mipmap/offline_caching"
-                app:Image_Text="稍后再看"
-                app:Text_Color="@color/Ash"
-                app:Image_Text_Spacing="20"/>
+                <LinearLayout
+                    android:id="@+id/function_six"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/function_five"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:orientation="horizontal">
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/function_six"
-            android:layout_below="@+id/function_five"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐服务"
+                        android:textColor="#212121"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="推荐服务"
-                android:textSize="16sp"
-                android:textColor="#212121"/>
-        </LinearLayout>
+                <com.example.customcontrollibs.MenuItemLayout
+                    android:id="@+id/M_Customer_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/function_six"
+                    android:layout_marginTop="@dimen/dp_10"
+                    app:ImageLeftMargin="50"
+                    app:TitleImg="@mipmap/customer_service"
+                    app:TitleSize="14"
+                    app:TitleText="联系客服"
+                    app:Underline="false" />
 
-        <com.example.customcontrollibs.MenuItemLayout
-            android:id="@+id/M_setting"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_below="@+id/function_six"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:ImageLeftMargin="50"
-            app:TitleImg="@mipmap/setting"
-            app:TitleText="设置"
-            app:TitleSize="14"
-            app:Underline="false" />
+                <com.example.customcontrollibs.MenuItemLayout
+                    android:id="@+id/M_classroom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/M_Customer_service"
+                    app:ImageLeftMargin="50"
+                    app:TitleImg="@mipmap/classroom"
+                    app:TitleSize="14"
+                    app:TitleText="课堂模式"
+                    app:Underline="false" />
+
+                <com.example.customcontrollibs.MenuItemLayout
+                    android:id="@+id/teenagers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/M_classroom"
+                    app:ImageLeftMargin="50"
+                    app:TitleImg="@mipmap/teenagers"
+                    app:TitleSize="14"
+                    app:TitleText="青少年模式"
+                    app:Underline="false" />
+
+                <com.example.customcontrollibs.MenuItemLayout
+                    android:id="@+id/M_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/teenagers"
+                    app:ImageLeftMargin="50"
+                    app:TitleImg="@mipmap/setting"
+                    app:TitleSize="14"
+                    app:TitleText="设置"
+                    app:Underline="false" />
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
 </layout>

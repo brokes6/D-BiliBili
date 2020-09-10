@@ -6,8 +6,11 @@ import com.example.dildil.base.BasePresenter;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
+import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.danmu;
 import com.example.dildil.video.bean.dto;
 
 import io.reactivex.Observable;
@@ -36,6 +39,14 @@ public interface VideoDetailsContract {
 
         void onGetVideoCommentFail(String e);
 
+        void onGetDanMuSuccess(DanmuBean danmuBean);
+
+        void onGetDanMuFail(String e);
+
+        void onGetSeadDanMuSuccess(SeadDanmuBean seadDanmuBean);
+
+        void onGetSedaDanMuFail(String e);
+
     }
 
     interface Model extends BaseModel {
@@ -48,7 +59,11 @@ public interface VideoDetailsContract {
 
         Observable<CollectionBean> CollectionVideo(dto dto);
 
-        Observable<CommentDetailBean> getVideoComment(int id,int num,int size,int uid);
+        Observable<CommentDetailBean> getVideoComment(int id, int num, int size, int uid);
+
+        Observable<DanmuBean> getDanMu(int value, int vid);
+
+        Observable<SeadDanmuBean> seadDanMu(danmu danmu, int uid);
 
     }
 
@@ -62,6 +77,10 @@ public interface VideoDetailsContract {
 
         public abstract void CollectionVideo(dto dto);
 
-        public abstract void getVideoComment(int id,int num,int size,int uid);
+        public abstract void getVideoComment(int id, int num, int size, int uid);
+
+        public abstract void getDanMu(int value, int vid);
+
+        public abstract void seadDanMu(danmu danmu, int uid);
     }
 }

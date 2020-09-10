@@ -1,10 +1,15 @@
 package com.example.dildil.video.presenter;
 
+import android.util.Log;
+
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
+import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.danmu;
 import com.example.dildil.video.bean.dto;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.model.VideoDetailsModel;
@@ -158,6 +163,62 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetVideoCommentFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private static final String TAG = "VideoDetailsPresenter";
+
+    @Override
+    public void getDanMu(int second, int vid) {
+        mModel.getDanMu(second,vid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DanmuBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(DanmuBean danmuBean) {
+                        mView.onGetDanMuSuccess(danmuBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetDanMuFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void seadDanMu(danmu danmu, int uid) {
+        mModel.seadDanMu(danmu,uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SeadDanmuBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(SeadDanmuBean seadDanmuBean) {
+                        mView.onGetSeadDanMuSuccess(seadDanmuBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetSedaDanMuFail(e.getMessage());
                     }
 
                     @Override

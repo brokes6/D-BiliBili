@@ -31,9 +31,12 @@ import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
+import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.danmu;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.fragment_tab.CommentFragment;
 import com.example.dildil.video.fragment_tab.IntroductionFragment;
@@ -50,7 +53,6 @@ import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +150,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.detailPlayer.setIsTouchWiget(true);
         //关闭自动旋转
         binding.detailPlayer.setRotateViewAuto(false);
+        binding.detailPlayer.setNeedAutoAdaptation(true);
         binding.detailPlayer.setLockLand(false);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_16_9);
         binding.detailPlayer.setShowFullAnimation(false);
@@ -173,7 +176,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 //开始播放了才能旋转和全屏
                 orientationUtils.setEnable(true);
                 isPlay = true;
-                getDanmu();
+                DanmakuVideoPlayer currentPlayer = (DanmakuVideoPlayer) binding.detailPlayer.getCurrentPlayer();
+                currentPlayer.setDanmaKuStream();
             }
 
             @Override
@@ -198,6 +202,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             public void onClickStartIcon(String url, Object... objects) {
                 super.onClickStartIcon(url, objects);
                 binding.keyboard.setVisibility(View.GONE);
+                binding.more.setVisibility(View.GONE);
                 banAppBarScroll(false);
             }
 
@@ -205,6 +210,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             public void onClickStop(String url, Object... objects) {
                 super.onClickStop(url, objects);
                 binding.keyboard.setVisibility(View.VISIBLE);
+                binding.more.setVisibility(View.VISIBLE);
                 banAppBarScroll(true);
             }
 
@@ -212,6 +218,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             public void onClickResume(String url, Object... objects) {
                 super.onClickResume(url, objects);
                 binding.keyboard.setVisibility(View.GONE);
+                binding.more.setVisibility(View.GONE);
                 binding.playButton.setVisibility(View.GONE);
                 binding.appbar.setExpanded(true);
                 banAppBarScroll(false);
@@ -274,6 +281,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+        mPresenter.getDanMu(0, id);
         mPresenter.getVideoDetails(id, uid);
     }
 
@@ -290,6 +298,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             case R.id.playButton:
                 binding.detailPlayer.onVideoResume();
                 binding.appbar.setExpanded(true);
+                binding.more.setVisibility(View.GONE);
                 binding.keyboard.setVisibility(View.GONE);
                 banAppBarScroll(false);
                 break;
@@ -337,6 +346,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
                     binding.detailPlayer.addDanmaku(true, replyContent, textSize);
+                    danmu danmu = new danmu(replyContent, binding.detailPlayer.getCurrentPositionWhenPlaying(), uid, id);
+                    mPresenter.seadDanMu(danmu, id);
                 } else {
                     XToastUtils.toast("弹幕内容不能为空");
                 }
@@ -369,13 +380,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         }
     }
 
-    //获取弹幕
-    private void getDanmu() {
-        DanmakuVideoPlayer currentPlayer = (DanmakuVideoPlayer) binding.detailPlayer.getCurrentPlayer();
-        File file = new File("text");
-        currentPlayer.setDanmaKuStream(file);
-    }
-
     private void resolveNormalVideoUI() {
         //增加title
         binding.detailPlayer.getTitleTextView().setVisibility(View.GONE);
@@ -404,7 +408,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         if (isPlay) {
             getCurPlay().release();
         }
-        //GSYPreViewManager.instance().releaseMediaPlayer();
         if (orientationUtils != null)
             orientationUtils.releaseListener();
         isDestory = true;
@@ -456,13 +459,14 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             urls.add(switchVideoBean);
         }
         binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
+        binding.detailPlayer.setUPData(videoDetailsBean.getUpImg(), videoDetailsBean.getUpName());
         hideDialog();
     }
 
     @Override
     public void onGetVideoDetailsFail(String e) {
-        XToastUtils.error(e);
         hideDialog();
+        XToastUtils.error(e);
     }
 
     @Override
@@ -503,5 +507,25 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     public void onGetVideoCommentFail(String e) {
 
+    }
+
+    @Override
+    public void onGetDanMuSuccess(DanmuBean danmuBean) {
+        binding.detailPlayer.setDanmuData(danmuBean.getData());
+    }
+
+    @Override
+    public void onGetDanMuFail(String e) {
+        XToastUtils.error("获取弹幕出错：" + e);
+    }
+
+    @Override
+    public void onGetSeadDanMuSuccess(SeadDanmuBean seadDanmuBean) {
+        XToastUtils.success("发送弹幕成功!");
+    }
+
+    @Override
+    public void onGetSedaDanMuFail(String e) {
+        XToastUtils.error("弹幕发送失败:" + e);
     }
 }

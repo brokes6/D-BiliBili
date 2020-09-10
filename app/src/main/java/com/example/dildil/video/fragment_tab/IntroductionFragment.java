@@ -26,6 +26,8 @@ import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
+import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
@@ -243,7 +245,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetThumbsUpSuccess(ThumbsUpBean thumbsUpBean) {
         mIsPraise = true;
-        XToastUtils.success("点赞成功！");
+        XToastUtils.success("操纵成功！");
         XToastUtils.success(thumbsUpBean.getMessage());
         like_img.setImageResource(R.drawable.thumb_up_24);
         mPresenter.getVideoDetails(id, uid);
@@ -274,6 +276,26 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetVideoCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDanMuSuccess(DanmuBean danmuBean) {
+
+    }
+
+    @Override
+    public void onGetDanMuFail(String e) {
+
+    }
+
+    @Override
+    public void onGetSeadDanMuSuccess(SeadDanmuBean seadDanmuBean) {
+
+    }
+
+    @Override
+    public void onGetSedaDanMuFail(String e) {
 
     }
 }

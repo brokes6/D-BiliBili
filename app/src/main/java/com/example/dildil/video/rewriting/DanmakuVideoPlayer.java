@@ -19,6 +19,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.R;
@@ -26,6 +27,7 @@ import com.example.dildil.util.BiliDanmukuParser;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.DanamakuAdapter;
+import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.dialog.DoubleSpeedDialog;
 import com.example.dildil.video.dialog.SwitchVideoTypeDialog;
@@ -66,7 +68,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private IDanmakuView mDanmakuView;//弹幕view
     private DanmakuContext mDanmakuContext;
 
-    private TextView mSendDanmaku, DoubleSpeed, mResolvingPower;
+    private TextView mSendDanmaku, DoubleSpeed, mResolvingPower,up_name;
 
     private long mDanmakuStartSeekPosition = -1;
 
@@ -74,14 +76,15 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     private File mDumakuFile;
 
-    private LinearLayout Bottom_controller;
+    private LinearLayout Bottom_controller,Sanlian;
 
     private ImageView Video_play, mToogleDanmaku;
 
     //滑动小图预览
-    private RelativeLayout mPreviewLayout;
+    private RelativeLayout mPreviewLayout,UPImage;
 
-    private ImageView mPreView, mSeekBar_play, mCoverImage;
+    private ImageView mPreView, mSeekBar_play, mCoverImage,Dm_like,Dm_coin,Dm_forward,Dm_more;
+    private CircleImageView up_img;
 
     String mCoverOriginUrl;
     int mDefaultRes;
@@ -108,6 +111,8 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private BottomVideoDialog dialog;
 
     private FullScreenStatusMonitoring listener;
+
+    private List<DanmuBean.Datas> datasList = new ArrayList<>();
 
     public DanmakuVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -146,7 +151,19 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         DoubleSpeed = findViewById(R.id.Double_speed);
         mResolvingPower = findViewById(R.id.definition);
         mSeekBar_play = findViewById(R.id.Video_SeekBar_play);
+        Sanlian = findViewById(R.id.Sanlians);
+        UPImage = findViewById(R.id.UPImage);
+        Dm_like = findViewById(R.id.Dm_like);
+        Dm_coin = findViewById(R.id.Dm_coin);
+        Dm_forward = findViewById(R.id.Dm_forward);
+        Dm_more = findViewById(R.id.Dm_more);
+        up_img = findViewById(R.id.up_img);
+        up_name = findViewById(R.id.up_name);
 
+        Dm_like.setOnClickListener(this);
+        Dm_coin.setOnClickListener(this);
+        Dm_forward.setOnClickListener(this);
+        Dm_more.setOnClickListener(this);
         mSeekBar_play.setOnClickListener(this);
         mResolvingPower.setOnClickListener(this);
         DoubleSpeed.setOnClickListener(this);
@@ -169,6 +186,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     public void onPrepared() {
         super.onPrepared();
         if (isFirstload) {
+            UPImage.setVisibility(GONE);
             Bottom_controller.setVisibility(View.GONE);
             mSeekBar_play.setVisibility(View.VISIBLE);
         }
@@ -220,7 +238,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             setDanmakuStartSeekPosition(time);
         }
     }
-
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -244,7 +261,24 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 isFirstload = false;
                 showSwitchDialog();
                 break;
+            case R.id.Dm_like:
+
+                break;
+            case R.id.Dm_coin:
+
+                break;
+            case R.id.Dm_forward:
+
+                break;
+            case R.id.Dm_more:
+
+                break;
         }
+    }
+
+    public void setUPData(String upImg,String upName){
+        Glide.with(mContext).load(upImg).into(up_img);
+        up_name.setText(upName);
     }
 
     private void sendOutDanMu() {
@@ -271,7 +305,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 //                    onVideoResume();
                     getGSYVideoManager().start();
                     danmakuOnResume();
-                    addDanmaku(true, replyContent,0);
+                    addDanmaku(true, replyContent, 0);
                     setStateAndUi(CURRENT_STATE_PLAYING);
                     Video_play.setImageResource(R.mipmap.pause);
                 } else {
@@ -286,11 +320,16 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     protected void cloneParams(GSYBaseVideoPlayer from, GSYBaseVideoPlayer to) {
         super.cloneParams(from, to);
         ((DanmakuVideoPlayer) to).mDumakuFile = ((DanmakuVideoPlayer) from).mDumakuFile;
+        ((DanmakuVideoPlayer) to).datasList = ((DanmakuVideoPlayer) from).datasList;
         ((DanmakuVideoPlayer) to).mSourcePosition = ((DanmakuVideoPlayer) from).mSourcePosition;
         ((DanmakuVideoPlayer) to).isFirstload = ((DanmakuVideoPlayer) from).isFirstload;
         ((DanmakuVideoPlayer) to).mTypeText = ((DanmakuVideoPlayer) from).mTypeText;
     }
 
+    private void changeUi(){
+        UPImage.setVisibility(VISIBLE);
+        Sanlian.setVisibility(VISIBLE);
+    }
 
     private void resolveTypeUI() {
         if (getCurrentState() == CURRENT_STATE_PREPAREING) {
@@ -328,7 +367,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     public boolean setUp(List<SwitchVideoBean> url, boolean cacheWithPlay, File cachePath, String title) {
         mUrlList = url;
 //        mSourcePosition = (int) SharedPreferencesUtil.getData("index",0);
-        mSourcePosition = mUrlList.size()-1;
+        mSourcePosition = mUrlList.size() - 1;
         mTypeText = mUrlList.get(mSourcePosition).getName();
         mResolvingPower.setText(mTypeText);
         return setUp(url.get(mSourcePosition).getUrl(), cacheWithPlay, cachePath, title);
@@ -352,10 +391,11 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             gsyVideoPlayer.mUrlList = mUrlList;
             gsyVideoPlayer.mSourcePosition = mSourcePosition;
             gsyVideoPlayer.mTypeText = mTypeText;
-            gsyVideoPlayer.resolveTypeUI();
             //对弹幕设置偏移记录
             gsyVideoPlayer.setDanmakuStartSeekPosition(getCurrentPositionWhenPlaying());
             gsyVideoPlayer.setDanmaKuShow(getDanmaKuShow());
+            gsyVideoPlayer.resolveTypeUI();
+            gsyVideoPlayer.changeUi();
             onPrepareDanmaku(gsyVideoPlayer);
         }
         return gsyBaseVideoPlayer;
@@ -417,11 +457,12 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         }
     }
 
-    public void setDanmaKuStream(File is) {
-        mDumakuFile = is;
+    public void setDanmaKuStream() {
+//        mDumakuFile = is;
         if (!getDanmakuView().isPrepared()) {
             onPrepareDanmaku((DanmakuVideoPlayer) getCurrentPlayer());
             Video_play.setImageResource(R.mipmap.pause);
+
         }
     }
 
@@ -442,9 +483,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair);
         if (mDanmakuView != null) {
-            if (mDumakuFile != null) {
-                mParser = createParser(getIsStream(mDumakuFile));
-            }
+//            if (mDumakuFile != null) {
+//                mParser = createParser(getIsStream(mDumakuFile));
+//            }
 
             //todo 这是为了demo效果，实际上需要去掉这个，外部传输文件进来
             mParser = createParser(this.getResources().openRawResource(R.raw.comments));
@@ -472,6 +513,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                             setDanmakuStartSeekPosition(-1);
                         }
                         resolveDanmakuShow();
+                        if (datasList != null) {
+                            addDanmaKuExternal();
+                        }
                     }
                 }
             });
@@ -572,6 +616,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         }
 
         ILoader loader = DanmakuLoaderFactory.create(DanmakuLoaderFactory.TAG_BILI);
+//        ILoader loader = DanmakuLoaderFactory.create(DanmakuLoaderFactory.TAG_ACFUN);
 
         try {
             loader.load(stream);
@@ -652,19 +697,19 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         }
         byStartedClick = true;
         super.onClickUiToggle();
-
     }
 
     @Override
     protected void changeUiToNormal() {
         super.changeUiToNormal();
+        UPImage.setVisibility(GONE);
+        Sanlian.setVisibility(GONE);
         byStartedClick = false;
     }
 
     @Override
     protected void changeUiToPreparingShow() {
         super.changeUiToPreparingShow();
-        Debuger.printfLog("Sample changeUiToPreparingShow");
         setViewShowState(mBottomContainer, INVISIBLE);
         setViewShowState(mStartButton, INVISIBLE);
     }
@@ -672,7 +717,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     protected void changeUiToPlayingBufferingShow() {
         super.changeUiToPlayingBufferingShow();
-        Debuger.printfLog("Sample changeUiToPlayingBufferingShow");
         if (!byStartedClick) {
             setViewShowState(mBottomContainer, INVISIBLE);
             setViewShowState(mStartButton, INVISIBLE);
@@ -682,7 +726,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     protected void changeUiToPlayingShow() {
         super.changeUiToPlayingShow();
-        Debuger.printfLog("Sample changeUiToPlayingShow");
         if (!byStartedClick) {
             setViewShowState(mBottomContainer, INVISIBLE);
             setViewShowState(mStartButton, INVISIBLE);
@@ -836,11 +879,10 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                         mTypeText = name;
                         mResolvingPower.setText(mTypeText);
                         mSourcePosition = position;
-                        SharedPreferencesUtil.putData("index",position);
+                        SharedPreferencesUtil.putData("index", position);
                         Toast toast = Toast.makeText(getContext(), "已切换到" + mTypeText, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.LEFT | Gravity.BOTTOM, 0, 220);
                         toast.show();
-                        Log.e(TAG, "当前分辨率改变,为：" + mTypeText);
                     }
                 } else {
                     Toast.makeText(getContext(), "已经是 " + name, Toast.LENGTH_LONG).show();
@@ -850,10 +892,25 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         switchVideoTypeDialog.show();
     }
 
+    public void addDanmaKuExternal() {
+        for (int i = 0; i < datasList.size(); i++) {
+            BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+            if (danmaku == null || mDanmakuView == null) {
+                return;
+            }
+            danmaku.text = datasList.get(i).getContent();
+            danmaku.isLive = true;
+            danmaku.setTime(datasList.get(i).getShowSecond());
+            danmaku.textSize = 20f * (mParser.getDisplayer().getDensity() - 0.6f);
+            danmaku.textColor = Color.RED;
+            mDanmakuView.addDanmaku(danmaku);
+        }
+    }
+
     /**
      * 模拟添加弹幕数据
      */
-    public void addDanmaku(boolean islive, String content,int textSize) {
+    public void addDanmaku(boolean islive, String content, int textSize) {
         BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         if (danmaku == null || mDanmakuView == null) {
             return;
@@ -863,17 +920,21 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级
         danmaku.isLive = islive;
         danmaku.setTime(mDanmakuView.getCurrentTime() + 500);
-        if (textSize == 1){
+        if (textSize == 1) {
             danmaku.textSize = 25f * (mParser.getDisplayer().getDensity() - 0.6f);
-        }else if (textSize == 0){
+        } else if (textSize == 0) {
             danmaku.textSize = 20f * (mParser.getDisplayer().getDensity() - 0.6f);
-        }else{
+        } else {
             danmaku.textSize = 15f * (mParser.getDisplayer().getDensity() - 0.6f);
         }
         danmaku.textColor = Color.RED;
 //        danmaku.textShadowColor = Color.WHITE;
         danmaku.underlineColor = Color.GREEN;
         mDanmakuView.addDanmaku(danmaku);
+    }
+
+    public void setDanmuData(List<DanmuBean.Datas> list) {
+        this.datasList = list;
     }
 
 }
