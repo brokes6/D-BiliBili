@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
-        <activity android:name=".my_page.view.SettingActivity"></activity>
+
+        <activity android:name=".my_page.view.SettingActivity" />
         <activity
             android:name=".video.view.VideoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
@@ -48,9 +49,9 @@
             android:value="640" /> <!-- <meta-data -->
         <!-- android:name="android.max_aspect" -->
         <!-- android:value="2.4" /> &lt;!&ndash; 适配华为（huawei）刘海屏 &ndash;&gt; -->
-        <!-- <meta-data -->
-        <!-- android:name="android.notch_support" -->
-        <!-- android:value="true" /> &lt;!&ndash; 适配小米（xiaomi）刘海屏 &ndash;&gt; -->
+         <meta-data
+         android:name="android.notch_support"
+         android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />

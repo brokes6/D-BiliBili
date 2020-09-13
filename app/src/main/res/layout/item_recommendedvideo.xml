@@ -15,7 +15,7 @@
             android:id="@+id/Re_cover"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="centerInside"/>
+            android:scaleType="fitCenter"/>
 
         <RelativeLayout
             android:id="@+id/volume"

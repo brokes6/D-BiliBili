@@ -1,5 +1,6 @@
 package com.example.dildil.api;
 
+import com.example.dildil.home_page.bean.DynamicNumBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.login_page.bean.RegisterBean;
@@ -59,5 +60,8 @@ public interface ApiService {
 
     @POST("commentservice/danmu")
     Observable<SeadDanmuBean> seadDanMu(@Body danmu danmu);
+
+    @GET("userservice/dynamic/unread")
+    Observable<DynamicNumBean> getDynamicNum(@Query("uid") int uid);
 
 }

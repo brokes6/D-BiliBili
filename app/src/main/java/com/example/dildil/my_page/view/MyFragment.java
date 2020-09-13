@@ -10,15 +10,16 @@ import androidx.databinding.DataBindingUtil;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
-import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.databinding.FragmentMyBinding;
-import com.example.dildil.my_page.bean.MyDataBean;
+import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.util.GsonUtil;
+import com.example.dildil.util.SharePreferenceUtil;
 
 public class MyFragment extends BaseFragment {
     private static final String TAG = "MyFragment";
     FragmentMyBinding binding;
-    private MyDataBean MyDataBean;
+    private LoginBean loginBean;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,18 +35,15 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void initData() {
         showDialog();
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initMyData();
-        MyDataBean = resourcesData.getMyDataBeans();
-
-        Glide.with(getContext()).load(MyDataBean.getUserImg()).into(binding.MUserImg);
-        binding.MUserName.setText(MyDataBean.getUsername());
-        binding.dynamic.setTop_Text(MyDataBean.getDynamic()+"");
-        binding.follow.setTop_Text(MyDataBean.getFollow()+"");
-        binding.fans.setTop_Text(MyDataBean.getFans()+"");
-        if (MyDataBean.isMember()){
+        loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
+        Glide.with(getContext()).load(loginBean.getData().getImg()).into(binding.MUserImg);
+        binding.MUserName.setText(loginBean.getData().getUsername());
+        binding.dynamic.setTop_Text(0 + "");
+        binding.follow.setTop_Text(loginBean.getData().getFollowNum() + "");
+        binding.fans.setTop_Text(loginBean.getData().getFansNum() + "");
+        if (true) {
             binding.member.setText("年度大会员");
-        }else{
+        } else {
             binding.member.setText("普通会员");
         }
         hideDialog();
@@ -54,7 +52,7 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.M_setting:
                 ActivityUtils.startActivity(SettingActivity.class);
                 break;

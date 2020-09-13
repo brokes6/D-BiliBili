@@ -1,17 +1,18 @@
 package com.example.dildil.home_page.fragment.fragment_tab;
 
-import android.graphics.Outline;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
@@ -20,16 +21,19 @@ import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentRecommendedBinding;
 import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
-import com.example.dildil.home_page.other.GlideImageLoader;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.util.XToastUtils;
 import com.google.android.material.appbar.AppBarLayout;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.youth.banner.BannerConfig;
+import com.youth.banner.adapter.BannerImageAdapter;
+import com.youth.banner.config.IndicatorConfig;
+import com.youth.banner.holder.BannerImageHolder;
+import com.youth.banner.indicator.CircleIndicator;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -104,32 +108,26 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         initBanner(resourcesData.getBeannerUrl());
     }
 
-    private void initDates() {
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initBanner();
-        initBanner(resourcesData.getBeannerUrl());
-
-    }
-
-    private void initBanner(List<?> imageUrls) {
-        binding.ReBanner.setImageLoader(new GlideImageLoader());
-        binding.ReBanner.setImages(imageUrls);
-        binding.ReBanner.setDelayTime(4000);
-        binding.ReBanner.setIndicatorGravity(BannerConfig.CENTER);
-        binding.ReBanner.setOutlineProvider(new ViewOutlineProvider() {
-            @Override
-            public void getOutline(View view, Outline outline) {
-                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), 15);
-            }
-        });
+    private void initBanner(List<BannerBean> imageUrls) {
+        binding.ReBanner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT);
+        binding.ReBanner.setBannerRound(15);
         binding.ReBanner.setClipToOutline(true);
         binding.ReBanner.start();
+        binding.ReBanner.setAdapter(new BannerImageAdapter<BannerBean>(imageUrls) {
+
+            @Override
+            public void onBindView(BannerImageHolder holder, BannerBean data, int position, int size) {
+                //图片加载自己实现
+                Glide.with(holder.itemView)
+                        .load(data.getImageUrl())
+                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
+                        .into(holder.imageView);
+            }
+        })
+                .addBannerLifecycleObserver(this)//添加生命周期观察者
+                .setIndicator(new CircleIndicator(getContext()));
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
 
     @Override
     public void onClick(View v) {
@@ -150,7 +148,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
-        Log.e(TAG, "onGetRefreshRecommendVideoSuccess: 刷新成功" );
+        Log.e(TAG, "onGetRefreshRecommendVideoSuccess: 刷新成功");
         binding.ReBanner.setVisibility(View.GONE);
         adapter.refresh(videoBean.getData());
         adapter.setData(videoBean);
@@ -159,7 +157,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRefreshRecommendVideoFail(String e) {
-        XToastUtils.error("出现错误:"+e);
+        XToastUtils.error("出现错误:" + e);
         binding.swipe.finishRefresh(true);
     }
 }

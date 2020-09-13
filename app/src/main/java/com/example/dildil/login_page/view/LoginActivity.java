@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.databinding.DataBindingUtil;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void onBackPressed() {
-        System.exit(0);// 完全退出应用
+        AppUtils.exitApp();
     }
 
     @Override

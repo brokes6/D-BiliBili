@@ -30,10 +30,6 @@ public class LiveBroadcastFragment extends BaseFragment {
 
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
 
     @Override
     public void onClick(View v) {

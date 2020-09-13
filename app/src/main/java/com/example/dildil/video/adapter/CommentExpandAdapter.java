@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
-import com.example.dildil.ResourcesData;
+import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.util.GsonUtil;
+import com.example.dildil.util.SharePreferenceUtil;
 import com.example.dildil.util.TimeDateUtils;
 import com.example.dildil.video.bean.CommentDetailBean;
 
@@ -29,6 +31,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "CommentExpandAdapter";
     private Context mContext;
     private List<CommentDetailBean.CommentData> commentBeanList;
+    private LoginBean loginBean;
 
     public CommentExpandAdapter(Context context, CommentDetailBean list) {
         this.mContext = context;
@@ -104,9 +107,11 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             //否则就返回一个当前的View实例
             groupHolder = (GroupHolder) convertView.getTag();
         }
+        loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(mContext).getUserInfo(""), LoginBean.class);
         //将数据展示设置上去
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initMyData();
+        if (commentBeanList.get(groupPosition).getUsername().equals(loginBean.getData().getUsername())) {
+            groupHolder.comment_follow.setVisibility(View.GONE);
+        }
         Glide.with(mContext).load(commentBeanList.get(groupPosition).getImg()).into(groupHolder.logo);
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getUsername());
         String data = TimeDateUtils.long2String(commentBeanList.get(groupPosition).getCreateTime(), FORMAT_TYPE_2);
@@ -152,18 +157,18 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }
         if (childPosition == 0) {
             childHolder.secondLevel.setBackgroundResource(R.drawable.file_background_radius_top_grey);
-            childHolder.secondLevel.setPadding(30,25,0,0);
+            childHolder.secondLevel.setPadding(30, 25, 0, 0);
         } else if (isLastChild) {
             childHolder.secondLevel.setBackgroundResource(R.drawable.file_background_radius_bottom_grey);
-            childHolder.secondLevel.setPadding(30,0,0,25);
+            childHolder.secondLevel.setPadding(30, 0, 0, 25);
         } else {
             childHolder.secondLevel.setBackgroundColor(mContext.getResources().getColor(R.color.White_ash));
-            childHolder.secondLevel.setPadding(30,15,0,15);
+            childHolder.secondLevel.setPadding(30, 15, 0, 15);
         }
-        if (childPosition>3){
+        if (childPosition > 3) {
             childHolder.tv_name.setText("查看更多评论 >");
             childHolder.tv_content.setVisibility(View.GONE);
-        }else{
+        } else {
             //设置数据
             String replyUser = commentBeanList.get(groupPosition).getReplyList().get(childPosition).getUsername();
             if (!TextUtils.isEmpty(replyUser)) {
@@ -186,7 +191,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
      */
     private class GroupHolder {
         private CircleImageView logo;
-        private TextView tv_name, tv_content, tv_time;
+        private TextView tv_name, tv_content, tv_time, comment_follow;
         private ImageView iv_like;
 
         public GroupHolder(View view) {
@@ -195,6 +200,7 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
             tv_name = view.findViewById(R.id.comment_item_userName);
             tv_time = view.findViewById(R.id.comment_item_time);
             iv_like = view.findViewById(R.id.comment_item_like);
+            comment_follow = view.findViewById(R.id.comment_follow);
         }
     }
 

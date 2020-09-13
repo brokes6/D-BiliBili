@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.bumptech.glide.Glide;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.databinding.FragmentHomepageBinding;
@@ -20,7 +21,10 @@ import com.example.dildil.home_page.fragment.fragment_tab.PursueFramgment;
 import com.example.dildil.home_page.fragment.fragment_tab.RapFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
+import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.search.view.SearchActivity;
+import com.example.dildil.util.GsonUtil;
+import com.example.dildil.util.SharePreferenceUtil;
 
 import java.util.ArrayList;
 
@@ -54,13 +58,10 @@ public class HomePageFragment extends BaseFragment {
     protected void initData() {
         binding.tab.setViewPager(binding.viewPager, TabTitle, getActivity(), mFragments);
         binding.tab.setCurrentTab(1);
+        LoginBean loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
+        Glide.with(getActivity()).load(loginBean.getData().getImg()).into(binding.userImg);
     }
 
-
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
 
     @Override
     public void onClick(View view) {

@@ -7,12 +7,18 @@ import android.view.View;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.channel_page.view.ChannelFragment;
+import com.example.dildil.component.activity.ActivityModule;
+import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityHomeBinding;
 import com.example.dildil.dynamic_page.view.DynamicFragment;
+import com.example.dildil.home_page.bean.DynamicNumBean;
+import com.example.dildil.home_page.contract.HomeContract;
 import com.example.dildil.home_page.fragment.HomePageFragment;
+import com.example.dildil.home_page.presenter.HomePresenter;
 import com.example.dildil.my_page.view.MyFragment;
 import com.gyf.immersionbar.ImmersionBar;
 import com.next.easynavigation.view.EasyNavigationBar;
@@ -21,7 +27,9 @@ import com.xuexiang.xui.utils.SnackbarUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity {
+import javax.inject.Inject;
+
+public class HomeActivity extends BaseActivity implements HomeContract.View {
     private static final String TAG = "HomeActivity";
     ActivityHomeBinding binding;
     private String[] tabText = {"首页", "频道", "动态", "我的"};
@@ -30,6 +38,9 @@ public class HomeActivity extends BaseActivity {
     private List<Fragment> fragmentList = new ArrayList<>();
     private long firstTime = 0;
 
+    @Inject
+    HomePresenter mPresenter;
+
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
@@ -37,6 +48,12 @@ public class HomeActivity extends BaseActivity {
                 .transparentStatusBar()
                 .statusBarColor(R.color.White)
                 .init();
+
+        DaggerActivityComponent.builder()
+                .appComponent(MyApplication.getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build().inject(this);
+        mPresenter.attachView(this);
     }
 
     @Override
@@ -61,10 +78,12 @@ public class HomeActivity extends BaseActivity {
                 .setOnTabLoadListener(new EasyNavigationBar.OnTabLoadListener() { //Tab加载完毕回调
                     @Override
                     public void onTabLoadCompleteEvent() {
-                        binding.navigationBar.setMsgPointCount(2, 3);
+//                        binding.navigationBar.setMsgPointCount(2, 3);
                     }
                 })
                 .build();
+        mPresenter.getDynamicNum(1);
+        showDialog();
     }
 
     @Override
@@ -107,9 +126,19 @@ public class HomeActivity extends BaseActivity {
         if (secondTime - firstTime > 2000) {
             SnackbarUtils.Short(binding.main, "再按一次退出").info().show();
             firstTime = secondTime;
-        } else{
+        } else {
 //            ActivityUtils.finishAllActivities();
             System.exit(0);// 完全退出应用
         }
+    }
+
+    @Override
+    public void onGetDynamicNumSuccess(DynamicNumBean dynamicNumBean) {
+        hideDialog();
+    }
+
+    @Override
+    public void onGetDynamicNumFail(String e) {
+        hideDialog();
     }
 }

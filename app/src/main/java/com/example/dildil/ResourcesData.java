@@ -6,7 +6,9 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.bean.PursueBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
 import com.example.dildil.dynamic_page.bean.VideoNewsBean;
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.HotRankingBean;
+import com.example.dildil.home_page.bean.MyPursuitBean;
 import com.example.dildil.home_page.bean.VideoBean;
 import com.example.dildil.my_page.bean.MyDataBean;
 import com.example.dildil.search.bean.HotSearchBean;
@@ -15,8 +17,6 @@ import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.google.gson.Gson;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +26,12 @@ public class ResourcesData {
     private List<DynamicBean> dynamicBeans = new ArrayList<>();
     private List<HotRankingBean> hotRankingBeans = new ArrayList<>();
     private List<SwitchVideoBean> urls = new ArrayList<>();
-    private List<URL> bannerImageList = new ArrayList<>();
+    private List<BannerBean> bannerImageList = new ArrayList<>();
     private List<HotSearchBean> hotSearchBeans = new ArrayList<>();
     private List<BeInterestedBean> beInterestedBeans = new ArrayList<>();
     private List<HaveViewedBean> haveViewedBeans = new ArrayList<>();
     private List<PursueBean> pursueBeans = new ArrayList<>();
+    private List<MyPursuitBean> myPursuitBeans = new ArrayList<>();
     private List<VideoNewsBean> videoNewsBeans = new ArrayList<>();
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList = new ArrayList<>();
@@ -248,22 +249,23 @@ public class ResourcesData {
         return urls;
     }
 
-    public void initBanner(){
-        try {
-            URL url = new URL("https://i0.hdslb.com/bfs/archive/20a25dc84739a3852c125d55b9223d6bd70c34bb.png@880w_388h_1c_95q");
-            URL url2 = new URL("https://i0.hdslb.com/bfs/sycp/creative_img/202007/82e1e1a0fd91537c6d1c30c80fe60e6c.jpg@880w_388h_1c_95q");
-            bannerImageList.add(url);
-            bannerImageList.add(url2);
-        }catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+    public void initBanner() {
+        BannerBean bannerBean = new BannerBean();
+        bannerBean.setImageUrl("https://i0.hdslb.com/bfs/archive/20a25dc84739a3852c125d55b9223d6bd70c34bb.png@880w_388h_1c_95q");
+        BannerBean bannerBean1 = new BannerBean();
+        bannerBean1.setImageUrl("https://i0.hdslb.com/bfs/sycp/creative_img/202007/82e1e1a0fd91537c6d1c30c80fe60e6c.jpg@880w_388h_1c_95q");
+        BannerBean bannerBean2 = new BannerBean();
+        bannerBean2.setImageUrl("https://i0.hdslb.com/bfs/bangumi/image/f46ccf197313641b62d44430a9ebd3a63266d117.jpg@2320w_664h.jpg");
+        bannerImageList.add(bannerBean);
+        bannerImageList.add(bannerBean1);
+        bannerImageList.add(bannerBean2);
     }
 
-    public List<URL> getBeannerUrl(){
+    public List<BannerBean> getBeannerUrl() {
         return bannerImageList;
     }
 
-    public void initMyData(){
+    public void initMyData() {
         mMyDataBean = new MyDataBean();
         mMyDataBean.setUsername("Fracture6");
         mMyDataBean.setUserImg("https://i1.hdslb.com/bfs/face/acc7a0e97bf9f6c4d047777e40270a39bc7f4f7d.jpg");
@@ -273,7 +275,7 @@ public class ResourcesData {
         mMyDataBean.setMember(true);
     }
 
-    public MyDataBean getUserData(){
+    public MyDataBean getUserData() {
         MyDataBean mMyDataBean = new MyDataBean();
         mMyDataBean.setUsername("Fracture6");
         mMyDataBean.setUserImg("https://i1.hdslb.com/bfs/face/acc7a0e97bf9f6c4d047777e40270a39bc7f4f7d.jpg");
@@ -284,16 +286,16 @@ public class ResourcesData {
         return mMyDataBean;
     }
 
-    public MyDataBean getMyDataBeans(){
+    public MyDataBean getMyDataBeans() {
         return mMyDataBean;
     }
 
-    public String[] getSearchTag(){
-        String[] text = {"兰博基尼自私","柯南","空军一号","华为GT2","iphoneXr","iphone11"};
+    public String[] getSearchTag() {
+        String[] text = {"兰博基尼自私", "柯南", "空军一号", "华为GT2", "iphoneXr", "iphone11"};
         return text;
     }
 
-    public void initHotSearch(){
+    public void initHotSearch() {
         HotSearchBean bean = new HotSearchBean();
         bean.setHotSearchTitle("雾山五行");
         bean.setDegree(1);
@@ -346,12 +348,12 @@ public class ResourcesData {
         hotSearchBeans.add(bean9);
     }
 
-    public List<HotSearchBean> getHotSearchBeans(){
+    public List<HotSearchBean> getHotSearchBeans() {
         return hotSearchBeans;
     }
 
 
-    public void initBeInterestedData(){
+    public void initBeInterestedData() {
         BeInterestedBean beInterestedBean = new BeInterestedBean();
         beInterestedBean.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/a92c19dbc4335fd553e50e187d759b2fafee9a64.jpg@115w_115h_1c_100q.webp");
         beInterestedBean.setBeInterestedTitle("COSPLAY");
@@ -379,11 +381,11 @@ public class ResourcesData {
         beInterestedBeans.add(beInterestedBean4);
     }
 
-    public List<BeInterestedBean> getBeInterestedBeans(){
+    public List<BeInterestedBean> getBeInterestedBeans() {
         return beInterestedBeans;
     }
 
-    public void initHaveViewedData(){
+    public void initHaveViewedData() {
         HaveViewedBean haveViewedBean = new HaveViewedBean();
         haveViewedBean.setMiddle_Image("https://i0.hdslb.com/bfs/tag/c044d70d3c5f8e5920e19b8f5ef64d1bbcee625d.jpg@60w_60h_1c_100q.webp");
         haveViewedBean.setTop_Image("http://i0.hdslb.com/bfs/tag/186e0cef45b86ea1f5c8062c7f93bb7d0ecc2b71.jpg@.webp");
@@ -419,15 +421,15 @@ public class ResourcesData {
         haveViewedBeans.add(haveViewedBean4);
     }
 
-    public List<HaveViewedBean> getHaveViewedBeans(){
+    public List<HaveViewedBean> getHaveViewedBeans() {
         return haveViewedBeans;
     }
 
-    public void initRecentVisit(){
+    public void initRecentVisit() {
 
     }
 
-    public void initPursue(){
+    public void initPursue() {
         PursueBean pursueBean = new PursueBean();
         pursueBean.setPursueImage("https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp");
         pursueBean.setPursueName("刀剑神域 爱丽丝篇 异界战争 -终章-");
@@ -453,11 +455,47 @@ public class ResourcesData {
         pursueBeans.add(pursueBean3);
         pursueBeans.add(pursueBean4);
     }
-    public List<PursueBean> getPursueBeans(){
+
+    public List<PursueBean> getPursueBeans() {
         return pursueBeans;
     }
 
-    public void initVideoList(){
+    public void initMyPursue() {
+        MyPursuitBean pursueBean = new MyPursuitBean();
+        pursueBean.setMyPursueImage("https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp");
+        pursueBean.setMyPursueName("刀剑神域 爱丽丝篇 异界战争 -终章-");
+        pursueBean.setToUpdate_word(18);
+        pursueBean.setWatch_Situation("看到第20话");
+
+        MyPursuitBean pursueBean1 = new MyPursuitBean();
+        pursueBean1.setMyPursueImage("https://i0.hdslb.com/bfs/bangumi/image/b827439e756028116cc87747d3a01569d7f1d47e.png@450w_600h.webp");
+        pursueBean1.setMyPursueName("彼得·格里爾的賢者時間");
+        pursueBean1.setToUpdate_word(19);
+        pursueBean1.setWatch_Situation("尚未观看");
+
+        MyPursuitBean pursueBean3 = new MyPursuitBean();
+        pursueBean3.setMyPursueImage("https://i0.hdslb.com/bfs/bangumi/2c7cf455b32117c1c9e70313a564b0b189a5de90.jpg@450w_600h.webp");
+        pursueBean3.setMyPursueName("RAIL WARS!-日本国有铁道公安队-");
+        pursueBean3.setToUpdate_word(28);
+        pursueBean3.setWatch_Situation("尚未观看");
+
+        MyPursuitBean pursueBean4 = new MyPursuitBean();
+        pursueBean4.setMyPursueImage("https://i0.hdslb.com/bfs/bangumi/image/8e0473261c426c453a0a1bc5cc0d836a4e985a0c.png@450w_600h.webp");
+        pursueBean4.setMyPursueName("魔王學院的不適任者～史上最強的魔王始祖，轉生就讀子孫們的學校～");
+        pursueBean4.setToUpdate_word(10);
+        pursueBean4.setWatch_Situation("尚未观看");
+
+        myPursuitBeans.add(pursueBean);
+        myPursuitBeans.add(pursueBean1);
+        myPursuitBeans.add(pursueBean3);
+        myPursuitBeans.add(pursueBean4);
+    }
+
+    public List<MyPursuitBean> getMyPursuitBean() {
+        return myPursuitBeans;
+    }
+
+    public void initVideoList() {
         VideoNewsBean videoNewsBean = new VideoNewsBean();
         videoNewsBean.setVideo_Url("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");
         videoNewsBean.setVideo_UserName("天ノ落");
@@ -495,7 +533,8 @@ public class ResourcesData {
         videoNewsBeans.add(videoNewsBean2);
         videoNewsBeans.add(videoNewsBean3);
     }
-    public List<VideoNewsBean> getVideoNewsBeans(){
+
+    public List<VideoNewsBean> getVideoNewsBeans() {
         return videoNewsBeans;
     }
 
@@ -585,12 +624,14 @@ public class ResourcesData {
             "\t\t]\n" +
             "\t}\n" +
             "}";
+
     /**
      * by moos on 2018/04/20
      * func:生成测试数据
+     *
      * @return 评论数据
      */
-    public List<CommentDetailBean> generateTestData(){
+    public List<CommentDetailBean> generateTestData() {
         Gson gson = new Gson();
         commentBean = gson.fromJson(testJson, CommentBean.class);
         List<CommentDetailBean> commentList = commentBean.getData().getList();

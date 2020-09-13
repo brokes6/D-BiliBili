@@ -13,15 +13,18 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentCommentBinding;
+import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.util.GsonUtil;
+import com.example.dildil.util.SharePreferenceUtil;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.CommentExpandAdapter;
@@ -37,6 +40,9 @@ import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.presenter.VideoDetailsPresenter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 
@@ -52,9 +58,10 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     private CommentBean commentBean;
     private List<CommentDetailBean.CommentData> commentsList;
     private BottomSheetDialog dialog;
-    private ResourcesData mResourcesData;
     private EmojIconActions emojIcon;
+    private boolean isLoad = true;
     private int id,uid;
+    private LoginBean loginBean;
 
     @Inject
     VideoDetailsPresenter mPresenter;
@@ -74,6 +81,21 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     @Override
     protected void initView() {
         binding.detailPageDoComment.setOnClickListener(this);
+
+        //设置 Header式
+        binding.swipe.setRefreshHeader(new MaterialHeader(getContext()));
+        //取消Footer
+        binding.swipe.setEnableLoadMore(false);
+        binding.swipe.setDisableContentWhenRefresh(true);
+
+        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "onRefresh: 开始刷新");
+                mPresenter.getVideoComment(id,1,10,uid);
+            }
+        });
     }
 
     @Override
@@ -81,8 +103,9 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         showDialog();
         id = (int) SharedPreferencesUtil.getData("id", 0);
         uid = (int) SharedPreferencesUtil.getData("uid", 0);
+        loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
         mPresenter.getVideoComment(id,1,10,uid);
-        mResourcesData = new ResourcesData();
+        isLoad = false;
     }
 
     @Override
@@ -169,8 +192,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     dialog.dismiss();
                     CommentDetailBean.CommentData.replyData replyData = new  CommentDetailBean.CommentData.replyData();
                     replyData.setContent(replyContent);
-                    replyData.setImg(mResourcesData.getUserData().getUserImg());
-                    replyData.setUsername(mResourcesData.getUserData().getUsername());
+                    replyData.setImg(loginBean.getData().getImg());
+                    replyData.setUsername(loginBean.getData().getUsername());
                     adapter.addTheReplyData(replyData, position);
                     binding.FCCommentList.expandGroup(position);
                     XToastUtils.toast("回复成功");
@@ -234,11 +257,10 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
             public void onClick(View view) {
                 String commentContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(commentContent)) {
-                    //commentOnWork(commentContent);
                     dialog.dismiss();
                     CommentDetailBean.CommentData detailBean = new CommentDetailBean.CommentData();
-                    detailBean.setUsername(mResourcesData.getUserData().getUsername());
-                    detailBean.setImg(mResourcesData.getUserData().getUserImg());
+                    detailBean.setUsername(loginBean.getData().getUsername());
+                    detailBean.setImg(loginBean.getData().getImg());
                     detailBean.setContent(commentContent);
                     adapter.addTheCommentData(detailBean);
                     XToastUtils.toast("评论成功");
@@ -314,6 +336,9 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
     @Override
     public void onGetVideoCommentSuccess(CommentDetailBean commentDetailBean) {
+        if (!isLoad){
+            binding.swipe.finishRefresh(true);
+        }
         initExpandableListView(commentDetailBean);
         commentsList = commentDetailBean.getData();
         hideDialog();
@@ -323,6 +348,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     public void onGetVideoCommentFail(String e) {
         hideDialog();
         Log.e(TAG, "onGetVideoCommentFail: ???????????"+e );
+        binding.comments.setVisibility(View.GONE);
         XToastUtils.error("出现错误:"+e);
     }
 

@@ -113,6 +113,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         int playtime = intent.getIntExtra("playtime", 0);
         id = intent.getIntExtra("id", 0);
         uid = intent.getIntExtra("uid", 0);
+        Log.e(TAG, "当前点击的视频id="+id );
         SharedPreferencesUtil.putData("id", id);
         SharedPreferencesUtil.putData("uid", uid);
         if (playtime != 0) {
@@ -447,11 +448,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
-        if (videoDetailsBean.getCover() == null) {
-            imageView.setImageDrawable(mContext.getResources().getDrawable(R.drawable.file_background_circular_orange));
-        } else {
-            Glide.with(mContext).load(videoDetailsBean.getCover()).into(imageView);
-        }
+        Glide.with(mContext).load(videoDetailsBean.getCover()).into(imageView);
         binding.detailPlayer.setThumbImageView(imageView);
         String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {

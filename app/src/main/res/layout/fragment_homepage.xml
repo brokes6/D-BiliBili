@@ -22,12 +22,10 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            //这里的头像还是本地的！！！！！！！！！！！！！！！！！！
             <com.android.liuzhuang.rcimageview.CircleImageView
                 android:id="@+id/user_img"
                 android:layout_width="@dimen/dp_45"
-                android:layout_height="@dimen/dp_45"
-                android:src="@mipmap/top" />
+                android:layout_height="@dimen/dp_45" />
 
             <TextView
                 android:id="@+id/ed_text"
