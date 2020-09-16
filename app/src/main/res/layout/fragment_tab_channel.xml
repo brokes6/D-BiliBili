@@ -5,6 +5,11 @@
 
     </data>
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,4 +80,6 @@
             android:layout_height="@dimen/dp_10"
             android:background="#f4f4f4"/>
     </RelativeLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

@@ -30,10 +30,11 @@ public class PartitionTabFragment extends BaseFragment {
 
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
+    @Override
+    protected void initLocalData() {
+
+    }
+
 
     @Override
     public void onClick(View v) {

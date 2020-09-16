@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
+import com.ethanhua.skeleton.Skeleton;
+import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
@@ -50,12 +52,15 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private boolean isOpen = false;
     private LinearLayout mMainCoin, thumbsUp, CollectionMain, ForwardMain;
     private boolean isLoad = false;
-
-    @Inject
-    VideoDetailsPresenter mPresenter;
+    private SkeletonScreen mSkeletonScreen;
+    private SkeletonScreen mSkeletonScreen2;
     private boolean mIsPraise = false;
     private int mCoinNum = 0;
     private boolean isCollection = false;
+
+    @Inject
+    VideoDetailsPresenter mPresenter;
+
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +82,24 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         adapter.setListener(listener);
         binding.InRecyclerView.setLayoutManager(layoutManager);
         binding.InRecyclerView.setAdapter(adapter);
+        mSkeletonScreen2 = Skeleton.bind(binding.InRecyclerView)
+                .adapter(adapter)//设置实际adapter
+                .shimmer(true)//是否开启动画
+                .angle(30)//shimmer的倾斜角度
+                .frozen(true)//true则表示显示骨架屏时，RecyclerView不可滑动，否则可以滑动
+                .duration(1200)//动画时间，以毫秒为单位
+                .count(4)//显示骨架屏时item的个数
+                .load(R.layout.item_hot_ranking_list_skleton)//骨架屏UI
+                .show();
+
+        mSkeletonScreen = Skeleton.bind(binding.top)
+                .load(R.layout.item_fragment_introduction_skeleton)//骨架屏UI
+                .duration(1000)//动画时间，以毫秒为单位
+                .shimmer(true)//是否开启动画
+                .color(R.color.shimmer_color)//shimmer的颜色
+                .angle(30)//shimmer的倾斜角度
+                .show();
+
     }
 
     private void getIncludeView() {
@@ -107,6 +130,11 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         id = (int) SharedPreferencesUtil.getData("id", 0);
         uid = (int) SharedPreferencesUtil.getData("uid", 0);
         mPresenter.getVideoDetails(id, uid);
+    }
+
+    @Override
+    protected void initLocalData() {
+
     }
 
 
@@ -216,6 +244,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         }
         if (!isLoad) initDatas();
         isLoad = true;
+        mSkeletonScreen.hide();
+        mSkeletonScreen2.hide();
         hideDialog();
     }
 
@@ -229,6 +259,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetVideoDetailsFail(String e) {
+        hideDialog();
+        mSkeletonScreen.hide();
+        mSkeletonScreen2.hide();
         XToastUtils.error("网络出现错误");
     }
 

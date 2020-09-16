@@ -26,6 +26,11 @@ public class LiveBroadcastFragment extends BaseFragment {
     }
 
     @Override
+    protected void initLocalData() {
+
+    }
+
+    @Override
     protected void initView() {
 
     }

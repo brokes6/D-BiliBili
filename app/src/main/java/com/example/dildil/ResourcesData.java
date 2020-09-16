@@ -7,6 +7,7 @@ import com.example.dildil.dynamic_page.bean.PursueBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
 import com.example.dildil.dynamic_page.bean.VideoNewsBean;
 import com.example.dildil.home_page.bean.BannerBean;
+import com.example.dildil.home_page.bean.FanRecommendationBean;
 import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.MyPursuitBean;
 import com.example.dildil.home_page.bean.VideoBean;
@@ -19,6 +20,12 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+/**
+ * Author:fuxinbo
+ * 本地资源初始化+使用
+ */
 
 public class ResourcesData {
     private List<VideoBean> beans = new ArrayList<>();
@@ -33,6 +40,7 @@ public class ResourcesData {
     private List<PursueBean> pursueBeans = new ArrayList<>();
     private List<MyPursuitBean> myPursuitBeans = new ArrayList<>();
     private List<VideoNewsBean> videoNewsBeans = new ArrayList<>();
+    private List<FanRecommendationBean> fanRecommendationBeans = new ArrayList<>();
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
@@ -465,7 +473,7 @@ public class ResourcesData {
         pursueBean.setMyPursueImage("https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp");
         pursueBean.setMyPursueName("刀剑神域 爱丽丝篇 异界战争 -终章-");
         pursueBean.setToUpdate_word(18);
-        pursueBean.setWatch_Situation("看到第20话");
+        pursueBean.setWatch_Situation("看到第13话");
 
         MyPursuitBean pursueBean1 = new MyPursuitBean();
         pursueBean1.setMyPursueImage("https://i0.hdslb.com/bfs/bangumi/image/b827439e756028116cc87747d3a01569d7f1d47e.png@450w_600h.webp");
@@ -493,6 +501,45 @@ public class ResourcesData {
 
     public List<MyPursuitBean> getMyPursuitBean() {
         return myPursuitBeans;
+    }
+
+    public void initFanRecommendation(){
+        FanRecommendationBean fanRecommendationBean = new FanRecommendationBean();
+        fanRecommendationBean.setCover("https://i0.hdslb.com/bfs/bangumi/image/3afcc9d66735123d6168c336b579c5d9920bb9ab.jpg@320w_200h.webp");
+        fanRecommendationBean.setTitle("我的青春恋爱物语果然有问题。完");
+        fanRecommendationBean.setSecondaryTitle("544.4万");
+        fanRecommendationBean.setWatch("尚未观看");
+        fanRecommendationBean.setExclusive(true);
+
+        FanRecommendationBean fanRecommendationBean1 = new FanRecommendationBean();
+        fanRecommendationBean1.setCover("https://i0.hdslb.com/bfs/bangumi/image/0d7c67a6cc50b6541fce7f3e7c4343894d453db6.jpg@320w_200h.webp");
+        fanRecommendationBean1.setTitle("Re：从零开始的异世界生活 第二季");
+        fanRecommendationBean1.setSecondaryTitle("758.5万");
+        fanRecommendationBean1.setWatch("尚未观看");
+        fanRecommendationBean1.setExclusive(true);
+
+        FanRecommendationBean fanRecommendationBean2 = new FanRecommendationBean();
+        fanRecommendationBean2.setCover("https://i0.hdslb.com/bfs/bangumi/image/c51106d352db6751e7a64d84c324db5cac2690c5.png@320w_200h.webp");
+        fanRecommendationBean2.setTitle("知晓天空之蓝的人啊");
+        fanRecommendationBean2.setSecondaryTitle("50.2万");
+        fanRecommendationBean2.setWatch("尚未观看");
+        fanRecommendationBean2.setExclusive(false);
+
+        FanRecommendationBean fanRecommendationBean3 = new FanRecommendationBean();
+        fanRecommendationBean3.setCover("https://i0.hdslb.com/bfs/bangumi/image/16976d6ee9524f18d24aaf6b366095df51074988.gif");
+        fanRecommendationBean3.setTitle("刀剑神域 爱丽丝篇 异界战争 -终章-");
+        fanRecommendationBean3.setSecondaryTitle("691.4万");
+        fanRecommendationBean3.setWatch("以观看到13话");
+        fanRecommendationBean3.setExclusive(true);
+
+        fanRecommendationBeans.add(fanRecommendationBean);
+        fanRecommendationBeans.add(fanRecommendationBean1);
+        fanRecommendationBeans.add(fanRecommendationBean2);
+        fanRecommendationBeans.add(fanRecommendationBean3);
+    }
+
+    public List<FanRecommendationBean> getFanRecommendationBeans(){
+        return fanRecommendationBeans;
     }
 
     public void initVideoList() {

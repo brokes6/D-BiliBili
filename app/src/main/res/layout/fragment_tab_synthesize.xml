@@ -6,6 +6,11 @@
 
     </data>
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/TV_nestSc"
         android:layout_width="match_parent"
@@ -116,4 +121,5 @@
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

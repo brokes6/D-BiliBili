@@ -10,6 +10,10 @@ import java.util.HashSet;
 import okhttp3.Interceptor;
 import okhttp3.Response;
 
+/**
+ * Author:fuxinbo
+ * 定义拦截Cookies
+ */
 public class ReceivedCookiesInterceptor implements Interceptor {
     private static final String TAG = "ReceivedCookiesIntercep";
 

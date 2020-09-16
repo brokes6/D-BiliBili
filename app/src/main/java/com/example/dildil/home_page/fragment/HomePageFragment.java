@@ -23,8 +23,6 @@ import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.search.view.SearchActivity;
-import com.example.dildil.util.GsonUtil;
-import com.example.dildil.util.SharePreferenceUtil;
 
 import java.util.ArrayList;
 
@@ -52,14 +50,19 @@ public class HomePageFragment extends BaseFragment {
 
         binding.userImg.setOnClickListener(this);
         binding.edText.setOnClickListener(this);
+        binding.tab.setViewPager(binding.viewPager, TabTitle, getActivity(), mFragments);
+        binding.tab.setCurrentTab(1);
     }
 
     @Override
     protected void initData() {
-        binding.tab.setViewPager(binding.viewPager, TabTitle, getActivity(), mFragments);
-        binding.tab.setCurrentTab(1);
-        LoginBean loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
+        LoginBean loginBean = getUserData();
         Glide.with(getActivity()).load(loginBean.getData().getImg()).into(binding.userImg);
+    }
+
+    @Override
+    protected void initLocalData() {
+
     }
 
 

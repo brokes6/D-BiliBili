@@ -26,14 +26,15 @@ public class RapFragment extends BaseFragment {
     }
 
     @Override
+    protected void initLocalData() {
+
+    }
+
+    @Override
     protected void initView() {
 
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
 
     @Override
     public void onClick(View v) {

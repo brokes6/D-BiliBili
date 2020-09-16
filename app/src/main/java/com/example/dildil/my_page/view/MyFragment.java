@@ -13,8 +13,6 @@ import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.databinding.FragmentMyBinding;
 import com.example.dildil.login_page.bean.LoginBean;
-import com.example.dildil.util.GsonUtil;
-import com.example.dildil.util.SharePreferenceUtil;
 
 public class MyFragment extends BaseFragment {
     private static final String TAG = "MyFragment";
@@ -35,7 +33,7 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void initData() {
         showDialog();
-        loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
+        loginBean = getUserData();
         Glide.with(getContext()).load(loginBean.getData().getImg()).into(binding.MUserImg);
         binding.MUserName.setText(loginBean.getData().getUsername());
         binding.dynamic.setTop_Text(0 + "");
@@ -47,6 +45,11 @@ public class MyFragment extends BaseFragment {
             binding.member.setText("普通会员");
         }
         hideDialog();
+    }
+
+    @Override
+    protected void initLocalData() {
+
     }
 
 

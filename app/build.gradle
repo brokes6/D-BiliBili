@@ -111,4 +111,8 @@ dependencies {
     //下拉刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'
+    //占位符
+    implementation 'com.ethanhua:skeleton:1.1.2'
+    //主要是动画的实现
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
 }

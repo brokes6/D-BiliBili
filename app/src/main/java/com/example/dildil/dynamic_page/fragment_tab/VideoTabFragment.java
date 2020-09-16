@@ -20,6 +20,8 @@ import com.example.dildil.databinding.FragmentTabVideoBinding;
 import com.example.dildil.dynamic_page.adapter.PursueAdapter;
 import com.example.dildil.dynamic_page.adapter.VideoNewsAdapter;
 import com.example.dildil.util.ScrollCalculatorHelper;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
@@ -31,6 +33,7 @@ public class VideoTabFragment extends BaseFragment {
     private LinearLayoutManager layoutManager2;
     private ScrollCalculatorHelper scrollCalculatorHelper;
     private boolean mFull = false;
+    private boolean isFirst = true;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,12 +43,6 @@ public class VideoTabFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
-    }
-
-    @Override
-    protected void initData() {
-        showDialog();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         adapter = new BeInterestedChannerAdapter(getContext());
@@ -62,6 +59,19 @@ public class VideoTabFragment extends BaseFragment {
         mVAdapter = new VideoNewsAdapter(getContext());
         binding.VTVideo.setLayoutManager(layoutManager2);
         binding.VTVideo.setAdapter(mVAdapter);
+
+        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initDatas();
+                isFirst = false;
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
 
         //限定范围为屏幕一半的上下偏移180
         int playTop = CommonUtil.getScreenHeight(getContext()) / 2 - CommonUtil.dip2px(getContext(), 180);
@@ -91,14 +101,14 @@ public class VideoTabFragment extends BaseFragment {
                 }
             }
         });
-
-        initDatas();
+        binding.swipe.autoRefresh();//自动刷新
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
+    @Override
+    protected void initLocalData() {
+
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -110,10 +120,16 @@ public class VideoTabFragment extends BaseFragment {
         resourcesData.initBeInterestedData();
         resourcesData.initPursue();
         resourcesData.initVideoList();
-        adapter.loadMore(resourcesData.getBeInterestedBeans());
-        mPAdapter.loadMore(resourcesData.getPursueBeans());
-        mVAdapter.loadMore(resourcesData.getVideoNewsBeans());
-        hideDialog();
+        if (isFirst){
+            adapter.loadMore(resourcesData.getBeInterestedBeans());
+            mPAdapter.loadMore(resourcesData.getPursueBeans());
+            mVAdapter.loadMore(resourcesData.getVideoNewsBeans());
+        }else{
+            adapter.refresh(resourcesData.getBeInterestedBeans());
+            mPAdapter.refresh(resourcesData.getPursueBeans());
+            mVAdapter.refresh(resourcesData.getVideoNewsBeans());
+        }
+        binding.swipe.finishRefresh(true);
     }
 
     public static void VideoSuspend(){

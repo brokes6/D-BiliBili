@@ -13,6 +13,9 @@ import com.example.dildil.R;
 import com.example.dildil.home_page.bean.HotRankingBean;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
+import com.xuexiang.xui.adapter.recyclerview.XRecyclerAdapter;
+
+import java.util.Collection;
 
 public class HotRankingAdapter extends BaseRecyclerAdapter<HotRankingBean> implements View.OnClickListener{
     private static final String TAG = "HotRankingAdapter";
@@ -64,5 +67,11 @@ public class HotRankingAdapter extends BaseRecyclerAdapter<HotRankingBean> imple
 
         void onClick(int position);
 
+    }
+
+    @Override
+    public XRecyclerAdapter loadMore(Collection<HotRankingBean> collection) {
+
+        return super.loadMore(collection);
     }
 }

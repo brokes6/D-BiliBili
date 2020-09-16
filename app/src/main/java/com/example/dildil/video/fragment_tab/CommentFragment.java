@@ -40,7 +40,6 @@ import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.presenter.VideoDetailsPresenter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -82,12 +81,6 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     protected void initView() {
         binding.detailPageDoComment.setOnClickListener(this);
 
-        //设置 Header式
-        binding.swipe.setRefreshHeader(new MaterialHeader(getContext()));
-        //取消Footer
-        binding.swipe.setEnableLoadMore(false);
-        binding.swipe.setDisableContentWhenRefresh(true);
-
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -106,6 +99,11 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
         mPresenter.getVideoComment(id,1,10,uid);
         isLoad = false;
+    }
+
+    @Override
+    protected void initLocalData() {
+
     }
 
     @Override

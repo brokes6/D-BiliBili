@@ -5,6 +5,10 @@
     <data>
 
     </data>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -133,4 +137,5 @@
                     android:background="#f4f4f4" />
             </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

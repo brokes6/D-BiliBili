@@ -14,6 +14,10 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * Author:fuxinbo
+ * 请求时添加Cookies
+ */
 public class AddCookiesInterceptor implements Interceptor {
 
     @NotNull

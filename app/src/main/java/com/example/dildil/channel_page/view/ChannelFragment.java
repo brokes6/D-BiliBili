@@ -39,11 +39,10 @@ public class ChannelFragment extends BaseFragment {
         binding.ChTab.setViewPager(binding.ChViewPager, TabTitle, getActivity(), mFragments);
     }
 
+    @Override
+    protected void initLocalData() {
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
+    }
 
     @Override
     public void onClick(View view) {

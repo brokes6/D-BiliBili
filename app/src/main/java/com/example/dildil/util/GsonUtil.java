@@ -4,6 +4,8 @@ package com.example.dildil.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Type;
+
 /**
  * 字符串和Java类的转换工具
  */
@@ -33,4 +35,18 @@ public class GsonUtil {
         }
         return null;
     }
+
+
+    /**
+     * 将字符串转换成对应的Java对象
+     */
+    public static <T> T fromJSON(String json, Type type) {
+        try {
+            return createGson().fromJson(json,type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

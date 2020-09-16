@@ -29,6 +29,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+/**
+ * Author:fuxinbo
+ * 主页
+ */
 public class HomeActivity extends BaseActivity implements HomeContract.View {
     private static final String TAG = "HomeActivity";
     ActivityHomeBinding binding;

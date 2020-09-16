@@ -26,14 +26,14 @@ public class MoviesFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
+    protected void initLocalData() {
 
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
+    @Override
+    protected void initView() {
+
+    }
 
     @Override
     public void onClick(View v) {

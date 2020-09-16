@@ -24,6 +24,11 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
+/**
+ * Author:fuxinbo
+ * 网络接口
+ */
+
 public interface ApiService {
 
     String BASE_URL = "http://116.196.105.203";

@@ -26,7 +26,7 @@
     <string name="BulletScreenTips">发个友善的弹幕见证当下</string>
     <string name="DoubleSpeed">倍速</string>
     <string name="Automatic">自动</string>
-    <string name="SaySomething">说点什么吧...</string>
+    <string name="SaySomething">说点什么吧…</string>
     <string name="warning">未经作者授权禁止转载</string>
     <string name="RecentChannels">最近看过的频道</string>
     <string name="RecentVisit">最近访问</string>
@@ -43,7 +43,7 @@
     <string name="ForgetThePassword">忘记密码？</string>
     <string name="Register">注册</string>
     <string name="Login">登录</string>
-    <string name="Tips_one">登录即代表你同意用户协议和隐私政策</string>
+    <string name="Tips_one">登录即代表你同意 用户协议 和 隐私政策</string>
     <string name="Tips_two">遇到问题？查看帮助</string>
     <string name="please_input_phonenumber">请输入手机号码</string>
     <string name="please_input_phonenumber_correctly">请输入有效的电话号码</string>
@@ -51,6 +51,9 @@
     <string name="pwd_must_less_than_30">请输入小于30位的密码</string>
     <string name="login_fail">登录失败，请稍后重试</string>
     <string name="pwd_wrong">密码输入错误，请重试</string>
+    <string name="MyPursuit">我的追番</string>
+    <string name="Seemore">查看更多</string>
+    <string name="FanRecommendation">番剧推荐</string>
 
 
 </resources>

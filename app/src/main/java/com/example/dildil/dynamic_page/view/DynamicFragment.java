@@ -60,10 +60,10 @@ public class DynamicFragment extends BaseFragment {
         });
     }
 
-//    @Override
-//    public BasePresenter onCreatePresenter() {
-//        return null;
-//    }
+    @Override
+    protected void initLocalData() {
+
+    }
 
     @Override
     public void onClick(View view) {
