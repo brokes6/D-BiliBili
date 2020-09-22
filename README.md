@@ -26,18 +26,11 @@ implementation 'com.github.brokes6:CustomControl:1.1.7'
 
 ## 视频介绍:（GIF的效果会没这么好，实际效果更棒）<br>
 ### 主页:<br>
+![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/login.gif)<br>
 ![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/home.gif)<br>
-### 视频详情页面:<br>
-![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/videoPage.gif)<br>
-### 动态视频页面:<br>
-跟随你的屏幕来进行自动播放<br>
-![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/dynanmic_videoPage.gif)<br>
-### 动态综合页面:<br>
-![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/dynanmic_SynthPage.gif)<br>
-### 频道页面:<br>
-![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/channelPage.gif)<br>
-### My页面:<br>
-![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/mypage.gif)<br>
-### Video_Horizontal_Screen页面:<br>
+![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/home_1.gif)<br>
+![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/home_2.gif)<br>
+![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/home_3.gif)<br>
+![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/dongtai.gif)<br>
 ![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/video_horizontal.gif)<br>
 还有些小细节就不展示了(后面将会补充)<br>
