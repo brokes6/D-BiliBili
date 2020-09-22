@@ -13,6 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:background="@color/White">
 
             <RelativeLayout
@@ -48,19 +49,19 @@
                     android:textSize="13sp" />
 
                 <TextView
-                    android:layout_marginTop="@dimen/dp_20"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:paddingTop="@dimen/dp_3"
-                    android:paddingBottom="@dimen/dp_3"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_10"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_10"
                     android:background="@drawable/file_background_follow_pink"
-                    android:textSize="15sp"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_3"
+                    android:text="+关注"
                     android:textColor="@color/White"
-                    android:text="+关注"/>
+                    android:textSize="15sp" />
 
 
                 <LinearLayout
@@ -72,23 +73,23 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:paddingTop="@dimen/dp_3"
-                        android:paddingBottom="@dimen/dp_3"
-                        android:paddingLeft="@dimen/dp_7"
-                        android:paddingRight="@dimen/dp_7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@mipmap/hots"
                         android:background="@drawable/file_background_hot_gray"
-                        android:textSize="15sp"
+                        android:drawableLeft="@mipmap/hots"
+                        android:paddingLeft="@dimen/dp_7"
+                        android:paddingTop="@dimen/dp_3"
+                        android:paddingRight="@dimen/dp_7"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:text="热门"
                         android:textColor="@color/Pink"
-                        android:text="热门"/>
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/In_Title"
-                        android:layout_marginLeft="@dimen/dp_5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_5"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:maxLines="1"
@@ -175,11 +176,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/In_recyclerView"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/top" />
+                android:layout_below="@+id/top"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10" />
 
         </RelativeLayout>
 

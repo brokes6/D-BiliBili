@@ -31,7 +31,7 @@ import retrofit2.http.Url;
 
 public interface ApiService {
 
-    String BASE_URL = "http://116.196.105.203";
+    String BASE_URL = "http://116.196.105.203:6380";
 
     @GET("videoservice/category/random/all")
     Observable<RecommendVideoBean> randomRecommendation();

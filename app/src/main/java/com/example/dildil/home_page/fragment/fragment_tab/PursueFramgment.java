@@ -43,6 +43,7 @@ public class PursueFramgment extends BaseFragment {
     private FanRecommendationAdapter fanRecommendationAdapter;
     private SkeletonScreen mSkeletonScreen;
     private SkeletonScreen mSkeletonScreen2;
+    private SkeletonScreen mSkeletonScreeView;
     private List<FanRecommendationBean> fanRecommendationBeans = new ArrayList<>();
     private boolean isFirst = true;
 
@@ -59,6 +60,15 @@ public class PursueFramgment extends BaseFragment {
         adapter = new MyPursuitAdapter(getContext());
         binding.PuMyPursuit.setLayoutManager(layoutManager);
         binding.PuMyPursuit.setAdapter(adapter);
+
+        mSkeletonScreeView = Skeleton.bind(binding.PuBanner)
+                .load(R.layout.item_banner_skeleton)//骨架屏UI
+                .duration(1000)//动画时间，以毫秒为单位
+                .shimmer(true)//是否开启动画
+                .color(R.color.shimmer_color)//shimmer的颜色
+                .angle(30)//shimmer的倾斜角度
+                .show();
+
         mSkeletonScreen2 = Skeleton.bind(binding.PuMyPursuit)
                 .adapter(adapter)//设置实际adapter
                 .shimmer(true)//是否开启动画
@@ -146,6 +156,7 @@ public class PursueFramgment extends BaseFragment {
         })
                 .addBannerLifecycleObserver(this)//添加生命周期观察者
                 .setIndicator(new CircleIndicator(getContext()));
+        mSkeletonScreeView.hide();
     }
 
 

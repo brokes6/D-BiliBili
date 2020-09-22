@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
-import com.example.dildil.util.XToastUtils;
+import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.video.view.VideoActivity;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
@@ -55,10 +55,19 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
                 mContext.startActivity(intent);
             }
         });
+        Re_video.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext,"fuxinbo");
+                videoChoiceDialog.show();
+                return false;
+            }
+        });
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XToastUtils.info("暂未开发");
+                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext,"fuxinbo");
+                videoChoiceDialog.show();
             }
         });
         if (item!=null){

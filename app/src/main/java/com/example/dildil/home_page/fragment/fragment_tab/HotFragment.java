@@ -55,7 +55,6 @@ public class HotFragment extends BaseFragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                showDialog();
                 initDatas();
                 isFirst = false;
             }
@@ -94,7 +93,6 @@ public class HotFragment extends BaseFragment {
         } else {
             adapter.refresh(resourcesData.getHotRanking());
         }
-        hideDialog();
         binding.swipe.finishRefresh(true);
         mSkeletonScreen.hide();
     }

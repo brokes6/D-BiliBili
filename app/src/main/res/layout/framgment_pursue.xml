@@ -19,7 +19,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/White">
+                android:background="@color/White"
+                android:animateLayoutChanges="true">
 
                 <com.youth.banner.Banner
                     android:id="@+id/Pu_banner"

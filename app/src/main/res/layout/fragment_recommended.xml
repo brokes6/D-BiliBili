@@ -14,7 +14,8 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/White_ash">
+            android:animateLayoutChanges="true"
+            android:background="@color/White">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
@@ -30,10 +31,10 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     app:banner_indicator_gravity="right"
+                    app:banner_indicator_marginBottom="@dimen/dp_7"
+                    app:banner_indicator_marginRight="@dimen/dp_15"
                     app:banner_indicator_normal_color="@color/White"
                     app:banner_indicator_selected_color="@color/Pink"
-                    app:banner_indicator_marginRight="@dimen/dp_15"
-                    app:banner_indicator_marginBottom="@dimen/dp_7"
                     app:layout_scrollFlags="scroll" />
 
             </com.google.android.material.appbar.AppBarLayout>

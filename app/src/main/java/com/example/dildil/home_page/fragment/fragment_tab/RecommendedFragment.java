@@ -108,14 +108,15 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                Log.e(TAG, "onRefresh: 开始刷新");
                 if (isFirst) {
                     mPresenter.getRandomRecommendation();
                     ResourcesData resourcesData = new ResourcesData();
                     resourcesData.initBanner();
                     initBanner(resourcesData.getBeannerUrl());
+                }else{
+                    mPresenter.getRefreshRecommendVideo();
                 }
-                Log.e(TAG, "onRefresh: 开始刷新");
-                mPresenter.getRefreshRecommendVideo();
                 isFirst = false;
             }
         });
@@ -166,6 +167,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         adapter.loadMore(videoBean.getData());
         mSkeletonScreen.hide();
         save(GsonUtil.toJson(videoBean), "RFLocalHua");
+        binding.swipe.finishRefresh(true);
     }
 
     @Override

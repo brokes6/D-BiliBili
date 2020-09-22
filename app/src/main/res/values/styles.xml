@@ -48,4 +48,15 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
+
+    <style name="BottomDialog"  parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:windowBackground">@color/transparent</item>//背景设置为透明
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item> <!-- 点外边可以消失  -->
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
 </resources>

@@ -57,19 +57,12 @@ public class SplashActivity extends BaseActivity {
             @Override
             public void onFinish() {
                 HashSet<String > authTokens = SharePreferenceUtil.getInstance(SplashActivity.this).getCookies("cookie");
-//                String authToken = SharePreferenceUtil.getInstance(SplashActivity.this).getAuthToken("");
                 if (authTokens ==null){
                     ActivityUtils.startActivity(LoginActivity.class);
 //                    ActivityUtils.startActivity(HomeActivity.class);
                 } else {
                     ActivityUtils.startActivity(HomeActivity.class);
                 }
-//                if (TextUtils.isEmpty(authToken)) {
-//                    ActivityUtils.startActivity(LoginActivity.class);
-////                    ActivityUtils.startActivity(HomeActivity.class);
-//                } else {
-//                    ActivityUtils.startActivity(HomeActivity.class);
-//                }
                 SplashActivity.this.finish();
             }
         };

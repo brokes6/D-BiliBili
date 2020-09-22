@@ -27,7 +27,7 @@ public class SynthesizeTabFragment extends BaseFragment {
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_synthesize,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_synthesize, container, false);
         return binding.getRoot();
     }
 
@@ -45,7 +45,7 @@ public class SynthesizeTabFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),2);
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         adapter_topic = new TopicAdapter(getContext());
         binding.RecyTopic.setLayoutManager(layoutManager1);
         binding.RecyTopic.setAdapter(adapter_topic);
@@ -67,14 +67,14 @@ public class SynthesizeTabFragment extends BaseFragment {
 
     }
 
-    private void initDatas(){
+    private void initDatas() {
         ResourcesData resourcesData = new ResourcesData();
         resourcesData.initTopicData();
         resourcesData.initDynamic();
-        if (isFirst){
+        if (isFirst) {
             adapter_topic.loadMore(resourcesData.getTopicData());
             adapter_dynamic.loadMore(resourcesData.getDynamicBeans());
-        }else{
+        } else {
             adapter_topic.refresh(resourcesData.getTopicData());
             adapter_dynamic.refresh(resourcesData.getDynamicBeans());
         }
