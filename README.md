@@ -34,3 +34,5 @@ implementation 'com.github.brokes6:CustomControl:1.1.7'
 ![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/dongtai.gif)<br>
 ![image](https://github.com/brokes6/DaliDali/blob/master/app/src/showresources/video_horizontal.gif)<br>
 还有些小细节就不展示了(后面将会补充)<br>
+
+/ps: 如有侵权，请联系作者！
