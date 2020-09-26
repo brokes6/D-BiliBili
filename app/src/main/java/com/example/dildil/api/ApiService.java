@@ -2,6 +2,7 @@ package com.example.dildil.api;
 
 import com.example.dildil.home_page.bean.DynamicNumBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
+import com.example.dildil.home_page.bean.VersionBean;
 import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.login_page.bean.RegisterBean;
 import com.example.dildil.login_page.bean.inputDto;
@@ -68,5 +69,8 @@ public interface ApiService {
 
     @GET("userservice/dynamic/unread")
     Observable<DynamicNumBean> getDynamicNum(@Query("uid") int uid);
+
+    @GET()
+    Observable<VersionBean>getVersion(@Url String url);
 
 }

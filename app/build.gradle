@@ -9,7 +9,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
-        versionName "1.1.1"
+        versionName "1.1.0"
         dataBinding.enabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -115,4 +115,5 @@ dependencies {
     implementation 'com.ethanhua:skeleton:1.1.2'
     //主要是动画的实现
     implementation 'io.supercharge:shimmerlayout:2.1.0'
+    implementation 'com.jidcoo.android.widget.commentview:CommentView:1.0.0'
 }

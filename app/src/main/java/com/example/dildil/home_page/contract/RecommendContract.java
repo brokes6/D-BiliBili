@@ -19,18 +19,28 @@ public interface RecommendContract {
 
         void onGetRefreshRecommendVideoFail(String e);
 
+        void onGetVideoLoadSuccess(RecommendVideoBean videoBean);
+
+        void onGetVideoLoadFail(String e);
+
     }
+
     interface Model extends BaseModel {
 
         Observable<RecommendVideoBean> getRandomRecommendation();
 
         Observable<RecommendVideoBean> getRefreshRecommendVideo();
 
+        Observable<RecommendVideoBean> LoadVideo();
+
     }
+
     abstract class Presenter extends BasePresenter<View, Model> {
 
         public abstract void getRandomRecommendation();
 
         public abstract void getRefreshRecommendVideo();
+
+        public abstract void LoadVideo();
     }
 }

@@ -42,7 +42,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/Re_recy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginRight="@dimen/dp_5"

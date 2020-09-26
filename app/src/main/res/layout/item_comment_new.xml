@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <RelativeLayout
+        android:id="@+id/rl_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:paddingLeft="15dp"
+        android:paddingTop="8dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="8dp">
+
+        <!--头像-->
+        <com.android.liuzhuang.rcimageview.RoundCornerImageView
+            android:id="@+id/iv_header"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:scaleType="centerCrop"
+            app:riv_border_color="@color/gray_d8"
+            app:riv_border_width="0.8dp"
+            app:riv_corner_radius="18dp" />
+
+        <!--点赞-->
+        <LinearLayout
+            android:id="@+id/ll_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="3dp">
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@mipmap/like_while" />
+
+            <TextView
+                android:id="@+id/tv_like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="2dp"
+                android:text="200"
+                android:textColor="@color/color_6f"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!--用户名-->
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/ll_like"
+            android:layout_toRightOf="@+id/iv_header"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="#9B9B9B"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!--评论内容-->
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_alignLeft="@+id/tv_user_name"
+            android:layout_alignRight="@+id/tv_user_name"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="2dp"
+            android:text=""
+            android:textColor="@color/black_21"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_alignLeft="@+id/tv_content"
+            android:layout_alignRight="@+id/tv_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="刚刚"
+            android:textColor="#9B9B9B"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

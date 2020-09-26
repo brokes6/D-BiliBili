@@ -84,24 +84,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void onClick(View v) {
-//        if (ClickUtil.isFastClick(1000, v)) {
-//            return;
-//        }
         switch (v.getId()) {
             case R.id.Lo_login:
                 account = binding.LoUserAccount.getText().toString().trim();
                 password = binding.LoUserPassword.getText().toString().trim();
                 if (InputUtil.checkMobileLegal(account) && InputUtil.checkPasswordLegal(password)) {
                     showDialog();
-                    Log.d(TAG, "login账号密码 : " + account + " ," + password);
+                    Log.d("why", "login账号密码 : " + account + " ," + password);
                     inputDto inputDto = new inputDto(account,password);
                     mPresenter.userLogin(inputDto);
                 }
                 break;
-//            case R.id.register:
-//            case R.id.forget_pwd:
-//                XToastUtils.info(R.string.in_developing);
-//                break;
         }
     }
 

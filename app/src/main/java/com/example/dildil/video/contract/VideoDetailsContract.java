@@ -3,6 +3,7 @@ package com.example.dildil.video.contract;
 import com.example.dildil.abstractclass.BaseModel;
 import com.example.dildil.abstractclass.BaseView;
 import com.example.dildil.base.BasePresenter;
+import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
@@ -47,6 +48,10 @@ public interface VideoDetailsContract {
 
         void onGetSedaDanMuFail(String e);
 
+        void onGetRelatedVideosSuccess(RecommendVideoBean recommendVideoBean);
+
+        void onGetRelatedVideosFail(String e);
+
     }
 
     interface Model extends BaseModel {
@@ -65,6 +70,8 @@ public interface VideoDetailsContract {
 
         Observable<SeadDanmuBean> seadDanMu(danmu danmu, int uid);
 
+        Observable<RecommendVideoBean> getRelatedVideos();
+
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -82,5 +89,7 @@ public interface VideoDetailsContract {
         public abstract void getDanMu(int value, int vid);
 
         public abstract void seadDanMu(danmu danmu, int uid);
+
+        public abstract void getRelatedVideos();
     }
 }

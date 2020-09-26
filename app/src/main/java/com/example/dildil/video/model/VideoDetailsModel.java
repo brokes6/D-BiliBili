@@ -1,6 +1,7 @@
 package com.example.dildil.video.model;
 
 import com.example.dildil.api.ApiEngine;
+import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
@@ -48,5 +49,10 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
     @Override
     public Observable<SeadDanmuBean> seadDanMu(danmu danmu, int uid) {
         return ApiEngine.getInstance().getApiService().seadDanMu(danmu);
+    }
+
+    @Override
+    public Observable<RecommendVideoBean> getRelatedVideos() {
+        return ApiEngine.getInstance().getApiService().randomRecommendation();
     }
 }

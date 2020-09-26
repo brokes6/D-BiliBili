@@ -2,6 +2,8 @@ package com.example.dildil.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.dildil.R;
 import com.example.dildil.util.LoadingsDialog;
-import com.example.dildil.util.LocaleManageUtil;
 import com.gyf.immersionbar.ImmersionBar;
 
 
@@ -36,10 +37,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public Context mContext;
 
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocaleManageUtil.setLocal(newBase));
-    }
+//    @Override
+//    protected void attachBaseContext(Context newBase) {
+//        super.attachBaseContext(LocaleManageUtil.setLocal(newBase));
+//    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -245,6 +246,26 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             p.setMargins(l, t, r, b);
             v.requestLayout();
         }
+    }
+
+    /**
+     * 获取版本号
+     *
+     * @return
+     */
+    public String getVersionCode() {
+        // 包管理器 可以获取清单文件信息
+        PackageManager packageManager = getPackageManager();
+        try {
+            // 获取包信息
+            // 参1 包名 参2 获取额外信息的flag 不需要的话 写0
+            PackageInfo packageInfo = packageManager.getPackageInfo(
+                    getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void showDialog() {

@@ -80,4 +80,10 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     public void onGetLogoutFail(String e) {
         hideDialog();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
+    }
 }

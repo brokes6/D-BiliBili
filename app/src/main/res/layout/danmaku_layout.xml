@@ -276,7 +276,7 @@
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/UPImage"
-            android:layout_width="@dimen/dp_100"
+            android:layout_width="@dimen/dp_120"
             android:layout_height="@dimen/dp_30"
             android:layout_below="@+id/first_floor"
             android:layout_marginLeft="@dimen/dp_20">
@@ -290,13 +290,14 @@
             <com.android.liuzhuang.rcimageview.CircleImageView
                 android:id="@+id/up_img"
                 android:layout_width="@dimen/dp_30"
-                android:layout_height="match_parent" />
+                android:layout_height="@dimen/dp_30" />
 
             <TextView
                 android:id="@+id/up_name"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
                 android:paddingRight="@dimen/dp_10"
+                android:text="UP主名称"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"

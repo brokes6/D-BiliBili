@@ -22,7 +22,7 @@
         android:layout_margin="@dimen/dp_5"
         android:text=""
         android:textColor="#fff"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/Ranking_video_Title"
@@ -33,7 +33,7 @@
         android:maxLines="2"
         android:text=""
         android:textColor="#000000"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/up_img"
@@ -54,7 +54,7 @@
         android:layout_toRightOf="@+id/up_img"
         android:text=""
         android:textColor="#999999"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
 
     <ImageView
@@ -76,7 +76,7 @@
         android:layout_toRightOf="@+id/play_num_img"
         android:text=""
         android:textColor="#999999"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <View
         android:layout_width="match_parent"

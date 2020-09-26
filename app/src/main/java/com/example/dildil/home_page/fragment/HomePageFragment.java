@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class HomePageFragment extends BaseFragment {
     FragmentHomepageBinding binding;
-    private String[] TabTitle = {"直播", "推荐", "热门", "追番", "影视", "说唱区", "抗灾区"};
+    private final String[] TabTitle = {"直播", "推荐", "热门", "追番", "影视", "说唱区", "抗灾区"};
     private ArrayList<Fragment> mFragments;
 
     @Override

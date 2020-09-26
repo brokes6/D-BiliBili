@@ -1,11 +1,15 @@
 package com.example.dildil.video.bean;
 
+import com.jidcoo.android.widget.commentview.model.AbstractCommentModel;
+import com.jidcoo.android.widget.commentview.model.CommentEnable;
+import com.jidcoo.android.widget.commentview.model.ReplyEnable;
+
 import java.util.List;
 
-public class CommentDetailBean {
-   private int code;
-   private List<CommentData> data;
-   private String message;
+public class CommentDetailBean extends AbstractCommentModel<CommentDetailBean.CommentData> {
+    private int code;
+    private List<CommentData> data;
+    private String message;
 
     public int getCode() {
         return code;
@@ -31,81 +35,86 @@ public class CommentDetailBean {
         this.message = message;
     }
 
-    public static class CommentData{
-       private int id;
-       private int uid;
-       private int praiseNum;
-       private int replyNum;
-       private String content;
-       private String username;
-       private String img;
-       private long createTime;
-       private List<replyData> replyList;
-       private int flag;
+    @Override
+    public List<CommentData> getComments() {
+        return data;
+    }
 
-       public int getId() {
-           return id;
-       }
+    public static class CommentData extends CommentEnable {
+        private int id;
+        private int uid;
+        private int praiseNum;
+        private int replyNum;
+        private String content;
+        private String username;
+        private String img;
+        private long createTime;
+        private List<replyData> replyList;
+        private int flag;
 
-       public void setId(int id) {
-           this.id = id;
-       }
+        public int getId() {
+            return id;
+        }
 
-       public int getUid() {
-           return uid;
-       }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-       public void setUid(int uid) {
-           this.uid = uid;
-       }
+        public int getUid() {
+            return uid;
+        }
 
-       public int getPraiseNum() {
-           return praiseNum;
-       }
+        public void setUid(int uid) {
+            this.uid = uid;
+        }
 
-       public void setPraiseNum(int praiseNum) {
-           this.praiseNum = praiseNum;
-       }
+        public int getPraiseNum() {
+            return praiseNum;
+        }
 
-       public int getReplyNum() {
-           return replyNum;
-       }
+        public void setPraiseNum(int praiseNum) {
+            this.praiseNum = praiseNum;
+        }
 
-       public void setReplyNum(int replyNum) {
-           this.replyNum = replyNum;
-       }
+        public int getReplyNum() {
+            return replyNum;
+        }
 
-       public String getContent() {
-           return content;
-       }
+        public void setReplyNum(int replyNum) {
+            this.replyNum = replyNum;
+        }
 
-       public void setContent(String content) {
-           this.content = content;
-       }
+        public String getContent() {
+            return content;
+        }
 
-       public String getUsername() {
-           return username;
-       }
+        public void setContent(String content) {
+            this.content = content;
+        }
 
-       public void setUsername(String username) {
-           this.username = username;
-       }
+        public String getUsername() {
+            return username;
+        }
 
-       public String getImg() {
-           return img;
-       }
+        public void setUsername(String username) {
+            this.username = username;
+        }
 
-       public void setImg(String img) {
-           this.img = img;
-       }
+        public String getImg() {
+            return img;
+        }
 
-       public long getCreateTime() {
-           return createTime;
-       }
+        public void setImg(String img) {
+            this.img = img;
+        }
 
-       public void setCreateTime(long createTime) {
-           this.createTime = createTime;
-       }
+        public long getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(long createTime) {
+            this.createTime = createTime;
+        }
 
         public List<replyData> getReplyList() {
             return replyList;
@@ -116,105 +125,110 @@ public class CommentDetailBean {
         }
 
         public int getFlag() {
-           return flag;
-       }
+            return flag;
+        }
 
-       public void setFlag(int flag) {
-           this.flag = flag;
-       }
+        public void setFlag(int flag) {
+            this.flag = flag;
+        }
 
-       public static class replyData{
-           private int id;
-           private int cid;
-           private int ruid;
-           private int uid;
-           private int praiseNum;
-           private String username;
-           private String img;
-           private String rusername;
-           private String content;
-           private int flag;
+        @Override
+        public List<replyData> getReplies() {
+            return replyList;
+        }
 
-           public int getId() {
-               return id;
-           }
+        public static class replyData extends ReplyEnable {
+            private int id;
+            private int cid;
+            private int ruid;
+            private int uid;
+            private int praiseNum;
+            private String username;
+            private String img;
+            private String rusername;
+            private String content;
+            private int flag;
 
-           public void setId(int id) {
-               this.id = id;
-           }
+            public int getId() {
+                return id;
+            }
 
-           public int getCid() {
-               return cid;
-           }
+            public void setId(int id) {
+                this.id = id;
+            }
 
-           public void setCid(int cid) {
-               this.cid = cid;
-           }
+            public int getCid() {
+                return cid;
+            }
 
-           public int getRuid() {
-               return ruid;
-           }
+            public void setCid(int cid) {
+                this.cid = cid;
+            }
 
-           public void setRuid(int ruid) {
-               this.ruid = ruid;
-           }
+            public int getRuid() {
+                return ruid;
+            }
 
-           public int getUid() {
-               return uid;
-           }
+            public void setRuid(int ruid) {
+                this.ruid = ruid;
+            }
 
-           public void setUid(int uid) {
-               this.uid = uid;
-           }
+            public int getUid() {
+                return uid;
+            }
 
-           public int getPraiseNum() {
-               return praiseNum;
-           }
+            public void setUid(int uid) {
+                this.uid = uid;
+            }
 
-           public void setPraiseNum(int praiseNum) {
-               this.praiseNum = praiseNum;
-           }
+            public int getPraiseNum() {
+                return praiseNum;
+            }
 
-           public String getUsername() {
-               return username;
-           }
+            public void setPraiseNum(int praiseNum) {
+                this.praiseNum = praiseNum;
+            }
 
-           public void setUsername(String username) {
-               this.username = username;
-           }
+            public String getUsername() {
+                return username;
+            }
 
-           public String getImg() {
-               return img;
-           }
+            public void setUsername(String username) {
+                this.username = username;
+            }
 
-           public void setImg(String img) {
-               this.img = img;
-           }
+            public String getImg() {
+                return img;
+            }
 
-           public String getRusername() {
-               return rusername;
-           }
+            public void setImg(String img) {
+                this.img = img;
+            }
 
-           public void setRusername(String rusername) {
-               this.rusername = rusername;
-           }
+            public String getRusername() {
+                return rusername;
+            }
 
-           public String getContent() {
-               return content;
-           }
+            public void setRusername(String rusername) {
+                this.rusername = rusername;
+            }
 
-           public void setContent(String content) {
-               this.content = content;
-           }
+            public String getContent() {
+                return content;
+            }
 
-           public int getFlag() {
-               return flag;
-           }
+            public void setContent(String content) {
+                this.content = content;
+            }
 
-           public void setFlag(int flag) {
-               this.flag = flag;
-           }
-       }
-   }
+            public int getFlag() {
+                return flag;
+            }
+
+            public void setFlag(int flag) {
+                this.flag = flag;
+            }
+        }
+    }
 
 }

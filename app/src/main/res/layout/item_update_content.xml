@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/backgrount_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_130"
+            android:background="#6ED4E1" />
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_90"
+            android:layout_height="@dimen/dp_90"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@drawable/file_background_radius_30_white">
+
+            <ImageView
+                android:layout_width="@dimen/dp_60"
+                android:layout_height="@dimen/dp_60"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/update_img" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_margin="@dimen/dp_5"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            android:src="@drawable/baseline_close"/>
+
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/backgrount_1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:text="版本更新"
+            android:textColor="@color/Black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/Version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="1.3.0更新内容"
+            android:textColor="@color/Text_gray"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/maiBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Version"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/dp_10"
+            android:maxLines="4"
+            android:textColor="@color/Black"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/app_update_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/maiBody"
+            android:layout_margin="@dimen/dp_15"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/app_update_current_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/app_update_progress"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:textColor="@color/Text_gray"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/app_update_current_percent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/file_background_radius_30_aquagreen"
+            android:paddingLeft="@dimen/dp_25"
+            android:paddingTop="@dimen/dp_3"
+            android:paddingRight="@dimen/dp_25"
+            android:paddingBottom="@dimen/dp_3"
+            android:text="更 新"
+            android:textColor="@color/White"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

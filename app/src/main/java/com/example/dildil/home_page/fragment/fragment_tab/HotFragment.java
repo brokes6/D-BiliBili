@@ -1,5 +1,6 @@
 package com.example.dildil.home_page.fragment.fragment_tab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,28 +10,44 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
+import com.example.dildil.component.activity.ActivityModule;
+import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentHotBinding;
 import com.example.dildil.home_page.adapter.HotRankingAdapter;
+import com.example.dildil.home_page.bean.RecommendVideoBean;
+import com.example.dildil.home_page.contract.RecommendContract;
+import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.video.view.VideoActivity;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
-public class HotFragment extends BaseFragment {
+import javax.inject.Inject;
+
+public class HotFragment extends BaseFragment implements RecommendContract.View{
     FragmentHotBinding binding;
     private HotRankingAdapter adapter;
     private SkeletonScreen mSkeletonScreen;
     private boolean isFirst = true;
 
+    @Inject
+    RecommendPresenter mPresenter;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_hot, container, false);
+        DaggerActivityComponent.builder()
+                .appComponent(MyApplication.getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .build()
+                .inject(this);
+        mPresenter.attachView(this);
+
         return binding.getRoot();
     }
 
@@ -55,7 +72,11 @@ public class HotFragment extends BaseFragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initDatas();
+                if (isFirst) {
+                    mPresenter.getRandomRecommendation();
+                }else{
+                    mPresenter.getRefreshRecommendVideo();
+                }
                 isFirst = false;
             }
         });
@@ -78,22 +99,45 @@ public class HotFragment extends BaseFragment {
 
     HotRankingAdapter.ItemOnClickListener listener = new HotRankingAdapter.ItemOnClickListener() {
         @Override
-        public void onClick(int position) {
-            GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
-            gsyVideoManager.onPause();
-            ActivityUtils.startActivity(VideoActivity.class);
+        public void onClick(int position, int vid) {
+            Intent intent = new Intent(getContext(),VideoActivity.class);
+            intent.putExtra("id",vid);
+            intent.putExtra("uid",1);
+            getContext().startActivity(intent);
         }
+
     };
 
-    private void initDatas() {
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initHotRanking();
-        if (isFirst) {
-            adapter.loadMore(resourcesData.getHotRanking());
-        } else {
-            adapter.refresh(resourcesData.getHotRanking());
-        }
+
+    @Override
+    public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
+        adapter.loadMore(videoBean.getData());
         binding.swipe.finishRefresh(true);
         mSkeletonScreen.hide();
+    }
+
+    @Override
+    public void onGetRecommendVideoFail(String e) {
+        mSkeletonScreen.hide();
+    }
+
+    @Override
+    public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
+
+    }
+
+    @Override
+    public void onGetRefreshRecommendVideoFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoLoadSuccess(RecommendVideoBean videoBean) {
+
+    }
+
+    @Override
+    public void onGetVideoLoadFail(String e) {
+
     }
 }

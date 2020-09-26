@@ -3,6 +3,7 @@ package com.example.dildil.component.activity;
 import android.app.Activity;
 
 import com.example.dildil.component.app.AppComponent;
+import com.example.dildil.home_page.fragment.fragment_tab.HotFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.login_page.view.LoginActivity;
@@ -37,5 +38,7 @@ public interface ActivityComponent {
     void inject(CommentFragment commentFragment);
 
     void inject(SettingActivity settingActivity);
+
+    void inject(HotFragment hotFragment);
     //TODO 后续需要注入的Activity类都可以在这里添加 中像上面一样写就好了
 }

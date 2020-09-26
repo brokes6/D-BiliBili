@@ -1,7 +1,6 @@
 package com.example.dildil.video.presenter;
 
-import android.util.Log;
-
+import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentDetailBean;
@@ -219,6 +218,33 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetSedaDanMuFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getRelatedVideos() {
+        mModel.getRelatedVideos().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RecommendVideoBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(RecommendVideoBean recommendVideoBean) {
+                        mView.onGetRelatedVideosSuccess(recommendVideoBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onGetRelatedVideosFail(e.getMessage());
                     }
 
                     @Override

@@ -1,5 +1,6 @@
 package com.example.dildil.video.fragment_tab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,18 +12,17 @@ import android.widget.TextView;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentIntroductionBinding;
 import com.example.dildil.home_page.adapter.HotRankingAdapter;
+import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
@@ -130,6 +130,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         id = (int) SharedPreferencesUtil.getData("id", 0);
         uid = (int) SharedPreferencesUtil.getData("uid", 0);
         mPresenter.getVideoDetails(id, uid);
+        mPresenter.getRelatedVideos();
     }
 
     @Override
@@ -213,12 +214,15 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
      */
     HotRankingAdapter.ItemOnClickListener listener = new HotRankingAdapter.ItemOnClickListener() {
         @Override
-        public void onClick(int position) {
+        public void onClick(int position, int vid) {
+            Intent intent = new Intent(getContext(),VideoActivity.class);
+            intent.putExtra("id",vid);
+            intent.putExtra("uid",1);
             VideoActivity videoActivity = (VideoActivity) getActivity();
             videoActivity.getPlayPosition();
             GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
             gsyVideoManager.onPause();
-            ActivityUtils.startActivity(VideoActivity.class);
+            getContext().startActivity(intent);
         }
     };
 
@@ -242,20 +246,20 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             if (videoDetailsBean.getLog().isCollection()) Collection.setImageResource(R.mipmap.collect_on);
             if (videoDetailsBean.getLog().getCoinNum() == 2) coinImg.setImageResource(R.mipmap.coin_on);
         }
-        if (!isLoad) initDatas();
+        //if (!isLoad) initDatas();
         isLoad = true;
         mSkeletonScreen.hide();
         mSkeletonScreen2.hide();
         hideDialog();
     }
 
-    private void initDatas() {
-        binding.InFans.setText(608 + "粉丝");
-
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initHotRanking();
-        adapter.loadMore(resourcesData.getHotRanking());
-    }
+//    private void initDatas() {
+//        binding.InFans.setText(608 + "粉丝");
+//
+//        ResourcesData resourcesData = new ResourcesData();
+//        resourcesData.initHotRanking();
+//        adapter.loadMore(resourcesData.getHotRanking());
+//    }
 
     @Override
     public void onGetVideoDetailsFail(String e) {
@@ -330,5 +334,21 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetSedaDanMuFail(String e) {
 
+    }
+
+    @Override
+    public void onGetRelatedVideosSuccess(RecommendVideoBean recommendVideoBean) {
+        adapter.loadMore(recommendVideoBean.getData());
+    }
+
+    @Override
+    public void onGetRelatedVideosFail(String e) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
     }
 }

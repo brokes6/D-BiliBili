@@ -29,9 +29,10 @@ import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.XToastUtils;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.config.IndicatorConfig;
@@ -92,18 +93,20 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                 .angle(30)//shimmer的倾斜角度
                 .show();
 
-        binding.appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-
-                if (verticalOffset >= 0) {
-                    binding.swipe.setEnabled(true);
-                } else {
-                    binding.swipe.setEnabled(false);
-                }
-            }
-        });
-
+//        binding.appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//
+//                if (verticalOffset >= 0) {
+//                    binding.swipe.setEnabled(true);
+//                } else {
+//                    binding.swipe.setEnabled(false);
+//                }
+//            }
+//        });
+        binding.swipe.setEnableLoadMore(true);
+        binding.swipe.setEnableAutoLoadMore(false);
+        binding.swipe.setRefreshFooter(new ClassicsFooter(getContext()));
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -118,6 +121,12 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                     mPresenter.getRefreshRecommendVideo();
                 }
                 isFirst = false;
+            }
+        });
+        binding.swipe.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.LoadVideo();
             }
         });
     }
@@ -187,5 +196,21 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     public void onGetRefreshRecommendVideoFail(String e) {
         XToastUtils.error("出现错误:" + e);
         binding.swipe.finishRefresh(true);
+    }
+
+    @Override
+    public void onGetVideoLoadSuccess(RecommendVideoBean videoBean) {
+        adapter.loadMore(videoBean.getData());
+        binding.swipe.finishLoadMore(true);
+    }
+
+    @Override
+    public void onGetVideoLoadFail(String e) {
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
     }
 }

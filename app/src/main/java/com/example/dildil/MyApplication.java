@@ -45,6 +45,7 @@ public class MyApplication extends Application {
                 //开始设置全局的基本参数（可以被下面的DefaultRefreshHeaderCreator覆盖）
                 layout.setEnableLoadMore(false);
                 layout.setDisableContentWhenRefresh(true);
+                layout.setDisableContentWhenLoading(true);
             }
         });
 

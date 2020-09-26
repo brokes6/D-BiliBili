@@ -23,12 +23,15 @@ import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.R;
+import com.example.dildil.api.ApiEngine;
 import com.example.dildil.util.BiliDanmukuParser;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.DanamakuAdapter;
 import com.example.dildil.video.bean.DanmuBean;
+import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
+import com.example.dildil.video.bean.danmu;
 import com.example.dildil.video.dialog.DoubleSpeedDialog;
 import com.example.dildil.video.dialog.SwitchVideoTypeDialog;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -49,6 +52,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import master.flame.danmaku.controller.IDanmakuView;
 import master.flame.danmaku.danmaku.loader.ILoader;
 import master.flame.danmaku.danmaku.loader.IllegalDataException;
@@ -113,6 +120,8 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private FullScreenStatusMonitoring listener;
 
     private List<DanmuBean.Datas> datasList = new ArrayList<>();
+    private int vid,uid;
+    private String upImg,upName;
 
     public DanmakuVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -171,6 +180,11 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mToogleDanmaku.setOnClickListener(this);
         Video_play.setOnClickListener(this);
         resolveTypeUI();
+    }
+
+    public void setVideoDetails(int vid,int uid){
+        this.vid = vid;
+        this.uid = uid;
     }
 
     /**
@@ -277,8 +291,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public void setUPData(String upImg,String upName){
-        Glide.with(mContext).load(upImg).into(up_img);
-        up_name.setText(upName);
+        this.upImg = upImg;
+        this.upName = upName;
+        Log.e("why", "111111: ???????????????????"+upImg+"名称为"+upName );
     }
 
     private void sendOutDanMu() {
@@ -297,6 +312,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         commentView.measure(0, 0);
         behavior.setPeekHeight(commentView.getMeasuredHeight());
         send.setOnClickListener(new View.OnClickListener() {
+
+            private com.example.dildil.video.bean.danmu danmu;
+
             @Override
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
@@ -305,7 +323,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 //                    onVideoResume();
                     getGSYVideoManager().start();
                     danmakuOnResume();
+                    danmu = new danmu(replyContent, (int) mDanmakuView.getCurrentTime() + 500, uid, vid);
                     addDanmaku(true, replyContent, 0);
+                    addDanmakuServlce(danmu);
                     setStateAndUi(CURRENT_STATE_PLAYING);
                     Video_play.setImageResource(R.mipmap.pause);
                 } else {
@@ -324,11 +344,17 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         ((DanmakuVideoPlayer) to).mSourcePosition = ((DanmakuVideoPlayer) from).mSourcePosition;
         ((DanmakuVideoPlayer) to).isFirstload = ((DanmakuVideoPlayer) from).isFirstload;
         ((DanmakuVideoPlayer) to).mTypeText = ((DanmakuVideoPlayer) from).mTypeText;
+        ((DanmakuVideoPlayer) to).upImg = ((DanmakuVideoPlayer) from).upImg;
+        ((DanmakuVideoPlayer) to).upName = ((DanmakuVideoPlayer) from).upName;
     }
 
     private void changeUi(){
         UPImage.setVisibility(VISIBLE);
         Sanlian.setVisibility(VISIBLE);
+
+        Log.e("why", "222222: ???????????????????"+upImg+"名称为"+upName );
+        Glide.with(mContext).load(upImg).into(up_img);
+        up_name.setText(upName);
     }
 
     private void resolveTypeUI() {
@@ -905,6 +931,32 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             danmaku.textColor = Color.RED;
             mDanmakuView.addDanmaku(danmaku);
         }
+    }
+
+    private void addDanmakuServlce(danmu danmu){
+        ApiEngine.getInstance().getApiService().seadDanMu(danmu).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SeadDanmuBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(SeadDanmuBean seadDanmuBean) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        XToastUtils.error("网络出现波动~~~");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     /**

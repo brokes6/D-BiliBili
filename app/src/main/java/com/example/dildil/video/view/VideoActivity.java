@@ -26,6 +26,7 @@ import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityVideoBinding;
+import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
@@ -63,7 +64,7 @@ import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAU
 public class VideoActivity extends BaseActivity implements VideoDetailsContract.View, Selector.OnSelectorStateListener {
     private static final String TAG = "VideoActivity";
     ActivityVideoBinding binding;
-    private String[] TabTitle = {"简介", "评论"};
+    private final String[] TabTitle = {"简介", "评论"};
     private ArrayList<Fragment> mFragments;
     private OrientationUtils orientationUtils;
     boolean isPlay;
@@ -77,9 +78,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private BottomSheetDialog dialog;
     private SelectorGroup selectorGroup = new SelectorGroup();
     private int textSize;
-    private int LARGEFONT = 1, FINEPRINT = 2;
+    private final int LARGEFONT = 1, FINEPRINT = 2;
     private boolean isFunction = true;
-    String[] definition = {"360p", "480p", "720p", "1080p"};
+    final String[] definition = {"360p", "480p", "720p", "1080p"};
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -149,6 +150,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         orientationUtils.setEnable(false);
 
         binding.detailPlayer.setIsTouchWiget(true);
+        binding.detailPlayer.setVideoDetails(uid,id);
         //关闭自动旋转
         binding.detailPlayer.setRotateViewAuto(false);
         binding.detailPlayer.setNeedAutoAdaptation(true);
@@ -402,32 +404,11 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         Log.e(TAG, "当前播放位置为:" + mWhenPlaying);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.detachView();
-        if (isPlay) {
-            getCurPlay().release();
-        }
-        if (orientationUtils != null)
-            orientationUtils.releaseListener();
-        isDestory = true;
-        GSYVideoManager.releaseAllVideos();
-    }
-
     public GSYVideoPlayer getCurPlay() {
         if (binding.detailPlayer.getFullWindowPlayer() != null) {
             return binding.detailPlayer.getFullWindowPlayer();
         }
         return binding.detailPlayer;
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (GSYVideoManager.backFromWindowFull(this)) {
-            return;
-        }
-        super.onBackPressed();
     }
 
     /**
@@ -455,8 +436,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i], urlList[i]);
             urls.add(switchVideoBean);
         }
-        binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
         binding.detailPlayer.setUPData(videoDetailsBean.getUpImg(), videoDetailsBean.getUpName());
+        binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
         hideDialog();
     }
 
@@ -524,5 +505,36 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     public void onGetSedaDanMuFail(String e) {
         XToastUtils.error("弹幕发送失败:" + e);
+    }
+
+    @Override
+    public void onGetRelatedVideosSuccess(RecommendVideoBean recommendVideoBean) {
+
+    }
+
+    @Override
+    public void onGetRelatedVideosFail(String e) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
+        if (isPlay) {
+            getCurPlay().release();
+        }
+        if (orientationUtils != null)
+            orientationUtils.releaseListener();
+        isDestory = true;
+        GSYVideoManager.releaseAllVideos();
     }
 }
