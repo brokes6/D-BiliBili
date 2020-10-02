@@ -31,7 +31,7 @@ public class RecommendVideoBean {
         this.data = data;
     }
 
-    public class BeanData{
+    public class BeanData {
         private int id;
         private int uid;
         private int playNum;

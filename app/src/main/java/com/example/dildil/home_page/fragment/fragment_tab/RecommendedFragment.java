@@ -29,9 +29,8 @@ import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.XToastUtils;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.adapter.BannerImageAdapter;
@@ -75,6 +74,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         adapter = new RecommendedVideoAdapter(getContext());
         binding.ReRecy.setLayoutManager(layoutManager1);
         binding.ReRecy.setAdapter(adapter);
+
         mSkeletonScreen = Skeleton.bind(binding.ReRecy)
                 .adapter(adapter)//设置实际adapter
                 .shimmer(true)//是否开启动画
@@ -93,20 +93,8 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                 .angle(30)//shimmer的倾斜角度
                 .show();
 
-//        binding.appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//
-//                if (verticalOffset >= 0) {
-//                    binding.swipe.setEnabled(true);
-//                } else {
-//                    binding.swipe.setEnabled(false);
-//                }
-//            }
-//        });
         binding.swipe.setEnableLoadMore(true);
-        binding.swipe.setEnableAutoLoadMore(false);
-        binding.swipe.setRefreshFooter(new ClassicsFooter(getContext()));
+        binding.swipe.setRefreshFooter(new BallPulseFooter(getContext()));
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -117,7 +105,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                     ResourcesData resourcesData = new ResourcesData();
                     resourcesData.initBanner();
                     initBanner(resourcesData.getBeannerUrl());
-                }else{
+                } else {
                     mPresenter.getRefreshRecommendVideo();
                 }
                 isFirst = false;
@@ -138,8 +126,9 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initLocalData() {
-        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load("RFLocalHua"), new TypeToken<List<RecommendVideoBean>>() {}.getType());
+        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load("OfflineData"), RecommendVideoBean.class);
         adapter.setData(recommendVideoBean);
+        adapter.loadMore(recommendVideoBean.getData());
         mSkeletonScreen.hide();
     }
 
@@ -175,7 +164,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         adapter.setData(videoBean);
         adapter.loadMore(videoBean.getData());
         mSkeletonScreen.hide();
-        save(GsonUtil.toJson(videoBean), "RFLocalHua");
+        save(GsonUtil.toJson(videoBean), "OfflineData");
         binding.swipe.finishRefresh(true);
     }
 
@@ -200,8 +189,10 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetVideoLoadSuccess(RecommendVideoBean videoBean) {
-        adapter.loadMore(videoBean.getData());
         binding.swipe.finishLoadMore(true);
+        for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
+            adapter.add(datum);
+        }
     }
 
     @Override

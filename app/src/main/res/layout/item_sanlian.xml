@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Props_column"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp_10"
+    android:background="@color/While"
     android:animateLayoutChanges="true"
     android:orientation="vertical">
 
@@ -14,26 +16,29 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/thumbsUp"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/like_img"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_5"
                 android:src="@drawable/thumb_up_no" />
 
             <TextView
                 android:id="@+id/praise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/like_img"
+                android:layout_centerHorizontal="true"
                 android:textColor="#757575" />
-        </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/share"
@@ -46,6 +51,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginTop="@dimen/dp_5"
                 android:src="@drawable/thumb_down_no" />
 
             <TextView
@@ -55,48 +61,74 @@
                 android:textColor="#757575" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/main_coin"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.example.customcontrollibs.AnnularProgressButton
+                android:id="@+id/coin_circleView"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                app:radius="10dp"
+                app:ringColor="@color/Pink"
+                app:strokeWidth="2dp" />
 
             <ImageView
                 android:id="@+id/coinImg"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_5"
                 android:src="@mipmap/coin" />
 
             <TextView
                 android:id="@+id/coin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/coinImg"
+                android:layout_centerHorizontal="true"
                 android:textColor="#757575" />
-        </LinearLayout>
 
-        <LinearLayout
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/CollectionMain"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <com.example.customcontrollibs.AnnularProgressButton
+                android:id="@+id/Collection_circleView"
+                android:layout_width="@dimen/dp_35"
+                android:layout_height="@dimen/dp_35"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                app:radius="10dp"
+                app:ringColor="@color/Pink"
+                app:strokeWidth="2dp" />
 
             <ImageView
                 android:id="@+id/Collection"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_5"
                 android:src="@mipmap/collect" />
 
             <TextView
                 android:id="@+id/CollectionNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/Collection"
+                android:layout_centerHorizontal="true"
                 android:text="1.1万"
                 android:textColor="#757575" />
-        </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/ForwardMain"
@@ -110,6 +142,7 @@
                 android:id="@+id/Forward"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginTop="@dimen/dp_5"
                 android:src="@mipmap/forward_black" />
 
             <TextView

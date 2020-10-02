@@ -2,11 +2,14 @@ package com.example.dildil.video.fragment_tab;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.example.customcontrollibs.AnnularProgressButton;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseFragment;
@@ -50,17 +54,19 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
     private ImageView like_img, Collection, coinImg;
     private boolean isOpen = false;
-    private LinearLayout mMainCoin, thumbsUp, CollectionMain, ForwardMain;
+    private RelativeLayout thumbsUp,mMainCoin,CollectionMain;
+    private LinearLayout  ForwardMain;
+    private AnnularProgressButton coin_circleView,Collection_circleView;
     private boolean isLoad = false;
     private SkeletonScreen mSkeletonScreen;
     private SkeletonScreen mSkeletonScreen2;
     private boolean mIsPraise = false;
     private int mCoinNum = 0;
     private boolean isCollection = false;
+    private boolean isSanLian = true;
 
     @Inject
     VideoDetailsPresenter mPresenter;
-
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,12 +122,71 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         CollectionNum = binding.Sanlian.findViewById(R.id.CollectionNum);
         ForwardMain = binding.Sanlian.findViewById(R.id.ForwardMain);
         coinImg = binding.Sanlian.findViewById(R.id.coinImg);
+        coin_circleView = binding.Sanlian.findViewById(R.id.coin_circleView);
+        Collection_circleView = binding.Sanlian.findViewById(R.id.Collection_circleView);
+
 
         binding.function1.setOnClickListener(this);
         thumbsUp.setOnClickListener(this);
         mMainCoin.setOnClickListener(this);
         CollectionMain.setOnClickListener(this);
         ForwardMain.setOnClickListener(this);
+        coin_circleView.setListener(new AnnularProgressButton.ProgressButtonFinishCallback() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+        Collection_circleView.setListener(new AnnularProgressButton.ProgressButtonFinishCallback() {
+            @Override
+            public void onFinish() {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+        like_img.setOnTouchListener(new View.OnTouchListener() {
+            private boolean isFinish;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()){
+                    case  MotionEvent.ACTION_DOWN:
+                        coin_circleView.startAnimationProgress(300);
+                        Collection_circleView.startAnimationProgress(300);
+                        break;
+                    case  MotionEvent.ACTION_UP:
+                        if(coin_circleView.mProgress >= 300){
+                            if(!isFinish){
+                                //完成长按
+                                Log.e("why", "onTouch: ??????????????"+coin_circleView.mProgress );
+                                like_img.setImageResource(R.drawable.thumb_up_24);
+                                Collection.setImageResource(R.mipmap.collect_on);
+                                coinImg.setImageResource(R.mipmap.coin_on);
+                                return false;
+                            }
+                        }
+                        if(coin_circleView.mProgress != 300){
+                            if(coin_circleView.mProgress < 300){
+                                //取消长按
+                                Log.e("why", "onTouch: ??????????????"+coin_circleView.mProgress );
+                                coin_circleView.stopAnimationProgress(coin_circleView.mProgress);
+                                Collection_circleView.stopAnimationProgress(Collection_circleView.mProgress);
+                            }
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -137,7 +202,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     protected void initLocalData() {
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -215,9 +279,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     HotRankingAdapter.ItemOnClickListener listener = new HotRankingAdapter.ItemOnClickListener() {
         @Override
         public void onClick(int position, int vid) {
-            Intent intent = new Intent(getContext(),VideoActivity.class);
-            intent.putExtra("id",vid);
-            intent.putExtra("uid",1);
+            Intent intent = new Intent(getContext(), VideoActivity.class);
+            intent.putExtra("id", vid);
+            intent.putExtra("uid", 1);
             VideoActivity videoActivity = (VideoActivity) getActivity();
             videoActivity.getPlayPosition();
             GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
@@ -242,9 +306,12 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             mIsPraise = videoDetailsBean.getLog().isPraise();
             mCoinNum = videoDetailsBean.getLog().getCoinNum();
             isCollection = videoDetailsBean.getLog().isCollection();
-            if (videoDetailsBean.getLog().isPraise()) like_img.setImageResource(R.drawable.thumb_up_24);
-            if (videoDetailsBean.getLog().isCollection()) Collection.setImageResource(R.mipmap.collect_on);
-            if (videoDetailsBean.getLog().getCoinNum() == 2) coinImg.setImageResource(R.mipmap.coin_on);
+            if (videoDetailsBean.getLog().isPraise())
+                like_img.setImageResource(R.drawable.thumb_up_24);
+            if (videoDetailsBean.getLog().isCollection())
+                Collection.setImageResource(R.mipmap.collect_on);
+            if (videoDetailsBean.getLog().getCoinNum() == 2)
+                coinImg.setImageResource(R.mipmap.coin_on);
         }
         //if (!isLoad) initDatas();
         isLoad = true;
@@ -252,14 +319,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mSkeletonScreen2.hide();
         hideDialog();
     }
-
-//    private void initDatas() {
-//        binding.InFans.setText(608 + "粉丝");
-//
-//        ResourcesData resourcesData = new ResourcesData();
-//        resourcesData.initHotRanking();
-//        adapter.loadMore(resourcesData.getHotRanking());
-//    }
 
     @Override
     public void onGetVideoDetailsFail(String e) {

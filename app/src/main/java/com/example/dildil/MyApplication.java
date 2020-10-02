@@ -18,6 +18,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
 
+import org.litepal.LitePal;
+
 import cn.alien95.resthttp.request.RestHttp;
 
 
@@ -28,15 +30,16 @@ import cn.alien95.resthttp.request.RestHttp;
  * 初始化 SharedPreferencesUtil
  * 初始化Dagger的AppComponent
  * 需要去Android Manifest里使用
+ *
  * @author fuxinbo
  * @since 2020/04/09 10:07
  */
 
 public class MyApplication extends Application {
     private static Context mContext;
-    public static final String DATA_BASE_NAME = "MusicPlay";
     public static MyApplication instance;
     public static AppComponent appComponent;
+
     static {//使用static代码段可以防止内存泄漏
         //设置全局默认配置（优先级最低，会被其他设置覆盖）
         SmartRefreshLayout.setDefaultRefreshInitializer(new DefaultRefreshInitializer() {
@@ -55,7 +58,7 @@ public class MyApplication extends Application {
             public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
                 //开始设置全局的基本参数（这里设置的属性只跟下面的MaterialHeader绑定，其他Header不会生效，能覆盖DefaultRefreshInitializer的属性和Xml设置的属性）
                 layout.setEnableHeaderTranslationContent(false);
-                return new MaterialHeader(context).setColorSchemeResources(R.color.Pink,R.color.While,R.color.While);
+                return new MaterialHeader(context).setColorSchemeResources(R.color.Pink, R.color.While, R.color.While);
             }
         });
     }
@@ -64,13 +67,14 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        LitePal.initialize(this);
         mContext = getApplicationContext();
         XUI.init(this);
         XUI.debug(MyApplication.isDebug());
-        SharedPreferencesUtil.getInstance(this,"SPy");
+        SharedPreferencesUtil.getInstance(this, "SPy");
         RestHttp.initialize(this);
-        if(BuildConfig.DEBUG){
-            RestHttp.setDebug(true,"network");
+        if (BuildConfig.DEBUG) {
+            RestHttp.setDebug(true, "network");
         }
     }
 
@@ -94,6 +98,5 @@ public class MyApplication extends Application {
     public static Context getContext() {
         return mContext;
     }
-
 
 }

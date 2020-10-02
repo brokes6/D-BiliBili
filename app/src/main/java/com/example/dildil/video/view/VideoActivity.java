@@ -68,7 +68,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private ArrayList<Fragment> mFragments;
     private OrientationUtils orientationUtils;
     boolean isPlay;
-    boolean isPause;
     boolean isDestory;
     private int mWhenPlaying;
     private CollapsingToolbarLayoutState state;
@@ -80,7 +79,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private int textSize;
     private final int LARGEFONT = 1, FINEPRINT = 2;
     private boolean isFunction = true;
-    final String[] definition = {"360p", "480p", "720p", "1080p"};
+    private final String[] definition = {"360p", "480p", "720p", "1080p"};
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -160,7 +159,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.detailPlayer.setNeedLockFull(true);
         binding.detailPlayer.setListener(listener);
 
-        //detailPlayer.setOpenPreView(true);
         binding.detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

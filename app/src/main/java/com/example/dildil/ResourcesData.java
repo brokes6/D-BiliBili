@@ -8,7 +8,6 @@ import com.example.dildil.dynamic_page.bean.TopicBean;
 import com.example.dildil.dynamic_page.bean.VideoNewsBean;
 import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.FanRecommendationBean;
-import com.example.dildil.home_page.bean.HotRankingBean;
 import com.example.dildil.home_page.bean.MyPursuitBean;
 import com.example.dildil.home_page.bean.VideoBean;
 import com.example.dildil.my_page.bean.MyDataBean;
@@ -31,7 +30,6 @@ public class ResourcesData {
     private List<VideoBean> beans = new ArrayList<>();
     private List<TopicBean> topicBeans = new ArrayList<>();
     private List<DynamicBean> dynamicBeans = new ArrayList<>();
-    private List<HotRankingBean> hotRankingBeans = new ArrayList<>();
     private List<SwitchVideoBean> urls = new ArrayList<>();
     private List<BannerBean> bannerImageList = new ArrayList<>();
     private List<HotSearchBean> hotSearchBeans = new ArrayList<>();
@@ -188,60 +186,6 @@ public class ResourcesData {
         return dynamicBeans;
     }
 
-    public void initHotRanking() {
-        HotRankingBean hotRankingBean = new HotRankingBean();
-        hotRankingBean.setVideo_cover("https://i2.hdslb.com/bfs/archive/b1a07a8baefa0694760cd6d99f212bee45d1333d.jpg@143w_88h.webp");
-        hotRankingBean.setVideo_title("敢 杀 我 的 马？！");
-        hotRankingBean.setVideo_up("哦呼w");
-        hotRankingBean.setVideo_play_num("152.6万");
-        hotRankingBean.setVideo_time("2:25");
-
-        HotRankingBean hotRankingBean2 = new HotRankingBean();
-        hotRankingBean2.setVideo_cover("https://i0.hdslb.com/bfs/archive/c1e48e6aaf5e2eb430de9e9c635cb626103c0bef.jpg@412w_232h_1c_100q.jpg");
-        hotRankingBean2.setVideo_title("有⚡茅⚡台");
-        hotRankingBean2.setVideo_up("晏策去月光林地了");
-        hotRankingBean2.setVideo_play_num("152.6万");
-        hotRankingBean2.setVideo_time("2:25");
-
-        HotRankingBean hotRankingBean3 = new HotRankingBean();
-        hotRankingBean3.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
-        hotRankingBean3.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
-        hotRankingBean3.setVideo_up("全能大鹏");
-        hotRankingBean3.setVideo_play_num("46.4万");
-        hotRankingBean3.setVideo_time("2:25");
-
-        HotRankingBean hotRankingBean4 = new HotRankingBean();
-        hotRankingBean4.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
-        hotRankingBean4.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
-        hotRankingBean4.setVideo_up("全能大鹏");
-        hotRankingBean4.setVideo_play_num("46.4万");
-        hotRankingBean4.setVideo_time("2:25");
-
-        HotRankingBean hotRankingBean5 = new HotRankingBean();
-        hotRankingBean5.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
-        hotRankingBean5.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
-        hotRankingBean5.setVideo_up("全能大鹏");
-        hotRankingBean5.setVideo_play_num("46.4万");
-        hotRankingBean5.setVideo_time("2:25");
-
-        HotRankingBean hotRankingBean6 = new HotRankingBean();
-        hotRankingBean6.setVideo_cover("https://i2.hdslb.com/bfs/archive/8a801382150edd0ecd5d74f90dcaa4c9845360af.jpg@257w_145h_1c_100q.webp");
-        hotRankingBean6.setVideo_title("希 望 新 来 的 体 育 老 师 没 事......");
-        hotRankingBean6.setVideo_up("全能大鹏");
-        hotRankingBean6.setVideo_play_num("46.4万");
-        hotRankingBean6.setVideo_time("2:25");
-
-        hotRankingBeans.add(hotRankingBean);
-        hotRankingBeans.add(hotRankingBean2);
-        hotRankingBeans.add(hotRankingBean3);
-        hotRankingBeans.add(hotRankingBean4);
-        hotRankingBeans.add(hotRankingBean5);
-        hotRankingBeans.add(hotRankingBean6);
-    }
-
-    public List<HotRankingBean> getHotRanking() {
-        return hotRankingBeans;
-    }
 
     public void initVideo() {
         SwitchVideoBean switchVideoBean = new SwitchVideoBean("480p", "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4");

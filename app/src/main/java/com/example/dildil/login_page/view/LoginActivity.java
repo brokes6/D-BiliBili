@@ -59,13 +59,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     protected void initView() {
         binding.LoLogin.setOnClickListener(this);
         setMargins(binding.top1,0,getStatusBarHeight(this),0,0);
-//        SettingSPUtils spUtils = new SettingSPUtils(LoginActivity.this);
-//        if (!spUtils.isAgreePrivacy()) {
-//            PrivacyUtils.showPrivacyDialog(this, (dialog, which) -> {
-//                dialog.dismiss();
-//                spUtils.setIsAgreePrivacy(true);
-//            });
-//        }
     }
 
     @Override
@@ -125,7 +118,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             XToastUtils.error(R.string.enter_correct_password);
         } else {
             XToastUtils.error(e);
-            Log.e(TAG, "onGetLoginFail: ？？？？"+e );
+            Log.e(TAG, "出现错误"+e );
         }
     }
 }

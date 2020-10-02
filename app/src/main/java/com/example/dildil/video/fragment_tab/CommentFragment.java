@@ -272,7 +272,6 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                 String commentContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(commentContent)) {
                     dialog.dismiss();
-                    //commentsList.clear();
                     detailBean.setUsername(loginBean.getData().getUsername());
                     detailBean.setImg(loginBean.getData().getImg());
                     detailBean.setContent(commentContent);

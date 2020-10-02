@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.VersionBean;
-import com.example.dildil.util.AppDownloadManager;
 
 public class AppUpdateDialog extends Dialog implements View.OnClickListener {
     private Context context;
@@ -26,7 +25,6 @@ public class AppUpdateDialog extends Dialog implements View.OnClickListener {
     private View view;
     private TextView mVersion, mMainBody, mUpdate, mValueText;
     private ImageView close;
-    private AppDownloadManager mDownloadManager;
 
     public AppUpdateDialog(@NonNull Context context, VersionBean mAppUpdateInfo) {
         super(context, R.style.BottomDialog);
@@ -66,7 +64,6 @@ public class AppUpdateDialog extends Dialog implements View.OnClickListener {
         close.setOnClickListener(this);
         mMainBody.setOnClickListener(this);
         mUpdate.setOnClickListener(this);
-        mDownloadManager = new AppDownloadManager(mContext);
 
         setContentView(view);
         Window dialogWindow = getWindow();
@@ -86,11 +83,9 @@ public class AppUpdateDialog extends Dialog implements View.OnClickListener {
                 dismiss();
                 break;
             case R.id.update:
-//                    mValueText.setVisibility(View.VISIBLE);
-//                    mUpdate.setVisibility(View.GONE);
-//                    mOnUpdateListener.update(this);
-
-                mDownloadManager.installApp(context);
+                mValueText.setVisibility(View.VISIBLE);
+                mUpdate.setVisibility(View.GONE);
+                mOnUpdateListener.update(this);
                 break;
         }
     }

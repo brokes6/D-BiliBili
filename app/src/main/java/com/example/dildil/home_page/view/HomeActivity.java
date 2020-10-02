@@ -116,10 +116,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
 
                     }
                 });
-                mDownloadManager.downloadApk(updateInfo.getData().getUrl(), "dildil", "版本更新");
-                if (mDownloadManager != null) {
-                    mDownloadManager.resume();
-                }
+                mDownloadManager.downloadApk(updateInfo.getData().getUrl());
             }
 
         });
@@ -159,6 +156,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
 
     @Override
     public void onGetDynamicNumSuccess(DynamicNumBean dynamicNumBean) {
+        //SetRedDot(3,dynamicNumBean.getData());
         hideDialog();
     }
 
@@ -204,9 +202,6 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mDownloadManager != null) {
-            mDownloadManager.onPause();
-        }
         mPresenter.detachView();
     }
 }

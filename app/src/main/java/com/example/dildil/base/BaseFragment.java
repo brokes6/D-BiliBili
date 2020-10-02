@@ -33,7 +33,6 @@ import java.io.OutputStreamWriter;
  * Created By fuxinbo on 2020/5/14
  */
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements View.OnClickListener {
-    private static final String TAG = "BaseFragment";
 
     //Loading加载类
     protected LoadingsDialog mDialogs;
@@ -113,7 +112,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
                 isFirstLoad = false;
                 if (NetUtil.isNetworkAvailable(getContext())) {
                     initData();
-                }else{
+                } else {
                     XToastUtils.info("当前无网络！");
                     initLocalData();
                 }
@@ -243,15 +242,16 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         mDialogs.dismiss();
     }
 
-    public LoginBean getUserData(){
+    public LoginBean getUserData() {
         return GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
     }
 
     /**
      * 保存数据
+     *
      * @param data
      */
-    public void save(String data,String name) {
+    public void save(String data, String name) {
         FileOutputStream out = null;
         BufferedWriter writer = null;
         try {
@@ -275,6 +275,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     /**
      * 读取数据
+     *
      * @return
      */
     public String load(String name) {

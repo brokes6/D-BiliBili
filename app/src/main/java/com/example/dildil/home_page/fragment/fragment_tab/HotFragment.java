@@ -26,6 +26,8 @@ import com.example.dildil.video.view.VideoActivity;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.litepal.LitePal;
+
 import javax.inject.Inject;
 
 public class HotFragment extends BaseFragment implements RecommendContract.View{
@@ -89,7 +91,9 @@ public class HotFragment extends BaseFragment implements RecommendContract.View{
 
     @Override
     protected void initLocalData() {
-
+        RecommendVideoBean recommendVideoBean = LitePal.findFirst(RecommendVideoBean.class);
+        adapter.loadMore(recommendVideoBean.getData());
+        mSkeletonScreen.hide();
     }
 
     @Override

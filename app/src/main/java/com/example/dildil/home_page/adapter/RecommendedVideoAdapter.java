@@ -17,25 +17,29 @@ import com.example.dildil.video.view.VideoActivity;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
-public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoBean.BeanData>{
-    private static final String TAG = "RecommendedVideoAdapter";
-    private ImageView cover,more;
-    private TextView play_volume,barrage_volume,title;
+public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoBean.BeanData> {
+    private ImageView cover, more;
+    private TextView play_volume, barrage_volume, title;
     private Context mContext;
     private CardView Re_video;
     private RecommendVideoBean videoBean;
-    private int id,uid;
-    public RecommendedVideoAdapter(Context context){
+
+    public RecommendedVideoAdapter(Context context) {
         mContext = context;
     }
 
-    public void setData(RecommendVideoBean bean){
+    public void setData(RecommendVideoBean bean) {
         videoBean = bean;
     }
 
     @Override
     protected int getItemLayoutId(int viewType) {
         return R.layout.item_recommendedvideo;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
     }
 
     @Override
@@ -49,16 +53,16 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
         Re_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext,VideoActivity.class);
-                intent.putExtra("id",videoBean.getData().get(position).getId());
-                intent.putExtra("uid",videoBean.getData().get(position).getUid());
+                Intent intent = new Intent(mContext, VideoActivity.class);
+                intent.putExtra("id", videoBean.getData().get(position).getId());
+                intent.putExtra("uid", videoBean.getData().get(position).getUid());
                 mContext.startActivity(intent);
             }
         });
         Re_video.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext,"fuxinbo");
+                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext, "fuxinbo");
                 videoChoiceDialog.show();
                 return false;
             }
@@ -66,23 +70,21 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext,"fuxinbo");
+                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext, "fuxinbo");
                 videoChoiceDialog.show();
             }
         });
-        if (item!=null){
-            initData(position, item);
+        if (item != null) {
+            initData(item);
         }
     }
 
-    private void initData( int position, RecommendVideoBean.BeanData item){
+    private void initData(RecommendVideoBean.BeanData item) {
         Glide.with(mContext)
                 .load(item.getCover())
                 .into(cover);
-        play_volume.setText(item.getPlayNum()+"");
-        barrage_volume.setText(item.getDanmunum()+"");
+        play_volume.setText(item.getPlayNum() + "");
+        barrage_volume.setText(item.getDanmunum() + "");
         title.setText(item.getTitle());
     }
-
-
 }

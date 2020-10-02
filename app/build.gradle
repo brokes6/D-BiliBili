@@ -93,7 +93,7 @@ dependencies {
     implementation 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-x86:0.9.21'
     //自己的控件库
-    implementation 'com.github.brokes6:CustomControl:1.2.1'
+    implementation 'com.github.brokes6:CustomControl:1.2.3'
     //Android九宫格显示多图或item
     implementation 'cn.lemon:multiview:1.0.2'
 
@@ -116,4 +116,8 @@ dependencies {
     //主要是动画的实现
     implementation 'io.supercharge:shimmerlayout:2.1.0'
     implementation 'com.jidcoo.android.widget.commentview:CommentView:1.0.0'
+
+    implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
+    //数据库工具类
+    //implementation 'org.litepal.android:java:3.0.0'
 }

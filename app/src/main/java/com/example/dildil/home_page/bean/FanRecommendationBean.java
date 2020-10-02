@@ -1,6 +1,8 @@
 package com.example.dildil.home_page.bean;
 
-public class FanRecommendationBean {
+import org.litepal.crud.LitePalSupport;
+
+public class FanRecommendationBean extends LitePalSupport {
     private String cover;
     private String title;
     private boolean isExclusive;
