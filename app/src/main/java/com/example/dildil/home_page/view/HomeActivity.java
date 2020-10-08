@@ -174,7 +174,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
 
     @Override
     public void onGetVersionFail(String e) {
-        Log.e(TAG, "下载出现错误:" + e);
+        Log.e(TAG, "获取版本号出现错误:" + e);
     }
 
     @Override

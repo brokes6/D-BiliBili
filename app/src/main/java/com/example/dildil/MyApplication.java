@@ -18,8 +18,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
 
-import org.litepal.LitePal;
-
 import cn.alien95.resthttp.request.RestHttp;
 
 
@@ -67,7 +65,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        LitePal.initialize(this);
         mContext = getApplicationContext();
         XUI.init(this);
         XUI.debug(MyApplication.isDebug());

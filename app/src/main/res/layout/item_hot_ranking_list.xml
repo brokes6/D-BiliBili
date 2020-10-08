@@ -13,6 +13,13 @@
         android:scaleType="centerCrop"
         rc:rciv_radius="5dp" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_28"
+        android:layout_alignRight="@+id/Ranking_video_img"
+        android:layout_alignBottom="@+id/Ranking_video_img"
+        android:background="@drawable/file_background_white_gradient" />
+
     <TextView
         android:id="@+id/Ranking_video_time"
         android:layout_width="wrap_content"

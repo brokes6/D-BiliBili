@@ -3,112 +3,124 @@ package com.example.dildil.dynamic_page.bean;
 import java.util.List;
 
 public class DynamicBean {
-    private String user_img;
-    private String user_name;
-    private String release_date;
-    private String Text;
-    private String video_cover;
-    private String video_time;
-    private List<String> ShowPictures;
-    private int PictureStatus;
-    private int video_bullet_chat;
-    private int video_Playback_volume;
-    private int comment_num;
-    private int thumbs_num;
+    private int code;
+    private List<Datas> data;
+    private String message;
 
-    public List<String> getShowPictures() {
-        return ShowPictures;
+    public int getCode() {
+        return code;
     }
 
-    public void setShowPictures(List<String> showPictures) {
-        ShowPictures = showPictures;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public int getPictureStatus() {
-        return PictureStatus;
+    public List<Datas> getData() {
+        return data;
     }
 
-    public void setPictureStatus(int pictureStatus) {
-        PictureStatus = pictureStatus;
+    public void setData(List<Datas> data) {
+        this.data = data;
     }
 
-    public String getVideo_time() {
-        return video_time;
+    public String getMessage() {
+        return message;
     }
 
-    public void setVideo_time(String video_time) {
-        this.video_time = video_time;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public int getVideo_bullet_chat() {
-        return video_bullet_chat;
-    }
+    public class Datas {
+        private int id;
+        private int uid;
+        private int playNum;
+        private int danmuNum;
+        private int length;
+        private String upImg;
+        private String upName;
+        private String title;
+        private String cover;
+        private String previewUrl;
 
-    public void setVideo_bullet_chat(int video_bullet_chat) {
-        this.video_bullet_chat = video_bullet_chat;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public int getVideo_Playback_volume() {
-        return video_Playback_volume;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public void setVideo_Playback_volume(int video_Playback_volume) {
-        this.video_Playback_volume = video_Playback_volume;
-    }
+        public int getUid() {
+            return uid;
+        }
 
-    public String getVideo_cover() {
-        return video_cover;
-    }
+        public void setUid(int uid) {
+            this.uid = uid;
+        }
 
-    public void setVideo_cover(String video_cover) {
-        this.video_cover = video_cover;
-    }
+        public int getPlayNum() {
+            return playNum;
+        }
 
-    public String getUser_img() {
-        return user_img;
-    }
+        public void setPlayNum(int playNum) {
+            this.playNum = playNum;
+        }
 
-    public void setUser_img(String user_img) {
-        this.user_img = user_img;
-    }
+        public int getDanmuNum() {
+            return danmuNum;
+        }
 
-    public String getUser_name() {
-        return user_name;
-    }
+        public void setDanmuNum(int danmuNum) {
+            this.danmuNum = danmuNum;
+        }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
-    }
+        public int getLength() {
+            return length;
+        }
 
-    public String getRelease_date() {
-        return release_date;
-    }
+        public void setLength(int length) {
+            this.length = length;
+        }
 
-    public void setRelease_date(String release_date) {
-        this.release_date = release_date;
-    }
+        public String getUpImg() {
+            return upImg;
+        }
 
-    public String getText() {
-        return Text;
-    }
+        public void setUpImg(String upImg) {
+            this.upImg = upImg;
+        }
 
-    public void setText(String text) {
-        Text = text;
-    }
+        public String getUpName() {
+            return upName;
+        }
 
-    public int getComment_num() {
-        return comment_num;
-    }
+        public void setUpName(String upName) {
+            this.upName = upName;
+        }
 
-    public void setComment_num(int comment_num) {
-        this.comment_num = comment_num;
-    }
+        public String getTitle() {
+            return title;
+        }
 
-    public int getThumbs_num() {
-        return thumbs_num;
-    }
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
-    public void setThumbs_num(int thumbs_num) {
-        this.thumbs_num = thumbs_num;
+        public String getCover() {
+            return cover;
+        }
+
+        public void setCover(String cover) {
+            this.cover = cover;
+        }
+
+        public String getPreviewUrl() {
+            return previewUrl;
+        }
+
+        public void setPreviewUrl(String previewUrl) {
+            this.previewUrl = previewUrl;
+        }
     }
 }

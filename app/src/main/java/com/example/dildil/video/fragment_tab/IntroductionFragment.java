@@ -2,7 +2,6 @@ package com.example.dildil.video.fragment_tab;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -167,7 +166,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                         if(coin_circleView.mProgress >= 300){
                             if(!isFinish){
                                 //完成长按
-                                Log.e("why", "onTouch: ??????????????"+coin_circleView.mProgress );
                                 like_img.setImageResource(R.drawable.thumb_up_24);
                                 Collection.setImageResource(R.mipmap.collect_on);
                                 coinImg.setImageResource(R.mipmap.coin_on);
@@ -177,7 +175,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                         if(coin_circleView.mProgress != 300){
                             if(coin_circleView.mProgress < 300){
                                 //取消长按
-                                Log.e("why", "onTouch: ??????????????"+coin_circleView.mProgress );
                                 coin_circleView.stopAnimationProgress(coin_circleView.mProgress);
                                 Collection_circleView.stopAnimationProgress(Collection_circleView.mProgress);
                             }

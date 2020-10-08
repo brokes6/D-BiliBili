@@ -26,6 +26,7 @@ import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
 import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
+import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.XToastUtils;
@@ -69,9 +70,12 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initView() {
+        VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(getContext());
+        videoChoiceDialog.setOnFeedbackClickListener(onFeedbackClickListener);
+
         //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
-        adapter = new RecommendedVideoAdapter(getContext());
+        adapter = new RecommendedVideoAdapter(getContext(),videoChoiceDialog);
         binding.ReRecy.setLayoutManager(layoutManager1);
         binding.ReRecy.setAdapter(adapter);
 
@@ -131,6 +135,13 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         adapter.loadMore(recommendVideoBean.getData());
         mSkeletonScreen.hide();
     }
+
+    private VideoChoiceDialog.OnFeedbackClickListener onFeedbackClickListener = new VideoChoiceDialog.OnFeedbackClickListener() {
+        @Override
+        public void update(int position) {
+            adapter.delete(position);
+        }
+    };
 
     private void initBanner(List<BannerBean> imageUrls) {
         binding.ReBanner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT);

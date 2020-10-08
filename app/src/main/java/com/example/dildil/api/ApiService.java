@@ -1,5 +1,6 @@
 package com.example.dildil.api;
 
+import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.home_page.bean.DynamicNumBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.bean.VersionBean;
@@ -56,13 +57,13 @@ public interface ApiService {
     Observable<CollectionBean> CollectionVideo(@Body dto dto);
 
     @GET("commentservice/comment/list/praise/VIDEO/{id}/{pageNum}/{pageSize}")
-    Observable<CommentDetailBean> getVideoComment(@Path("id") int vid,@Path("pageNum") int num,@Path("pageSize") int size,@Query("uid") int uid);
+    Observable<CommentDetailBean> getVideoComment(@Path("id") int vid, @Path("pageNum") int num, @Path("pageSize") int size, @Query("uid") int uid);
 
     @GET("userservice/logout")
     Observable<LogoutBean> Logout();
 
     @GET("commentservice/danmu/{vid}/{second}")
-    Observable<DanmuBean> getDanMu(@Path("second") int second, @Path("vid") int vid );
+    Observable<DanmuBean> getDanMu(@Path("second") int second, @Path("vid") int vid);
 
     @POST("commentservice/danmu")
     Observable<SeadDanmuBean> seadDanMu(@Body danmu danmu);
@@ -71,6 +72,10 @@ public interface ApiService {
     Observable<DynamicNumBean> getDynamicNum(@Query("uid") int uid);
 
     @GET()
-    Observable<VersionBean>getVersion(@Url String url);
+    Observable<VersionBean> getVersion(@Url String url);
+
+    @GET("userservice/dynamic/list/{pageNum}/{pageSize}/{uid}")
+    Observable<DynamicBean> getDynamic(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Path("uid") int uid);
+
 
 }

@@ -3,6 +3,7 @@ package com.example.dildil.component.activity;
 import android.app.Activity;
 
 import com.example.dildil.component.app.AppComponent;
+import com.example.dildil.dynamic_page.fragment_tab.SynthesizeTabFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.HotFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
@@ -40,5 +41,7 @@ public interface ActivityComponent {
     void inject(SettingActivity settingActivity);
 
     void inject(HotFragment hotFragment);
+
+    void inject(SynthesizeTabFragment synthesizeTabFragment);
     //TODO 后续需要注入的Activity类都可以在这里添加 中像上面一样写就好了
 }

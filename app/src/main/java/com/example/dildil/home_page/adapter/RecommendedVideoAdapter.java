@@ -23,8 +23,10 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
     private Context mContext;
     private CardView Re_video;
     private RecommendVideoBean videoBean;
+    private VideoChoiceDialog videoChoiceDialog;
 
-    public RecommendedVideoAdapter(Context context) {
+    public RecommendedVideoAdapter(Context context,VideoChoiceDialog videoChoiceDialog) {
+        this.videoChoiceDialog = videoChoiceDialog;
         mContext = context;
     }
 
@@ -62,16 +64,20 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
         Re_video.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext, "fuxinbo");
-                videoChoiceDialog.show();
+                if (videoChoiceDialog !=null){
+                    videoChoiceDialog.setData("fuxinbo",position);
+                    videoChoiceDialog.show();
+                }
                 return false;
             }
         });
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(mContext, "fuxinbo");
-                videoChoiceDialog.show();
+                if (videoChoiceDialog !=null){
+                    videoChoiceDialog.setData("fuxinbo",position);
+                    videoChoiceDialog.show();
+                }
             }
         });
         if (item != null) {

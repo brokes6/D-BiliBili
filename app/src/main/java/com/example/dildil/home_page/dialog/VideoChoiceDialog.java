@@ -12,20 +12,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.dildil.R;
+import com.example.dildil.util.XToastUtils;
 
-public class VideoChoiceDialog extends Dialog implements View.OnClickListener{
+public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
     private Context context;
     private Activity mContext;
     private View view;
-    private TextView AddLater,pornographyVulgarity,bloodyAwful,coverDisgusting,TitleParty,
-            UP_name,classification,cancel;
+    private TextView AddLater, pornographyVulgarity, bloodyAwful, coverDisgusting, TitleParty,
+            UP_name, classification, cancel;
     private String upName;
+    private OnFeedbackClickListener onFeedbackClickListener;
+    private int position;
 
-    public VideoChoiceDialog(@NonNull Context context,String name) {
-        super(context,R.style.BottomDialog);
+    public VideoChoiceDialog(@NonNull Context context) {
+        super(context, R.style.BottomDialog);
         this.context = context;
-        upName = name;
         initView();
+    }
+
+    public void setData(String name, int position) {
+        this.upName = name;
+        this.position = position;
+    }
+
+    public void setOnFeedbackClickListener(OnFeedbackClickListener onFeedbackClickListeners) {
+        this.onFeedbackClickListener = onFeedbackClickListeners;
     }
 
     private void initView() {
@@ -47,7 +58,7 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener{
         UP_name.setOnClickListener(this);
         classification.setOnClickListener(this);
         cancel.setOnClickListener(this);
-        UP_name.setText("UP主:"+upName);
+        UP_name.setText("UP主:" + upName);
 
 
         setContentView(view);
@@ -63,19 +74,31 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.AddLater:
 
                 break;
             case R.id.pornographyVulgarity:
-
-                break;
+            case R.id.coverDisgusting:
+            case R.id.TitleParty:
+            case R.id.UP_name:
+            case R.id.classification:
+            case R.id.Channel:
+            case R.id.notInterested:
             case R.id.bloodyAwful:
-
+                XToastUtils.toast("感谢反馈，将减少该类型的推送");
+                if (onFeedbackClickListener != null) {
+                    onFeedbackClickListener.update(position);
+                }
+                dismiss();
                 break;
             case R.id.cancel:
                 dismiss();
                 break;
         }
+    }
+
+    public interface OnFeedbackClickListener {
+        void update(int position);
     }
 }
