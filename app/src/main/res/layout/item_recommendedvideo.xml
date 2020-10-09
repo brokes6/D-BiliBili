@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Re_video_cover"
-    android:layout_margin="@dimen/dp_5"
+    android:layout_margin="@dimen/dp_4"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="5dp">
@@ -14,8 +14,8 @@
         <ImageView
             android:id="@+id/Re_cover"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter"/>
+            android:layout_height="@dimen/dp_110"
+            android:scaleType="fitXY"/>
 
         <RelativeLayout
             android:id="@+id/volume"
@@ -82,7 +82,7 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="#212121"
-                android:textSize="14sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/Re_classification"
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#999999"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:text="分类 · 分类"/>
 
             <ImageView

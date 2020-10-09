@@ -4,10 +4,10 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_marginLeft="@dimen/dp_5"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_marginRight="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginRight="@dimen/dp_2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200"
+        android:layout_height="@dimen/dp_190"
         android:src="@drawable/skeleton_circular_grey"/>
 </RelativeLayout>

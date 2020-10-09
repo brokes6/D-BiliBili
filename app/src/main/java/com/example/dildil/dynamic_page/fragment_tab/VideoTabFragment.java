@@ -72,7 +72,6 @@ public class VideoTabFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
         //限定范围为屏幕一半的上下偏移180
         int playTop = CommonUtil.getScreenHeight(getContext()) / 2 - CommonUtil.dip2px(getContext(), 180);
         int playBottom = CommonUtil.getScreenHeight(getContext()) / 2 + CommonUtil.dip2px(getContext(), 180);

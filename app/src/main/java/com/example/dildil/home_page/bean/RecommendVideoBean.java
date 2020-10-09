@@ -131,5 +131,23 @@ public class RecommendVideoBean {
         public void setPreviewUrl(String previewUrl) {
             this.previewUrl = previewUrl;
         }
+
+        @Override
+        public String toString() {
+            return "BeanData{" +
+                    "id=" + id +
+                    ", uid=" + uid +
+                    ", playNum=" + playNum +
+                    ", praiseNum=" + praiseNum +
+                    ", danmunum=" + danmunum +
+                    ", length=" + length +
+                    ", upImg='" + upImg + '\'' +
+                    ", upName='" + upName + '\'' +
+                    ", title='" + title + '\'' +
+                    ", cover='" + cover + '\'' +
+                    ", previewUrl='" + previewUrl + '\'' +
+                    '}';
+        }
     }
+
 }

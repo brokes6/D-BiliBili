@@ -9,7 +9,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
-        versionName "1.1.0"
+        versionName "1.2.0"
         dataBinding.enabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -118,6 +118,4 @@ dependencies {
     implementation 'com.jidcoo.android.widget.commentview:CommentView:1.0.0'
 
     implementation 'com.github.maning0303:MNUpdateAPK:V2.0.3'
-    //数据库工具类
-    //implementation 'org.litepal.android:java:3.0.0'
 }

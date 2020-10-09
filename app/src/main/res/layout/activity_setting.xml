@@ -13,16 +13,15 @@
 
         <LinearLayout
             android:id="@+id/Title"
-            android:background="@color/White"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/White"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/iv_back"
                 android:layout_width="@dimen/dp_30"
                 android:layout_height="@dimen/dp_30"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_15"
                 android:layout_marginTop="@dimen/dp_5"
                 android:background="@drawable/bg_back"
@@ -32,31 +31,50 @@
                 android:id="@+id/tv_left_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/dp_15"
-                android:layout_toEndOf="@id/iv_back"
+                android:layout_marginTop="@dimen/dp_7"
+                android:text="设置"
                 android:textColor="#333333"
                 android:textSize="@dimen/sp_18"
                 android:typeface="monospace" />
         </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:layout_below="@+id/Title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/Title"
             android:background="#eaeaea">
 
-            <TextView
-                android:id="@+id/logOut"
-                android:background="@color/white"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/dp_10"
-                android:paddingBottom="@dimen/dp_10"
-                android:gravity="center"
-                android:textColor="@color/Black"
-                android:textSize="16sp"
-                android:text="退出登录" />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/DetectUpdates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="检测更新"
+                    android:textColor="@color/Black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/logOut"
+                    android:layout_below="@+id/DetectUpdates"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="退出登录"
+                    android:textColor="@color/Black"
+                    android:textSize="16sp" />
+            </RelativeLayout>
 
         </androidx.core.widget.NestedScrollView>
 

@@ -23,19 +23,34 @@
                 android:layout_height="wrap_content"
                 app:elevation="0dp">
 
-                <com.youth.banner.Banner
-                    android:id="@+id/Re_banner"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginRight="@dimen/dp_10"
-                    app:banner_indicator_gravity="right"
-                    app:banner_indicator_marginBottom="@dimen/dp_7"
-                    app:banner_indicator_marginRight="@dimen/dp_15"
-                    app:banner_indicator_normal_color="@color/White"
-                    app:banner_indicator_selected_color="@color/Pink"
-                    app:layout_scrollFlags="scroll" />
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/Re_TopRecy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_5" />
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/Re_banner"
+                        android:layout_below="@+id/Re_TopRecy"
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_4"
+                        android:layout_marginRight="@dimen/dp_10"
+                        app:banner_indicator_gravity="right"
+                        app:banner_indicator_marginBottom="@dimen/dp_7"
+                        app:banner_indicator_marginRight="@dimen/dp_15"
+                        app:banner_indicator_normal_color="@color/White"
+                        app:banner_indicator_selected_color="@color/Pink" />
+
+                </RelativeLayout>
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_4"
                 android:layout_marginRight="@dimen/dp_5"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

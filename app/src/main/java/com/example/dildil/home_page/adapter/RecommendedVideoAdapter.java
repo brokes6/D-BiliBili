@@ -22,26 +22,16 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
     private TextView play_volume, barrage_volume, title;
     private Context mContext;
     private CardView Re_video;
-    private RecommendVideoBean videoBean;
     private VideoChoiceDialog videoChoiceDialog;
 
-    public RecommendedVideoAdapter(Context context,VideoChoiceDialog videoChoiceDialog) {
+    public RecommendedVideoAdapter(Context context, VideoChoiceDialog videoChoiceDialog) {
         this.videoChoiceDialog = videoChoiceDialog;
         mContext = context;
-    }
-
-    public void setData(RecommendVideoBean bean) {
-        videoBean = bean;
     }
 
     @Override
     protected int getItemLayoutId(int viewType) {
         return R.layout.item_recommendedvideo;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        super.onBindViewHolder(holder, position);
     }
 
     @Override
@@ -56,16 +46,16 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VideoActivity.class);
-                intent.putExtra("id", videoBean.getData().get(position).getId());
-                intent.putExtra("uid", videoBean.getData().get(position).getUid());
+                intent.putExtra("id", item.getId());
+                intent.putExtra("uid", item.getUid());
                 mContext.startActivity(intent);
             }
         });
         Re_video.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (videoChoiceDialog !=null){
-                    videoChoiceDialog.setData("fuxinbo",position);
+                if (videoChoiceDialog != null) {
+                    videoChoiceDialog.setData("fuxinbo", position);
                     videoChoiceDialog.show();
                 }
                 return false;
@@ -74,8 +64,8 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
         more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (videoChoiceDialog !=null){
-                    videoChoiceDialog.setData("fuxinbo",position);
+                if (videoChoiceDialog != null) {
+                    videoChoiceDialog.setData("fuxinbo", position);
                     videoChoiceDialog.show();
                 }
             }

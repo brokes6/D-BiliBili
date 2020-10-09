@@ -47,6 +47,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     private static final String TAG = "RecommendedFragment";
     FragmentRecommendedBinding binding;
     private RecommendedVideoAdapter adapter;
+    private RecommendedVideoAdapter adapter2;
     private SkeletonScreen mSkeletonScreen;
     private SkeletonScreen mSkeletonScreeView;
     private boolean isFirst = true;
@@ -75,9 +76,14 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
         //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
-        adapter = new RecommendedVideoAdapter(getContext(),videoChoiceDialog);
+        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog);
         binding.ReRecy.setLayoutManager(layoutManager1);
         binding.ReRecy.setAdapter(adapter);
+
+        GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
+        adapter2 = new RecommendedVideoAdapter(getContext(), videoChoiceDialog);
+        binding.ReTopRecy.setLayoutManager(layoutManager2);
+        binding.ReTopRecy.setAdapter(adapter2);
 
         mSkeletonScreen = Skeleton.bind(binding.ReRecy)
                 .adapter(adapter)//设置实际adapter
@@ -85,7 +91,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                 .angle(30)//shimmer的倾斜角度
                 .frozen(false)//true则表示显示骨架屏时，RecyclerView不可滑动，否则可以滑动
                 .duration(1200)//动画时间，以毫秒为单位
-                .count(4)//显示骨架屏时item的个数
+                .count(6)//显示骨架屏时item的个数
                 .load(R.layout.item_recommendedvideo_skleton)//骨架屏UI
                 .show();
 
@@ -131,7 +137,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     protected void initLocalData() {
         RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load("OfflineData"), RecommendVideoBean.class);
-        adapter.setData(recommendVideoBean);
         adapter.loadMore(recommendVideoBean.getData());
         mSkeletonScreen.hide();
     }
@@ -172,7 +177,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
-        adapter.setData(videoBean);
         adapter.loadMore(videoBean.getData());
         mSkeletonScreen.hide();
         save(GsonUtil.toJson(videoBean), "OfflineData");
@@ -186,9 +190,10 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
-        binding.ReBanner.setVisibility(View.GONE);
-        adapter.refresh(videoBean.getData());
-        adapter.setData(videoBean);
+        for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
+            adapter2.add(0,datum);
+        }
+        binding.ReTopRecy.scrollToPosition(0);
         binding.swipe.finishRefresh(true);
     }
 
