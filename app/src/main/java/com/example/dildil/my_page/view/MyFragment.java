@@ -28,6 +28,7 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void initView() {
         binding.MSetting.setOnClickListener(this);
+        binding.MUserImg.setOnClickListener(this);
     }
 
     @Override
@@ -36,13 +37,18 @@ public class MyFragment extends BaseFragment {
         loginBean = getUserData();
         Glide.with(getContext()).load(loginBean.getData().getImg()).into(binding.MUserImg);
         binding.MUserName.setText(loginBean.getData().getUsername());
+        binding.MBCurrency.setText("B币: 5.0");
+        binding.MCoin.setText("硬币: " + loginBean.getData().getCoinNum());
         binding.dynamic.setTop_Text(0 + "");
         binding.follow.setTop_Text(loginBean.getData().getFollowNum() + "");
         binding.fans.setTop_Text(loginBean.getData().getFansNum() + "");
         if (true) {
             binding.member.setText("年度大会员");
+            binding.MMember.setText("年度大会员");
         } else {
             binding.member.setText("普通会员");
+            binding.MMember.setText("普通会员");
+            binding.MMember.setBackground(getResources().getDrawable(R.drawable.skeleton_circular_grey));
         }
         hideDialog();
     }
@@ -58,6 +64,9 @@ public class MyFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.M_setting:
                 ActivityUtils.startActivity(SettingActivity.class);
+                break;
+            case R.id.M_user_img:
+                ActivityUtils.startActivity(PersonalActivity.class);
                 break;
         }
     }

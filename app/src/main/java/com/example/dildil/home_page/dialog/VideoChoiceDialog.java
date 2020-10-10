@@ -23,6 +23,7 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
     private String upName;
     private OnFeedbackClickListener onFeedbackClickListener;
     private int position;
+    private int type;
 
     public VideoChoiceDialog(@NonNull Context context) {
         super(context, R.style.BottomDialog);
@@ -30,9 +31,10 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
         initView();
     }
 
-    public void setData(String name, int position) {
+    public void setData(String name, int position, int value) {
         this.upName = name;
         this.position = position;
+        type = value;
     }
 
     public void setOnFeedbackClickListener(OnFeedbackClickListener onFeedbackClickListeners) {
@@ -88,7 +90,7 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
             case R.id.bloodyAwful:
                 XToastUtils.toast("感谢反馈，将减少该类型的推送");
                 if (onFeedbackClickListener != null) {
-                    onFeedbackClickListener.update(position);
+                    onFeedbackClickListener.update(position,type);
                 }
                 dismiss();
                 break;
@@ -99,6 +101,6 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
     }
 
     public interface OnFeedbackClickListener {
-        void update(int position);
+        void update(int position,int type);
     }
 }

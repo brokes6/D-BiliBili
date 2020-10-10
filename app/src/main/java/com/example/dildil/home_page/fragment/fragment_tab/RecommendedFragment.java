@@ -76,13 +76,15 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
         //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
-        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog);
+        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 1);
         binding.ReRecy.setLayoutManager(layoutManager1);
+        binding.ReRecy.setHasFixedSize(true);
         binding.ReRecy.setAdapter(adapter);
 
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
-        adapter2 = new RecommendedVideoAdapter(getContext(), videoChoiceDialog);
+        adapter2 = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 2);
         binding.ReTopRecy.setLayoutManager(layoutManager2);
+        binding.ReTopRecy.setHasFixedSize(true);
         binding.ReTopRecy.setAdapter(adapter2);
 
         mSkeletonScreen = Skeleton.bind(binding.ReRecy)
@@ -143,8 +145,16 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     private VideoChoiceDialog.OnFeedbackClickListener onFeedbackClickListener = new VideoChoiceDialog.OnFeedbackClickListener() {
         @Override
-        public void update(int position) {
-            adapter.delete(position);
+        public void update(int position, int type) {
+            switch (type) {
+                case 1:
+                    adapter.removeItem(position);
+                    break;
+                case 2:
+                    adapter2.removeItem(position);
+                    break;
+            }
+
         }
     };
 
@@ -191,7 +201,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
         for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
-            adapter2.add(0,datum);
+            adapter2.add(0, datum);
         }
         binding.ReTopRecy.scrollToPosition(0);
         binding.swipe.finishRefresh(true);

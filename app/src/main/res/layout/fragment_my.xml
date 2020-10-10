@@ -46,14 +46,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/function_top"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="8dp"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10">
 
             <com.android.liuzhuang.rcimageview.CircleImageView
                 android:id="@+id/M_user_img"
-                android:layout_width="@dimen/dp_60"
-                android:layout_height="@dimen/dp_60" />
+                android:layout_width="@dimen/dp_65"
+                android:layout_height="@dimen/dp_65" />
 
             <TextView
                 android:id="@+id/M_user_name"
@@ -63,6 +63,45 @@
                 android:layout_toRightOf="@+id/M_user_img"
                 android:textColor="@color/Pink"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/M_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/M_user_name"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_toRightOf="@+id/M_user_img"
+                android:background="@drawable/file_background_follow_pink"
+                android:paddingLeft="4dp"
+                android:paddingTop="2dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="2dp"
+                android:text="年度大会员"
+                android:textColor="@color/While"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/M_B_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/M_member"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_toRightOf="@+id/M_user_img"
+                android:textColor="@color/Text_gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/M_coin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/M_member"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginTop="@dimen/dp_3"
+                android:layout_toRightOf="@+id/M_B_currency"
+                android:textColor="@color/Text_gray"
+                android:textSize="14sp" />
 
 
             <TextView
@@ -88,6 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/function_user"
             android:layout_marginTop="@dimen/dp_10"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.example.customcontrollibs.TopTextView
@@ -98,6 +138,11 @@
                 app:Bottom_Text="动态"
                 app:Text_Spacing="20" />
 
+            <TextView
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_20"
+                android:background="@color/Grey_9" />
+
             <com.example.customcontrollibs.TopTextView
                 android:id="@+id/follow"
                 android:layout_width="0dp"
@@ -105,6 +150,11 @@
                 android:layout_weight="1"
                 app:Bottom_Text="关注"
                 app:Text_Spacing="20" />
+
+            <TextView
+                android:layout_width="@dimen/dp_1"
+                android:layout_height="@dimen/dp_20"
+                android:background="@color/Grey_9" />
 
             <com.example.customcontrollibs.TopTextView
                 android:id="@+id/fans"
@@ -118,10 +168,10 @@
         <com.gcssloop.widget.RCRelativeLayout
             android:id="@+id/M_video_cover"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
+            android:layout_height="@dimen/dp_50"
             android:layout_below="@+id/function_data"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             app:round_corner_top_left="5dp"
             app:round_corner_top_right="5dp">

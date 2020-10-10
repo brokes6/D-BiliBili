@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -23,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".my_page.view.PersonalActivity"></activity>
         <activity android:name=".my_page.view.SettingActivity" />
         <activity
             android:name=".video.view.VideoActivity"
@@ -48,9 +47,7 @@
             android:value="400" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="640" />
-
-        <!-- <meta-data -->
+            android:value="640" /> <!-- <meta-data -->
         <!-- android:name="android.max_aspect" -->
         <!-- android:value="2.4" /> &lt;!&ndash; 适配华为（huawei）刘海屏 &ndash;&gt; -->
         <meta-data

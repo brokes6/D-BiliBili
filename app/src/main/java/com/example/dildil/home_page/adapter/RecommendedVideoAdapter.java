@@ -23,10 +23,12 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
     private Context mContext;
     private CardView Re_video;
     private VideoChoiceDialog videoChoiceDialog;
+    private int type = 0;
 
-    public RecommendedVideoAdapter(Context context, VideoChoiceDialog videoChoiceDialog) {
+    public RecommendedVideoAdapter(Context context, VideoChoiceDialog videoChoiceDialog, int value) {
         this.videoChoiceDialog = videoChoiceDialog;
         mContext = context;
+        type = value;
     }
 
     @Override
@@ -55,7 +57,7 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
             @Override
             public boolean onLongClick(View v) {
                 if (videoChoiceDialog != null) {
-                    videoChoiceDialog.setData("fuxinbo", position);
+                    videoChoiceDialog.setData("fuxinbo", position,type);
                     videoChoiceDialog.show();
                 }
                 return false;
@@ -65,7 +67,7 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
             @Override
             public void onClick(View v) {
                 if (videoChoiceDialog != null) {
-                    videoChoiceDialog.setData("fuxinbo", position);
+                    videoChoiceDialog.setData("fuxinbo", position,type);
                     videoChoiceDialog.show();
                 }
             }
@@ -82,5 +84,11 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
         play_volume.setText(item.getPlayNum() + "");
         barrage_volume.setText(item.getDanmunum() + "");
         title.setText(item.getTitle());
+    }
+
+    public void removeItem(int position){
+        getData().remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
     }
 }

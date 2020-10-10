@@ -55,8 +55,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_15"
                     android:text="检测更新"
                     android:textColor="@color/Black"
                     android:textSize="16sp" />
@@ -69,8 +69,8 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:paddingTop="@dimen/dp_10"
-                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_15"
                     android:text="退出登录"
                     android:textColor="@color/Black"
                     android:textSize="16sp" />

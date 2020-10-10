@@ -125,6 +125,8 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
         hideDialog();
         if (!versionBean.getData().getVersion().equals(getVersionCode())) {
             downloadApk(versionBean);
+        }else{
+            XToastUtils.info("当前已是最新版本！");
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
@@ -26,6 +27,7 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentIntroductionBinding;
 import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
+import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
@@ -62,7 +64,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private boolean mIsPraise = false;
     private int mCoinNum = 0;
     private boolean isCollection = false;
-    private boolean isSanLian = true;
+    private boolean isSanLian = false;
 
     @Inject
     VideoDetailsPresenter mPresenter;
@@ -81,12 +83,12 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     protected void initView() {
-        getIncludeView();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         adapter = new HotRankingAdapter(getContext());
         adapter.setListener(listener);
         binding.InRecyclerView.setLayoutManager(layoutManager);
         binding.InRecyclerView.setAdapter(adapter);
+        binding.InUserImg.setOnClickListener(this);
         mSkeletonScreen2 = Skeleton.bind(binding.InRecyclerView)
                 .adapter(adapter)//设置实际adapter
                 .shimmer(true)//是否开启动画
@@ -105,6 +107,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 .angle(30)//shimmer的倾斜角度
                 .show();
 
+        getIncludeView();
     }
 
     private void getIncludeView() {
@@ -153,24 +156,28 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             }
         });
         like_img.setOnTouchListener(new View.OnTouchListener() {
-            private boolean isFinish;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
                 switch (event.getAction()){
                     case  MotionEvent.ACTION_DOWN:
+                        if (isSanLian){
+                            XToastUtils.toast("已经三连过啦~");
+                            return false;
+                        }
                         coin_circleView.startAnimationProgress(300);
                         Collection_circleView.startAnimationProgress(300);
                         break;
                     case  MotionEvent.ACTION_UP:
                         if(coin_circleView.mProgress >= 300){
-                            if(!isFinish){
                                 //完成长按
                                 like_img.setImageResource(R.drawable.thumb_up_24);
                                 Collection.setImageResource(R.mipmap.collect_on);
                                 coinImg.setImageResource(R.mipmap.coin_on);
+                                /**
+                                 * 这里进行三连操作
+                                 */
                                 return false;
-                            }
                         }
                         if(coin_circleView.mProgress != 300){
                             if(coin_circleView.mProgress < 300){
@@ -240,6 +247,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 }
                 dto str1 = new dto(id);
                 mPresenter.CollectionVideo(str1);
+                break;
+            case R.id.In_user_img:
+                ActivityUtils.startActivity(PersonalActivity.class);
                 break;
         }
     }

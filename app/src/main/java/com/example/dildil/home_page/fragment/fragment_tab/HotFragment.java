@@ -58,6 +58,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
         adapter = new HotRankingAdapter(getContext());
         adapter.setListener(listener);
         binding.HotRecy.setLayoutManager(layoutManager);
+        binding.HotRecy.setHasFixedSize(true);
         binding.HotRecy.setAdapter(adapter);
         mSkeletonScreen = Skeleton.bind(binding.HotRecy)
                 .adapter(adapter)//设置实际adapter
@@ -126,7 +127,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
-
+        binding.swipe.finishRefresh(true);
     }
 
     @Override
