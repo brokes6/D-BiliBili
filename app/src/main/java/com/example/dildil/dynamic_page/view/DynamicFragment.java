@@ -19,8 +19,7 @@ import com.example.dildil.home_page.view.HomeActivity;
 import java.util.ArrayList;
 
 public class DynamicFragment extends BaseFragment {
-    private static final String TAG = "DynamicFragment";
-    FragmentDynamicBinding binding;
+    private FragmentDynamicBinding binding;
     private String[] TabTitle = {"视频", "综合"};
     private ArrayList<Fragment> mFragments;
 

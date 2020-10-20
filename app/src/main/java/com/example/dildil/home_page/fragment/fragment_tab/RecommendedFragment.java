@@ -1,7 +1,6 @@
 package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -22,7 +22,7 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentRecommendedBinding;
-import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
+import com.example.dildil.home_page.adapter.RecommendedVideoBetterAdapter;
 import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
@@ -44,10 +44,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class RecommendedFragment extends BaseFragment implements RecommendContract.View {
-    private static final String TAG = "RecommendedFragment";
-    FragmentRecommendedBinding binding;
-    private RecommendedVideoAdapter adapter;
-    private RecommendedVideoAdapter adapter2;
+    private FragmentRecommendedBinding binding;
+    private RecommendedVideoBetterAdapter adapter;
+    private RecommendedVideoBetterAdapter adapter2;
     private SkeletonScreen mSkeletonScreen;
     private SkeletonScreen mSkeletonScreeView;
     private boolean isFirst = true;
@@ -73,26 +72,27 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     protected void initView() {
         VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(getContext());
         videoChoiceDialog.setOnFeedbackClickListener(onFeedbackClickListener);
+        RecyclerView.RecycledViewPool mSharedPool = new RecyclerView.RecycledViewPool();
 
         //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
-        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 1);
         binding.ReRecy.setLayoutManager(layoutManager1);
+        binding.ReRecy.setRecycledViewPool(mSharedPool);
         binding.ReRecy.setHasFixedSize(true);
-        binding.ReRecy.setAdapter(adapter);
 
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
-        adapter2 = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 2);
+        adapter2 = new RecommendedVideoBetterAdapter(getContext(), videoChoiceDialog, 2);
         binding.ReTopRecy.setLayoutManager(layoutManager2);
+        binding.ReTopRecy.setRecycledViewPool(mSharedPool);
         binding.ReTopRecy.setHasFixedSize(true);
-        binding.ReTopRecy.setAdapter(adapter2);
 
+        adapter = new RecommendedVideoBetterAdapter(getContext(), videoChoiceDialog,1);
         mSkeletonScreen = Skeleton.bind(binding.ReRecy)
                 .adapter(adapter)//设置实际adapter
                 .shimmer(true)//是否开启动画
                 .angle(30)//shimmer的倾斜角度
                 .frozen(false)//true则表示显示骨架屏时，RecyclerView不可滑动，否则可以滑动
-                .duration(1200)//动画时间，以毫秒为单位
+                .duration(1000)//动画时间，以毫秒为单位
                 .count(6)//显示骨架屏时item的个数
                 .load(R.layout.item_recommendedvideo_skleton)//骨架屏UI
                 .show();
@@ -111,7 +111,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Log.e(TAG, "onRefresh: 开始刷新");
                 if (isFirst) {
                     mPresenter.getRandomRecommendation();
                     ResourcesData resourcesData = new ResourcesData();
@@ -138,12 +137,12 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initLocalData() {
-        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load("OfflineData"), RecommendVideoBean.class);
+        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class);
         adapter.loadMore(recommendVideoBean.getData());
         mSkeletonScreen.hide();
     }
 
-    private VideoChoiceDialog.OnFeedbackClickListener onFeedbackClickListener = new VideoChoiceDialog.OnFeedbackClickListener() {
+    private final VideoChoiceDialog.OnFeedbackClickListener onFeedbackClickListener = new VideoChoiceDialog.OnFeedbackClickListener() {
         @Override
         public void update(int position, int type) {
             switch (type) {
@@ -189,7 +188,8 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
         adapter.loadMore(videoBean.getData());
         mSkeletonScreen.hide();
-        save(GsonUtil.toJson(videoBean), "OfflineData");
+        binding.ReTopRecy.setAdapter(adapter2);
+        save(GsonUtil.toJson(videoBean), offlineData);
         binding.swipe.finishRefresh(true);
     }
 
@@ -209,7 +209,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRefreshRecommendVideoFail(String e) {
-        XToastUtils.error("出现错误:" + e);
+        XToastUtils.error(R.string.errorOccurred + e);
         binding.swipe.finishRefresh(true);
     }
 
@@ -227,7 +227,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mPresenter.detachView();
+        super.onDestroy();
     }
 }

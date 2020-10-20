@@ -23,7 +23,7 @@
             android:layout_height="@dimen/dp_28"
             android:layout_alignBottom="@+id/Re_cover">
 
-            <ImageView
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/file_background_white_gradient" />

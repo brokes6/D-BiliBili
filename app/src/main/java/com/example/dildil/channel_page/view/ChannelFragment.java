@@ -17,7 +17,7 @@ import com.example.dildil.databinding.FragmentChannelBinding;
 import java.util.ArrayList;
 
 public class ChannelFragment extends BaseFragment {
-    FragmentChannelBinding binding;
+    private FragmentChannelBinding binding;
     private String[] TabTitle = {"频道", "分区"};
     private ArrayList<Fragment> mFragments;
 

@@ -70,7 +70,6 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
         fragmentList.add(new ChannelFragment());
         fragmentList.add(new DynamicFragment());
         fragmentList.add(new MyFragment());
-        Log.i("why", "当前流海高度为:" + getStatusBarHeight(this));
         setMargins(binding.navigationBar, 0, getStatusBarHeight(this), 0, 0);
     }
 
@@ -165,9 +164,9 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
         hideDialog();
     }
 
-    @Override
+       @Override
     public void onGetVersionSuccess(VersionBean versionBean) {
-        if (!versionBean.getData().getVersion().equals(getVersionCode())) {
+        if (versionBean.getData().getVersion().compareTo(getVersionCode())==1) {
             downloadApk(versionBean);
         }
     }
@@ -201,7 +200,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mPresenter.detachView();
+        super.onDestroy();
     }
 }

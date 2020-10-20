@@ -1,7 +1,6 @@
 package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +58,6 @@ public class PursueFramgment extends BaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         adapter = new MyPursuitAdapter(getContext());
         binding.PuMyPursuit.setLayoutManager(layoutManager);
-        binding.PuMyPursuit.setAdapter(adapter);
 
         mSkeletonScreeView = Skeleton.bind(binding.PuBanner)
                 .load(R.layout.item_banner_skeleton)//骨架屏UI
@@ -97,7 +95,6 @@ public class PursueFramgment extends BaseFragment {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                Log.e(TAG, "onRefresh: 开始刷新");
                 initDatas();
                 isFirst = false;
             }
@@ -112,7 +109,8 @@ public class PursueFramgment extends BaseFragment {
     @Override
     protected void initLocalData() {
         fanRecommendationBeans.clear();
-        List<FanRecommendationBean> fanRecommendationBean = GsonUtil.fromJSON(load("LocalHua"), new TypeToken<List<FanRecommendationBean>>() {}.getType());
+        List<FanRecommendationBean> fanRecommendationBean = GsonUtil.fromJSON(load(LocalHua), new TypeToken<List<FanRecommendationBean>>() {
+        }.getType());
         fanRecommendationAdapter.loadMore(fanRecommendationBean);
         mSkeletonScreen2.hide();
         mSkeletonScreen.hide();
@@ -131,7 +129,7 @@ public class PursueFramgment extends BaseFragment {
             adapter.refresh(resourcesData.getMyPursuitBean());
             fanRecommendationAdapter.refresh(resourcesData.getFanRecommendationBeans());
         }
-        save(GsonUtil.toJson(resourcesData.getFanRecommendationBeans()), "LocalHua");
+        save(GsonUtil.toJson(resourcesData.getFanRecommendationBeans()), LocalHua);
         binding.swipe.finishRefresh(true);
         mSkeletonScreen2.hide();
         mSkeletonScreen.hide();

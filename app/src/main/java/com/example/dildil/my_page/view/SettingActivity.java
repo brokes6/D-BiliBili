@@ -56,7 +56,6 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
         binding.DetectUpdates.setOnClickListener(this);
         binding.ivBack.setOnClickListener(this);
         setMargins(binding.Title, 0, getStatusBarHeight(this), 0, 0);
-
     }
 
     @Override
@@ -123,7 +122,7 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     @Override
     public void onGetVersionSuccess(VersionBean versionBean) {
         hideDialog();
-        if (!versionBean.getData().getVersion().equals(getVersionCode())) {
+        if (versionBean.getData().getVersion().compareTo(getVersionCode())==1) {
             downloadApk(versionBean);
         }else{
             XToastUtils.info("当前已是最新版本！");
@@ -138,7 +137,7 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mPresenter.detachView();
+        super.onDestroy();
     }
 }

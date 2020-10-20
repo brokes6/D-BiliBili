@@ -29,9 +29,9 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_marginBottom="@dimen/dp_5"
-                android:src="@drawable/search_24_while" />
+                android:src="@drawable/search_24_c1bfc0" />
 
-            <rewriting_view.SearchEditText
+            <com.example.dildil.rewriting_view.SearchEditText
                 android:id="@+id/search_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

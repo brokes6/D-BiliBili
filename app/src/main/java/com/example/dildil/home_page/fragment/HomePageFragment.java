@@ -1,5 +1,6 @@
 package com.example.dildil.home_page.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.example.dildil.R;
+import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.databinding.FragmentHomepageBinding;
 import com.example.dildil.home_page.fragment.fragment_tab.EpidemicSituationFragment;
@@ -50,6 +52,7 @@ public class HomePageFragment extends BaseFragment {
 
         binding.userImg.setOnClickListener(this);
         binding.edText.setOnClickListener(this);
+        binding.information.setOnClickListener(this);
         binding.tab.setViewPager(binding.viewPager, TabTitle, getActivity(), mFragments);
         binding.tab.setCurrentTab(1);
     }
@@ -65,16 +68,17 @@ public class HomePageFragment extends BaseFragment {
 
     }
 
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.user_img:
-                ((HomeActivity) getActivity()).SwitchPages(4);
-                break;
-            case R.id.ed_text:
-                ActivityUtils.startActivity(SearchActivity.class);
-                break;
+        int id = view.getId();
+        if (id == R.id.user_img) {
+            ((HomeActivity) getActivity()).SwitchPages(4);
+        } else if (id == R.id.ed_text) {
+            ActivityUtils.startActivity(SearchActivity.class);
+        } else if (id == R.id.information) {
+            Intent intent = new Intent();
+            intent.setAction(BaseActivity.signInAction);
+            getContext().sendBroadcast(intent);
         }
     }
 }

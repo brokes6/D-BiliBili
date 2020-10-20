@@ -91,4 +91,5 @@ public class RecommendedVideoAdapter extends BaseRecyclerAdapter<RecommendVideoB
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getItemCount());
     }
+
 }

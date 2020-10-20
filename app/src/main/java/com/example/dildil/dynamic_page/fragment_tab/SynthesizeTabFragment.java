@@ -100,7 +100,7 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mPresenter.detachView();
+        super.onDestroy();
     }
 }

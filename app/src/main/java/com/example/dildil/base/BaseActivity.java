@@ -1,7 +1,9 @@
 package com.example.dildil.base;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -13,16 +15,31 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.android.liuzhuang.rcimageview.CircleImageView;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.example.dildil.R;
+import com.example.dildil.api.ApiEngine;
+import com.example.dildil.api.ApiService;
+import com.example.dildil.login_page.view.LoginActivity;
+import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.util.LoadingsDialog;
+import com.example.dildil.util.SharePreferenceUtil;
+import com.example.dildil.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
+import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -30,17 +47,10 @@ import com.gyf.immersionbar.ImmersionBar;
  * Activity Base类
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = "BaseActivity";
-
     protected LoadingsDialog mDialogs;
-
     public Context mContext;
-
-
-//    @Override
-//    protected void attachBaseContext(Context newBase) {
-//        super.attachBaseContext(LocaleManageUtil.setLocal(newBase));
-//    }
+    private JudgeLoginReceiver judgeLoginReceiver;
+    public static String signInAction = "LOGIN.DilDil.ACTION";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,11 +61,70 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 .statusBarDarkFont(true)
                 .navigationBarDarkIcon(true)
                 .init();
+
         mContext = this;
         onCreateView(savedInstanceState);
         goDialog();
         initView();
         initData();
+        initBroadcastReceiver();
+    }
+
+    private void initBroadcastReceiver() {
+        if (judgeLoginReceiver != null) {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(signInAction);
+            registerReceiver(judgeLoginReceiver, intentFilter);
+        } else {
+            judgeLoginReceiver = new JudgeLoginReceiver();
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(signInAction);
+            registerReceiver(judgeLoginReceiver, intentFilter);
+        }
+    }
+
+    private static class JudgeLoginReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            new MaterialDialog.Builder(context)
+                    .title(R.string.loginWarning)
+                    .content(R.string.thisAccountHasSigned)
+                    .positiveText(R.string.determine)
+                    .cancelable(false)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            ApiService apiService = ApiEngine.getInstance().getApiService();
+                            apiService.Logout()
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Observer<LogoutBean>() {
+                                        @Override
+                                        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                                        }
+
+                                        @Override
+                                        public void onNext(@io.reactivex.annotations.NonNull LogoutBean logoutBean) {
+                                            SharePreferenceUtil.getInstance(context).remove("cookie");
+                                            ActivityUtils.startActivity(LoginActivity.class);
+                                        }
+
+                                        @Override
+                                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                                            XToastUtils.error(R.string.networkError);
+                                        }
+
+                                        @Override
+                                        public void onComplete() {
+
+                                        }
+                                    });
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override
@@ -70,6 +139,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onDestroy() {
+        if (judgeLoginReceiver != null) {
+            unregisterReceiver(judgeLoginReceiver);
+        }
         System.gc();
         super.onDestroy();
     }

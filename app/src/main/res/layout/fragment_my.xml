@@ -50,7 +50,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10">
 
-            <com.android.liuzhuang.rcimageview.CircleImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/M_user_img"
                 android:layout_width="@dimen/dp_65"
                 android:layout_height="@dimen/dp_65" />

@@ -59,7 +59,6 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
         adapter.setListener(listener);
         binding.HotRecy.setLayoutManager(layoutManager);
         binding.HotRecy.setHasFixedSize(true);
-        binding.HotRecy.setAdapter(adapter);
         mSkeletonScreen = Skeleton.bind(binding.HotRecy)
                 .adapter(adapter)//设置实际adapter
                 .shimmer(true)//是否开启动画
@@ -91,7 +90,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     protected void initLocalData() {
-        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load("OfflineData"), RecommendVideoBean.class);
+        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class);
         adapter.loadMore(recommendVideoBean.getData());
         mSkeletonScreen.hide();
     }

@@ -1,7 +1,6 @@
 package com.example.dildil.home_page.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -31,7 +30,6 @@ public class HotRankingAdapter extends BaseRecyclerAdapter<RecommendVideoBean.Be
 
     public void setListener(ItemOnClickListener listener) {
         this.listener = listener;
-        Log.e(TAG, "onClick: 当前的listener为"+listener );
     }
 
     @Override

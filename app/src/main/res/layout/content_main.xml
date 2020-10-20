@@ -11,7 +11,7 @@
     clipChildren的意思是是否限制子View在其范围内，这个默认是true，
     也就是默认是限制子view在其范围的-->
 
-    <rewriting_view.ClipViewPager
+    <com.example.dildil.rewriting_view.ClipViewPager
         android:id="@+id/viewpager"
         android:layout_width="150dp"
         android:layout_height="150dp"

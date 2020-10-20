@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import com.example.dildil.R;
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.api.ApiService;
+import com.example.dildil.rewriting_view.ClipViewPager;
+import com.example.dildil.rewriting_view.ScalePageTransformer;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.video.adapter.TubatuAdapter;
 import com.example.dildil.video.bean.CoinBean;
@@ -31,8 +33,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import rewriting_view.ClipViewPager;
-import rewriting_view.ScalePageTransformer;
 
 public class CoinDialog extends Dialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private Context mContext;

@@ -70,12 +70,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    protected void onResume() {
-        Log.d(TAG, "onResume");
-        super.onResume();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.Lo_login:
@@ -93,8 +87,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mPresenter.detachView();
+        super.onDestroy();
     }
 
     @Override
@@ -118,7 +112,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             XToastUtils.error(R.string.enter_correct_password);
         } else {
             XToastUtils.error(e);
-            Log.e(TAG, "出现错误"+e );
+            Log.e(TAG, R.string.errorOccurred+e );
         }
     }
 }

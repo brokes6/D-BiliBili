@@ -55,6 +55,13 @@
     <string name="MyPursuit">我的追番</string>
     <string name="Seemore">查看更多</string>
     <string name="FanRecommendation">番剧推荐</string>
-
+    <string name="userIntroduce">用户介绍</string>
+    <string name="EditingMaterials">编辑资料</string>
+    <string name="loginWarning">警告</string>
+    <string name="thisAccountHasSigned">此账号已在别处登录</string>
+    <string name="determine">确定</string>
+    <string name="networkError">当前网络状况不佳，请稍后重试</string>
+    <string name="errorOccurred">出现错误:</string>
+    <string name="saveProgress">已为您保存播放进度</string>
 
 </resources>

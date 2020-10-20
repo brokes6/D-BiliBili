@@ -98,10 +98,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.detail_page_do_comment:
-                showCommentDialog();
-                break;
+        if (v.getId() == R.id.detail_page_do_comment) {
+            showCommentDialog();
         }
     }
 
@@ -396,9 +394,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     @Override
     public void onGetVideoCommentFail(String e) {
         hideDialog();
-        Log.e(TAG, "onGetVideoCommentFail: ???????????" + e);
         binding.comments.setVisibility(View.GONE);
-        XToastUtils.error("出现错误:" + e);
+        XToastUtils.error(R.string.errorOccurred + e);
     }
 
     @Override
@@ -433,7 +430,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         mPresenter.detachView();
+        super.onDestroy();
     }
 }

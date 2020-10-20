@@ -19,6 +19,8 @@ import com.example.dildil.util.NetUtil;
 import com.example.dildil.util.SharePreferenceUtil;
 import com.example.dildil.util.XToastUtils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -54,6 +56,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     //强制刷新数据 但仍然要 visible & Prepared，采取reset数据的方式，所以要重新走initData
     private boolean forceLoad = false;
 
+    //首页的离线数据
+    public static String offlineData = "OfflineData";
+
+    //追番的离线数据
+    public static String LocalHua = "LocalHua";
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +96,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         activity = (Activity) context;
     }
@@ -287,7 +295,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             in = MyApplication.getContext().openFileInput(name);
             //FileInputStream -> InputStreamReader ->BufferedReader
             reader = new BufferedReader(new InputStreamReader(in));
-            String line = new String();
+            String line;
             //读取每一行数据，并追加到StringBuilder对象中，直到结束
             while ((line = reader.readLine()) != null) {
                 content.append(line);

@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/While">
 
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/Dy_tab"
@@ -50,7 +51,7 @@
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
                 android:layout_marginLeft="@dimen/dp_15"
-                android:src="@drawable/search_24_while" />
+                android:src="@drawable/search_24_c1bfc0" />
 
             <TextView
                 android:layout_width="0dp"

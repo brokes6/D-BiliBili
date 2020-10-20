@@ -171,11 +171,9 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
                 });
     }
 
-    private static final String TAG = "VideoDetailsPresenter";
-
     @Override
     public void getDanMu(int second, int vid) {
-        mModel.getDanMu(second,vid).subscribeOn(Schedulers.io())
+        mModel.getDanMu(second, vid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DanmuBean>() {
                     @Override
@@ -202,7 +200,7 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
 
     @Override
     public void seadDanMu(danmu danmu, int uid) {
-        mModel.seadDanMu(danmu,uid).subscribeOn(Schedulers.io())
+        mModel.seadDanMu(danmu, uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SeadDanmuBean>() {
                     @Override

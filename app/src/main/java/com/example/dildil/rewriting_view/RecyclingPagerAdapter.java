@@ -1,4 +1,4 @@
-package rewriting_view;
+package com.example.dildil.rewriting_view;
 
 import android.view.View;
 import android.view.ViewGroup;

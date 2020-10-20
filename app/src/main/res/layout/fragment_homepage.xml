@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff">
+        android:background="@color/While">
 
         <LinearLayout
             android:id="@+id/Title_Search"
@@ -75,6 +75,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/xian_1" />
+            android:layout_below="@+id/xian_1"
+            android:background="@color/White"/>
     </RelativeLayout>
 </layout>

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import rewriting_view.RecyclingPagerAdapter;
+import com.example.dildil.rewriting_view.RecyclingPagerAdapter;
 
 /**
  * Created by wujian on 2016/3/23.

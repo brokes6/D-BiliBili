@@ -293,7 +293,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     public void setUPData(String upImg,String upName){
         this.upImg = upImg;
         this.upName = upName;
-        Log.e("why", "111111: ???????????????????"+upImg+"名称为"+upName );
     }
 
     private void sendOutDanMu() {

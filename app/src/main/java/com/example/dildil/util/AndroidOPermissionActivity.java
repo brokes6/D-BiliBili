@@ -115,7 +115,7 @@ public class AndroidOPermissionActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         sListener = null;
+        super.onDestroy();
     }
 }

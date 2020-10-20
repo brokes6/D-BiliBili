@@ -113,14 +113,13 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         int playtime = intent.getIntExtra("playtime", 0);
         id = intent.getIntExtra("id", 0);
         uid = intent.getIntExtra("uid", 0);
-        Log.e(TAG, "当前点击的视频id="+id );
         SharedPreferencesUtil.putData("id", id);
         SharedPreferencesUtil.putData("uid", uid);
         if (playtime != 0) {
             mWhenPlaying = playtime;
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
             binding.detailPlayer.startPlayLogic();
-            XToastUtils.info("已为您保存播放进度");
+            XToastUtils.info(R.string.saveProgress);
         }
     }
 
@@ -149,7 +148,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         orientationUtils.setEnable(false);
 
         binding.detailPlayer.setIsTouchWiget(true);
-        binding.detailPlayer.setVideoDetails(uid,id);
+        binding.detailPlayer.setVideoDetails(uid, id);
         //关闭自动旋转
         binding.detailPlayer.setRotateViewAuto(false);
         binding.detailPlayer.setNeedAutoAdaptation(true);
@@ -289,23 +288,19 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.V_DanmakuShow:
-                DanmakuShow();
-                break;
-            case R.id.V_definition_text:
-                sendOutDanMu();
-                break;
-            case R.id.playButton:
-                binding.detailPlayer.onVideoResume();
-                binding.appbar.setExpanded(true);
-                binding.more.setVisibility(View.GONE);
-                binding.keyboard.setVisibility(View.GONE);
-                banAppBarScroll(false);
-                break;
-            case R.id.keyboard:
-                finish();
-                break;
+        int vId = v.getId();
+        if (vId == R.id.V_DanmakuShow) {
+            DanmakuShow();
+        } else if (vId == R.id.V_definition_text) {
+            sendOutDanMu();
+        } else if (vId == R.id.playButton) {
+            binding.detailPlayer.onVideoResume();
+            binding.appbar.setExpanded(true);
+            binding.more.setVisibility(View.GONE);
+            binding.keyboard.setVisibility(View.GONE);
+            banAppBarScroll(false);
+        } else if (vId == R.id.keyboard) {
+            finish();
         }
     }
 
@@ -525,7 +520,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mPresenter.detachView();
         if (isPlay) {
             getCurPlay().release();
@@ -534,5 +528,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             orientationUtils.releaseListener();
         isDestory = true;
         GSYVideoManager.releaseAllVideos();
+        super.onDestroy();
     }
 }
