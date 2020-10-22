@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/Black"
-        android:textSize="17sp"/>
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/HS_Title"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/Black"
-        android:textSize="17sp"/>
+        android:textSize="14sp"/>
 
     <ImageView
         android:id="@+id/HS_degree"

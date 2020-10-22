@@ -33,7 +33,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:text="@string/Ranking_List"
             android:textColor="#757575"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
 
@@ -65,7 +65,7 @@
             android:layout_marginTop="@dimen/dp_5"
             android:text="@string/see_every_week"
             android:textColor="#757575"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -96,6 +96,6 @@
             android:layout_marginTop="@dimen/dp_5"
             android:text="@string/Must_brush_when_entering_the_station"
             android:textColor="#757575"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 </LinearLayout>

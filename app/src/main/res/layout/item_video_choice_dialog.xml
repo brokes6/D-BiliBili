@@ -20,7 +20,7 @@
         <View
             android:id="@+id/xian1"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/dp_1"
             android:layout_below="@id/AddLater"
             android:background="#e7e7e7"
             android:paddingLeft="@dimen/dp_15"

@@ -13,8 +13,8 @@
 
     <com.example.dildil.rewriting_view.ClipViewPager
         android:id="@+id/viewpager"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
         android:layout_centerInParent="true"
         android:clipChildren="false"
         android:overScrollMode="never" />
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewpager"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/dp_30"
         android:text="@string/conductCoin"
         android:textColor="@color/White"
         android:textSize="18sp" />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Da_Tips"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp_10"
         android:textColor="@color/White"
         android:text="@string/isThumbsUp" />
 

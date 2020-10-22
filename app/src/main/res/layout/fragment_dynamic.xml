@@ -23,7 +23,7 @@
             app:tl_indicator_width_equal_title="true"
             app:tl_textSelectColor="@color/Pink"
             app:tl_textUnselectColor="#838080"
-            app:tl_textsize="19sp"
+            app:tl_textsize="16sp"
             app:tl_underline_height="1dp" />
 
         <TextView
@@ -60,7 +60,7 @@
                 android:layout_weight="1"
                 android:text="查找精彩动态内容"
                 android:textColor="#c1bfc0"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <androidx.viewpager.widget.ViewPager

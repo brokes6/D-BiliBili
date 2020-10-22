@@ -12,16 +12,16 @@
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
-        android:paddingLeft="15dp"
-        android:paddingTop="8dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="8dp">
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_8">
 
         <!--头像-->
         <com.android.liuzhuang.rcimageview.RoundCornerImageView
             android:id="@+id/iv_header"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
             android:scaleType="centerCrop"
             app:riv_border_color="@color/gray_d8"
             app:riv_border_width="0.8dp"
@@ -33,15 +33,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="3dp">
+            android:padding="@dimen/dp_3">
 
             <ImageView
                 android:id="@+id/iv_like"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="@dimen/dp_16"
+                android:layout_height="@dimen/dp_16"
                 android:src="@mipmap/like_while" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/dp_2"
                 android:text="200"
                 android:textColor="@color/color_6f"
                 android:textSize="12sp" />
@@ -61,8 +61,8 @@
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_toLeftOf="@+id/ll_like"
             android:layout_toRightOf="@+id/iv_header"
             android:ellipsize="end"
@@ -80,8 +80,8 @@
             android:layout_below="@+id/tv_user_name"
             android:layout_alignLeft="@+id/tv_user_name"
             android:layout_alignRight="@+id/tv_user_name"
-            android:layout_marginTop="5dp"
-            android:lineSpacingExtra="2dp"
+            android:layout_marginTop="@dimen/dp_5"
+            android:lineSpacingExtra="@dimen/dp_2"
             android:text=""
             android:textColor="@color/black_21"
             android:textSize="15sp" />

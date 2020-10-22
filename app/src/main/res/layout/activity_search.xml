@@ -25,7 +25,7 @@
             android:layout_margin="@dimen/dp_10"
             android:text="@string/Search_for_heat"
             android:textColor="@color/Black"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Se_HotSearch"
@@ -43,7 +43,7 @@
             android:layout_margin="@dimen/dp_10"
             android:text="@string/Search_history"
             android:textColor="@color/Black"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <com.xuexiang.xui.widget.flowlayout.FlowTagLayout
             android:id="@+id/Se_normal_select"

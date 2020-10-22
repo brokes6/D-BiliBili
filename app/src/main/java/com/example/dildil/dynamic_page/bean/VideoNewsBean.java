@@ -1,5 +1,7 @@
 package com.example.dildil.dynamic_page.bean;
 
+import java.util.List;
+
 public class VideoNewsBean {
     private String Video_UserImage;
     private String Video_UserName;
@@ -10,6 +12,24 @@ public class VideoNewsBean {
     private int Video_thumbsUp;
     private int Video_forward;
     private int Video_collection;
+    private int type;
+    private List<String> images;
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getVideo_Cover() {
         return Video_Cover;

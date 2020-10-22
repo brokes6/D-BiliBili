@@ -9,24 +9,24 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_bottomsheet_rv_lists"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="@dimen/dp_400"
+        android:layout_marginTop="@dimen/dp_50"
         android:background="@color/white" />
 
     <RelativeLayout
         android:id="@+id/dialog_bottomsheet_rl_title"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/dp_50"
         android:background="@drawable/select_elevation">
 
         <ImageView
             android:id="@+id/dialog_bottomsheet_iv_close"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="@dimen/dp_26"
+            android:layout_height="@dimen/dp_26"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:padding="7dp"
+            android:layout_marginRight="@dimen/dp_10"
+            android:padding="@dimen/dp_7"
             android:src="@mipmap/ic_close_black" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/dp_10"
             android:text="评论"
             android:textColor="@color/black_21"
             android:textSize="13sp"
@@ -45,7 +45,7 @@
     <RelativeLayout
         android:id="@+id/rl_comment"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="@dimen/dp_52"
         android:layout_below="@+id/dialog_bottomsheet_rv_lists"
         android:background="@color/white">
 
@@ -53,18 +53,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_1"
             android:text="留下你的精彩评论吧~~"
             android:textColor="@color/color_6f"
             android:textSize="15sp" />
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="@dimen/dp_10"
             android:padding="5dp"
             android:src="@drawable/baseline_send" />
 

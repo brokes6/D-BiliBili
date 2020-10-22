@@ -20,7 +20,6 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 import cn.lemon.multi.MultiView;
 
 public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean.Datas> implements View.OnClickListener{
-    private static final String TAG = "DynamicAdapter";
     private Context mContext;
     private CircleImageView userimg;
     private TextView comment_num,thmbus_num;

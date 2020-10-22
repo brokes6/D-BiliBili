@@ -8,8 +8,8 @@
         android:id="@+id/secondLevel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginLeft="@dimen/dp_48"
+        android:layout_marginRight="@dimen/dp_32"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_10">
 
@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="10"
-            android:paddingLeft="4dp"
-            android:paddingRight="8dp"
+            android:paddingLeft="@dimen/dp_4"
+            android:paddingRight="@dimen/dp_8"
             android:textColor="@color/Black"
             android:textSize="15sp" />
     </LinearLayout>

@@ -6,34 +6,10 @@
 
     </data>
 
-    <!--    <com.scwang.smartrefresh.layout.SmartRefreshLayout-->
-    <!--        android:id="@+id/swipe"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent">-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--            <androidx.core.widget.NestedScrollView-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent"-->
-        <!--                android:layout_above="@+id/comments">-->
-
-        <!--            <com.example.dildil.video.rewriting.CommentExpandableListView-->
-        <!--                android:id="@+id/FC_commentList"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent"-->
-        <!--                android:divider="@null"-->
-        <!--                android:childDivider="@android:color/transparent"-->
-        <!--                android:listSelector="@android:color/transparent"-->
-        <!--                android:scrollbars="vertical" />-->
-
-        <!--                <androidx.recyclerview.widget.RecyclerView-->
-        <!--                    android:id="@+id/FC_commentList"-->
-        <!--                    android:layout_above="@+id/comments"-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="match_parent" />-->
         <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
@@ -48,13 +24,10 @@
                 android:layout_above="@+id/comments" />
         </LinearLayout>
 
-
-        <!--            </androidx.core.widget.NestedScrollView>-->
-
         <LinearLayout
             android:id="@+id/comments"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="@dimen/dp_58"
             android:layout_alignParentBottom="true"
             android:background="@android:color/white"
             android:elevation="2dp"
@@ -64,9 +37,9 @@
             <TextView
                 android:id="@+id/detail_page_do_comment"
                 android:layout_width="0dp"
-                android:layout_height="34dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="22dp"
+                android:layout_height="@dimen/dp_34"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginRight="@dimen/dp_22"
                 android:layout_weight="1"
                 android:background="@drawable/et_botten_grey"
                 android:gravity="center_vertical"
@@ -76,8 +49,8 @@
                 android:textSize="12sp" />
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
                 android:src="@drawable/baseline_grade_24" />
 
             <TextView
@@ -89,16 +62,16 @@
                 android:textSize="14sp" />
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginLeft="20dp"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
+                android:layout_marginLeft="@dimen/dp_20"
                 android:src="@drawable/thumb_up_no" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="14dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_14"
                 android:text="66"
                 android:textColor="#9A9A9A"
                 android:textSize="14sp" />
@@ -106,5 +79,4 @@
         </LinearLayout>
 
     </RelativeLayout>
-    <!--    </com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 </layout>

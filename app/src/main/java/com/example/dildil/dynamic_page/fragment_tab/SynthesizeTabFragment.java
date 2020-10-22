@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
+import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
@@ -65,6 +66,9 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
                 if (isFirst){
                     mPresenter.getDynamic(1,8,1);
                     isFirst = false;
+                    ResourcesData resourcesData = new ResourcesData();
+                    resourcesData.initTopicData();
+                    adapter_topic.loadMore(resourcesData.getTopicData());
                 }else{
 
                 }

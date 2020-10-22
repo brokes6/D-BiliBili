@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/dp_10"
-    android:background="@color/While"
     android:animateLayoutChanges="true"
+    android:background="@color/While"
     android:orientation="vertical">
 
     <LinearLayout
@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/like_img"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_5"
                 android:src="@drawable/thumb_up_no" />
@@ -49,8 +49,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
                 android:layout_marginTop="@dimen/dp_5"
                 android:src="@drawable/thumb_down_no" />
 
@@ -58,7 +58,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="不喜欢"
-                android:textColor="#757575" />
+                android:textColor="#757575"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <RelativeLayout
@@ -79,8 +80,8 @@
 
             <ImageView
                 android:id="@+id/coinImg"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_5"
                 android:src="@mipmap/coin" />
@@ -113,8 +114,8 @@
 
             <ImageView
                 android:id="@+id/Collection"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_5"
                 android:src="@mipmap/collect" />
@@ -126,7 +127,8 @@
                 android:layout_below="@+id/Collection"
                 android:layout_centerHorizontal="true"
                 android:text="1.1万"
-                android:textColor="#757575" />
+                android:textColor="#757575"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
@@ -140,8 +142,8 @@
 
             <ImageView
                 android:id="@+id/Forward"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"
                 android:layout_marginTop="@dimen/dp_5"
                 android:src="@mipmap/forward_black" />
 
@@ -150,7 +152,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="6967"
-                android:textColor="#757575" />
+                android:textColor="#757575"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

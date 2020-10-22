@@ -8,7 +8,7 @@
     <com.android.liuzhuang.rcimageview.RoundCornerImageView
         android:id="@+id/FR_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_120"
+        android:layout_height="@dimen/dp_100"
         android:scaleType="fitXY"
         rc:rciv_radius="5dp" />
 
@@ -24,8 +24,8 @@
             android:src="@drawable/file_background_like_circular_grey" />
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
             android:layout_centerInParent="true"
             android:src="@drawable/favorite_border" />
     </RelativeLayout>
@@ -39,11 +39,12 @@
         android:layout_marginRight="@dimen/dp_5"
         android:background="@drawable/file_background_follow_pink"
         android:gravity="center"
+        android:includeFontPadding="false"
         android:paddingLeft="@dimen/dp_5"
         android:paddingRight="@dimen/dp_5"
         android:text="会员专享"
         android:textColor="@color/White"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:visibility="gone" />
 
     <ImageView
@@ -62,7 +63,7 @@
         android:layout_marginLeft="@dimen/dp_7"
         android:layout_marginBottom="@dimen/dp_3"
         android:textColor="@color/White"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/FR_Title"
@@ -73,7 +74,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/Black"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/FR_watch"
@@ -81,6 +82,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/FR_Title"
         android:textColor="@color/Text_gray"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
 </RelativeLayout>

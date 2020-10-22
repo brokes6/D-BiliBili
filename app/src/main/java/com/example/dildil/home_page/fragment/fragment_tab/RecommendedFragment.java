@@ -22,19 +22,19 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentRecommendedBinding;
-import com.example.dildil.home_page.adapter.RecommendedVideoBetterAdapter;
+import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
 import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
+import com.example.dildil.util.BannerImageAdapter;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.XToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.youth.banner.adapter.BannerImageAdapter;
 import com.youth.banner.config.IndicatorConfig;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
@@ -45,8 +45,8 @@ import javax.inject.Inject;
 
 public class RecommendedFragment extends BaseFragment implements RecommendContract.View {
     private FragmentRecommendedBinding binding;
-    private RecommendedVideoBetterAdapter adapter;
-    private RecommendedVideoBetterAdapter adapter2;
+    private RecommendedVideoAdapter adapter;
+    private RecommendedVideoAdapter adapter2;
     private SkeletonScreen mSkeletonScreen;
     private SkeletonScreen mSkeletonScreeView;
     private boolean isFirst = true;
@@ -81,12 +81,12 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         binding.ReRecy.setHasFixedSize(true);
 
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
-        adapter2 = new RecommendedVideoBetterAdapter(getContext(), videoChoiceDialog, 2);
+        adapter2 = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 2);
         binding.ReTopRecy.setLayoutManager(layoutManager2);
         binding.ReTopRecy.setRecycledViewPool(mSharedPool);
         binding.ReTopRecy.setHasFixedSize(true);
 
-        adapter = new RecommendedVideoBetterAdapter(getContext(), videoChoiceDialog,1);
+        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog,1);
         mSkeletonScreen = Skeleton.bind(binding.ReRecy)
                 .adapter(adapter)//设置实际adapter
                 .shimmer(true)//是否开启动画
@@ -223,6 +223,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetVideoLoadFail(String e) {
+
     }
 
     @Override

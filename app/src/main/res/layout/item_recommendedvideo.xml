@@ -2,9 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Re_video_cover"
-    android:layout_margin="@dimen/dp_4"
     android:layout_width="match_parent"
-    android:layout_height="185dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp_4"
     app:cardCornerRadius="5dp">
 
     <RelativeLayout
@@ -14,8 +14,8 @@
         <ImageView
             android:id="@+id/Re_cover"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_110"
-            android:scaleType="fitXY"/>
+            android:layout_height="@dimen/dp_100"
+            android:scaleType="fitXY" />
 
         <RelativeLayout
             android:id="@+id/volume"
@@ -33,7 +33,7 @@
                 android:layout_width="@dimen/dp_18"
                 android:layout_height="@dimen/dp_18"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:src="@mipmap/playback_volume" />
 
             <TextView
@@ -70,7 +70,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_75"
+            android:layout_height="@dimen/dp_69"
             android:layout_below="@+id/volume"
             android:background="@drawable/btn_bg">
 
@@ -79,31 +79,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
-                android:maxLines="2"
                 android:ellipsize="end"
+                android:maxLines="2"
                 android:textColor="#212121"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/Re_classification"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginBottom="5dp"
-                android:layout_alignBottom="@+id/Re_more"
-                android:layout_alignParentBottom="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/Re_more"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="分类 · 分类"
                 android:textColor="#999999"
-                android:textSize="13sp"
-                android:text="分类 · 分类"/>
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/Re_more"
                 android:layout_width="@dimen/dp_20"
                 android:layout_height="@dimen/dp_20"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_5"
                 android:src="@drawable/more_vert_24" />
         </RelativeLayout>
     </RelativeLayout>

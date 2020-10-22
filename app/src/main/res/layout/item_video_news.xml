@@ -10,8 +10,8 @@
 
     <com.android.liuzhuang.rcimageview.CircleImageView
         android:id="@+id/VN_user_img"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50" />
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45" />
 
     <TextView
         android:id="@+id/VN_user_name"
@@ -21,7 +21,7 @@
         android:layout_toEndOf="@+id/VN_user_img"
         android:text=""
         android:textColor="#fa7296"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/VN_date"
@@ -32,7 +32,7 @@
         android:layout_toEndOf="@+id/VN_user_img"
         android:text=""
         android:textColor="#a4a4a4"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/VN_more"
@@ -53,7 +53,7 @@
         <com.example.dildil.dynamic_page.view.SwitchVideo
             android:id="@+id/video_item_player"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_160" />
+            android:layout_height="@dimen/dp_140" />
     </androidx.cardview.widget.CardView>
 
     <TextView
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5"
         android:textColor="#212121"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 
 
 </RelativeLayout>

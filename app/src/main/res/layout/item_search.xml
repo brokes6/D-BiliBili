@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:textColor="@color/Ash"
-            android:textSize="18sp"/>
+            android:textSize="14sp"/>
 
     </LinearLayout>
 </RelativeLayout>

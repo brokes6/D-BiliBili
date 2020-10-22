@@ -65,7 +65,7 @@
             <com.android.liuzhuang.rcimageview.RoundCornerImageView
                 android:id="@+id/Dy_video_cover"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="@dimen/dp_160"
                 android:layout_marginTop="@dimen/dp_5"
                 android:scaleType="centerCrop"
                 rc:rciv_radius="5dp" />
@@ -120,8 +120,7 @@
             android:id="@+id/multi_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_160"
-            android:layout_below="@+id/Dy_text"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_20"
             android:background="@color/While"
             android:visibility="gone"
             app:divideSpace="8dp"

@@ -6,7 +6,7 @@
 
     <com.example.customcontrollibs.CustomChannelView
         android:id="@+id/HV_Image"
-        android:layout_width="130dp"
-        android:layout_height="170dp"/>
+        android:layout_width="@dimen/dp_130"
+        android:layout_height="@dimen/dp_170"/>
 
 </RelativeLayout>

@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PursueFramgment extends BaseFragment {
-    private static final String TAG = "PursueFramgment";
     FramgmentPursueBinding binding;
     private MyPursuitAdapter adapter;
     private FanRecommendationAdapter fanRecommendationAdapter;
@@ -80,7 +79,6 @@ public class PursueFramgment extends BaseFragment {
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         fanRecommendationAdapter = new FanRecommendationAdapter(getContext());
         binding.PuFanOperaRecommendation.setLayoutManager(layoutManager1);
-        binding.PuFanOperaRecommendation.setAdapter(fanRecommendationAdapter);
         mSkeletonScreen = Skeleton.bind(binding.PuFanOperaRecommendation)
                 .adapter(fanRecommendationAdapter)//设置实际adapter
                 .shimmer(true)//是否开启动画

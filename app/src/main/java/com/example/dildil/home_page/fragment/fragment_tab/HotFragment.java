@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.dildil.MyApplication;
@@ -22,6 +24,7 @@ import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
+import com.example.dildil.home_page.view.RankingLstActivity;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.video.view.VideoActivity;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -30,10 +33,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import javax.inject.Inject;
 
 public class HotFragment extends BaseFragment implements RecommendContract.View {
-    FragmentHotBinding binding;
+    private FragmentHotBinding binding;
     private HotRankingAdapter adapter;
     private SkeletonScreen mSkeletonScreen;
     private boolean isFirst = true;
+    private RelativeLayout rankingList;
 
     @Inject
     RecommendPresenter mPresenter;
@@ -69,6 +73,9 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
                 .load(R.layout.item_hot_ranking_list_skleton)//骨架屏UI
                 .show();
 
+        rankingList = binding.top.findViewById(R.id.Ranking_List);
+        rankingList.setOnClickListener(this);
+
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -97,7 +104,9 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.Ranking_List) {
+            ActivityUtils.startActivity(RankingLstActivity.class);
+        }
     }
 
     HotRankingAdapter.ItemOnClickListener listener = new HotRankingAdapter.ItemOnClickListener() {
@@ -142,5 +151,11 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
     @Override
     public void onGetVideoLoadFail(String e) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        mPresenter.detachView();
+        super.onDestroy();
     }
 }

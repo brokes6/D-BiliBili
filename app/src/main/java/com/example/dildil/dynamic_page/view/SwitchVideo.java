@@ -21,12 +21,12 @@ import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
-public class SwitchVideo extends StandardGSYVideoPlayer{
+public class SwitchVideo extends StandardGSYVideoPlayer {
     private static final String TAG = "SwitchVideo";
-    ImageView mCoverImage,volume_off;
+    ImageView mCoverImage, volume_off;
     String mCoverOriginUrl;
     int mDefaultRes;
-    int  mCoverOriginId = 0;
+    int mCoverOriginId = 0;
     private boolean isMute = false;
 
     public SwitchVideo(Context context, Boolean fullFlag) {
@@ -44,16 +44,16 @@ public class SwitchVideo extends StandardGSYVideoPlayer{
     @Override
     protected void init(Context context) {
         super.init(context);
-        mCoverImage =  findViewById(R.id.thumbImage);
+        mCoverImage = findViewById(R.id.thumbImage);
         volume_off = findViewById(R.id.volume_off);
         volume_off.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isMute){
+                if (!isMute) {
                     isMute = true;
                     volume_off.setImageResource(R.drawable.volume_down_24);
                     GSYVideoManager.instance().setNeedMute(true);
-                }else{
+                } else {
                     isMute = false;
                     volume_off.setImageResource(R.drawable.volume_off_24);
                     GSYVideoManager.instance().setNeedMute(false);
@@ -67,11 +67,11 @@ public class SwitchVideo extends StandardGSYVideoPlayer{
         }
     }
 
-    public int getVideoTime(){
-        Log.e(TAG, "getVideoTime: 当前播放状态为"+getCurrentState() );
-        if (getCurrentState()==CURRENT_STATE_NORMAL){
+    public int getVideoTime() {
+        Log.e(TAG, "getVideoTime: 当前播放状态为" + getCurrentState());
+        if (getCurrentState() == CURRENT_STATE_NORMAL) {
             return (int) getGSYVideoManager().getCurrentPosition();
-        }else{
+        } else {
             return 0;
         }
     }
@@ -102,7 +102,7 @@ public class SwitchVideo extends StandardGSYVideoPlayer{
         mCoverImage.setImageResource(id);
     }
 
-    public void loadCoverUrl(String url){
+    public void loadCoverUrl(String url) {
         Glide.with(mContext).load(url).into(mCoverImage);
     }
 
@@ -110,9 +110,9 @@ public class SwitchVideo extends StandardGSYVideoPlayer{
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         GSYBaseVideoPlayer gsyBaseVideoPlayer = super.startWindowFullscreen(context, actionBar, statusBar);
         SwitchVideo sampleCoverVideo = (SwitchVideo) gsyBaseVideoPlayer;
-        if(mCoverOriginUrl != null) {
+        if (mCoverOriginUrl != null) {
             sampleCoverVideo.loadCoverImage(mCoverOriginUrl, mDefaultRes);
-        } else  if(mCoverOriginId != 0) {
+        } else if (mCoverOriginId != 0) {
             sampleCoverVideo.loadCoverImageBy(mCoverOriginId, mDefaultRes);
         }
         return gsyBaseVideoPlayer;

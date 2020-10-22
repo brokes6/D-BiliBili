@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -346,5 +348,24 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     public void hideDialog() {
         mDialogs.dismiss();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.fontScale != 1) { //fontScale不为1，需要强制设置为1
+            getResources();
+        }
+    }
+
+    @Override
+    public Resources getResources() {
+        Resources resources = super.getResources();
+        if (resources.getConfiguration().fontScale != 1) { //fontScale不为1，需要强制设置为1
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置成默认值，即fontScale为1
+            resources.updateConfiguration(newConfig, resources.getDisplayMetrics());
+        }
+        return resources;
     }
 }

@@ -13,13 +13,13 @@
 
         <View
             android:id="@+id/line"
-            android:layout_width="2dp"
+            android:layout_width="@dimen/dp_2"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/right"
             android:layout_alignBottom="@id/right"
-            android:layout_marginLeft="52dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="@dimen/dp_52"
+            android:layout_marginTop="@dimen/dp_2"
+            android:layout_marginBottom="@dimen/dp_2"
             android:background="#c3c8cb" />
 
 
@@ -27,9 +27,9 @@
             android:id="@+id/right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_marginBottom="@dimen/dp_4"
             android:layout_toRightOf="@id/line">
 
 
@@ -37,17 +37,17 @@
                 android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
+                android:layout_marginLeft="@dimen/dp_6"
                 android:textColor="#666666"
                 android:textSize="13sp" />
 
             <ImageView
                 android:id="@+id/comment_item_like"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="@dimen/dp_18"
+                android:layout_height="@dimen/dp_18"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:padding="3dp"
+                android:layout_marginRight="@dimen/dp_30"
+                android:padding="@dimen/dp_3"
                 android:src="@drawable/pxjh"
                 android:visibility="visible" />
 
@@ -63,8 +63,8 @@
                 android:id="@+id/data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_18"
                 android:textColor="#1C1C1C" />
         </RelativeLayout>
 
