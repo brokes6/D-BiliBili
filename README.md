@@ -22,6 +22,11 @@ implementation 'com.github.brokes6:CustomControl:1.1.7'
 5.屏幕完全适配
 6.使用了RxJava+Retrofit2
 7.使用了依赖注入（Dagger2）
+8.RecyclerView已尽力优化...
+9.可以适配大多数异性屏
+10.内存占用很小
+11.采取MVP模式来进行的开发
+12.软件可在线更新
 ```
 
 ## 视频介绍:（GIF的效果会没这么好，实际效果更棒）<br>
