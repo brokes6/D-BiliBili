@@ -64,5 +64,11 @@
     <string name="errorOccurred">出现错误:</string>
     <string name="saveProgress">已为您保存播放进度</string>
     <string name="trafficWarning">您在使用数据进行观看，是否继续</string>
+    <string name="versionUpdate">版本更新</string>
+    <string name="update">更 新</string>
+    <string name="setUp">设置</string>
+    <string name="detectUpdates">检测更新</string>
+    <string name="logOut">退出登录</string>
+    <string name="updateContent">更新内容</string>
 
 </resources>

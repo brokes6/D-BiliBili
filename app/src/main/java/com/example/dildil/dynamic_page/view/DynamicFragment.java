@@ -76,4 +76,11 @@ public class DynamicFragment extends BaseFragment {
             VideoTabFragment.VideoSuspend();
         }
     }
+
+    @Override
+    public void onDestroy() {
+        mFragments.clear();
+        mFragments = null;
+        super.onDestroy();
+    }
 }

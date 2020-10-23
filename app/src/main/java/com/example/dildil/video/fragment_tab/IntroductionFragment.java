@@ -130,7 +130,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         coin_circleView = binding.Sanlian.findViewById(R.id.coin_circleView);
         Collection_circleView = binding.Sanlian.findViewById(R.id.Collection_circleView);
 
-
         binding.function1.setOnClickListener(this);
         thumbsUp.setOnClickListener(this);
         mMainCoin.setOnClickListener(this);
@@ -247,7 +246,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     protected void initLocalData() {
-
+        mSkeletonScreen.hide();
+        mSkeletonScreen2.hide();
     }
 
     @Override
@@ -366,8 +366,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetVideoDetailsFail(String e) {
         hideDialog();
-        mSkeletonScreen.hide();
-        mSkeletonScreen2.hide();
         XToastUtils.error(R.string.networkError);
     }
 
@@ -448,7 +446,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetRelatedVideosFail(String e) {
-
+        mSkeletonScreen.hide();
+        mSkeletonScreen2.hide();
     }
 
     @Override

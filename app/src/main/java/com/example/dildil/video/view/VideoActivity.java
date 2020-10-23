@@ -63,7 +63,7 @@ import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAU
 
 public class VideoActivity extends BaseActivity implements VideoDetailsContract.View, Selector.OnSelectorStateListener {
     private static final String TAG = "VideoActivity";
-    ActivityVideoBinding binding;
+    private ActivityVideoBinding binding;
     private final String[] TabTitle = {"简介", "评论"};
     private ArrayList<Fragment> mFragments;
     private OrientationUtils orientationUtils;
@@ -436,8 +436,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetVideoDetailsFail(String e) {
+        XToastUtils.error(R.string.errorOccurred + e);
         hideDialog();
-        XToastUtils.error(e);
     }
 
     @Override
@@ -521,6 +521,10 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     protected void onDestroy() {
         mPresenter.detachView();
+        mFragments.clear();
+        mFragments = null;
+        urls.clear();
+        urls = null;
         if (isPlay) {
             getCurPlay().release();
         }

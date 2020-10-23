@@ -48,4 +48,11 @@ public class ChannelFragment extends BaseFragment {
     public void onClick(View view) {
 
     }
+
+    @Override
+    public void onDestroy() {
+        mFragments.clear();
+        mFragments = null;
+        super.onDestroy();
+    }
 }

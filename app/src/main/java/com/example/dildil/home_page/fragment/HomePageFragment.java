@@ -81,4 +81,11 @@ public class HomePageFragment extends BaseFragment {
             getContext().sendBroadcast(intent);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        mFragments.clear();
+        mFragments = null;
+        super.onDestroy();
+    }
 }

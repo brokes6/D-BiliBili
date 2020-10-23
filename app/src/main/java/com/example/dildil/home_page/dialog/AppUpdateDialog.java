@@ -59,7 +59,7 @@ public class AppUpdateDialog extends Dialog implements View.OnClickListener {
         mProgressBar = view.findViewById(R.id.app_update_progress);
         mValueText = view.findViewById(R.id.app_update_current_percent);
         mUpdate = view.findViewById(R.id.update);
-        mVersion.setText(mAppUpdateInfo.getData().getVersion() + " 更新内容");
+        mVersion.setText(mAppUpdateInfo.getData().getVersion() + R.string.updateContent);
         mMainBody.setText(mAppUpdateInfo.getData().getDescription());
         close.setOnClickListener(this);
         mMainBody.setOnClickListener(this);
@@ -78,15 +78,13 @@ public class AppUpdateDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.close:
-                dismiss();
-                break;
-            case R.id.update:
-                mValueText.setVisibility(View.VISIBLE);
-                mUpdate.setVisibility(View.GONE);
-                mOnUpdateListener.update(this);
-                break;
+        int id = v.getId();
+        if (id == R.id.close) {
+            dismiss();
+        } else if (id == R.id.update) {
+            mValueText.setVisibility(View.VISIBLE);
+            mUpdate.setVisibility(View.GONE);
+            mOnUpdateListener.update(this);
         }
     }
 

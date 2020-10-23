@@ -97,8 +97,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     protected void initLocalData() {
-        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class);
-        adapter.loadMore(recommendVideoBean.getData());
+        adapter.loadMore(GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class).getData());
         mSkeletonScreen.hide();
     }
 

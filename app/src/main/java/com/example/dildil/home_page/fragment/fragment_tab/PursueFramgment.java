@@ -160,4 +160,11 @@ public class PursueFramgment extends BaseFragment {
     public void onClick(View v) {
 
     }
+
+    @Override
+    public void onDestroy() {
+        fanRecommendationBeans.clear();
+        fanRecommendationBeans = null;
+        super.onDestroy();
+    }
 }

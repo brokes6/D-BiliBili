@@ -28,9 +28,11 @@ import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
+import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.util.BannerImageAdapter;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.XToastUtils;
+import com.next.easynavigation.view.EasyNavigationBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -50,6 +52,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     private SkeletonScreen mSkeletonScreen;
     private SkeletonScreen mSkeletonScreeView;
     private boolean isFirst = true;
+    private VideoChoiceDialog videoChoiceDialog;
 
     @Inject
     RecommendPresenter mPresenter;
@@ -70,7 +73,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initView() {
-        VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(getContext());
+        videoChoiceDialog = new VideoChoiceDialog(getContext());
         videoChoiceDialog.setOnFeedbackClickListener(onFeedbackClickListener);
         RecyclerView.RecycledViewPool mSharedPool = new RecyclerView.RecycledViewPool();
 
@@ -86,7 +89,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         binding.ReTopRecy.setRecycledViewPool(mSharedPool);
         binding.ReTopRecy.setHasFixedSize(true);
 
-        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog,1);
+        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 1);
         mSkeletonScreen = Skeleton.bind(binding.ReRecy)
                 .adapter(adapter)//设置实际adapter
                 .shimmer(true)//是否开启动画
@@ -128,6 +131,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                 mPresenter.LoadVideo();
             }
         });
+        ((HomeActivity) getActivity()).setOnTabClickListener(onTabClickListener);
     }
 
     @Override
@@ -137,8 +141,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initLocalData() {
-        RecommendVideoBean recommendVideoBean = GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class);
-        adapter.loadMore(recommendVideoBean.getData());
+        adapter.loadMore(GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class).getData());
         mSkeletonScreen.hide();
     }
 
@@ -172,7 +175,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                         .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
                         .into(holder.imageView);
             }
-        })
+        }, true)
                 .addBannerLifecycleObserver(this)//添加生命周期观察者
                 .setIndicator(new CircleIndicator(getContext()));
         mSkeletonScreeView.hide();
@@ -183,6 +186,19 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     public void onClick(View v) {
 
     }
+
+    EasyNavigationBar.OnTabClickListener onTabClickListener = new EasyNavigationBar.OnTabClickListener() {
+        @Override
+        public boolean onTabSelectEvent(View view, int position) {
+            return false;
+        }
+
+        @Override
+        public boolean onTabReSelectEvent(View view, int position) {
+            binding.swipe.autoRefresh();
+            return false;
+        }
+    };
 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
@@ -229,6 +245,8 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     public void onDestroy() {
         mPresenter.detachView();
+        videoChoiceDialog = null;
+        onTabClickListener = null;
         super.onDestroy();
     }
 }

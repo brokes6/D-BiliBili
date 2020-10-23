@@ -27,20 +27,20 @@ import java.util.List;
  */
 
 public class ResourcesData {
-    private List<VideoBean> beans = new ArrayList<>();
-    private List<TopicBean> topicBeans = new ArrayList<>();
-    private List<DynamicBean> dynamicBeans = new ArrayList<>();
-    private List<SwitchVideoBean> urls = new ArrayList<>();
-    private List<BannerBean> bannerImageList = new ArrayList<>();
-    private List<HotSearchBean> hotSearchBeans = new ArrayList<>();
-    private List<BeInterestedBean> beInterestedBeans = new ArrayList<>();
-    private List<HaveViewedBean> haveViewedBeans = new ArrayList<>();
-    private List<PursueBean> pursueBeans = new ArrayList<>();
-    private List<MyPursuitBean> myPursuitBeans = new ArrayList<>();
-    private List<VideoNewsBean> videoNewsBeans = new ArrayList<>();
-    private List<FanRecommendationBean> fanRecommendationBeans = new ArrayList<>();
+    private static List<VideoBean> beans = new ArrayList<>();
+    private static List<TopicBean> topicBeans = new ArrayList<>();
+    private static List<DynamicBean> dynamicBeans = new ArrayList<>();
+    private static List<SwitchVideoBean> urls = new ArrayList<>();
+    private static List<HotSearchBean> hotSearchBeans = new ArrayList<>();
+    private static List<BannerBean> bannerImageList = new ArrayList<>();
+    private static List<BeInterestedBean> beInterestedBeans = new ArrayList<>();
+    private static List<HaveViewedBean> haveViewedBeans = new ArrayList<>();
+    private static List<PursueBean> pursueBeans = new ArrayList<>();
+    private static List<MyPursuitBean> myPursuitBeans = new ArrayList<>();
+    private static List<VideoNewsBean> videoNewsBeans = new ArrayList<>();
+    private static List<FanRecommendationBean> fanRecommendationBeans = new ArrayList<>();
+    private static List<CommentDetailBean> commentsList = new ArrayList<>();
     private CommentBean commentBean;
-    private List<CommentDetailBean> commentsList = new ArrayList<>();
     private VideoBean videoBean, videoBean2, videoBean3, videoBean4, videoBean6, videoBean7;
     private MyDataBean mMyDataBean;
 

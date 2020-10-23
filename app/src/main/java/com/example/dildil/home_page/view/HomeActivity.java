@@ -152,6 +152,9 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
         binding.navigationBar.clearMsgPoint(index);
     }
 
+    public void setOnTabClickListener(EasyNavigationBar.OnTabClickListener onTabClick){
+        binding.navigationBar.setOnTabClickListener(onTabClick);
+    }
 
     @Override
     public void onGetDynamicNumSuccess(DynamicNumBean dynamicNumBean) {
@@ -201,6 +204,8 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
     @Override
     public void onDestroy() {
         mPresenter.detachView();
+        fragmentList.clear();
+        fragmentList = null;
         super.onDestroy();
     }
 }

@@ -124,6 +124,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     @Override
     protected void onDestroy() {
         mPresenter.detachView();
+        mFragments.clear();
+        mFragments = null;
         super.onDestroy();
     }
 }
