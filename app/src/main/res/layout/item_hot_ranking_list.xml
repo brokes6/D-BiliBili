@@ -29,7 +29,7 @@
         android:layout_margin="@dimen/dp_5"
         android:text=""
         android:textColor="#fff"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/Ranking_video_Title"
@@ -40,12 +40,12 @@
         android:maxLines="2"
         android:text=""
         android:textColor="#000000"
-        android:textSize="14sp" />
+        android:textSize="13sp" />
 
     <ImageView
         android:id="@+id/up_img"
-        android:layout_width="@dimen/dp_20"
-        android:layout_height="@dimen/dp_20"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
         android:layout_above="@+id/play_num_img"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/Ranking_video_img"
@@ -66,8 +66,8 @@
 
     <ImageView
         android:id="@+id/play_num_img"
-        android:layout_width="@dimen/dp_20"
-        android:layout_height="@dimen/dp_20"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
         android:layout_alignBottom="@+id/Ranking_video_img"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/Ranking_video_img"
@@ -81,7 +81,6 @@
         android:layout_marginStart="@dimen/dp_5"
         android:layout_marginBottom="@dimen/dp_2"
         android:layout_toEndOf="@+id/play_num_img"
-        android:text=""
         android:textColor="#999999"
         android:textSize="12sp" />
 

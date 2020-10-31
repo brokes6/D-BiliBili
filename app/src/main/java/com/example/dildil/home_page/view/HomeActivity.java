@@ -1,5 +1,6 @@
 package com.example.dildil.home_page.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -80,6 +81,10 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
                 .normalIconItems(normalIcon)
                 .selectIconItems(selectIcon)
                 .fragmentList(fragmentList)
+                .iconSize(18)
+                .navigationHeight(48)
+                .normalTextColor(Color.parseColor("#a2a2a2"))
+                .selectTextColor(Color.parseColor("#fa7298"))
                 .fragmentManager(getSupportFragmentManager())
                 .smoothScroll(false)
                 .setOnTabLoadListener(new EasyNavigationBar.OnTabLoadListener() { //Tab加载完毕回调
@@ -158,7 +163,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
 
     @Override
     public void onGetDynamicNumSuccess(DynamicNumBean dynamicNumBean) {
-        //SetRedDot(3,dynamicNumBean.getData());
+        SetRedDot(3,dynamicNumBean.getData());
         hideDialog();
     }
 
@@ -169,7 +174,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
 
        @Override
     public void onGetVersionSuccess(VersionBean versionBean) {
-        if (versionBean.getData().getVersion().compareTo(getVersionCode())==1) {
+        if (versionBean.getData().getVersion().compareTo(getVersionCode()) > 0) {
             downloadApk(versionBean);
         }
     }

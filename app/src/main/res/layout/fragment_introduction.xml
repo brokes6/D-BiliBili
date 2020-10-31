@@ -12,11 +12,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:background="@color/White"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/top"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true">
@@ -171,14 +173,15 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:background="#e7e7e7" />
 
-            </RelativeLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/In_recyclerView"
+                    android:layout_below="@+id/xian_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/In_recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10" />
+            </RelativeLayout>
 
         </LinearLayout>
 

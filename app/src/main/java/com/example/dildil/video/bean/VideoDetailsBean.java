@@ -78,6 +78,7 @@ public class VideoDetailsBean {
         private String title;
         private String urls;
         private String cover;
+        private String previewUrl;
         private String description;
         private String tags;
         private String resolutionState;
@@ -226,6 +227,14 @@ public class VideoDetailsBean {
 
         public void setCover(String cover) {
             this.cover = cover;
+        }
+
+        public String getPreviewUrl() {
+            return previewUrl;
+        }
+
+        public void setPreviewUrl(String previewUrl) {
+            this.previewUrl = previewUrl;
         }
 
         public String getDescription() {

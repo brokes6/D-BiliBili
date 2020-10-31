@@ -107,6 +107,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
      * 初始化评论和回复列表
      */
     private void initExpandableListView(final CommentDetailBean commentList) {
+        commentList.setPageSize(1);
         binding.commentView.loadComplete(commentList);
     }
 

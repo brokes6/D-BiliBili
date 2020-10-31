@@ -2,7 +2,6 @@ package com.example.dildil.dynamic_page.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -59,7 +58,7 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
     private void initData(int position, VideoNewsBean item) {
         VNideo.setPlayTag(TAG);
         VNideo.setPlayPosition(position);
-        VNideo.setUp(item.getVideo_Url(), true, null, null, "这是title");
+        VNideo.setUp(item.getVideo_Url(), true, null, null, item.getVideo_Title());
 
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(mContext).load(item.getVideo_Cover()).into(imageView);
@@ -68,6 +67,7 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
             viewGroup.removeView(imageView);
         }
         VNideo.setThumbImageView(imageView);
+        VNideo.setNeedShowWifiTip(false);
         if (GSYVideoManager.instance().getPlayTag().equals(VideoNewsAdapter.TAG)
                 && (position == GSYVideoManager.instance().getPlayPosition())) {
             VNideo.getThumbImageViewLayout().setVisibility(View.GONE);
@@ -75,7 +75,7 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
             VNideo.getThumbImageViewLayout().setVisibility(View.VISIBLE);
         }
 
-        Glide.with(mContext).load(item.getVideo_UserImage()).into(VNImage);
+        Glide.with(mContext).load(item.getVideo_UserImage()).placeholder(R.drawable.skeleton_circular_grey).into(VNImage);
         VN_userName.setText(item.getVideo_UserName());
         VN_Title.setText(item.getVideo_Title());
         VN_date.setText(item.getVideo_Time());
@@ -83,16 +83,12 @@ public class VideoNewsAdapter extends BaseRecyclerAdapter<VideoNewsBean> impleme
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.IT_main:
-                GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
-                gsyVideoManager.onPause();
-                int playtime = VNideo.getVideoTime();
-                Intent intent = new Intent(mContext, VideoActivity.class);
-                intent.putExtra("playtime", playtime);
-                Log.e(TAG, "onClick: 能否获取到当前播放的进度?"+playtime );
-                mContext.startActivity(intent);
-                break;
+        if (v.getId() == R.id.IT_main) {
+            GSYVideoManager.onPause();
+            int playtime = VNideo.getVideoTime();
+            Intent intent = new Intent(mContext, VideoActivity.class);
+            intent.putExtra("playtime", playtime);
+            mContext.startActivity(intent);
         }
     }
 }

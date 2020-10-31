@@ -3,14 +3,11 @@ package com.example.dildil.video.fragment_tab;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
@@ -18,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
-import com.ethanhua.skeleton.Skeleton;
-import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.customcontrollibs.AnnularProgressButton;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
@@ -29,6 +24,7 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentIntroductionBinding;
 import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
+import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
@@ -50,26 +46,24 @@ import javax.inject.Inject;
 
 public class IntroductionFragment extends BaseFragment implements VideoDetailsContract.View {
     private static final String TAG = "IntroductionFragment";
-    FragmentIntroductionBinding binding;
-    HotRankingAdapter adapter;
+    private FragmentIntroductionBinding binding;
+    private HotRankingAdapter adapter;
     private int id;
     private int uid;
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
     private ImageView like_img, Collection, coinImg;
     private boolean isOpen = false;
-    private RelativeLayout thumbsUp, mMainCoin, CollectionMain;
     private LinearLayout ForwardMain;
     private AnnularProgressButton coin_circleView, Collection_circleView;
     private boolean isLoad = false;
-    private SkeletonScreen mSkeletonScreen;
-    private SkeletonScreen mSkeletonScreen2;
     private boolean mIsPraise = false;
     private int mCoinNum = 0;
     private boolean isCollection = false;
-    private boolean isSanLian = false;
+    private boolean isSanLian = true;
 
     @Inject
     VideoDetailsPresenter mPresenter;
+    private LoginBean loginBean;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,23 +85,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         binding.InUserImg.setOnClickListener(this);
         adapter = new HotRankingAdapter(getContext());
         adapter.setListener(listener);
-        mSkeletonScreen2 = Skeleton.bind(binding.InRecyclerView)
-                .adapter(adapter)//设置实际adapter
-                .shimmer(true)//是否开启动画
-                .angle(30)//shimmer的倾斜角度
-                .frozen(true)//true则表示显示骨架屏时，RecyclerView不可滑动，否则可以滑动
-                .duration(1200)//动画时间，以毫秒为单位
-                .count(4)//显示骨架屏时item的个数
-                .load(R.layout.item_hot_ranking_list_skleton)//骨架屏UI
-                .show();
-
-        mSkeletonScreen = Skeleton.bind(binding.top)
-                .load(R.layout.item_fragment_introduction_skeleton)//骨架屏UI
-                .duration(1000)//动画时间，以毫秒为单位
-                .shimmer(true)//是否开启动画
-                .color(R.color.shimmer_color)//shimmer的颜色
-                .angle(30)//shimmer的倾斜角度
-                .show();
+        binding.InRecyclerView.setAdapter(adapter);
 
         getIncludeView();
     }
@@ -119,10 +97,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mPlayNum = binding.InVideoData.findViewById(R.id.It_play_num);
         mPraise = binding.Sanlian.findViewById(R.id.praise);
         mCoin = binding.Sanlian.findViewById(R.id.coin);
-        mMainCoin = binding.Sanlian.findViewById(R.id.main_coin);
-        thumbsUp = binding.Sanlian.findViewById(R.id.thumbsUp);
         like_img = binding.Sanlian.findViewById(R.id.like_img);
-        CollectionMain = binding.Sanlian.findViewById(R.id.CollectionMain);
         Collection = binding.Sanlian.findViewById(R.id.Collection);
         CollectionNum = binding.Sanlian.findViewById(R.id.CollectionNum);
         ForwardMain = binding.Sanlian.findViewById(R.id.ForwardMain);
@@ -131,9 +106,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         Collection_circleView = binding.Sanlian.findViewById(R.id.Collection_circleView);
 
         binding.function1.setOnClickListener(this);
-        thumbsUp.setOnClickListener(this);
-        mMainCoin.setOnClickListener(this);
-        CollectionMain.setOnClickListener(this);
+        like_img.setOnClickListener(this);
+        coinImg.setOnClickListener(this);
+        Collection.setOnClickListener(this);
         ForwardMain.setOnClickListener(this);
         coin_circleView.setListener(new AnnularProgressButton.ProgressButtonFinishCallback() {
             @Override
@@ -149,12 +124,28 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         Collection_circleView.setListener(new AnnularProgressButton.ProgressButtonFinishCallback() {
             @Override
             public void onFinish() {
-
+                if (coin_circleView.mProgress >= 300) {
+                    like_img.setImageResource(R.drawable.thumb_up_24);
+                    Collection.setImageResource(R.mipmap.collect_on);
+                    coinImg.setImageResource(R.mipmap.coin_on);
+                }
             }
 
             @Override
             public void onCancel() {
 
+            }
+        });
+        like_img.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (isSanLian) {
+                    coin_circleView.startAnimationProgress(300);
+                    Collection_circleView.startAnimationProgress(300);
+
+                    isSanLian = false;
+                }
+                return false;
             }
         });
 
@@ -164,80 +155,80 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
          * 上面已经加了@SuppressLint("ClickableViewAccessibility")用来取消警告
          */
 
-        like_img.setOnTouchListener(new View.OnTouchListener() {
-            private long downTime;
-            private long upTime;
-            private boolean mIsLongPressed = false;
-            private float mLastMotionX, mLastMotionY;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        downTime = System.currentTimeMillis();
-                        Log.e(TAG, "onTouch: 按下" + downTime);
-                        mLastMotionX = event.getX();
-                        mLastMotionY = event.getX();
-                        if (mIsPraise) {
-                            XToastUtils.toast("已经点过赞拉~");
-                        } else {
-                            dto str = new dto(id);
-                            mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like", str);
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        Log.e(TAG, "onTouch: 抬起");
-                        if (coin_circleView.mProgress >= 300) {
-                            //完成长按
-                            like_img.setImageResource(R.drawable.thumb_up_24);
-                            Collection.setImageResource(R.mipmap.collect_on);
-                            coinImg.setImageResource(R.mipmap.coin_on);
-                            /**
-                             * 这里进行三连操作
-                             */
-                            return false;
-                        }
-                        //取消长按
-                        coin_circleView.stopAnimationProgress(coin_circleView.mProgress);
-                        Collection_circleView.stopAnimationProgress(Collection_circleView.mProgress);
-
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        Log.e(TAG, "onTouch: 移动");
-                        upTime = System.currentTimeMillis();
-                        if (!mIsLongPressed) {
-                            mIsLongPressed = isLongPressed(mLastMotionX, mLastMotionY, event.getX(), event.getY(), downTime, upTime, 500);
-                        }
-                        if (mIsLongPressed) {
-                            //长按模式所做的事
-                            coin_circleView.startAnimationProgress(300);
-                            Collection_circleView.startAnimationProgress(300);
-
-                        } else {
-                            //移动模式所做的事
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
+//        like_img.setOnTouchListener(new View.OnTouchListener() {
+//            private long downTime;
+//            private long upTime;
+//            private boolean mIsLongPressed = false;
+//            private float mLastMotionX, mLastMotionY;
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        downTime = System.currentTimeMillis();
+//                        Log.e(TAG, "onTouch: 按下" + downTime);
+//                        mLastMotionX = event.getX();
+//                        mLastMotionY = event.getX();
+//                        if (mIsPraise) {
+//                            XToastUtils.toast("已经点过赞拉~");
+//                        } else {
+//                            dto str = new dto(id);
+//                            mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like", str);
+//                        }
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        Log.e(TAG, "onTouch: 抬起");
+//                        if (coin_circleView.mProgress >= 300) {
+//                            //完成长按
+//                            like_img.setImageResource(R.drawable.thumb_up_24);
+//                            Collection.setImageResource(R.mipmap.collect_on);
+//                            coinImg.setImageResource(R.mipmap.coin_on);
+//                            /**
+//                             * 这里进行三连操作
+//                             */
+//                            return false;
+//                        }
+//                        //取消长按
+//                        coin_circleView.stopAnimationProgress(coin_circleView.mProgress);
+//                        Collection_circleView.stopAnimationProgress(Collection_circleView.mProgress);
+//
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        Log.e(TAG, "onTouch: 移动");
+//                        upTime = System.currentTimeMillis();
+//                        if (!mIsLongPressed) {
+//                            mIsLongPressed = isLongPressed(mLastMotionX, mLastMotionY, event.getX(), event.getY(), downTime, upTime, 500);
+//                        }
+//                        if (mIsLongPressed) {
+//                            //长按模式所做的事
+//                            coin_circleView.startAnimationProgress(300);
+//                            Collection_circleView.startAnimationProgress(300);
+//
+//                        } else {
+//                            //移动模式所做的事
+//                        }
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
     }
 
-    private static boolean isLongPressed(float lastX, float lastY, float thisX,
-                                         float thisY, long lastDownTime, long thisEventTime,
-                                         long longPressTime) {
-        float offsetX = Math.abs(thisX - lastX);
-        float offsetY = Math.abs(thisY - lastY);
-        long intervalTime = thisEventTime - lastDownTime;
-        if (offsetX <= 10 && offsetY <= 10 && intervalTime >= longPressTime) {
-            return true;
-        }
-        return false;
-    }
+//    private static boolean isLongPressed(float lastX, float lastY, float thisX,
+//                                         float thisY, long lastDownTime, long thisEventTime,
+//                                         long longPressTime) {
+//        float offsetX = Math.abs(thisX - lastX);
+//        float offsetY = Math.abs(thisY - lastY);
+//        long intervalTime = thisEventTime - lastDownTime;
+//        if (offsetX <= 10 && offsetY <= 10 && intervalTime >= longPressTime) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     protected void initData() {
-        showDialog();
+        loginBean = getUserData();
         id = (int) SharedPreferencesUtil.getData("id", 0);
         uid = (int) SharedPreferencesUtil.getData("uid", 0);
         mPresenter.getVideoDetails(id, uid);
@@ -246,8 +237,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     protected void initLocalData() {
-        mSkeletonScreen.hide();
-        mSkeletonScreen2.hide();
+        //binding.top.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -267,22 +257,22 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 isOpen = false;
 
             }
-        } else if (vId == R.id.main_coin) {
+        } else if (vId == R.id.coinImg) {
             if (mCoinNum == 2) {
                 XToastUtils.toast("已经投过币拉~");
                 return;
             }
-            CoinDialog coinDialog = new CoinDialog(getContext(), id);
+            CoinDialog coinDialog = new CoinDialog(getContext(), id, loginBean.getData().getCoinNum());
             coinDialog.setListener(resultListener);
             coinDialog.show();
-        } else if (vId == R.id.thumbsUp) {
+        } else if (vId == R.id.like_img) {
             if (mIsPraise) {
                 XToastUtils.toast("已经点过赞拉~");
                 return;
             }
             dto str = new dto(id);
             mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like", str);
-        } else if (vId == R.id.CollectionMain) {
+        } else if (vId == R.id.Collection) {
             if (isCollection) {
                 XToastUtils.toast("已经收藏过拉~");
                 return;
@@ -331,8 +321,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             intent.putExtra("uid", 1);
             VideoActivity videoActivity = (VideoActivity) getActivity();
             videoActivity.getPlayPosition();
-            GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
-            gsyVideoManager.onPause();
+            GSYVideoManager.onPause();
             getContext().startActivity(intent);
         }
     };
@@ -365,7 +354,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetVideoDetailsFail(String e) {
-        hideDialog();
+        //hideDialog();
         XToastUtils.error(R.string.networkError);
     }
 
@@ -438,16 +427,13 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetRelatedVideosSuccess(RecommendVideoBean recommendVideoBean) {
+        binding.top.setVisibility(View.VISIBLE);
         adapter.loadMore(recommendVideoBean.getData());
-        mSkeletonScreen.hide();
-        mSkeletonScreen2.hide();
-        hideDialog();
     }
 
     @Override
     public void onGetRelatedVideosFail(String e) {
-        mSkeletonScreen.hide();
-        mSkeletonScreen2.hide();
+        XToastUtils.error(R.string.networkError);
     }
 
     @Override

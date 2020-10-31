@@ -59,7 +59,8 @@ public class AppUpdateDialog extends Dialog implements View.OnClickListener {
         mProgressBar = view.findViewById(R.id.app_update_progress);
         mValueText = view.findViewById(R.id.app_update_current_percent);
         mUpdate = view.findViewById(R.id.update);
-        mVersion.setText(mAppUpdateInfo.getData().getVersion() + R.string.updateContent);
+        mVersion.setText(mAppUpdateInfo.getData().getVersion());
+
         mMainBody.setText(mAppUpdateInfo.getData().getDescription());
         close.setOnClickListener(this);
         mMainBody.setOnClickListener(this);

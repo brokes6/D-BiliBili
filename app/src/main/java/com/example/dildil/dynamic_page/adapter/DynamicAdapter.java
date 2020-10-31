@@ -19,15 +19,15 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 import cn.lemon.multi.MultiView;
 
-public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean.Datas> implements View.OnClickListener{
+public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean.Datas> implements View.OnClickListener {
     private Context mContext;
     private CircleImageView userimg;
-    private TextView comment_num,thmbus_num;
+    private TextView comment_num, thmbus_num;
     private RoundCornerImageView video_cover;
-    private RelativeLayout video_introduce,main;
+    private RelativeLayout video_introduce, main;
     private MultiView multi_view;
 
-    public DynamicAdapter(Context context){
+    public DynamicAdapter(Context context) {
         mContext = context;
     }
 
@@ -54,35 +54,14 @@ public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean.Datas> imple
     }
 
     private void initData(@NonNull RecyclerViewHolder holder, DynamicBean.Datas item) {
-        Glide.with(mContext).load(item.getUpImg()).into(userimg);
-        holder.text(R.id.Dy_user_name,item.getUpName());
-        //holder.text(R.id.Dy_date,item.getRelease_date());
-        holder.text(R.id.Dy_text,item.getTitle());
-        //comment_num.setText(item.getComment_num()+"");
-        //thmbus_num.setText(item.getThumbs_num()+"");
-//        switch (item.getPictureStatus()){
-//            case 1:
-//                video_cover.setVisibility(View.GONE);
-//                video_introduce.setVisibility(View.GONE);
-//                break;
-//            case 2:
-//                Glide.with(mContext).load(item.getVideo_cover()).into(video_cover);
-//                holder.text(R.id.V_time,item.getVideo_time());
-//                holder.text(R.id.V_Playback_volume,item.getVideo_Playback_volume()+"播放量");
-//                holder.text(R.id.V_bullet_chat,item.getVideo_bullet_chat()+"弹幕");
-//                break;
-//            case 3:
-//                multi_view.setVisibility(View.VISIBLE);
-//                video_cover.setVisibility(View.GONE);
-//                video_introduce.setVisibility(View.GONE);
-//                multi_view.setImages(item.getShowPictures());
-//                break;
-//        }
+        Glide.with(mContext).load(item.getUpImg()).placeholder(R.drawable.skeleton_circular_grey).into(userimg);
+        holder.text(R.id.Dy_user_name, item.getUpName());
+        holder.text(R.id.Dy_text, item.getContent());
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.Dy_main:
 
                 break;

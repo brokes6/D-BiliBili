@@ -16,9 +16,9 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 public class FanRecommendationAdapter extends BaseRecyclerAdapter<FanRecommendationBean> {
     private Context mContext;
     private RoundCornerImageView cover;
-    private TextView mExclusive,mSecondaryTitle,mTitle,mWatch;
+    private TextView mExclusive, mSecondaryTitle, mTitle, mWatch;
 
-    public FanRecommendationAdapter(Context context){
+    public FanRecommendationAdapter(Context context) {
         mContext = context;
     }
 
@@ -40,12 +40,12 @@ public class FanRecommendationAdapter extends BaseRecyclerAdapter<FanRecommendat
     }
 
     private void initData(FanRecommendationBean item) {
-        Glide.with(mContext).load(item.getCover()).into(cover);
+        Glide.with(mContext).load(item.getCover()).placeholder(R.drawable.skeleton_circular_grey).into(cover);
         if (item.isExclusive()) mExclusive.setVisibility(View.VISIBLE);
         if (!item.getWatch().equals("尚未观看")) {
             mWatch.setTextColor(mContext.getResources().getColor(R.color.Pink));
         }
-        mSecondaryTitle.setText(item.getSecondaryTitle()+"追番");
+        mSecondaryTitle.setText(item.getSecondaryTitle() + "追番");
         mTitle.setText(item.getTitle());
         mWatch.setText(item.getWatch());
     }

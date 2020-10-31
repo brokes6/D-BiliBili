@@ -35,6 +35,7 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
         this.upName = name;
         this.position = position;
         type = value;
+        UP_name.setText("UP主:" + upName);
     }
 
     public void setOnFeedbackClickListener(OnFeedbackClickListener onFeedbackClickListeners) {
@@ -76,31 +77,21 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.AddLater:
+        int id = v.getId();
+        if (id == R.id.AddLater) {
 
-                break;
-            case R.id.pornographyVulgarity:
-            case R.id.coverDisgusting:
-            case R.id.TitleParty:
-            case R.id.UP_name:
-            case R.id.classification:
-            case R.id.Channel:
-            case R.id.notInterested:
-            case R.id.bloodyAwful:
-                XToastUtils.toast("感谢反馈，将减少该类型的推送");
-                if (onFeedbackClickListener != null) {
-                    onFeedbackClickListener.update(position,type);
-                }
-                dismiss();
-                break;
-            case R.id.cancel:
-                dismiss();
-                break;
+        } else if (id == R.id.pornographyVulgarity || id == R.id.coverDisgusting || id == R.id.TitleParty || id == R.id.UP_name || id == R.id.classification || id == R.id.Channel || id == R.id.notInterested || id == R.id.bloodyAwful) {
+            XToastUtils.toast("感谢反馈，将减少该类型的推送");
+            if (onFeedbackClickListener != null) {
+                onFeedbackClickListener.update(position, type);
+            }
+            dismiss();
+        } else if (id == R.id.cancel) {
+            dismiss();
         }
     }
 
     public interface OnFeedbackClickListener {
-        void update(int position,int type);
+        void update(int position, int type);
     }
 }

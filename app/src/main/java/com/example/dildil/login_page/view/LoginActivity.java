@@ -77,7 +77,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 password = binding.LoUserPassword.getText().toString().trim();
                 if (InputUtil.checkMobileLegal(account) && InputUtil.checkPasswordLegal(password)) {
                     showDialog();
-                    Log.d("why", "login账号密码 : " + account + " ," + password);
                     inputDto inputDto = new inputDto(account,password);
                     mPresenter.userLogin(inputDto);
                 }
@@ -108,7 +107,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void onGetLoginFail(String e) {
         hideDialog();
-        if (e.equals("HTTP 500 ")) {
+        if (e.equals("HTTP 500")) {
             XToastUtils.error(R.string.enter_correct_password);
         } else {
             XToastUtils.error(e);

@@ -18,6 +18,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.example.customcontrollibs.Selector;
 import com.example.customcontrollibs.SelectorGroup;
 import com.example.dildil.MyApplication;
@@ -59,6 +61,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAUSE;
 
 public class VideoActivity extends BaseActivity implements VideoDetailsContract.View, Selector.OnSelectorStateListener {
@@ -80,6 +83,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private final int LARGEFONT = 1, FINEPRINT = 2;
     private boolean isFunction = true;
     private final String[] definition = {"360p", "480p", "720p", "1080p"};
+    private DrawableCrossFadeFactory factory;
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -125,7 +129,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     protected void initView() {
-        showDialog();
+        //showDialog();
         imageView = new ImageView(mContext);
         mFragments = new ArrayList<>();
         mFragments.add(new IntroductionFragment());
@@ -276,6 +280,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     protected void initData() {
+        factory = new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
         binding.VTab.setViewPager(binding.VViewPager, TabTitle, this, mFragments);
         binding.detailPlayer.setShrinkImageRes(R.drawable.crop_free_24);
         binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
@@ -422,7 +427,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
-        Glide.with(mContext).load(videoDetailsBean.getCover()).into(imageView);
+        Glide.with(mContext).load(videoDetailsBean.getCover()).transition(withCrossFade(factory)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.skeleton_circular_grey).into(imageView);
         binding.detailPlayer.setThumbImageView(imageView);
         String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {
@@ -431,13 +436,13 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         }
         binding.detailPlayer.setUPData(videoDetailsBean.getUpImg(), videoDetailsBean.getUpName());
         binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
-        hideDialog();
+        //hideDialog();
     }
 
     @Override
     public void onGetVideoDetailsFail(String e) {
         XToastUtils.error(R.string.errorOccurred + e);
-        hideDialog();
+        //hideDialog();
     }
 
     @Override

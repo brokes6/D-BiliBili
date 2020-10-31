@@ -36,7 +36,7 @@ public class HotSearchAdapter extends BaseRecyclerAdapter<HotSearchBean> {
     }
 
     private void initData(@NonNull RecyclerViewHolder holder, int position, HotSearchBean item) {
-        holder.text(R.id.HS_num,(position+1)+"");
+        holder.text(R.id.HS_num,String.valueOf((position+1)));
         holder.text(R.id.HS_Title,item.getHotSearchTitle());
         if (position>3){
             num.setTextColor(mContext.getResources().getColor(R.color.Text_gray));

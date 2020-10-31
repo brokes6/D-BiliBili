@@ -15,9 +15,7 @@ import com.example.dildil.databinding.FragmentMyBinding;
 import com.example.dildil.login_page.bean.LoginBean;
 
 public class MyFragment extends BaseFragment {
-    private static final String TAG = "MyFragment";
-    FragmentMyBinding binding;
-    private LoginBean loginBean;
+    private FragmentMyBinding binding;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,8 +32,8 @@ public class MyFragment extends BaseFragment {
     @Override
     protected void initData() {
         showDialog();
-        loginBean = getUserData();
-        Glide.with(getContext()).load(loginBean.getData().getImg()).into(binding.MUserImg);
+        LoginBean loginBean = getUserData();
+        Glide.with(this).load(loginBean.getData().getImg()).into(binding.MUserImg);
         binding.MUserName.setText(loginBean.getData().getUsername());
         binding.MBCurrency.setText("B币: 5.0");
         binding.MCoin.setText("硬币: " + loginBean.getData().getCoinNum());
@@ -61,13 +59,11 @@ public class MyFragment extends BaseFragment {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.M_setting:
-                ActivityUtils.startActivity(SettingActivity.class);
-                break;
-            case R.id.M_user_img:
-                ActivityUtils.startActivity(PersonalActivity.class);
-                break;
+        int id = view.getId();
+        if (id == R.id.M_setting) {
+            ActivityUtils.startActivity(SettingActivity.class);
+        } else if (id == R.id.M_user_img) {
+            ActivityUtils.startActivity(PersonalActivity.class);
         }
     }
 }

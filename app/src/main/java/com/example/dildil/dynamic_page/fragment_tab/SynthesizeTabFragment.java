@@ -1,6 +1,7 @@
 package com.example.dildil.dynamic_page.fragment_tab;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
@@ -17,24 +19,29 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentTabSynthesizeBinding;
-import com.example.dildil.dynamic_page.adapter.DynamicAdapter;
+import com.example.dildil.dynamic_page.adapter.TabVideoAdapter;
 import com.example.dildil.dynamic_page.adapter.TopicAdapter;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
+import com.example.dildil.util.ScrollCalculatorHelper;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 
 import javax.inject.Inject;
 
 public class SynthesizeTabFragment extends BaseFragment implements DynamicContract.View {
-    FragmentTabSynthesizeBinding binding;
+    private FragmentTabSynthesizeBinding binding;
     private TopicAdapter adapter_topic;
-    private DynamicAdapter adapter_dynamic;
+    private TabVideoAdapter adapter_dynamic;
+    private static ScrollCalculatorHelper scrollCalculatorHelper;
     private boolean isFirst = true;
+    private boolean mFull = false;
 
     @Inject
     DynamicPresenter mPresenter;
+    private ResourcesData resourcesData;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,23 +63,53 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
         binding.RecyTopic.setAdapter(adapter_topic);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        adapter_dynamic = new DynamicAdapter(getContext());
+        adapter_dynamic = new TabVideoAdapter(getContext());
         binding.RecyDynamic.setLayoutManager(layoutManager);
         binding.RecyDynamic.setAdapter(adapter_dynamic);
+
+        //限定范围为屏幕一半的上下偏移180
+        int playTop = CommonUtil.getScreenHeight(getContext()) / 2 - CommonUtil.dip2px(getContext(), 180);
+        int playBottom = CommonUtil.getScreenHeight(getContext()) / 2 + CommonUtil.dip2px(getContext(), 180);
+
+        //自定播放帮助类
+        scrollCalculatorHelper = new ScrollCalculatorHelper(R.id.video_item_player, playTop, playBottom);
+
+        binding.RecyDynamic.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int firstVisibleItem, lastVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                scrollCalculatorHelper.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
+                lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+
+                //这是滑动自动播放的代码
+                if (!mFull) {
+                    scrollCalculatorHelper.onScroll(recyclerView, firstVisibleItem, lastVisibleItem, lastVisibleItem - firstVisibleItem);
+                }
+            }
+        });
+
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (isFirst){
-                    mPresenter.getDynamic(1,8,1);
-                    isFirst = false;
-                    ResourcesData resourcesData = new ResourcesData();
+                if (isFirst) {
+                    mPresenter.getDynamic(1, 8, 1);
+                    resourcesData = new ResourcesData();
                     resourcesData.initTopicData();
                     adapter_topic.loadMore(resourcesData.getTopicData());
-                }else{
-
+                    isFirst = false;
+                } else {
+                    mPresenter.getDynamic(1, 8, 1);
+                    adapter_topic.refresh(resourcesData.getTopicData());
                 }
-
             }
         });
     }
@@ -95,16 +132,25 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
     @Override
     public void onGetDynamicSuccess(DynamicBean dynamicBean) {
         binding.swipe.finishRefresh(true);
+        if (isFirst){
+            for (DynamicBean.Datas datum : dynamicBean.getData()) {
+                adapter_dynamic.add(datum);
+            }
+        }else{
+            adapter_dynamic.refresh(dynamicBean.getData());
+        }
     }
 
     @Override
     public void onGetDynamicFail(String e) {
+        Log.e("why", "动态出现错误"+e);
         binding.swipe.finishRefresh(true);
     }
 
     @Override
     public void onDestroy() {
         mPresenter.detachView();
+        resourcesData = null;
         super.onDestroy();
     }
 }

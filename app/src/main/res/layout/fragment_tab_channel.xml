@@ -10,76 +10,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/While">
-
-        <LinearLayout
-            android:id="@+id/Ch_search"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_10"
-            android:background="@drawable/file_background_radius_15_white_ash"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_marginLeft="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:src="@drawable/search_24_c1bfc0" />
-
-            <com.example.dildil.rewriting_view.SearchEditText
-                android:id="@+id/search_et"
+            <LinearLayout
+                android:id="@+id/Ch_search"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_5"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textSize="@dimen/sp_16" />
-        </LinearLayout>
-        
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Ch_be_interested"
-            android:layout_margin="@dimen/dp_5"
-            android:layout_below="@+id/Ch_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/file_background_radius_15_white_ash"
+                android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/Ch_Dividing_one"
-            android:layout_below="@+id/Ch_be_interested"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_10"
-            android:background="#f4f4f4"/>
+                <ImageView
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:src="@drawable/search_24_c1bfc0" />
 
-        <TextView
-            android:id="@+id/CH_Text_one"
-            android:layout_margin="@dimen/dp_10"
-            android:layout_below="@+id/Ch_Dividing_one"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/Black"
-            android:text="@string/RecentChannels"/>
+                <com.example.dildil.rewriting_view.SearchEditText
+                    android:id="@+id/search_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dp_5"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="#c1bfc0"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/CH_have_viewed"
-            android:layout_margin="@dimen/dp_5"
-            android:layout_below="@+id/CH_Text_one"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Ch_be_interested"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Ch_search"
+                android:layout_margin="@dimen/dp_5" />
 
-        <TextView
-            android:id="@+id/Ch_Dividing_two"
-            android:layout_below="@+id/CH_have_viewed"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_10"
-            android:background="#f4f4f4"/>
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/Ch_Dividing_one"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:layout_below="@+id/Ch_be_interested"
+                android:background="#f4f4f4" />
+
+            <TextView
+                android:id="@+id/CH_Text_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Ch_Dividing_one"
+                android:layout_margin="@dimen/dp_10"
+                android:text="@string/RecentChannels"
+                android:textColor="@color/Black"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/CH_have_viewed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/CH_Text_one"
+                android:layout_margin="@dimen/dp_5" />
+
+            <TextView
+                android:id="@+id/Ch_Dividing_two"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_10"
+                android:layout_below="@+id/CH_have_viewed"
+                android:background="#f4f4f4" />
+        </RelativeLayout>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

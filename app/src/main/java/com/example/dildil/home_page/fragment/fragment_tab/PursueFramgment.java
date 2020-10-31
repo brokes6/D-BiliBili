@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
-import com.ethanhua.skeleton.Skeleton;
-import com.ethanhua.skeleton.SkeletonScreen;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
@@ -39,11 +37,9 @@ public class PursueFramgment extends BaseFragment {
     FramgmentPursueBinding binding;
     private MyPursuitAdapter adapter;
     private FanRecommendationAdapter fanRecommendationAdapter;
-    private SkeletonScreen mSkeletonScreen;
-    private SkeletonScreen mSkeletonScreen2;
-    private SkeletonScreen mSkeletonScreeView;
     private List<FanRecommendationBean> fanRecommendationBeans = new ArrayList<>();
     private boolean isFirst = true;
+    private ResourcesData resourcesData;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,44 +53,18 @@ public class PursueFramgment extends BaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         adapter = new MyPursuitAdapter(getContext());
         binding.PuMyPursuit.setLayoutManager(layoutManager);
-
-        mSkeletonScreeView = Skeleton.bind(binding.PuBanner)
-                .load(R.layout.item_banner_skeleton)//骨架屏UI
-                .duration(1000)//动画时间，以毫秒为单位
-                .shimmer(true)//是否开启动画
-                .color(R.color.shimmer_color)//shimmer的颜色
-                .angle(30)//shimmer的倾斜角度
-                .show();
-
-        mSkeletonScreen2 = Skeleton.bind(binding.PuMyPursuit)
-                .adapter(adapter)//设置实际adapter
-                .shimmer(true)//是否开启动画
-                .angle(30)//shimmer的倾斜角度
-                .frozen(false)//true则表示显示骨架屏时，RecyclerView不可滑动，否则可以滑动
-                .duration(1200)//动画时间，以毫秒为单位
-                .count(4)//显示骨架屏时item的个数
-                .load(R.layout.item_mypursuit_skleton)//骨架屏UI
-                .show();
+        binding.PuMyPursuit.setAdapter(adapter);
 
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         fanRecommendationAdapter = new FanRecommendationAdapter(getContext());
         binding.PuFanOperaRecommendation.setLayoutManager(layoutManager1);
-        mSkeletonScreen = Skeleton.bind(binding.PuFanOperaRecommendation)
-                .adapter(fanRecommendationAdapter)//设置实际adapter
-                .shimmer(true)//是否开启动画
-                .angle(30)//shimmer的倾斜角度
-                .frozen(false)//true则表示显示骨架屏时，RecyclerView不可滑动，否则可以滑动
-                .duration(1200)//动画时间，以毫秒为单位
-                .count(4)//显示骨架屏时item的个数
-                .load(R.layout.item_fan_recommendation_skeleton)//骨架屏UI
-                .show();
+        binding.PuFanOperaRecommendation.setAdapter(fanRecommendationAdapter);
 
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initDatas();
-                isFirst = false;
+                initDates();
             }
         });
     }
@@ -106,32 +76,31 @@ public class PursueFramgment extends BaseFragment {
 
     @Override
     protected void initLocalData() {
+        binding.main.setVisibility(View.GONE);
         fanRecommendationBeans.clear();
         List<FanRecommendationBean> fanRecommendationBean = GsonUtil.fromJSON(load(LocalHua), new TypeToken<List<FanRecommendationBean>>() {
         }.getType());
         fanRecommendationAdapter.loadMore(fanRecommendationBean);
-        mSkeletonScreen2.hide();
-        mSkeletonScreen.hide();
+
     }
 
-    private void initDatas() {
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initBanner();
-        resourcesData.initMyPursue();
-        resourcesData.initFanRecommendation();
+    private void initDates() {
         if (isFirst) {
+            resourcesData = new ResourcesData();
+            resourcesData.initBanner();
+            resourcesData.initMyPursue();
+            resourcesData.initFanRecommendation();
             initBanner(resourcesData.getBeannerUrl());
             adapter.loadMore(resourcesData.getMyPursuitBean());
             fanRecommendationAdapter.loadMore(resourcesData.getFanRecommendationBeans());
+            isFirst = false;
         } else {
             adapter.refresh(resourcesData.getMyPursuitBean());
             fanRecommendationAdapter.refresh(resourcesData.getFanRecommendationBeans());
         }
         save(GsonUtil.toJson(resourcesData.getFanRecommendationBeans()), LocalHua);
         binding.swipe.finishRefresh(true);
-        mSkeletonScreen2.hide();
-        mSkeletonScreen.hide();
-
+        binding.main.setVisibility(View.VISIBLE);
     }
 
     private void initBanner(List<BannerBean> imageUrls) {
@@ -152,7 +121,6 @@ public class PursueFramgment extends BaseFragment {
         })
                 .addBannerLifecycleObserver(this)//添加生命周期观察者
                 .setIndicator(new CircleIndicator(getContext()));
-        mSkeletonScreeView.hide();
     }
 
 
@@ -165,6 +133,7 @@ public class PursueFramgment extends BaseFragment {
     public void onDestroy() {
         fanRecommendationBeans.clear();
         fanRecommendationBeans = null;
+        resourcesData = null;
         super.onDestroy();
     }
 }

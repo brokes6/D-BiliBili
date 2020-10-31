@@ -60,43 +60,43 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/keyboard"
-                        android:layout_centerVertical="true"
-                        android:layout_width="@dimen/dp_24"
-                        android:layout_height="@dimen/dp_24"
-                        android:src="@drawable/keyboard_backspace_24" />
-
-                    <LinearLayout
-                        android:id="@+id/playButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
                         <ImageView
-                            android:layout_width="@dimen/dp_35"
-                            android:layout_height="@dimen/dp_35"
-                            android:src="@mipmap/playback_volume" />
+                            android:id="@+id/keyboard"
+                            android:layout_width="@dimen/dp_24"
+                            android:layout_height="@dimen/dp_24"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/keyboard_backspace_24" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp_5"
-                            android:text="@string/PlayNow"
-                            android:textColor="@color/White"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/playButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp_35"
+                                android:layout_height="@dimen/dp_35"
+                                android:src="@mipmap/playback_volume" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_5"
+                                android:text="@string/PlayNow"
+                                android:textColor="@color/White"
+                                android:textSize="18sp" />
+                        </LinearLayout>
 
                         <ImageView
                             android:id="@+id/more"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/dp_10"
                             android:layout_width="@dimen/dp_24"
                             android:layout_height="@dimen/dp_24"
-                            android:src="@drawable/more_vert_24"/>
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:src="@drawable/more_vert_24" />
                     </RelativeLayout>
                 </androidx.appcompat.widget.Toolbar>
 
@@ -121,12 +121,13 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dp_40"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_vertical">
 
                     <com.flyco.tablayout.SlidingTabLayout
                         android:id="@+id/V_tab"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_10"
                         app:tl_indicator_bounce_enable="true"
                         app:tl_indicator_color="@color/Pink"
                         app:tl_indicator_width_equal_title="true"
@@ -160,9 +161,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
-                        android:textSize="14sp"
                         android:text="@string/SendTheBarrage"
-                        android:textColor="#999999" />
+                        android:textColor="#999999"
+                        android:textSize="14sp" />
 
                     <RelativeLayout
                         android:id="@+id/V_definition_off"

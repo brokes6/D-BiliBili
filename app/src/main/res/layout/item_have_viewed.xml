@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/dp_2"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <com.example.customcontrollibs.CustomChannelView
         android:id="@+id/HV_Image"
-        android:layout_width="@dimen/dp_130"
-        android:layout_height="@dimen/dp_170"/>
+        android:layout_width="@dimen/dp_110"
+        android:layout_height="@dimen/dp_140"
+        app:CH_Bottom_Size="5sp"
+        app:CH_Bottom_TimeSize="4sp"
+        app:CH_Bottom_paddingTop="40"/>
 
 </RelativeLayout>

@@ -15,7 +15,7 @@
             android:padding="@dimen/dp_15"
             android:text="添加至稍后在看"
             android:textColor="@color/Black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <View
             android:id="@+id/xian1"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="反馈"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text2"
@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:text="(选择后将优化首页此类内容)"
                 android:textColor="@color/Text_gray"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +73,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="血腥恐怖"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/bloodyAwful"
@@ -86,7 +86,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="色情低俗"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -108,7 +108,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="封面恶心"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/TitleParty"
@@ -121,7 +121,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="标题党/封面党"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <View
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:text="不感兴趣"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text4"
@@ -158,7 +158,7 @@
                 android:layout_weight="1"
                 android:text="(选择后将优化首页此类内容)"
                 android:textColor="@color/Text_gray"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -180,7 +180,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="UP主:"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/classification"
@@ -193,7 +193,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="分类:"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -215,7 +215,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="频道:"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/notInterested"
@@ -228,7 +228,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="不敢兴趣"
                 android:textColor="@color/Black"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <View

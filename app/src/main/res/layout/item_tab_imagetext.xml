@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/IT_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -36,12 +35,12 @@
 
     <TextView
         android:id="@+id/VN_Title"
-        android:layout_below="@+id/VN_user_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/VN_user_img"
         android:layout_marginTop="@dimen/dp_5"
         android:textColor="#212121"
-        android:textSize="18sp"/>
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/VN_more"
@@ -52,13 +51,26 @@
         android:src="@drawable/more_vert_24_black" />
 
 
-    <cn.lemon.multi.MultiView
-        android:id="@+id/VN_multi"
+    <LinearLayout
+        android:id="@+id/VN_multiMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/VN_Title"
-        android:layout_marginTop="@dimen/dp_20"
-        android:background="#f1506d"
-        app:divideSpace="8dp" />
+        android:layout_marginTop="@dimen/dp_10"
+        android:orientation="vertical">
+
+        <cn.lemon.multi.MultiView
+            android:id="@+id/VN_multi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/item_sanlian_layout"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/VN_multiMain" />
 
 </RelativeLayout>

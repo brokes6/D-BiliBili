@@ -16,7 +16,6 @@ import com.example.dildil.R;
  * 搜索的editText,点击回车后直接进入搜索
  */
 public class SearchEditText extends RelativeLayout {
-    private static final String TAG = "SearchEditText";
 
     private TextView tvGap;
     private EditText etTitle;
@@ -40,7 +39,6 @@ public class SearchEditText extends RelativeLayout {
     private void initView(Context context) {
         View v = LayoutInflater.from(context).inflate(R.layout.layout_search_et, this, true);
         etTitle = v.findViewById(R.id.et);
-        tvGap = v.findViewById(R.id.tv_gap);
         rlEt = v.findViewById(R.id.rl_et);
     }
 
@@ -57,9 +55,9 @@ public class SearchEditText extends RelativeLayout {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    tvGap.setBackgroundColor(highlightColor);
+                    //tvGap.setBackgroundColor(highlightColor);
                 } else {
-                    tvGap.setBackgroundColor(normalColor);
+                    //tvGap.setBackgroundColor(normalColor);
                 }
             }
         });

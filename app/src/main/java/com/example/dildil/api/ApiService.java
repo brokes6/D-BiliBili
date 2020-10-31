@@ -74,8 +74,8 @@ public interface ApiService {
     @GET()
     Observable<VersionBean> getVersion(@Url String url);
 
-    @GET("userservice/dynamic/list/{pageNum}/{pageSize}/{uid}")
-    Observable<DynamicBean> getDynamic(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Path("uid") int uid);
+    @GET("userservice/dynamic/list/{pageNum}/{pageSize}")
+    Observable<DynamicBean> getDynamic(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
 
 
 }

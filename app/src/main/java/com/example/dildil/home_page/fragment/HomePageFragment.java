@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.ColorInt;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -25,6 +26,7 @@ import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.login_page.bean.LoginBean;
 import com.example.dildil.search.view.SearchActivity;
+import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,12 @@ public class HomePageFragment extends BaseFragment {
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_homepage, container, false);
+
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.Pink)
+                .navigationBarColor(R.color.While)
+                .init();
+
         return binding.getRoot();
     }
 
@@ -80,6 +88,10 @@ public class HomePageFragment extends BaseFragment {
             intent.setAction(BaseActivity.signInAction);
             getContext().sendBroadcast(intent);
         }
+    }
+
+    public void setTitleBackGround(@ColorInt int value){
+        binding.main.setBackgroundColor(value);
     }
 
     @Override

@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:Is_radius="true"
-        app:Image_Size="55"
+        app:Image_Size="60"
         app:Text_Color="@color/Text_gray"
         app:Image_Text_Spacing="20"
         app:Text_Size="12"/>

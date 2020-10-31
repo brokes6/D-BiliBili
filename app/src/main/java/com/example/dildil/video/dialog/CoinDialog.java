@@ -11,6 +11,8 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -20,6 +22,7 @@ import com.example.dildil.api.ApiService;
 import com.example.dildil.rewriting_view.ClipViewPager;
 import com.example.dildil.rewriting_view.ScalePageTransformer;
 import com.example.dildil.util.SharedPreferencesUtil;
+import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.TubatuAdapter;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
@@ -41,14 +44,16 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
     private TubatuAdapter mPagerAdapter;
     private ClipViewPager mViewPager;
     private ImageView close;
+    private RelativeLayout page_container;
     private CheckBox CB_thumbsUp;
-    private int vid;
+    private int vid, coin;
+    private TextView Da_CoicNum;
     private throwCoinResultListener CoinListener;
     private boolean isThumbsUp = false;
     private ApiService mService;
     private String url = "http://116.196.105.203/videoservice/video/dynamic_like";
 
-    public CoinDialog(@NonNull Context context, int vid) {
+    public CoinDialog(@NonNull Context context, int vid, int coin) {
         super(context);
         mContext = context;
         this.vid = vid;
@@ -62,7 +67,6 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
         CB_thumbsUp = view.findViewById(R.id.CB_thumbsUp);
         CB_thumbsUp.setOnCheckedChangeListener(this);
         CB_thumbsUp.setChecked((Boolean) SharedPreferencesUtil.getData("isThumbsUp", false));
-
         close.setOnClickListener(this);
         mViewPager = view.findViewById(R.id.viewpager);
         /**调节ViewPager的滑动速度**/
@@ -75,7 +79,10 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
          * 需要将整个页面的事件分发给ViewPager，不然的话只有ViewPager中间的view能滑动，其他的都不能滑动，
          * 这是肯定的，因为ViewPager总体布局就是中间那一块大小，其他的子布局都跑到ViewPager外面来了
          */
-        view.findViewById(R.id.page_container).setOnTouchListener(new View.OnTouchListener() {
+        Da_CoicNum = view.findViewById(R.id.Da_CoicNum);
+        Da_CoicNum.setText(String.valueOf(coin));
+        page_container = view.findViewById(R.id.page_container);
+        page_container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return mViewPager.dispatchTouchEvent(event);
@@ -104,24 +111,34 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
         public void onLikeClick(int position) {
             boolean key = (boolean) SharedPreferencesUtil.getData("isThumbsUp", false);
             dto dto;
-            switch (position){
+            switch (position) {
                 case 0:
+                    if (coin < 1) {
+                        XToastUtils.info("硬币不够哦");
+                        dismiss();
+                        return;
+                    }
                     dto = new dto(1, vid);
-                    if (key){
+                    if (key) {
                         dto str = new dto(vid);
                         throwCoin(dto, 1);
-                        ThumbsUp(url,str);
-                    }else{
+                        ThumbsUp(url, str);
+                    } else {
                         throwCoin(dto, 1);
                     }
                     break;
                 case 1:
+                    if (coin < 2) {
+                        XToastUtils.info("硬币不够哦");
+                        dismiss();
+                        return;
+                    }
                     dto = new dto(2, vid);
-                    if (key){
+                    if (key) {
                         dto str = new dto(vid);
                         throwCoin(dto, 1);
-                        ThumbsUp(url,str);
-                    }else{
+                        ThumbsUp(url, str);
+                    } else {
                         throwCoin(dto, 1);
                     }
                     break;

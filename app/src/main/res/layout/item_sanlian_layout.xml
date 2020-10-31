@@ -13,15 +13,15 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:src="@mipmap/forward"/>
         <TextView
-            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/forward"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textColor="#747474"/>
     </LinearLayout>
 
@@ -33,16 +33,16 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
             android:src="@mipmap/comment"/>
 
         <TextView
             android:id="@+id/comment_number"
-            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textColor="#747474"/>
     </LinearLayout>
 
@@ -55,16 +55,16 @@
 
         <ImageView
             android:id="@+id/thumbs_img"
-            android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
+            android:layout_width="@dimen/dp_18"
+            android:layout_height="@dimen/dp_18"
             android:src="@mipmap/thumbs_up"/>
 
         <TextView
             android:id="@+id/thumbs_number"
-            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginStart="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textColor="#747474"/>
     </LinearLayout>
 </LinearLayout>

@@ -6,76 +6,83 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/While">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/Title_Search"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="@dimen/dp_15"
-            android:layout_marginTop="@dimen/dp_3"
-            android:layout_marginRight="@dimen/dp_15"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@color/Pink">
 
-            <com.android.liuzhuang.rcimageview.CircleImageView
-                android:id="@+id/user_img"
-                android:layout_width="@dimen/dp_45"
-                android:layout_height="@dimen/dp_45" />
-
-            <TextView
-                android:id="@+id/ed_text"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp_35"
+            <LinearLayout
+                android:id="@+id/Title_Search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_3"
                 android:layout_marginRight="@dimen/dp_15"
-                android:layout_weight="1"
-                android:background="@drawable/file_background_radius_30_gray" />
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp_10"
+                app:layout_scrollFlags="scroll|enterAlways">
 
-            <ImageView
-                android:id="@+id/information"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:layout_marginRight="@dimen/dp_15"
-                android:src="@mipmap/information" />
+                <com.android.liuzhuang.rcimageview.CircleImageView
+                    android:id="@+id/user_img"
+                    android:layout_width="@dimen/dp_35"
+                    android:layout_height="@dimen/dp_35" />
 
-            <ImageView
-                android:id="@+id/play"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
-                android:src="@mipmap/play_game" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/ed_text"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_weight="1"
+                    android:background="@drawable/file_background_radius_30_gray"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:textSize="5sp"
+                    app:drawableLeftCompat="@drawable/search_24_ecabbf" />
 
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/tab"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_40"
-            android:layout_below="@+id/Title_Search"
-            android:layout_marginTop="@dimen/dp_10"
-            app:tl_indicator_bounce_enable="true"
-            app:tl_indicator_color="@color/Pink"
-            app:tl_indicator_width_equal_title="true"
-            app:tl_textSelectColor="@color/Pink"
-            app:tl_textUnselectColor="#838080"
-            app:tl_textsize="14sp"
-            app:tl_underline_height="1dp" />
+                <ImageView
+                    android:id="@+id/information"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:src="@mipmap/information" />
 
-        <TextView
-            android:id="@+id/xian_1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:layout_below="@+id/tab"
-            android:background="#e7e7e7" />
+                <ImageView
+                    android:id="@+id/play"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:src="@mipmap/play_game" />
+            </LinearLayout>
+
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/tab"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:background="@color/While"
+                app:tl_indicator_bounce_enable="true"
+                app:tl_indicator_color="@color/Pink"
+                app:tl_indicator_width_equal_title="true"
+                app:tl_textSelectColor="@color/Pink"
+                app:tl_textUnselectColor="#838080"
+                app:tl_textsize="16sp"
+                app:tl_underline_height="1dp" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/xian_1"
-            android:background="@color/White" />
-    </RelativeLayout>
+            android:background="@color/While"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

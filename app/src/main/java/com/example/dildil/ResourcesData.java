@@ -181,6 +181,7 @@ public class ResourcesData {
     }
 
     public void initHotSearch() {
+        hotSearchBeans.clear();
         HotSearchBean bean = new HotSearchBean();
         bean.setHotSearchTitle("雾山五行");
         bean.setDegree(1);
@@ -239,6 +240,7 @@ public class ResourcesData {
 
 
     public void initBeInterestedData() {
+        beInterestedBeans.clear();
         BeInterestedBean beInterestedBean = new BeInterestedBean();
         beInterestedBean.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/a92c19dbc4335fd553e50e187d759b2fafee9a64.jpg@115w_115h_1c_100q.webp");
         beInterestedBean.setBeInterestedTitle("COSPLAY");
@@ -271,6 +273,7 @@ public class ResourcesData {
     }
 
     public void initHaveViewedData() {
+        haveViewedBeans.clear();
         HaveViewedBean haveViewedBean = new HaveViewedBean();
         haveViewedBean.setMiddle_Image("https://i0.hdslb.com/bfs/tag/c044d70d3c5f8e5920e19b8f5ef64d1bbcee625d.jpg@60w_60h_1c_100q.webp");
         haveViewedBean.setTop_Image("http://i0.hdslb.com/bfs/tag/186e0cef45b86ea1f5c8062c7f93bb7d0ecc2b71.jpg@.webp");
@@ -315,6 +318,7 @@ public class ResourcesData {
     }
 
     public void initPursue() {
+        pursueBeans.clear();
         PursueBean pursueBean = new PursueBean();
         pursueBean.setPursueImage("https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp");
         pursueBean.setPursueName("刀剑神域 爱丽丝篇 异界战争 -终章-");
@@ -346,6 +350,7 @@ public class ResourcesData {
     }
 
     public void initMyPursue() {
+        myPursuitBeans.clear();
         MyPursuitBean pursueBean = new MyPursuitBean();
         pursueBean.setMyPursueImage("https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp");
         pursueBean.setMyPursueName("刀剑神域 爱丽丝篇 异界战争 -终章-");

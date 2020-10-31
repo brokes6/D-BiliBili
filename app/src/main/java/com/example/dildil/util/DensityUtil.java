@@ -38,4 +38,22 @@ public class DensityUtil {
         float scale=context.getResources().getDisplayMetrics().density;
         return (int)(dpValue*scale+0.5f);
     }
+
+    public static String timeParse(long duration) {
+        String time = "";
+        long minute = duration / 60;
+        long seconds = duration % 60;
+        long second = Math.round((float) seconds);
+        if (minute < 10) {
+            time += "0";
+        }
+        time += minute + ":";
+        if (second < 10) {
+            time += "0";
+        }
+        time += second;
+        return time;
+    }
+
 }
+

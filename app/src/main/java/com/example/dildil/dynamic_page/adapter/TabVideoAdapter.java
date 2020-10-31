@@ -2,7 +2,6 @@ package com.example.dildil.dynamic_page.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,14 +16,16 @@ import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.example.customcontrollibs.BaseAdapter;
 import com.example.dildil.R;
-import com.example.dildil.dynamic_page.bean.VideoNewsBean;
+import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.view.SwitchVideo;
+import com.example.dildil.util.DensityUtil;
 import com.example.dildil.video.view.VideoActivity;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 
 import cn.lemon.multi.MultiView;
 
-public class TabVideoAdapter extends BaseAdapter<VideoNewsBean, RecyclerView.ViewHolder> {
+public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView.ViewHolder> {
     public static final String TAG = "VideoNewsAdapter";
     private Context mContext;
     private static final int IMAGE_TEXT = 1;
@@ -47,52 +48,75 @@ public class TabVideoAdapter extends BaseAdapter<VideoNewsBean, RecyclerView.Vie
     }
 
     @Override
-    protected void bindData(@NonNull RecyclerView.ViewHolder holder, int position, VideoNewsBean item) {
+    protected void bindData(@NonNull RecyclerView.ViewHolder holder, int position, DynamicBean.Datas item) {
         switch (getItemViewType(position)) {
             case IMAGE_TEXT:
-                Glide.with(mContext).load(item.getVideo_UserImage()).into(((TabImageHolder) holder).VNImage);
-                ((TabImageHolder) holder).VN_userName.setText(item.getVideo_UserName());
-                ((TabImageHolder) holder).VN_Title.setText(item.getVideo_Title());
-                ((TabImageHolder) holder).VN_date.setText(item.getVideo_Time());
+                Glide.with(mContext)
+                        .load(item.getUpImg())
+                        .placeholder(R.drawable.skeleton_circular_grey)
+                        .into(((TabImageHolder) holder).VNImage);
+                ((TabImageHolder) holder).VN_userName.setText(item.getUpName());
+                ((TabImageHolder) holder).VN_Title.setText(item.getContent());
+                ((TabImageHolder) holder).VN_date.setText(item.getCreateTime().substring(5, 10));
                 ((TabImageHolder) holder).multiView.setLayoutParams(new LinearLayout.LayoutParams(900, ViewGroup.LayoutParams.WRAP_CONTENT));
-                ((TabImageHolder) holder).multiView.setImages(item.getImages());
+                ((TabImageHolder) holder).multiView.setImages(item.getImgs().split(","));
                 break;
             case VIDEO_TEXT:
+                ((TabVideoHolder) holder).VN_main.setTag(position);
                 ((TabVideoHolder) holder).VNideo.setPlayTag(TAG);
                 ((TabVideoHolder) holder).VNideo.setPlayPosition(position);
-                ((TabVideoHolder) holder).VNideo.setUp(item.getVideo_Url(), true, null, null, "这是title");
+                String[] urlList = item.getObject().getUrls().split(",");
+                ((TabVideoHolder) holder).VNideo.setUp(urlList[0], true, null, null, item.getObject().getTitle());
 
                 ((TabVideoHolder) holder).imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Glide.with(mContext).load(item.getVideo_Cover()).into(((TabVideoHolder) holder).imageView);
+                Glide.with(mContext)
+                        .load(item.getObject().getPreviewUrl())
+                        .placeholder(R.drawable.skeleton_circular_grey)
+                        .into(((TabVideoHolder) holder).imageView);
                 if (((TabVideoHolder) holder).imageView.getParent() != null) {
                     ViewGroup viewGroup = (ViewGroup) ((TabVideoHolder) holder).imageView.getParent();
                     viewGroup.removeView(((TabVideoHolder) holder).imageView);
                 }
+
                 ((TabVideoHolder) holder).VNideo.setThumbImageView(((TabVideoHolder) holder).imageView);
+                ((TabVideoHolder) holder).VNideo.setNeedShowWifiTip(false);
                 if (GSYVideoManager.instance().getPlayTag().equals(VideoNewsAdapter.TAG)
                         && (position == GSYVideoManager.instance().getPlayPosition())) {
                     ((TabVideoHolder) holder).VNideo.getThumbImageViewLayout().setVisibility(View.GONE);
                 } else {
                     ((TabVideoHolder) holder).VNideo.getThumbImageViewLayout().setVisibility(View.VISIBLE);
                 }
+                Glide.with(mContext)
+                        .load(item.getUpImg())
+                        .into(((TabVideoHolder) holder).VNImage);
+                ((TabVideoHolder) holder).VN_userName.setText(item.getUpName());
 
-                Glide.with(mContext).load(item.getVideo_UserImage()).into(((TabVideoHolder) holder).VNImage);
-                ((TabVideoHolder) holder).VN_userName.setText(item.getVideo_UserName());
-                ((TabVideoHolder) holder).VN_Title.setText(item.getVideo_Title());
-                ((TabVideoHolder) holder).VN_date.setText(item.getVideo_Time());
+                ((TabVideoHolder) holder).videoTime.setText(DensityUtil.timeParse(item.getObject().getLength()));
+                ((TabVideoHolder) holder).videoDanmu.setText(item.getObject().getDanmuNum() + "弹幕");
+                ((TabVideoHolder) holder).videoPlayer.setText(item.getObject().getPlayNum() + "播放量");
+                ((TabVideoHolder) holder).VN_videoTitle.setText(item.getObject().getTitle());
+                ((TabVideoHolder) holder).VN_Title.setText(item.getContent());
+                ((TabVideoHolder) holder).VN_date.setText(item.getCreateTime().substring(5, 10));
                 break;
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return getData().get(position).getType();
+        switch (getData().get(position).getType()) {
+            case "VIDEO":
+                return VIDEO_TEXT;
+
+            case "STANDARD":
+                return IMAGE_TEXT;
+        }
+        return 0;
     }
 
     public class TabVideoHolder extends RecyclerView.ViewHolder {
         private SwitchVideo VNideo;
         private CircleImageView VNImage;
-        private TextView VN_userName, VN_Title, VN_date;
+        private TextView VN_userName, VN_Title, VN_date, VN_videoTitle, videoTime, videoPlayer, videoDanmu;
         private ImageView VN_more, imageView;
         private RelativeLayout VN_main;
 
@@ -104,15 +128,29 @@ public class TabVideoAdapter extends BaseAdapter<VideoNewsBean, RecyclerView.Vie
             VN_userName = itemView.findViewById(R.id.VN_user_name);
             VN_Title = itemView.findViewById(R.id.VN_Title);
             VN_date = itemView.findViewById(R.id.VN_date);
+            VN_videoTitle = itemView.findViewById(R.id.VN_videoTitle);
+            videoTime = itemView.findViewById(R.id.videoTime);
+            videoPlayer = itemView.findViewById(R.id.videoPlayer);
+            videoDanmu = itemView.findViewById(R.id.videoDanmu);
             imageView = new ImageView(mContext);
+            VNideo.setVideoAllCallBack(new GSYSampleCallBack() {
+                @Override
+                public void onStartPrepared(String url, Object... objects) {
+                    super.onStartPrepared(url, objects);
+                    videoTime.setVisibility(View.GONE);
+                    videoPlayer.setVisibility(View.GONE);
+                    videoDanmu.setVisibility(View.GONE);
+                }
+            });
             VN_main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GSYVideoManager.onPause();
                     int playtime = VNideo.getVideoTime();
                     Intent intent = new Intent(mContext, VideoActivity.class);
+                    intent.putExtra("id", getData().get((int) v.getTag()).getObject().getId());
+                    intent.putExtra("uid", getData().get((int) v.getTag()).getObject().getUid());
                     intent.putExtra("playtime", playtime);
-                    Log.e(TAG, "onClick: 能否获取到当前播放的进度?" + playtime);
                     mContext.startActivity(intent);
                 }
             });
@@ -122,7 +160,7 @@ public class TabVideoAdapter extends BaseAdapter<VideoNewsBean, RecyclerView.Vie
     public class TabImageHolder extends RecyclerView.ViewHolder {
         private CircleImageView VNImage;
         private TextView VN_userName, VN_Title, VN_date;
-        private ImageView VN_more, imageView;
+        private ImageView VN_more;
         private RelativeLayout VN_main;
         private MultiView multiView;
 
@@ -134,7 +172,6 @@ public class TabVideoAdapter extends BaseAdapter<VideoNewsBean, RecyclerView.Vie
             VN_userName = itemView.findViewById(R.id.VN_user_name);
             VN_Title = itemView.findViewById(R.id.VN_Title);
             VN_date = itemView.findViewById(R.id.VN_date);
-            imageView = new ImageView(mContext);
         }
     }
 }

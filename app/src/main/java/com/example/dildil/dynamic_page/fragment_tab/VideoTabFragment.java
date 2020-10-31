@@ -3,6 +3,7 @@ package com.example.dildil.dynamic_page.fragment_tab;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +32,11 @@ public class VideoTabFragment extends BaseFragment {
     private PursueAdapter mPAdapter;
     private VideoNewsAdapter mVAdapter;
     private LinearLayoutManager layoutManager2;
-    private ScrollCalculatorHelper scrollCalculatorHelper;
+    private static ScrollCalculatorHelper scrollCalculatorHelper;
+    private CountDownTimer countDownTimer;
     private boolean mFull = false;
     private boolean isFirst = true;
+    private ResourcesData resourcesData;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +68,6 @@ public class VideoTabFragment extends BaseFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 initDatas();
-                isFirst = false;
             }
         });
 
@@ -116,25 +118,38 @@ public class VideoTabFragment extends BaseFragment {
     }
 
     private void initDatas() {
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initBeInterestedData();
-        resourcesData.initPursue();
-        resourcesData.initVideoList();
-        if (isFirst){
+        if (isFirst) {
+            resourcesData = new ResourcesData();
+            resourcesData.initBeInterestedData();
+            resourcesData.initPursue();
+            resourcesData.initVideoList();
             adapter.loadMore(resourcesData.getBeInterestedBeans());
             mPAdapter.loadMore(resourcesData.getPursueBeans());
             mVAdapter.loadMore(resourcesData.getVideoNewsBeans());
-        }else{
+            isFirst = false;
+        } else {
             adapter.refresh(resourcesData.getBeInterestedBeans());
             mPAdapter.refresh(resourcesData.getPursueBeans());
             mVAdapter.refresh(resourcesData.getVideoNewsBeans());
         }
         binding.swipe.finishRefresh(true);
+        countDownTimer = new CountDownTimer(500, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                binding.VTRecentVisit.setVisibility(View.VISIBLE);
+            }
+        };
+        countDownTimer.start();
     }
 
-    public static void VideoSuspend(){
+    public static void VideoSuspend() {
         GSYVideoManager gsyVideoManager = GSYVideoManager.instance();
-        if (gsyVideoManager.isPlaying()){
+        if (gsyVideoManager.isPlaying()) {
             gsyVideoManager.onPause();
         }
     }
@@ -150,4 +165,13 @@ public class VideoTabFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+        resourcesData = null;
+        super.onDestroy();
+    }
 }

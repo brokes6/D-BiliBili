@@ -24,6 +24,7 @@ public class ChannelTabFragment extends BaseFragment {
     private BeInterestedChannerAdapter adapter;
     private HaveViewedAdapter HV_adapter;
     private boolean isFirst = true;
+    private ResourcesData resourcesData;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,18 +34,6 @@ public class ChannelTabFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initDatas();
-                isFirst = false;
-            }
-        });
-    }
-
-    @Override
-    protected void initData() {
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),5);
         adapter = new BeInterestedChannerAdapter(getContext());
         binding.ChBeInterested.setLayoutManager(layoutManager1);
@@ -55,7 +44,17 @@ public class ChannelTabFragment extends BaseFragment {
         HV_adapter = new HaveViewedAdapter(getContext());
         binding.CHHaveViewed.setLayoutManager(layoutManager);
         binding.CHHaveViewed.setAdapter(HV_adapter);
+        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initDates();
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
         binding.swipe.autoRefresh();//自动刷新
 
     }
@@ -70,17 +69,24 @@ public class ChannelTabFragment extends BaseFragment {
 
     }
 
-    private void initDatas(){
-        ResourcesData resourcesData = new ResourcesData();
-        resourcesData.initBeInterestedData();
-        resourcesData.initHaveViewedData();
+    private void initDates(){
         if (isFirst){
+            resourcesData = new ResourcesData();
+            resourcesData.initBeInterestedData();
+            resourcesData.initHaveViewedData();
             adapter.loadMore(resourcesData.getBeInterestedBeans());
             HV_adapter.loadMore(resourcesData.getHaveViewedBeans());
+            isFirst = false;
         }else{
             adapter.refresh(resourcesData.getBeInterestedBeans());
             HV_adapter.refresh(resourcesData.getHaveViewedBeans());
         }
         binding.swipe.finishRefresh(true);
+    }
+
+    @Override
+    public void onDestroy() {
+        resourcesData = null;
+        super.onDestroy();
     }
 }

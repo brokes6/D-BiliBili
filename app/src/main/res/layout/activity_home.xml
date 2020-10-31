@@ -16,6 +16,8 @@
             android:id="@+id/navigationBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:Easy_tabTextSize="14sp"/>
+            app:Easy_tabIconSize="@dimen/dp_12"
+            app:Easy_tabTextSize="12sp"
+            app:Easy_textSizeType="TYPE_SP" />
     </RelativeLayout>
 </layout>

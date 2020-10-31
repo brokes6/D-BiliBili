@@ -19,7 +19,6 @@ import java.util.HashSet;
  * 启动页
  */
 public class SplashActivity extends BaseActivity {
-    private static final String TAG = "SplashActivity";
     private CountDownTimer countDownTimer;
 
     @Override

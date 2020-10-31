@@ -3,7 +3,6 @@ package com.example.dildil.dynamic_page.view;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +10,25 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.dildil.R;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
-import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
+import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 
 public class SwitchVideo extends StandardGSYVideoPlayer {
     private static final String TAG = "SwitchVideo";
-    ImageView mCoverImage, volume_off;
-    String mCoverOriginUrl;
-    int mDefaultRes;
-    int mCoverOriginId = 0;
+    private ImageView mCoverImage, volume_off;
+    private String mCoverOriginUrl;
+    private int mDefaultRes;
+    private int mCoverOriginId = 0;
     private boolean isMute = false;
 
     public SwitchVideo(Context context, Boolean fullFlag) {
@@ -58,7 +60,6 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
                     volume_off.setImageResource(R.drawable.volume_off_24);
                     GSYVideoManager.instance().setNeedMute(false);
                 }
-
             }
         });
         if (mThumbImageViewLayout != null &&
@@ -68,14 +69,12 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
     }
 
     public int getVideoTime() {
-        Log.e(TAG, "getVideoTime: 当前播放状态为" + getCurrentState());
         if (getCurrentState() == CURRENT_STATE_NORMAL) {
             return (int) getGSYVideoManager().getCurrentPosition();
         } else {
             return 0;
         }
     }
-
 
     @Override
     public int getLayoutId() {
@@ -104,6 +103,30 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
 
     public void loadCoverUrl(String url) {
         Glide.with(mContext).load(url).into(mCoverImage);
+    }
+
+    @Override
+    protected void showWifiDialog() {
+        new MaterialDialog.Builder(mContext)
+                .title(R.string.loginWarning)
+                .content(R.string.trafficWarning)
+                .positiveText(R.string.determine)
+                .negativeText(R.string.cancel)
+                .cancelable(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        startPlayLogic();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -238,7 +261,6 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
     @Override
     protected void changeUiToPreparingShow() {
         super.changeUiToPreparingShow();
-        Debuger.printfLog("Sample changeUiToPreparingShow");
         setViewShowState(mBottomContainer, INVISIBLE);
         setViewShowState(mStartButton, INVISIBLE);
     }
@@ -246,7 +268,6 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
     @Override
     protected void changeUiToPlayingBufferingShow() {
         super.changeUiToPlayingBufferingShow();
-        Debuger.printfLog("Sample changeUiToPlayingBufferingShow");
         if (!byStartedClick) {
             setViewShowState(mBottomContainer, INVISIBLE);
             setViewShowState(mStartButton, INVISIBLE);
@@ -256,7 +277,6 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
     @Override
     protected void changeUiToPlayingShow() {
         super.changeUiToPlayingShow();
-        Debuger.printfLog("Sample changeUiToPlayingShow");
         if (!byStartedClick) {
             setViewShowState(mBottomContainer, INVISIBLE);
             setViewShowState(mStartButton, INVISIBLE);
@@ -266,7 +286,6 @@ public class SwitchVideo extends StandardGSYVideoPlayer {
     @Override
     public void startAfterPrepared() {
         super.startAfterPrepared();
-        Debuger.printfLog("Sample startAfterPrepared");
         setViewShowState(mBottomContainer, INVISIBLE);
         setViewShowState(mStartButton, INVISIBLE);
         setViewShowState(mBottomProgressBar, VISIBLE);

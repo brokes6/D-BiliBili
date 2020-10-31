@@ -17,7 +17,7 @@ public class AppDownloadManager {
     private WeakReference<Activity> weakReference;
     private DownloadManager mDownloadManager;
     private OnUpdateListener mUpdateListener;
-    public static final String APK_SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DilDil/dildil.apk";
+    public static final String APK_SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/dildil.apk";
     private InstallUtils.DownloadCallBack downloadCallBack;
     private String apkDownloadPath;
 
@@ -35,8 +35,8 @@ public class AppDownloadManager {
         InstallUtils.with(weakReference.get())
                 //必须-下载地址
                 .setApkUrl(apkUrl)
-                //非必须-下载保存的文件的完整路径+name.apk
-                .setApkPath(APK_SAVE_PATH)
+//                //非必须-下载保存的文件的完整路径+name.apk
+//                .setApkPath(APK_SAVE_PATH)
                 //非必须-下载回调
                 .setCallBack(downloadCallBack)
                 //开始下载

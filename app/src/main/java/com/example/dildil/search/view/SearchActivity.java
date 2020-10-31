@@ -21,27 +21,18 @@ public class SearchActivity extends BaseActivity {
     private TextView mSearchButton;
     private HistoryFlowTagAdapter adapter;
     private HotSearchAdapter hadapter;
+    private ResourcesData resourcesData;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
     }
 
-//    @Override
-//    protected BasePresenter onCreatePresenter() {
-//        return null;
-//    }
-
     @Override
     protected void initView() {
         mSearchButton = findViewById(R.id.search_button);
         mSearchButton.setOnClickListener(this);
-        setMargins(binding.SeSearch, 0, getStatusBarHeight(this), 0, 0);
-    }
-
-    @Override
-    protected void initData() {
-        GridLayoutManager layoutManager1 = new GridLayoutManager(this,2);
+        GridLayoutManager layoutManager1 = new GridLayoutManager(this, 2);
         hadapter = new HotSearchAdapter(this);
         binding.SeHotSearch.setLayoutManager(layoutManager1);
         binding.SeHotSearch.setAdapter(hadapter);
@@ -54,21 +45,31 @@ public class SearchActivity extends BaseActivity {
                 XToastUtils.info("点击了：" + parent.getAdapter().getItem(position));
             }
         });
+        setMargins(binding.SeSearch, 0, getStatusBarHeight(this), 0, 0);
+    }
+
+    @Override
+    protected void initData() {
         initDatas();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.search_button:
-                finish();
-                break;
+        if (v.getId() == R.id.search_button) {
+            finish();
         }
     }
-    private void initDatas(){
-        ResourcesData resourcesData = new ResourcesData();
+
+    private void initDatas() {
+        resourcesData = new ResourcesData();
         resourcesData.initHotSearch();
         adapter.addTags(resourcesData.getSearchTag());
         hadapter.loadMore(resourcesData.getHotSearchBeans());
+    }
+
+    @Override
+    protected void onDestroy() {
+        resourcesData = null;
+        super.onDestroy();
     }
 }

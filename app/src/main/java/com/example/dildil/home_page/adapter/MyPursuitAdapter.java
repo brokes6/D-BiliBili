@@ -15,11 +15,12 @@ import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 public class MyPursuitAdapter extends BaseRecyclerAdapter<MyPursuitBean> {
     private Context mContext;
     private RoundCornerImageView image;
-    private TextView image_text, title,watch;
+    private TextView image_text, title, watch;
 
     public MyPursuitAdapter(Context context) {
         mContext = context;
     }
+
     @Override
     protected int getItemLayoutId(int viewType) {
         return R.layout.item_mypursuit;
@@ -37,7 +38,7 @@ public class MyPursuitAdapter extends BaseRecyclerAdapter<MyPursuitBean> {
     }
 
     private void initData(MyPursuitBean item) {
-        Glide.with(mContext).load(item.getMyPursueImage()).into(image);
+        Glide.with(mContext).load(item.getMyPursueImage()).placeholder(R.drawable.skeleton_circular_grey).into(image);
         image_text.setText("更新至第" + item.getToUpdate_word() + "话");
         title.setText(item.getMyPursueName());
         if (!item.getWatch_Situation().equals("尚未观看")) {

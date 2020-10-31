@@ -41,7 +41,7 @@
                             android:layout_marginTop="@dimen/dp_10"
                             android:background="#e7e7e7" />
 
-                        //话题
+<!--                        话题-->
 
                         <RelativeLayout
                             android:id="@+id/Main_topic"
@@ -84,7 +84,8 @@
                 <TextView
                     android:id="@+id/Dividing_line"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_15"
+                    android:layout_height="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:background="#f4f4f4" />
 
                 <androidx.recyclerview.widget.RecyclerView

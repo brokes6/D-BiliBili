@@ -37,7 +37,7 @@ public class PursueAdapter extends BaseRecyclerAdapter<PursueBean> {
     }
 
     private void initData(PursueBean item) {
-        Glide.with(mContext).load(item.getPursueImage()).into(image);
+        Glide.with(mContext).load(item.getPursueImage()).placeholder(R.drawable.skeleton_circular_grey).into(image);
         image_text.setText("更新至第" + item.getToUpdate_word() + "话");
         title.setText(item.getPursueName());
     }
