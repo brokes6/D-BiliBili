@@ -77,5 +77,6 @@ public interface ApiService {
     @GET("userservice/dynamic/list/{pageNum}/{pageSize}")
     Observable<DynamicBean> getDynamic(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
 
-
+//    @POST("commentservice/comment")
+//    Observable<> addComment(@Body dto dto);
 }

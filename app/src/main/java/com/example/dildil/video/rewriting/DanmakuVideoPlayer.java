@@ -102,6 +102,10 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     int mDefaultRes;
     int mCoverOriginId = 0;
 
+    private int videoType = 0;
+    private final int HORIZONTAL_SCREEN = 1;
+    private final int VERTICAL_SCREEN = 2;
+
     //是否因为用户点击
     private boolean mIsFromUser;
 
@@ -265,6 +269,15 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         }
     }
 
+    public void setVideoType(int value) {
+        videoType = value;
+        Log.e(TAG, "setVideoType: 当前视频类型为" + videoType);
+    }
+
+    public int getVideoType() {
+        return videoType;
+    }
+
     @Override
     public void onCompletion() {
         releaseDanmaku(this);
@@ -366,16 +379,21 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         ((DanmakuVideoPlayer) to).mTypeText = ((DanmakuVideoPlayer) from).mTypeText;
         ((DanmakuVideoPlayer) to).upImg = ((DanmakuVideoPlayer) from).upImg;
         ((DanmakuVideoPlayer) to).upName = ((DanmakuVideoPlayer) from).upName;
+        ((DanmakuVideoPlayer) to).videoType = ((DanmakuVideoPlayer) from).videoType;
     }
 
     private void changeUi() {
-        main.setPadding(getStatusBarHeight(mContext), 0, 0, 0);
-        Glide.with(mContext).load(upImg).into(up_img);
-        up_name.setText(upName);
+        if (videoType == HORIZONTAL_SCREEN) {
+            main.setPadding(getStatusBarHeight(mContext), 0, 0, 0);
+            Glide.with(mContext).load(upImg).into(up_img);
+            up_name.setText(upName);
+        } else {
+
+        }
+
     }
 
     private void resolveTypeUI() {
-        main.setPadding(0, 0, 0, 0);
         if (getCurrentState() == CURRENT_STATE_PREPAREING) {
             mSeekBar_play.setImageResource(R.mipmap.play);
             Video_play.setImageResource(R.mipmap.play);
@@ -792,19 +810,34 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             setViewShowState(mBottomContainer, INVISIBLE);
             setViewShowState(mStartButton, INVISIBLE);
         }
-        if(mIfCurrentIsFullscreen){
+        if (mIfCurrentIsFullscreen && videoType == HORIZONTAL_SCREEN) {
             UPImage.setVisibility(VISIBLE);
             Sanlian.setVisibility(VISIBLE);
+            DoubleSpeed.setVisibility(VISIBLE);
+            mResolvingPower.setVisibility(VISIBLE);
+        } else {
+            DoubleSpeed.setVisibility(GONE);
+            mResolvingPower.setVisibility(GONE);
+            UPImage.setVisibility(GONE);
+            Sanlian.setVisibility(GONE);
         }
     }
 
     @Override
     protected void changeUiToPauseShow() {
         super.changeUiToPauseShow();
-        if(mIfCurrentIsFullscreen){
+        if (mIfCurrentIsFullscreen && videoType == HORIZONTAL_SCREEN) {
             UPImage.setVisibility(VISIBLE);
             Sanlian.setVisibility(VISIBLE);
+            DoubleSpeed.setVisibility(VISIBLE);
+            mResolvingPower.setVisibility(VISIBLE);
+        } else {
+            DoubleSpeed.setVisibility(GONE);
+            mResolvingPower.setVisibility(GONE);
+            UPImage.setVisibility(GONE);
+            Sanlian.setVisibility(GONE);
         }
+
     }
 
     @Override

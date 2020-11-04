@@ -59,6 +59,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     private boolean isLoad = true;
     private int id, uid;
     private LoginBean loginBean;
+    private CustomCommentViewHolder holder = null;
+    private CustomReplyViewHolder holders = null;
 
     @Inject
     VideoDetailsPresenter mPresenter;
@@ -119,7 +121,6 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     @Override
                     public View buildCommentItem(int groupPosition, CommentDetailBean.CommentData item, LayoutInflater inflater, View convertView, ViewGroup parent) {
                         //使用方法就像adapter里面的getView()方法一样
-                        final CustomCommentViewHolder holder;
                         if (convertView == null) {
                             //使用自定义布局
                             convertView = inflater.inflate(R.layout.comment_item_layout, parent, false);
@@ -132,6 +133,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                         holder.prizes.setText("0");
                         Glide.with(getContext()).load(item.getImg()).into(holder.ico);
                         holder.userName.setText(item.getUsername());
+                        holder.userData.setText("10-15");
                         holder.comment.setText(item.getContent());
                         return convertView;
                     }
@@ -143,24 +145,21 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     @Override
                     public View buildReplyItem(int groupPosition, int childPosition, boolean isLastReply, CommentDetailBean.CommentData.replyData item, LayoutInflater inflater, View convertView, ViewGroup parent) {
                         //使用方法就像adapter里面的getView()方法一样
-                        CustomReplyViewHolder holder = null;
                         if (convertView == null) {
                             //使用自定义布局
                             convertView = inflater.inflate(R.layout.item_secondary_review_comment, parent, false);
-                            holder = new CustomReplyViewHolder(convertView);
+                            holders = new CustomReplyViewHolder(convertView);
                             //必须使用ViewHolder机制
-                            convertView.setTag(holder);
+                            convertView.setTag(holders);
                         } else {
-                            holder = (CustomReplyViewHolder) convertView.getTag();
+                            holders = (CustomReplyViewHolder) convertView.getTag();
                         }
-                        if (childPosition>3){
-                            holder.userName.setVisibility(View.GONE);
-                            holder.reply.setVisibility(View.GONE);
-                            holder.prizes.setVisibility(View.GONE);
-                        }else{
-                            holder.userName.setText(item.getUsername());
-                            holder.reply.setText(item.getContent());
-                            holder.prizes.setText("0");
+                        if (childPosition > 3) {
+                            holders.userName.setVisibility(View.GONE);
+                            holders.reply.setVisibility(View.GONE);
+                        } else {
+                            holders.userName.setText(item.getUsername());
+                            holders.reply.setText(":" + item.getContent());
                         }
                         return convertView;
                     }
@@ -178,7 +177,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
      * by moos on 2018/04/20
      * func:弹出回复框
      */
-    private void showReplyDialog(final int position,CommentDetailBean.CommentData item) {
+    private void showReplyDialog(final int position, CommentDetailBean.CommentData item) {
         //本质上就是弹出一个输入框（使用了系统自带的底部弹窗）
         dialog = new BottomSheetDialog(getContext(), R.style.BottomSheetEdit);
         View commentView = LayoutInflater.from(getContext()).inflate(R.layout.comment_dialog_layout, null);
@@ -207,7 +206,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     replyData.setContent(replyContent);
                     replyData.setImg(loginBean.getData().getImg());
                     replyData.setUsername(loginBean.getData().getUsername());
-                    binding.commentView.addReply(replyData,position);
+                    binding.commentView.addReply(replyData, position);
                     XToastUtils.toast("回复成功");
                 } else {
                     XToastUtils.toast("回复内容不能为空");
@@ -313,8 +312,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
         @Override
         public void loading(CommentDetailBean.CommentData.replyData reply, int willLoadPage) {
-            if(willLoadPage==2){
-                Log.e("why", "loading: 》》》》》》》》评论过多" );
+            if (willLoadPage == 2) {
+                Log.e("why", "loading: 》》》》》》》》评论过多");
             }
         }
 
@@ -333,7 +332,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
         @Override
         public void commentItemOnClick(int position, CommentDetailBean.CommentData comment, View view) {
-            showReplyDialog(position,comment);
+            showReplyDialog(position, comment);
         }
 
         @Override
@@ -388,6 +387,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         if (!isLoad) {
             //binding.swipe.finishRefresh(true);
         }
+        commentDetailBean.setPageSize(2);
         initExpandableListView(commentDetailBean);
         hideDialog();
     }

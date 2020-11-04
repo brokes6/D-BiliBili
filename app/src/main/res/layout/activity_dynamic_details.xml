@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/DD_titles"
+            layout="@layout/item_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_40">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_10"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <com.android.liuzhuang.rcimageview.CircleImageView
+                        android:id="@+id/DD_user_img"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40" />
+
+                    <TextView
+                        android:id="@+id/DD_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toEndOf="@+id/DD_user_img"
+                        android:text=""
+                        android:textColor="#fa7296"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/DD_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/DD_user_name"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toEndOf="@+id/DD_user_img"
+                        android:text=""
+                        android:textColor="#a4a4a4"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/DD_Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/DD_user_img"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:textColor="#212121"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/DD_multiMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/DD_Title"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:orientation="vertical">
+
+                        <cn.lemon.multi.MultiView
+                            android:id="@+id/DD_multi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:placeholder="@drawable/skeleton_circular_grey" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_30"
+                    android:background="@color/While"
+                    app:tl_indicator_bounce_enable="true"
+                    app:tl_indicator_color="@color/Pink"
+                    app:tl_indicator_width_equal_title="true"
+                    app:tl_textSelectColor="@color/Pink"
+                    app:tl_textUnselectColor="#838080"
+                    app:tl_textsize="16sp"
+                    app:tl_underline_height="1dp" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/While"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <include
+                layout="@layout/item_sanlian_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

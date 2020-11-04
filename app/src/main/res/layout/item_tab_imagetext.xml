@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/IT_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,8 +10,8 @@
 
     <com.android.liuzhuang.rcimageview.CircleImageView
         android:id="@+id/VN_user_img"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50" />
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40" />
 
     <TextView
         android:id="@+id/VN_user_name"
@@ -62,7 +63,8 @@
         <cn.lemon.multi.MultiView
             android:id="@+id/VN_multi"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:placeholder="@drawable/skeleton_circular_grey"/>
 
     </LinearLayout>
 

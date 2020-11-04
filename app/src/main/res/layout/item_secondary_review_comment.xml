@@ -1,73 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/reply_rootView"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginStart="@dimen/dp_52"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:background="#f4f4f4"
+        android:paddingTop="@dimen/dp_7"
+        android:paddingBottom="@dimen/dp_7">
 
-        <View
-            android:id="@+id/line"
-            android:layout_width="@dimen/dp_2"
+        <TextView
+            android:id="@+id/user"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/right"
-            android:layout_alignBottom="@id/right"
-            android:layout_marginLeft="@dimen/dp_52"
-            android:layout_marginTop="@dimen/dp_2"
-            android:layout_marginBottom="@dimen/dp_2"
-            android:background="#c3c8cb" />
+            android:layout_marginStart="@dimen/dp_6"
+            android:textColor="#1489bf"
+            android:textSize="14sp" />
 
-
-        <RelativeLayout
-            android:id="@+id/right"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/userComment"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_14"
-            android:layout_marginBottom="@dimen/dp_4"
-            android:layout_toRightOf="@id/line">
-
-
-            <TextView
-                android:id="@+id/user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_6"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:id="@+id/comment_item_like"
-                android:layout_width="@dimen/dp_18"
-                android:layout_height="@dimen/dp_18"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_30"
-                android:padding="@dimen/dp_3"
-                android:src="@drawable/pxjh"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/prizes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/comment_item_like"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_6"
-                android:layout_marginTop="@dimen/dp_18"
-                android:textColor="#1C1C1C" />
-        </RelativeLayout>
-
+            android:layout_marginLeft="@dimen/dp_2"
+            android:layout_toRightOf="@+id/user"
+            android:textColor="#292929"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 </LinearLayout>

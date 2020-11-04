@@ -41,6 +41,8 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Inject
     RecommendPresenter mPresenter;
+    private ResourcesData mResourcesData;
+    private RecommendVideoBean.BeanData mBeanData;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,9 +81,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (isFirst) {
                     mPresenter.getRandomRecommendation();
-                    ResourcesData resourcesData = new ResourcesData();
-                    resourcesData.initBanner();
-                    adapter.initBanner(resourcesData.getBeannerUrl());
                     isFirst = false;
                 } else {
                     mPresenter.getRefreshRecommendVideo();
@@ -100,6 +99,11 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     protected void initData() {
         binding.swipe.autoRefresh();//自动刷新
+        mResourcesData = new ResourcesData();
+        mResourcesData.initBanner();
+        mBeanData = new RecommendVideoBean.BeanData();
+        mBeanData.setBanner(true);
+        mBeanData.setBannerUrl(mResourcesData.getBeannerUrl());
     }
 
     @Override
@@ -136,6 +140,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
         binding.swipe.setVisibility(View.VISIBLE);
+        videoBean.addData(mBeanData);
         for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
             adapter.add(datum);
         }
@@ -153,6 +158,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
             adapter.add(0, datum);
         }
+        binding.ReRecy.scrollToPosition(0);
         binding.swipe.finishRefresh(true);
     }
 

@@ -9,17 +9,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.customcontrollibs.BaseAdapter;
+import com.example.customcontrollibs.RoundRelativeLayout;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.dialog.VideoChoiceDialog;
-import com.example.dildil.rewriting_view.RoundRelativeLayout;
 import com.example.dildil.util.BannerImageAdapter;
 import com.example.dildil.util.DensityUtil;
 import com.example.dildil.video.view.VideoActivity;
@@ -28,12 +29,9 @@ import com.youth.banner.config.IndicatorConfig;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
 
-import java.util.List;
-
 public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.BeanData, RecyclerView.ViewHolder> {
-    private Context mContext;
-    private VideoChoiceDialog videoChoiceDialog;
-    private List<BannerBean> imageUrls;
+    private final Context mContext;
+    private final VideoChoiceDialog videoChoiceDialog;
     private boolean isLoad = false;
     private int positions;
     private int type = 0;
@@ -57,12 +55,12 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
     @Override
     protected void bindData(@NonNull RecyclerView.ViewHolder holder, int position, RecommendVideoBean.BeanData item) {
         if (getItemViewType(position) == TYPE_HEADER) {
-            if (!isLoad){
+            if (!isLoad) {
                 ((RecHeaderHolder) holder).banner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT);
                 ((RecHeaderHolder) holder).banner.setBannerRound(15);
                 ((RecHeaderHolder) holder).banner.setClipToOutline(true);
                 ((RecHeaderHolder) holder).banner.start();
-                ((RecHeaderHolder) holder).banner.setAdapter(new BannerImageAdapter<BannerBean>(imageUrls) {
+                ((RecHeaderHolder) holder).banner.setAdapter(new BannerImageAdapter<BannerBean>(getData().get(position).getBannerUrl()) {
 
                     @Override
                     public void onBindView(BannerImageHolder holder, BannerBean data, int position, int size) {
@@ -91,29 +89,38 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
         }
     }
 
-    public void initBanner(List<BannerBean> imageUrls) {
-        this.imageUrls = imageUrls;
-    }
-
     /**
      * 重写这个方法，很重要，是加入Header和Footer的关键，我们通过判断item的类型，从而绑定不同的view *
      */
     @Override
     public int getItemViewType(int position) {
-        if (mHeaderView == null && mFooterView == null) {
+        if (getData().get(position).isBanner()) {
+            return TYPE_HEADER;
+        } else {
             return TYPE_NORMAL;
         }
-        if (position == 0) {
-            //第一个item应该加载Header
-            return TYPE_HEADER;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        if (manager instanceof GridLayoutManager) {   // 布局是GridLayoutManager所管理
+            final GridLayoutManager gridLayoutManager = (GridLayoutManager) manager;
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    // 如果是Header、Footer的对象则占据spanCount的位置，否则就只占用1个位置
+                    return (getData().get(position).isBanner()) ? gridLayoutManager.getSpanCount() : 1;
+                }
+            });
         }
-        return TYPE_NORMAL;
     }
 
     public class RecViewHolder extends RecyclerView.ViewHolder {
-        private ImageView cover, more;
-        private TextView play_volume, barrage_volume, title, time;
-        private RoundRelativeLayout Re_video;
+        private final ImageView more,cover;
+        private final TextView play_volume,barrage_volume,title,time;
+        private final RoundRelativeLayout Re_video;
 
         public RecViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -159,8 +166,8 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
         }
     }
 
-    public class RecHeaderHolder extends RecyclerView.ViewHolder {
-        private Banner banner;
+    public static class RecHeaderHolder extends RecyclerView.ViewHolder {
+        private final Banner banner;
 
         public RecHeaderHolder(@NonNull View itemView) {
             super(itemView);

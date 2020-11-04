@@ -38,7 +38,7 @@ public class CustomViewStyleConfigurator extends ViewStyleConfigurator {
         dividerHeight = ViewUtil.dpToPx(1, context);//dp
         //*********//分割线总样式//*************//
         //*********//回复Item最后一项的下划线//*************//
-//        isDrawChildDivider = false;
+        isDrawChildDivider = false;
 //        c_divider_adjustMargins = true;
 //        c_divider_adjustMarginsLeft = ViewUtil.dpToPx(88, context);//dp
 //        c_divider_adjustMarginsTop = ViewUtil.dpToPx(5, context);//dp
@@ -46,7 +46,7 @@ public class CustomViewStyleConfigurator extends ViewStyleConfigurator {
 //        c_divider_adjustMarginsBottom = ViewUtil.dpToPx(5, context);//dp
 //        //*********//回复Item最后一项的下划线//*************//
 //        //*********//评论Item的分割线//*************//
-//        f_divider_adjustMargins = false;
+        f_divider_adjustMargins = true;
 //        f_divider_adjustMarginsLeft = 0;//dp
 //        f_divider_adjustMarginsTop = 0;//dp
 //        f_divider_adjustMarginsRight = 0;//dp

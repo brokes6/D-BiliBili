@@ -19,7 +19,7 @@ import com.example.dildil.home_page.view.RankingLstActivity;
 import com.example.dildil.util.DensityUtil;
 
 public class HotRankingAdapter extends BaseAdapter<RecommendVideoBean.BeanData, RecyclerView.ViewHolder> {
-    private Context mContext;
+    private final Context mContext;
     private int position;
     private ItemOnClickListener listener;
 
@@ -45,17 +45,17 @@ public class HotRankingAdapter extends BaseAdapter<RecommendVideoBean.BeanData, 
     @Override
     protected void bindData(@NonNull RecyclerView.ViewHolder holder, int position, RecommendVideoBean.BeanData item) {
         if (getItemViewType(position) == TYPE_HEADER) {
-            ((HotHeaderViewHolder)holder).rankingList.setTag(position);
-        }else{
+            ((HotHeaderViewHolder) holder).rankingList.setTag(position);
+        } else {
             Glide.with(mContext)
                     .load(item.getCover())
                     .placeholder(R.drawable.skeleton_circular_grey)
-                    .into(((HotViewHolder)holder).video_cover);
-            ((HotViewHolder)holder).title.setText(item.getTitle());
-            ((HotViewHolder)holder).up.setText(item.getUpName());
-            ((HotViewHolder)holder).time.setText(DensityUtil.timeParse(item.getLength()));
-            ((HotViewHolder)holder).playNum.setText(String.valueOf(item.getPlayNum()));
-            ((HotViewHolder)holder).hot_video_cover.setTag(position);
+                    .into(((HotViewHolder) holder).video_cover);
+            ((HotViewHolder) holder).title.setText(item.getTitle());
+            ((HotViewHolder) holder).up.setText(item.getUpName());
+            ((HotViewHolder) holder).time.setText(DensityUtil.timeParse(item.getLength()));
+            ((HotViewHolder) holder).playNum.setText(String.valueOf(item.getPlayNum()));
+            ((HotViewHolder) holder).hot_video_cover.setTag(position);
         }
     }
 
@@ -72,9 +72,10 @@ public class HotRankingAdapter extends BaseAdapter<RecommendVideoBean.BeanData, 
     }
 
     public class HotViewHolder extends RecyclerView.ViewHolder {
-        private RoundCornerImageView video_cover;
-        private RelativeLayout hot_video_cover;
-        private TextView time, title, up, playNum;
+        private final RoundCornerImageView video_cover;
+        private final RelativeLayout hot_video_cover;
+        private final TextView time,title,up;
+        private final TextView playNum;
 
         public HotViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -96,8 +97,8 @@ public class HotRankingAdapter extends BaseAdapter<RecommendVideoBean.BeanData, 
         }
     }
 
-    public class HotHeaderViewHolder extends RecyclerView.ViewHolder{
-        private RelativeLayout rankingList;
+    public class HotHeaderViewHolder extends RecyclerView.ViewHolder {
+        private final RelativeLayout rankingList;
 
         public HotHeaderViewHolder(@NonNull View itemView) {
             super(itemView);

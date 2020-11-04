@@ -31,7 +31,11 @@ public class RecommendVideoBean {
         this.data = data;
     }
 
-    public class BeanData {
+    public void addData(BeanData datas){
+        data.add(0,datas);
+    }
+
+    public static class BeanData {
         private int id;
         private int uid;
         private int playNum;
@@ -43,6 +47,8 @@ public class RecommendVideoBean {
         private String title;
         private String cover;
         private String previewUrl;
+        private boolean isBanner = false;
+        private List<BannerBean> bannerUrl;
 
         public int getId() {
             return id;
@@ -130,6 +136,22 @@ public class RecommendVideoBean {
 
         public void setPreviewUrl(String previewUrl) {
             this.previewUrl = previewUrl;
+        }
+
+        public boolean isBanner() {
+            return isBanner;
+        }
+
+        public void setBanner(boolean banner) {
+            isBanner = banner;
+        }
+
+        public List<BannerBean> getBannerUrl() {
+            return bannerUrl;
+        }
+
+        public void setBannerUrl(List<BannerBean> bannerUrl) {
+            this.bannerUrl = bannerUrl;
         }
 
         @Override

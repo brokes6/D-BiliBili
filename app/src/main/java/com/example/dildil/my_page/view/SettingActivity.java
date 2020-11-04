@@ -54,8 +54,8 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     protected void initView() {
         binding.logOut.setOnClickListener(this);
         binding.DetectUpdates.setOnClickListener(this);
-        binding.ivBack.setOnClickListener(this);
-        setMargins(binding.Title, 0, getStatusBarHeight(this), 0, 0);
+        binding.title.findViewById(R.id.iv_back).setOnClickListener(this);
+        setMargins(binding.title, 0, getStatusBarHeight(this), 0, 0);
     }
 
     @Override

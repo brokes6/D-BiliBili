@@ -1,6 +1,7 @@
 package com.example.dildil.video.view;
 
 import android.Manifest;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -29,7 +30,9 @@ import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityVideoBinding;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
+import com.example.dildil.util.DensityUtil;
 import com.example.dildil.util.SharedPreferencesUtil;
+import com.example.dildil.util.ViewWrapper;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -62,6 +65,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED;
+import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
+import static com.shuyu.gsyvideoplayer.utils.GSYVideoType.SCREEN_TYPE_CUSTOM;
+import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_AUTO_COMPLETE;
+import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_NORMAL;
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAUSE;
 
 public class VideoActivity extends BaseActivity implements VideoDetailsContract.View, Selector.OnSelectorStateListener {
@@ -78,9 +86,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private int id, uid;
     private List<SwitchVideoBean> urls = new ArrayList<>();
     private BottomSheetDialog dialog;
-    private SelectorGroup selectorGroup = new SelectorGroup();
+    private final SelectorGroup selectorGroup = new SelectorGroup();
     private int textSize;
-    private final int LARGEFONT = 1, FINEPRINT = 2;
     private boolean isFunction = true;
     private final String[] definition = {"360p", "480p", "720p", "1080p"};
     private DrawableCrossFadeFactory factory;
@@ -150,6 +157,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         orientationUtils = new OrientationUtils(this, binding.detailPlayer);
         //初始化不打开外部的旋转
         orientationUtils.setEnable(false);
+        binding.detailPlayer.setSeekRatio(1.5f);
 
         binding.detailPlayer.setIsTouchWiget(true);
         binding.detailPlayer.setVideoDetails(uid, id);
@@ -197,6 +205,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             @Override
             public void onQuitFullscreen(String url, Object... objects) {
                 super.onQuitFullscreen(url, objects);
+                if (binding.detailPlayer.getCurrentState() != CURRENT_STATE_AUTO_COMPLETE && binding.detailPlayer.getCurrentState() != CURRENT_STATE_NORMAL && binding.detailPlayer.getVideoType() == 1) {
+                    banAppBarScroll(false);
+                }
                 if (orientationUtils != null) {
                     orientationUtils.backToProtVideo();
                 }
@@ -207,7 +218,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 super.onClickStartIcon(url, objects);
                 binding.keyboard.setVisibility(View.GONE);
                 binding.more.setVisibility(View.GONE);
-                banAppBarScroll(false);
+                if (binding.detailPlayer.getVideoType() == 1) {
+                    banAppBarScroll(false);
+                }
             }
 
             @Override
@@ -215,7 +228,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 super.onClickStop(url, objects);
                 binding.keyboard.setVisibility(View.VISIBLE);
                 binding.more.setVisibility(View.VISIBLE);
-                banAppBarScroll(true);
+                if (binding.detailPlayer.getVideoType() == 1) {
+                    banAppBarScroll(true);
+                }
             }
 
             @Override
@@ -225,7 +240,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 binding.more.setVisibility(View.GONE);
                 binding.playButton.setVisibility(View.GONE);
                 binding.appbar.setExpanded(true);
-                banAppBarScroll(false);
+                if (binding.detailPlayer.getVideoType() == 1) {
+                    banAppBarScroll(false);
+                }
             }
         });
 
@@ -242,7 +259,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.appbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-
                 if (verticalOffset == 0) {
                     if (state != CollapsingToolbarLayoutState.EXPANDED) {
                         state = CollapsingToolbarLayoutState.EXPANDED;//修改状态标记为展开
@@ -253,11 +269,17 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                         binding.coll.setContentScrimColor(getResources().getColor(R.color.Pink));
                         binding.playButton.setVisibility(View.VISIBLE);//隐藏播放按钮
                         state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
+                        if (binding.detailPlayer.getVideoType()==2){
+                            GSYVideoManager.onPause();
+                        }
                     }
                 } else {
                     if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
                         if (state == CollapsingToolbarLayoutState.COLLAPSED) {
                             binding.playButton.setVisibility(View.GONE);//由折叠变为中间状态时隐藏播放按钮
+                            if (binding.detailPlayer.getVideoType()==2){
+                                GSYVideoManager.onResume();
+                            }
                         }
                         state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
                     }
@@ -284,7 +306,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.VTab.setViewPager(binding.VViewPager, TabTitle, this, mFragments);
         binding.detailPlayer.setShrinkImageRes(R.drawable.crop_free_24);
         binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
 
         mPresenter.getDanMu(0, id);
         mPresenter.getVideoDetails(id, uid);
@@ -361,6 +383,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     public void onStateChange(Selector selector, boolean isSelect) {
         String tag = selector.getTag();
+        int FINEPRINT = 2;
+        int LARGEFONT = 1;
         switch (tag) {
             case "text_up":
                 textSize = LARGEFONT;
@@ -418,7 +442,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         View mAppBarChildAt = binding.appbar.getChildAt(0);
         AppBarLayout.LayoutParams mAppBarParams = (AppBarLayout.LayoutParams) mAppBarChildAt.getLayoutParams();
         if (isScroll) {
-            mAppBarParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+            mAppBarParams.setScrollFlags(SCROLL_FLAG_SCROLL | SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
             mAppBarChildAt.setLayoutParams(mAppBarParams);
         } else {
             mAppBarParams.setScrollFlags(0);
@@ -429,6 +453,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
         Glide.with(mContext).load(videoDetailsBean.getCover()).transition(withCrossFade(factory)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.skeleton_circular_grey).into(imageView);
         binding.detailPlayer.setThumbImageView(imageView);
+        JudgeVideoType(videoDetailsBean.getScreenType());
         String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {
             SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i], urlList[i]);
@@ -436,7 +461,21 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         }
         binding.detailPlayer.setUPData(videoDetailsBean.getUpImg(), videoDetailsBean.getUpName());
         binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
-        //hideDialog();
+    }
+
+    private void JudgeVideoType(String valueType) {
+        if (valueType.equals("PORTRAIT")) {
+            binding.detailPlayer.setAutoFullWithSize(true);
+            GSYVideoType.setScreenScaleRatio(16f / 9f);
+            GSYVideoType.setShowType(SCREEN_TYPE_CUSTOM);
+            binding.detailPlayer.setVideoType(2);
+            ViewWrapper wrapper = new ViewWrapper(binding.videoDanmu);
+            ObjectAnimator animator = ObjectAnimator.ofInt(wrapper, "height", DensityUtil.getScreenRelatedInformation(this) * 3 / 4);
+            animator.setDuration(500);
+            animator.start();
+        } else {
+            binding.detailPlayer.setVideoType(1);
+        }
     }
 
     @Override

@@ -71,6 +71,7 @@ public class VideoDetailsBean {
         private int categoryPId;
         private int categoryId;
         private int length;
+        private String screenType;
         private String upImg;
         private String upName;
         private String categoryPName;
@@ -84,6 +85,14 @@ public class VideoDetailsBean {
         private String resolutionState;
         private String updateTime;
         private LogData log;
+
+        public String getScreenType() {
+            return screenType;
+        }
+
+        public void setScreenType(String screenType) {
+            this.screenType = screenType;
+        }
 
         public LogData getLog() {
             return log;

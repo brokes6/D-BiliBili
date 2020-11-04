@@ -10,7 +10,7 @@
         android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gray_d8">
+        android:background="@color/White_ash">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Re_recy"

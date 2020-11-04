@@ -1,9 +1,11 @@
 package com.example.dildil.login_page.view;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -58,6 +60,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     protected void initView() {
         binding.LoLogin.setOnClickListener(this);
+        binding.LoUserAccount.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        binding.LoUserPassword.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        binding.LoUserPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
         setMargins(binding.top1,0,getStatusBarHeight(this),0,0);
     }
 

@@ -10,8 +10,8 @@
 
     <com.android.liuzhuang.rcimageview.CircleImageView
         android:id="@+id/VN_user_img"
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="@dimen/dp_50" />
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40" />
 
     <TextView
         android:id="@+id/VN_user_name"

@@ -167,6 +167,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
                     android:gravity="center|left"
+                    android:maxLines="1"
                     android:paddingStart="@dimen/dp_5"
                     android:text="@string/BulletScreenTips"
                     android:textColor="#A1A1A3"
@@ -218,8 +219,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/video_title_bg"
-        android:visibility="invisible"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="invisible">
 
         <RelativeLayout
             android:id="@+id/first_floor"
@@ -240,6 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/back"
+                android:maxLines="1"
                 android:paddingLeft="@dimen/dp_10"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />

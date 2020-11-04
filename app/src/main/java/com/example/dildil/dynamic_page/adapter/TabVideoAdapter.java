@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.customcontrollibs.BaseAdapter;
 import com.example.dildil.R;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.view.DynamicDetailsActivity;
 import com.example.dildil.dynamic_page.view.SwitchVideo;
 import com.example.dildil.util.DensityUtil;
 import com.example.dildil.video.view.VideoActivity;
@@ -30,6 +31,7 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
     private Context mContext;
     private static final int IMAGE_TEXT = 1;
     private static final int VIDEO_TEXT = 2;
+    private Intent intent;
 
     public TabVideoAdapter(Context context) {
         mContext = context;
@@ -60,6 +62,7 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 ((TabImageHolder) holder).VN_date.setText(item.getCreateTime().substring(5, 10));
                 ((TabImageHolder) holder).multiView.setLayoutParams(new LinearLayout.LayoutParams(900, ViewGroup.LayoutParams.WRAP_CONTENT));
                 ((TabImageHolder) holder).multiView.setImages(item.getImgs().split(","));
+                ((TabImageHolder) holder).VN_main.setTag(position);
                 break;
             case VIDEO_TEXT:
                 ((TabVideoHolder) holder).VN_main.setTag(position);
@@ -147,11 +150,12 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 public void onClick(View v) {
                     GSYVideoManager.onPause();
                     int playtime = VNideo.getVideoTime();
-                    Intent intent = new Intent(mContext, VideoActivity.class);
+                    intent = new Intent(mContext, VideoActivity.class);
                     intent.putExtra("id", getData().get((int) v.getTag()).getObject().getId());
                     intent.putExtra("uid", getData().get((int) v.getTag()).getObject().getUid());
                     intent.putExtra("playtime", playtime);
                     mContext.startActivity(intent);
+                    intent = null;
                 }
             });
         }
@@ -172,6 +176,16 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
             VN_userName = itemView.findViewById(R.id.VN_user_name);
             VN_Title = itemView.findViewById(R.id.VN_Title);
             VN_date = itemView.findViewById(R.id.VN_date);
+            VN_main.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    intent = new Intent(mContext, DynamicDetailsActivity.class);
+                    intent.putExtra("id",getData().get((int) v.getTag()).getId());
+                    intent.putExtra("uid",getData().get((int) v.getTag()).getUid());
+                    mContext.startActivity(intent);
+                    intent = null;
+                }
+            });
         }
     }
 }

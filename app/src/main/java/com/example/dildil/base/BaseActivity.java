@@ -10,13 +10,14 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +49,7 @@ import io.reactivex.schedulers.Schedulers;
  * Author:fuxinbo
  * Activity Base类
  */
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements View.OnClickListener {
+public abstract class   BaseActivity<P extends BasePresenter> extends AppCompatActivity implements View.OnClickListener {
     protected LoadingsDialog mDialogs;
     public Context mContext;
     private JudgeLoginReceiver judgeLoginReceiver;
@@ -196,12 +197,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      *
      * @param color
      */
-    public void setBackBtn(String color) {
+    public void setBackBtn(@ColorInt int color) {
         ImageView backBtn = findViewById(R.id.iv_back);
         backBtn.setVisibility(View.VISIBLE);
         VectorDrawableCompat vectorDrawableCompat = VectorDrawableCompat.create(getResources(), R.drawable.shape_back, getTheme());
         //你需要改变的颜色
-        vectorDrawableCompat.setTint(Color.parseColor(color));
+        vectorDrawableCompat.setTint(color);
         backBtn.setImageDrawable(vectorDrawableCompat);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,8 +218,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      *
      * @param resId
      */
-    public void setLeftTitleText(int resId) {
+    public void setLeftTitleText(String resId) {
         TextView leftTitle = findViewById(R.id.tv_left_title);
+        Log.e("why", "setLeftTitleText1: ????????为什么"+leftTitle );
         leftTitle.setVisibility(View.VISIBLE);
         leftTitle.setText(resId);
     }
@@ -226,11 +228,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     /**
      * 设置标题栏背景颜色
      *
-     * @param resId
+     * @param color
      */
-    public void setTitleBG(String resId) {
-        RelativeLayout title = findViewById(R.id.title);
-        title.setBackgroundColor(Color.parseColor(resId));
+    public void setTitleBG(@ColorInt int color) {
+        LinearLayout title = findViewById(R.id.back_BackGround);
+        Log.e("why", "setLeftTitleText2: ????????为什么"+title );
+        title.setBackgroundColor(color);
     }
 
     /**
@@ -271,23 +274,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         TextView leftTitle = findViewById(R.id.tv_left_title);
         leftTitle.setVisibility(View.VISIBLE);
         leftTitle.setAlpha(alpha);
-    }
-
-    /**
-     * 将标题栏的样式改为 音乐样式
-     * 设置音乐名称
-     * 设置音乐作者
-     *
-     * @param songName
-     * @param singerName
-     */
-    public void setSongInfo(String songName, String singerName) {
-        RelativeLayout rlSong = findViewById(R.id.rl_song_info);
-        rlSong.setVisibility(View.VISIBLE);
-        TextView tvSongName = findViewById(R.id.tv_songname);
-        TextView tvSingerName = findViewById(R.id.tv_singername);
-        tvSongName.setText(songName);
-        tvSingerName.setText(singerName);
     }
 
     /**

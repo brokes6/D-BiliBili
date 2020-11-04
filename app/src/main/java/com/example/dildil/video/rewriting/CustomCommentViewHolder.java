@@ -9,12 +9,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CustomCommentViewHolder {
     public CircleImageView ico;
-    public TextView userName,prizes,comment;
+    public TextView userName,prizes,comment,userData;
 
     public CustomCommentViewHolder(View view) {
-        userName=view.findViewById(R.id.user);
-        prizes=view.findViewById(R.id.prizes);
-        comment=view.findViewById(R.id.data);
+        userName=view.findViewById(R.id.userName);
+        prizes=view.findViewById(R.id.comment_item_like_num);
+        comment=view.findViewById(R.id.userContent);
+        userData=view.findViewById(R.id.userData);
         ico=view.findViewById(R.id.ico);
     }
 }

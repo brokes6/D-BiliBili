@@ -1,7 +1,9 @@
 package com.example.dildil.util;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.WindowManager;
 
 /**
  * 单位转换工具类
@@ -53,6 +55,16 @@ public class DensityUtil {
         }
         time += second;
         return time;
+    }
+
+    public static int  getScreenRelatedInformation(Context context) {
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if (windowManager != null) {
+            DisplayMetrics outMetrics = new DisplayMetrics();
+            windowManager.getDefaultDisplay().getMetrics(outMetrics);
+         return outMetrics.heightPixels;
+        }
+        return 0;
     }
 
 }
