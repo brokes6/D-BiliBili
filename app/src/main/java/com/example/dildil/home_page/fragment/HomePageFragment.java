@@ -24,14 +24,14 @@ import com.example.dildil.home_page.fragment.fragment_tab.PursueFramgment;
 import com.example.dildil.home_page.fragment.fragment_tab.RapFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.search.view.SearchActivity;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 
 public class HomePageFragment extends BaseFragment {
-    FragmentHomepageBinding binding;
+    private FragmentHomepageBinding binding;
     private final String[] TabTitle = {"直播", "推荐", "热门", "追番", "影视", "说唱区", "抗灾区"};
     private ArrayList<Fragment> mFragments;
 
@@ -63,12 +63,20 @@ public class HomePageFragment extends BaseFragment {
         binding.information.setOnClickListener(this);
         binding.tab.setViewPager(binding.viewPager, TabTitle, getActivity(), mFragments);
         binding.tab.setCurrentTab(1);
+        setCallBackListener(callBackListener);
     }
+
+    ICallBackListener callBackListener = new ICallBackListener() {
+        @Override
+        public void onItemClick(boolean value) {
+            binding.viewPager.setScanScroll(value);
+        }
+    };
 
     @Override
     protected void initData() {
-        LoginBean loginBean = getUserData();
-        Glide.with(getActivity()).load(loginBean.getData().getImg()).into(binding.userImg);
+        UserBean userBean = getUserData();
+        Glide.with(getActivity()).load(userBean.getData().getImg()).into(binding.userImg);
     }
 
     @Override

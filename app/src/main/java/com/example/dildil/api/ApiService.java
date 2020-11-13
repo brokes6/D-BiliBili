@@ -4,8 +4,9 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.home_page.bean.DynamicNumBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.bean.VersionBean;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.home_page.bean.WholeStationBean;
 import com.example.dildil.login_page.bean.RegisterBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.login_page.bean.inputDto;
 import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.video.bean.CoinBean;
@@ -48,7 +49,7 @@ public interface ApiService {
     Observable<ThumbsUpBean> thumbsUp(@Url String url, @Body dto dto);
 
     @POST("userservice/login")
-    Observable<LoginBean> Login(@Body inputDto inputDto);
+    Observable<UserBean> Login(@Body inputDto inputDto);
 
     @POST("userservice/user")
     Observable<RegisterBean> Register(@Body inputDto inputDto);
@@ -77,6 +78,12 @@ public interface ApiService {
     @GET("userservice/dynamic/list/{pageNum}/{pageSize}")
     Observable<DynamicBean> getDynamic(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
 
+    @GET("userservice/dynamic/list/video/{pageNum}/{pageSize}")
+    Observable<DynamicBean> getVideoDynamic(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
+
 //    @POST("commentservice/comment")
 //    Observable<> addComment(@Body dto dto);
+
+    @GET("videoservice/video/top/{categoryId}/{pageSize}")
+    Observable<WholeStationBean> getWholeStation(@Path("categoryId") int categoryId, @Path("pageSize") int pageSize);
 }

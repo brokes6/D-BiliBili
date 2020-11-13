@@ -18,7 +18,7 @@ import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityLoginBinding;
 import com.example.dildil.home_page.view.HomeActivity;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.login_page.bean.inputDto;
 import com.example.dildil.login_page.contract.LoginContract;
 import com.example.dildil.login_page.presenter.LoginPresenter;
@@ -61,7 +61,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     protected void initView() {
         binding.LoLogin.setOnClickListener(this);
         binding.LoUserAccount.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        binding.LoUserPassword.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         binding.LoUserPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
         setMargins(binding.top1,0,getStatusBarHeight(this),0,0);
     }
@@ -101,8 +100,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     @Override
-    public void onGetLoginSuccess(LoginBean loginBean) {
-        SharePreferenceUtil.getInstance(this).saveUserInfo(loginBean, account);
+    public void onGetLoginSuccess(UserBean userBean) {
+        SharePreferenceUtil.getInstance(this).saveUserInfo(userBean, account);
         hideDialog();
         XToastUtils.success("登录成功!");
         ActivityUtils.startActivity(HomeActivity.class);

@@ -3,13 +3,13 @@
     xmlns:rc="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Hot_video_cover"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_80"
-    android:layout_marginTop="@dimen/dp_15">
+    android:layout_height="@dimen/dp_95"
+    android:layout_marginTop="@dimen/dp_10">
 
     <com.android.liuzhuang.rcimageview.RoundCornerImageView
         android:id="@+id/Ranking_video_img"
         android:layout_width="@dimen/dp_140"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dp_80"
         android:scaleType="centerCrop"
         rc:rciv_radius="@dimen/dp_5" />
 

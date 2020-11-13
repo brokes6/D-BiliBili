@@ -188,6 +188,15 @@
                             android:layout_width="@dimen/dp_25"
                             android:layout_height="@dimen/dp_25" />
 
+                        <TextView
+                            android:id="@+id/P_Top_userNmae"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/White"
+                            android:textSize="18sp"
+                            android:visibility="gone" />
+
                         <include
                             android:id="@+id/P_search"
                             layout="@layout/item_search_two"

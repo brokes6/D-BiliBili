@@ -137,6 +137,7 @@
                 android:layout_marginLeft="@dimen/dp_30"
                 android:layout_toLeftOf="@+id/Lo_forgetThePassword"
                 android:layout_toRightOf="@+id/Lo_password"
+                android:inputType="textPassword"
                 android:background="@null"
                 android:hint="@string/LoginPromptPassword"
                 android:textSize="14sp" />

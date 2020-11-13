@@ -11,12 +11,13 @@ import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
 public class BeInterestedChannerAdapter extends BaseRecyclerAdapter<BeInterestedBean> {
-    private Context mContext;
+    private final Context mContext;
     private ImageTopView mainImage;
 
-    public BeInterestedChannerAdapter(Context context){
+    public BeInterestedChannerAdapter(Context context) {
         mContext = context;
     }
+
     @Override
     protected int getItemLayoutId(int viewType) {
         return R.layout.item_be_interested;
@@ -25,12 +26,6 @@ public class BeInterestedChannerAdapter extends BaseRecyclerAdapter<BeInterested
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, BeInterestedBean item) {
         mainImage = holder.findViewById(R.id.BI_Main);
-        if (item != null) {
-            initData(item);
-        }
-    }
-
-    private void initData(BeInterestedBean item) {
         mainImage.setUrl(item.getBeInterestedImage());
         mainImage.setText(item.getBeInterestedTitle());
     }

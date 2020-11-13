@@ -14,7 +14,7 @@ import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityPersonalBinding;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.contract.PersonalContract;
 import com.example.dildil.my_page.fragment.MyCollectionFragment;
 import com.example.dildil.my_page.fragment.MyDynamicFragment;
@@ -34,7 +34,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     private ActivityPersonalBinding binding;
     private final String[] TabTitle = {"主页", "动态", "收藏", "追番"};
     private ArrayList<Fragment> mFragments;
-    private LoginBean loginBean;
+    private UserBean userBean;
     private final int While = 0xFFFFFF, grey = 0x999999;
     private ImageView backBackGround, backImage, searchBackGround, searchImage, moreBackGround, moreImage;
 
@@ -79,6 +79,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
                 if (verticalOffset == 0) {
+                    binding.PTopUserNmae.setVisibility(View.GONE);
                     backBackGround.setBackgroundResource(R.drawable.skeleton_circulars_grey);
                     backImage.setImageResource(R.drawable.keyboard_backspace_24);
 
@@ -89,6 +90,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
                     moreImage.setImageResource(R.drawable.more_vert_while_24);
 
                 } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                    binding.coll.setContentScrimColor(getResources().getColor(R.color.Pink));
+                    binding.PTopUserNmae.setVisibility(View.VISIBLE);
                     backBackGround.setBackgroundColor(While);
                     backImage.setImageResource(R.drawable.keyboard_backspace_24_gray);
 
@@ -106,12 +109,13 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
     @Override
     protected void initData() {
-        loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), LoginBean.class);
-        Glide.with(this).load(loginBean.getData().getImg()).into(binding.PUserImg);
-        binding.PUserName.setText(loginBean.getData().getUsername());
+        userBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), UserBean.class);
+        Glide.with(this).load(userBean.getData().getImg()).into(binding.PUserImg);
+        binding.PUserName.setText(userBean.getData().getUsername());
+        binding.PTopUserNmae.setText(userBean.getData().getUsername());
         binding.PDynamic.setTop_Text(0 + "");
-        binding.PFollow.setTop_Text(loginBean.getData().getFollowNum() + "");
-        binding.PFans.setTop_Text(loginBean.getData().getFansNum() + "");
+        binding.PFollow.setTop_Text(userBean.getData().getFollowNum() + "");
+        binding.PFans.setTop_Text(userBean.getData().getFansNum() + "");
     }
 
     @Override

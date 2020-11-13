@@ -11,9 +11,11 @@
         android:layout_height="match_parent"
         tools:context=".my_page.view.SettingActivity">
 
-       <include
-           android:id="@+id/title"
-           layout="@layout/item_titlebar"/>
+        <include
+            android:id="@+id/Title"
+            layout="@layout/item_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -39,10 +41,10 @@
 
                 <TextView
                     android:id="@+id/logOut"
-                    android:layout_below="@+id/DetectUpdates"
-                    android:layout_marginTop="@dimen/dp_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/DetectUpdates"
+                    android:layout_marginTop="@dimen/dp_5"
                     android:background="@color/white"
                     android:gravity="center"
                     android:paddingTop="@dimen/dp_15"

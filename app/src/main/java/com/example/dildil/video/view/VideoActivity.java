@@ -451,9 +451,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
+        JudgeVideoType(videoDetailsBean.getScreenType());
         Glide.with(mContext).load(videoDetailsBean.getCover()).transition(withCrossFade(factory)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.skeleton_circular_grey).into(imageView);
         binding.detailPlayer.setThumbImageView(imageView);
-        JudgeVideoType(videoDetailsBean.getScreenType());
         String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {
             SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i], urlList[i]);
@@ -466,6 +466,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private void JudgeVideoType(String valueType) {
         if (valueType.equals("PORTRAIT")) {
             binding.detailPlayer.setAutoFullWithSize(true);
+            binding.videoDanmu.setPadding(60,0,60,0);
             GSYVideoType.setScreenScaleRatio(16f / 9f);
             GSYVideoType.setShowType(SCREEN_TYPE_CUSTOM);
             binding.detailPlayer.setVideoType(2);
@@ -565,6 +566,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     protected void onDestroy() {
         mPresenter.detachView();
+        dialog = null;
         mFragments.clear();
         mFragments = null;
         urls.clear();

@@ -73,6 +73,7 @@ public class MyApplication extends Application {
         if (BuildConfig.DEBUG) {
             RestHttp.setDebug(true, "network");
         }
+
     }
 
     public static synchronized MyApplication getInstance() {

@@ -1,6 +1,6 @@
 package com.example.dildil.login_page.presenter;
 
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.login_page.bean.inputDto;
 import com.example.dildil.login_page.contract.LoginContract;
 import com.example.dildil.login_page.model.LoginModel;
@@ -32,15 +32,15 @@ public class LoginPresenter extends LoginContract.Presenter {
     public void userLogin(inputDto inputDto) {
         mModel.userLogin(inputDto).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<LoginBean>() {
+                .subscribe(new Observer<UserBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(LoginBean loginBean) {
-                        mView.onGetLoginSuccess(loginBean);
+                    public void onNext(UserBean userBean) {
+                        mView.onGetLoginSuccess(userBean);
                     }
 
                     @Override

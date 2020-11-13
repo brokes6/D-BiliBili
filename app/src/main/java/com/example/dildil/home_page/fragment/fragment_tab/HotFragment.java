@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -34,7 +33,6 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
     private FragmentHotBinding binding;
     private HotRankingAdapter adapter;
     private boolean isFirst = true;
-    private RelativeLayout rankingList;
 
     @Inject
     RecommendPresenter mPresenter;
@@ -69,10 +67,10 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (isFirst) {
                     mPresenter.getRandomRecommendation();
+                    isFirst = false;
                 } else {
                     mPresenter.getRefreshRecommendVideo();
                 }
-                isFirst = false;
             }
         });
     }
@@ -80,6 +78,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
     @Override
     protected void initData() {
         binding.swipe.autoRefresh();//自动刷新
+        setScanScroll(false);
     }
 
     @Override
@@ -103,20 +102,20 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
             intent.putExtra("uid", 1);
             getContext().startActivity(intent);
         }
-
     };
-
 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
         binding.swipe.setVisibility(View.VISIBLE);
         adapter.loadMore(videoBean.getData());
         binding.swipe.finishRefresh(true);
+        setScanScroll(true);
     }
 
     @Override
     public void onGetRecommendVideoFail(String e) {
         binding.swipe.setVisibility(View.GONE);
+        setScanScroll(true);
     }
 
     @Override

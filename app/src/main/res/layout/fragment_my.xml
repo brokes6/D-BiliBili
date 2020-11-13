@@ -15,9 +15,10 @@
             android:id="@+id/function_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/Pink"
             android:gravity="center_horizontal|right"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dp_10">
 
             <ImageView
                 android:id="@+id/M_sweep"
@@ -46,9 +47,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/function_top"
-            android:layout_marginTop="@dimen/dp_8"
+            android:background="@color/Pink"
             android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10">
+            android:paddingTop="@dimen/dp_8"
+            android:paddingRight="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/M_user_img"
@@ -61,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_toRightOf="@+id/M_user_img"
-                android:textColor="@color/Pink"
+                android:textColor="@color/White"
                 android:textSize="16sp" />
 
             <TextView
@@ -79,7 +82,7 @@
                 android:paddingRight="@dimen/dp_4"
                 android:paddingBottom="@dimen/dp_2"
                 android:text="年度大会员"
-                android:textColor="@color/While"
+                android:textColor="@color/Pink"
                 android:textSize="12sp" />
 
             <TextView
@@ -90,7 +93,7 @@
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_3"
                 android:layout_toRightOf="@+id/M_user_img"
-                android:textColor="@color/Text_gray"
+                android:textColor="@color/fddce3"
                 android:textSize="12sp" />
 
             <TextView
@@ -101,7 +104,7 @@
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_3"
                 android:layout_toRightOf="@+id/M_B_currency"
-                android:textColor="@color/Text_gray"
+                android:textColor="@color/fddce3"
                 android:textSize="12sp" />
 
 
@@ -110,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/Right_more"
+                android:textColor="@color/White"
                 android:text="空间"
                 android:textSize="12sp" />
 
@@ -127,7 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/function_user"
-            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -177,6 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
             android:layout_below="@+id/function_data"
+            android:background="@color/Pink"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"

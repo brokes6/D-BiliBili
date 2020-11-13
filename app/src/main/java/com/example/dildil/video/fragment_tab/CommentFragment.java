@@ -22,7 +22,7 @@ import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentCommentBinding;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.SharePreferenceUtil;
 import com.example.dildil.util.SharedPreferencesUtil;
@@ -58,7 +58,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     private EmojIconActions emojIcon;
     private boolean isLoad = true;
     private int id, uid;
-    private LoginBean loginBean;
+    private UserBean userBean;
     private CustomCommentViewHolder holder = null;
     private CustomReplyViewHolder holders = null;
 
@@ -88,7 +88,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         showDialog();
         id = (int) SharedPreferencesUtil.getData("id", 0);
         uid = (int) SharedPreferencesUtil.getData("uid", 0);
-        loginBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
+        userBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), UserBean.class);
         mPresenter.getVideoComment(id, 1, 10, uid);
         isLoad = false;
     }
@@ -204,8 +204,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     dialog.dismiss();
                     CommentDetailBean.CommentData.replyData replyData = new CommentDetailBean.CommentData.replyData();
                     replyData.setContent(replyContent);
-                    replyData.setImg(loginBean.getData().getImg());
-                    replyData.setUsername(loginBean.getData().getUsername());
+                    replyData.setImg(userBean.getData().getImg());
+                    replyData.setUsername(userBean.getData().getUsername());
                     binding.commentView.addReply(replyData, position);
                     XToastUtils.toast("回复成功");
                 } else {
@@ -270,8 +270,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                 String commentContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(commentContent)) {
                     dialog.dismiss();
-                    detailBean.setUsername(loginBean.getData().getUsername());
-                    detailBean.setImg(loginBean.getData().getImg());
+                    detailBean.setUsername(userBean.getData().getUsername());
+                    detailBean.setImg(userBean.getData().getImg());
                     detailBean.setContent(commentContent);
                     binding.commentView.addComment(detailBean);
                     XToastUtils.toast("评论成功");

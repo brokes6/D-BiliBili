@@ -39,7 +39,7 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
 
         ImmersionBar.with(this)
                 .transparentStatusBar()
-                .statusBarColor(R.color.White)
+                .statusBarColor(R.color.Pink)
                 .init();
 
         DaggerActivityComponent.builder()
@@ -52,10 +52,14 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
 
     @Override
     protected void initView() {
+        setLeftTitleText("设置");
+        setBackBtn(getResources().getColor(R.color.While, null));
+        setTitleBG(getResources().getColor(R.color.Pink,null));
+        setLeftTitleTextColorWhite();
         binding.logOut.setOnClickListener(this);
         binding.DetectUpdates.setOnClickListener(this);
-        binding.title.findViewById(R.id.iv_back).setOnClickListener(this);
-        setMargins(binding.title, 0, getStatusBarHeight(this), 0, 0);
+        binding.Title.findViewById(R.id.iv_back).setOnClickListener(this);
+        setMargins(binding.Title, 0, getStatusBarHeight(this), 0, 0);
     }
 
     @Override

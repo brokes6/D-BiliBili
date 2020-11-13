@@ -77,6 +77,10 @@ public class DynamicFragment extends BaseFragment {
         }
     }
 
+    public void setViewPagerSlide(boolean value){
+        binding.DyViewPager.setScanScroll(value);
+    }
+
     @Override
     public void onDestroy() {
         mFragments.clear();

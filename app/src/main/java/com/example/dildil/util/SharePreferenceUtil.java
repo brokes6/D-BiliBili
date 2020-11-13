@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.dildil.abstractclass.Constants;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -64,7 +64,7 @@ public class SharePreferenceUtil {
      * 所以 新账号会无法保存登录状态
      * @param
      */
-    public void saveUserInfo(LoginBean bean, String account) {
+    public void saveUserInfo(UserBean bean, String account) {
 //        if (bean.getBindings().size() > 0) {
 //            saveAuthToken(bean.getBindings().get(0).getTokenJsonStr());
 //        }

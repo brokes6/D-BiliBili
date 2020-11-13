@@ -24,7 +24,7 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentIntroductionBinding;
 import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
@@ -45,7 +45,6 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import javax.inject.Inject;
 
 public class IntroductionFragment extends BaseFragment implements VideoDetailsContract.View {
-    private static final String TAG = "IntroductionFragment";
     private FragmentIntroductionBinding binding;
     private HotRankingAdapter adapter;
     private int id;
@@ -63,7 +62,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Inject
     VideoDetailsPresenter mPresenter;
-    private LoginBean loginBean;
+    private UserBean userBean;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -228,7 +227,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     protected void initData() {
-        loginBean = getUserData();
+        userBean = getUserData();
         id = (int) SharedPreferencesUtil.getData("id", 0);
         uid = (int) SharedPreferencesUtil.getData("uid", 0);
         mPresenter.getVideoDetails(id, uid);
@@ -262,7 +261,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 XToastUtils.toast("已经投过币拉~");
                 return;
             }
-            CoinDialog coinDialog = new CoinDialog(getContext(), id, loginBean.getData().getCoinNum());
+            CoinDialog coinDialog = new CoinDialog(getContext(), id, userBean.getData().getCoinNum());
             coinDialog.setListener(resultListener);
             coinDialog.show();
         } else if (vId == R.id.like_img) {

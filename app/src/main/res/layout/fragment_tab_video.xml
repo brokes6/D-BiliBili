@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -9,123 +8,28 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF">
-
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:elevation="0dp">
-
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:id="@+id/coll_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fitsSystemWindows="true"
-                    app:layout_scrollFlags="scroll">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:animateLayoutChanges="true">
-
-                        <TextView
-                            android:id="@+id/xian_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_1"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:background="#e7e7e7" />
-
-                        <LinearLayout
-                            android:id="@+id/Sy_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_35"
-                            android:layout_below="@+id/xian_1"
-                            android:layout_marginLeft="@dimen/dp_15"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:layout_marginRight="@dimen/dp_15"
-                            android:animateLayoutChanges="true"
-                            android:background="@drawable/file_background_radius_30_while_gray"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="@dimen/dp_24"
-                                android:layout_height="@dimen/dp_24"
-                                android:layout_marginLeft="@dimen/dp_15"
-                                android:src="@drawable/search_24_c1bfc0" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp_5"
-                                android:layout_weight="1"
-                                android:text="查找精彩动态内容"
-                                android:textColor="#c1bfc0"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/text_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/Sy_text"
-                            android:layout_margin="@dimen/dp_15"
-                            android:text="@string/RecentVisit"
-                            android:textColor="@color/Black"
-                            android:textSize="16sp" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/VT_RecentVisit"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_1"
-                            android:layout_marginLeft="@dimen/dp_15"
-                            android:layout_marginRight="@dimen/dp_15"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/Ch_Dividing_1"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_10"
-                            android:layout_below="@+id/VT_RecentVisit"
-                            android:layout_marginTop="@dimen/dp_7"
-                            android:background="#f4f4f4" />
-
-                        <TextView
-                            android:id="@+id/text_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/Ch_Dividing_1"
-                            android:layout_margin="@dimen/dp_15"
-                            android:text="@string/MyPursuit_Drama"
-                            android:textColor="@color/Black"
-                            android:textSize="16sp" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/VT_Chasing_fans"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/text_2"
-                            android:layout_marginLeft="@dimen/dp_15"
-                            android:layout_marginRight="@dimen/dp_15" />
-
-                    </RelativeLayout>
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
-            </com.google.android.material.appbar.AppBarLayout>
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:animateLayoutChanges="true"
-                android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/Search"
+                    layout="@layout/item_search_dy" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/Top_Recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/Ch_Dividing_2"
@@ -137,9 +41,10 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/VT_Video"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="#f4f4f4" />
+
             </LinearLayout>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.core.widget.NestedScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

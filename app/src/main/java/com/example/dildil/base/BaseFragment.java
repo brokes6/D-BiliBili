@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dildil.MyApplication;
-import com.example.dildil.login_page.bean.LoginBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.LoadingsDialog;
 import com.example.dildil.util.NetUtil;
@@ -62,6 +62,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     //追番的离线数据
     public static String LocalHua = "LocalHua";
 
+    public static ICallBackListener listener;
+
+    public boolean isScroll = true;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +104,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         super.onAttach(context);
         activity = (Activity) context;
     }
+
 
     @Override
     public void onDestroyView() {
@@ -224,6 +229,20 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
     }
 
+    public interface ICallBackListener {
+        void onItemClick(boolean value);
+    }
+
+    public void setCallBackListener(ICallBackListener listener1) {
+        listener = listener1;
+    }
+
+    public void setScanScroll(boolean value) {
+        if (listener != null) {
+            listener.onItemClick(value);
+        }
+    }
+
     /**
      * 设置fragment的标题文字
      *
@@ -250,8 +269,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         mDialogs.dismiss();
     }
 
-    public LoginBean getUserData() {
-        return GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), LoginBean.class);
+    public UserBean getUserData() {
+        return GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), UserBean.class);
     }
 
     /**

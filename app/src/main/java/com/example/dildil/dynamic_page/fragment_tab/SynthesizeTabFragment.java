@@ -38,10 +38,10 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
     private static ScrollCalculatorHelper scrollCalculatorHelper;
     private boolean isFirst = true;
     private boolean mFull = false;
+    private ResourcesData resourcesData;
 
     @Inject
     DynamicPresenter mPresenter;
-    private ResourcesData resourcesData;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -132,19 +132,29 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
     @Override
     public void onGetDynamicSuccess(DynamicBean dynamicBean) {
         binding.swipe.finishRefresh(true);
-        if (isFirst){
+        if (isFirst) {
             for (DynamicBean.Datas datum : dynamicBean.getData()) {
                 adapter_dynamic.add(datum);
             }
-        }else{
+        } else {
             adapter_dynamic.refresh(dynamicBean.getData());
         }
     }
 
     @Override
     public void onGetDynamicFail(String e) {
-        Log.e("why", "动态出现错误"+e);
+        Log.e("why", "动态出现错误" + e);
         binding.swipe.finishRefresh(true);
+    }
+
+    @Override
+    public void onGetVideoDynamicSuccess(DynamicBean dynamicBean) {
+
+    }
+
+    @Override
+    public void onGetVideoDynamicFail(String e) {
+
     }
 
     @Override

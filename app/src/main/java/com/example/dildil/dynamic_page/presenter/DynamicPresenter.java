@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -45,6 +46,33 @@ public class DynamicPresenter extends DynamicContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetDynamicFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getVideoDynamic(int pageNum, int pageSize, int uid) {
+        mModel.getVideoDynamic(pageNum,pageSize,uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DynamicBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull DynamicBean dynamicBean) {
+                        mView.onGetVideoDynamicSuccess(dynamicBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetVideoDynamicFail(e.getMessage());
                     }
 
                     @Override

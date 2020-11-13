@@ -25,7 +25,7 @@
             app:tl_textUnselectColor="#D5D5D5"
             app:tl_textsize="16sp" />
 
-        <androidx.viewpager.widget.ViewPager
+        <com.example.dildil.rewriting_view.CustomViewPager
             android:id="@+id/Dy_viewPager"
             android:layout_marginTop="@dimen/dp_5"
             android:layout_width="match_parent"

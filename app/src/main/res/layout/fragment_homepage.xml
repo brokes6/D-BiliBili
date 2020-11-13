@@ -27,7 +27,7 @@
                 android:gravity="bottom"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dp_10"
-                app:layout_scrollFlags="scroll|enterAlways">
+                app:layout_scrollFlags="scroll|enterAlways|snap">
 
                 <com.android.liuzhuang.rcimageview.CircleImageView
                     android:id="@+id/user_img"
@@ -74,11 +74,11 @@
                 app:tl_textSelectColor="@color/Pink"
                 app:tl_textUnselectColor="#838080"
                 app:tl_textsize="16sp"
-                app:tl_underline_height="1dp" />
+                app:tl_underline_height="2dp" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.viewpager.widget.ViewPager
+        <com.example.dildil.rewriting_view.CustomViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

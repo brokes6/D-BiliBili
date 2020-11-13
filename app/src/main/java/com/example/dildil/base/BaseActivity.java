@@ -220,7 +220,6 @@ public abstract class   BaseActivity<P extends BasePresenter> extends AppCompatA
      */
     public void setLeftTitleText(String resId) {
         TextView leftTitle = findViewById(R.id.tv_left_title);
-        Log.e("why", "setLeftTitleText1: ????????为什么"+leftTitle );
         leftTitle.setVisibility(View.VISIBLE);
         leftTitle.setText(resId);
     }
@@ -232,7 +231,6 @@ public abstract class   BaseActivity<P extends BasePresenter> extends AppCompatA
      */
     public void setTitleBG(@ColorInt int color) {
         LinearLayout title = findViewById(R.id.back_BackGround);
-        Log.e("why", "setLeftTitleText2: ????????为什么"+title );
         title.setBackgroundColor(color);
     }
 

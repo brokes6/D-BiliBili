@@ -1,20 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
     </data>
 
     <RelativeLayout
+        android:id="@+id/RL_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/While">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="排行榜" />
+        <include
+            android:id="@+id/RL_titles"
+            layout="@layout/item_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50" />
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/RL_Tab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_30"
+            android:layout_below="@+id/RL_titles"
+            android:background="@color/Pink"
+            app:tl_indicator_bounce_enable="true"
+            app:tl_indicator_color="@color/White"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_textSelectColor="@color/White"
+            app:tl_textUnselectColor="#ffbed4"
+            app:tl_textsize="16sp"
+            app:tl_underline_height="2dp"
+            android:paddingBottom="@dimen/dp_7"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/RL_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/RL_Tab"
+            android:background="@color/While" />
 
     </RelativeLayout>
 </layout>

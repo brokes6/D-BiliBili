@@ -4,8 +4,10 @@ import android.app.Activity;
 
 import com.example.dildil.component.app.AppComponent;
 import com.example.dildil.dynamic_page.fragment_tab.SynthesizeTabFragment;
+import com.example.dildil.dynamic_page.fragment_tab.VideoTabFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.HotFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
+import com.example.dildil.home_page.fragment.fragment_tab.WholeStationFragment;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.login_page.view.LoginActivity;
 import com.example.dildil.my_page.fragment.MyHomePageFragment;
@@ -49,5 +51,9 @@ public interface ActivityComponent {
     void inject(PersonalActivity personalActivity);
 
     void inject(MyHomePageFragment myHomePageFragment);
+
+    void inject(VideoTabFragment videoTabFragment);
+
+    void inject(WholeStationFragment wholeStationFragment);
     //TODO 后续需要注入的Activity类都可以在这里添加 中像上面一样写就好了
 }

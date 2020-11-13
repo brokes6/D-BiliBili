@@ -16,17 +16,25 @@ public interface DynamicContract {
 
         void onGetDynamicFail(String e);
 
+        void onGetVideoDynamicSuccess(DynamicBean dynamicBean);
+
+        void onGetVideoDynamicFail(String e);
+
     }
 
     interface Model extends BaseModel {
 
         Observable<DynamicBean> getDynamic(int pageNum, int pageSize, int uid);
 
+        Observable<DynamicBean> getVideoDynamic(int pageNum, int pageSize, int uid);
+
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
 
         public abstract void getDynamic(int pageNum, int pageSize, int uid);
+
+        public abstract void getVideoDynamic(int pageNum, int pageSize, int uid);
 
     }
 }

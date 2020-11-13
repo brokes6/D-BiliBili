@@ -12,4 +12,9 @@ public class DynamicModel implements DynamicContract.Model {
     public Observable<DynamicBean> getDynamic(int pageNum, int pageSize, int uid) {
         return ApiEngine.getInstance().getApiService().getDynamic(pageNum, pageSize, uid);
     }
+
+    @Override
+    public Observable<DynamicBean> getVideoDynamic(int pageNum, int pageSize, int uid) {
+        return ApiEngine.getInstance().getApiService().getVideoDynamic(pageNum, pageSize, uid);
+    }
 }

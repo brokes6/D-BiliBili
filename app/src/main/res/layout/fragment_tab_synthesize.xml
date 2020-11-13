@@ -30,45 +30,33 @@
                     android:fitsSystemWindows="true"
                     app:layout_scrollFlags="scroll|snap">
 
+                    <!--话题-->
+
                     <RelativeLayout
+                        android:id="@+id/Main_topic"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/xian_2"
+                        android:layout_margin="@dimen/dp_15"
+                        android:animateLayoutChanges="true">
 
                         <TextView
-                            android:id="@+id/xian_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp_1"
-                            android:layout_marginTop="@dimen/dp_10"
-                            android:background="#e7e7e7" />
+                            android:id="@+id/Text_topic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/topic_of_conversation"
+                            android:textColor="#202020"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
-<!--                        话题-->
-
-                        <RelativeLayout
-                            android:id="@+id/Main_topic"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/Recy_topic"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/xian_2"
-                            android:layout_margin="@dimen/dp_15"
-                            android:animateLayoutChanges="true">
-
-                            <TextView
-                                android:id="@+id/Text_topic"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/topic_of_conversation"
-                                android:textColor="#202020"
-                                android:textSize="16sp"
-                                android:textStyle="bold" />
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/Recy_topic"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/Text_topic"
-                                android:layout_marginTop="@dimen/dp_10" />
-                        </RelativeLayout>
-
+                            android:layout_below="@+id/Text_topic"
+                            android:layout_marginTop="@dimen/dp_10" />
                     </RelativeLayout>
+
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 

@@ -27,7 +27,7 @@ import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import cn.lemon.multi.MultiView;
 
 public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView.ViewHolder> {
-    public static final String TAG = "VideoNewsAdapter";
+    public static final String TAG = "TabVideoAdapter";
     private Context mContext;
     private static final int IMAGE_TEXT = 1;
     private static final int VIDEO_TEXT = 2;
@@ -83,7 +83,7 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
 
                 ((TabVideoHolder) holder).VNideo.setThumbImageView(((TabVideoHolder) holder).imageView);
                 ((TabVideoHolder) holder).VNideo.setNeedShowWifiTip(false);
-                if (GSYVideoManager.instance().getPlayTag().equals(VideoNewsAdapter.TAG)
+                if (GSYVideoManager.instance().getPlayTag().equals(TAG)
                         && (position == GSYVideoManager.instance().getPlayPosition())) {
                     ((TabVideoHolder) holder).VNideo.getThumbImageViewLayout().setVisibility(View.GONE);
                 } else {

@@ -43,7 +43,6 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
     }
 
     private void startCountDownTime() {
@@ -55,8 +54,8 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                HashSet<String > authTokens = SharePreferenceUtil.getInstance(SplashActivity.this).getCookies("cookie");
-                if (authTokens ==null){
+                HashSet<String> authTokens = SharePreferenceUtil.getInstance(SplashActivity.this).getCookies("cookie");
+                if (authTokens == null) {
                     ActivityUtils.startActivity(LoginActivity.class);
 //                    ActivityUtils.startActivity(HomeActivity.class);
                 } else {

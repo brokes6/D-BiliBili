@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
@@ -38,11 +37,11 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     private RecommendedVideoAdapter adapter;
     private boolean isFirst = true;
     private VideoChoiceDialog videoChoiceDialog;
+    private ResourcesData mResourcesData;
+    private RecommendVideoBean.BeanData mBeanData;
 
     @Inject
     RecommendPresenter mPresenter;
-    private ResourcesData mResourcesData;
-    private RecommendVideoBean.BeanData mBeanData;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,12 +61,9 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     protected void initView() {
         videoChoiceDialog = new VideoChoiceDialog(getContext());
         videoChoiceDialog.setOnFeedbackClickListener(onFeedbackClickListener);
-        RecyclerView.RecycledViewPool mSharedPool = new RecyclerView.RecycledViewPool();
 
-        //网格模式(并不是瀑布流模式，瀑布流模式和NestedScrollView一起使用会起冲突)
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         binding.ReRecy.setLayoutManager(layoutManager1);
-        binding.ReRecy.setRecycledViewPool(mSharedPool);
         binding.ReRecy.setHasFixedSize(true);
         adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 1);
         adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_recommended_header, binding.ReRecy, false));
@@ -99,6 +95,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     protected void initData() {
         binding.swipe.autoRefresh();//自动刷新
+        setScanScroll(false);
         mResourcesData = new ResourcesData();
         mResourcesData.initBanner();
         mBeanData = new RecommendVideoBean.BeanData();
@@ -146,11 +143,13 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         }
         save(GsonUtil.toJson(videoBean), offlineData);
         binding.swipe.finishRefresh(true);
+        setScanScroll(true);
     }
 
     @Override
     public void onGetRecommendVideoFail(String e) {
         binding.swipe.setVisibility(View.GONE);
+        setScanScroll(true);
     }
 
     @Override
@@ -184,8 +183,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     public void onDestroy() {
         mPresenter.detachView();
-        videoChoiceDialog = null;
-        onTabClickListener = null;
         super.onDestroy();
     }
 }
