@@ -25,13 +25,13 @@ import com.example.customcontrollibs.Selector;
 import com.example.customcontrollibs.SelectorGroup;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityVideoBinding;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.util.DensityUtil;
-import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.ViewWrapper;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
@@ -41,6 +41,7 @@ import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
+import com.example.dildil.video.bean.VideoDaoBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.danmu;
 import com.example.dildil.video.contract.VideoDetailsContract;
@@ -91,6 +92,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private boolean isFunction = true;
     private final String[] definition = {"360p", "480p", "720p", "1080p"};
     private DrawableCrossFadeFactory factory;
+    private AppDatabase dp;
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -115,7 +117,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
-
+        dp = MyApplication.getDatabase();
         ifGO();
     }
 
@@ -123,9 +125,11 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         Intent intent = getIntent();
         int playtime = intent.getIntExtra("playtime", 0);
         id = intent.getIntExtra("id", 0);
-        uid = intent.getIntExtra("uid", 0);
-        SharedPreferencesUtil.putData("id", id);
-        SharedPreferencesUtil.putData("uid", uid);
+        if (dp.videoDao().getAll() != null) {
+            dp.videoDao().updateVideo(new VideoDaoBean(1,id));
+        } else {
+            dp.videoDao().insertAll(new VideoDaoBean(1,id));
+        }
         if (playtime != 0) {
             mWhenPlaying = playtime;
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
@@ -269,7 +273,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                         binding.coll.setContentScrimColor(getResources().getColor(R.color.Pink));
                         binding.playButton.setVisibility(View.VISIBLE);//隐藏播放按钮
                         state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
-                        if (binding.detailPlayer.getVideoType()==2){
+                        if (binding.detailPlayer.getVideoType() == 2) {
                             GSYVideoManager.onPause();
                         }
                     }
@@ -277,7 +281,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                     if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
                         if (state == CollapsingToolbarLayoutState.COLLAPSED) {
                             binding.playButton.setVisibility(View.GONE);//由折叠变为中间状态时隐藏播放按钮
-                            if (binding.detailPlayer.getVideoType()==2){
+                            if (binding.detailPlayer.getVideoType() == 2) {
                                 GSYVideoManager.onResume();
                             }
                         }
@@ -466,7 +470,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private void JudgeVideoType(String valueType) {
         if (valueType.equals("PORTRAIT")) {
             binding.detailPlayer.setAutoFullWithSize(true);
-            binding.videoDanmu.setPadding(60,0,60,0);
+            binding.videoDanmu.setPadding(60, 0, 60, 0);
             GSYVideoType.setScreenScaleRatio(16f / 9f);
             GSYVideoType.setShowType(SCREEN_TYPE_CUSTOM);
             binding.detailPlayer.setVideoType(2);

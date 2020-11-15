@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
@@ -37,6 +38,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     ActivityLoginBinding binding;
     private String account;
     private String password;
+    private AppDatabase db;
 
     @Inject
     LoginPresenter mPresenter;
@@ -59,10 +61,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void initView() {
+        db = MyApplication.getDatabase();
         binding.LoLogin.setOnClickListener(this);
         binding.LoUserAccount.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         binding.LoUserPassword.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        setMargins(binding.top1,0,getStatusBarHeight(this),0,0);
+        setMargins(binding.top1, 0, getStatusBarHeight(this), 0, 0);
     }
 
     @Override
@@ -81,7 +84,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 password = binding.LoUserPassword.getText().toString().trim();
                 if (InputUtil.checkMobileLegal(account) && InputUtil.checkPasswordLegal(password)) {
                     showDialog();
-                    inputDto inputDto = new inputDto(account,password);
+                    inputDto inputDto = new inputDto(account, password);
                     mPresenter.userLogin(inputDto);
                 }
                 break;
@@ -101,7 +104,16 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void onGetLoginSuccess(UserBean userBean) {
-        SharePreferenceUtil.getInstance(this).saveUserInfo(userBean, account);
+        /**
+         * 调用数据库都必须在子线程中
+         */
+//        Observable.create(new ObservableOnSubscribe<String>() {
+//            @Override
+//            public void subscribe(@NonNull ObservableEmitter emitter) throws Exception {
+                db.userDao().insertAll(userBean);
+//            }
+//        });
+        //SharePreferenceUtil.getInstance(this).saveUserInfo(userBean, account);
         hideDialog();
         XToastUtils.success("登录成功!");
         ActivityUtils.startActivity(HomeActivity.class);
@@ -115,7 +127,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             XToastUtils.error(R.string.enter_correct_password);
         } else {
             XToastUtils.error(e);
-            Log.e(TAG, R.string.errorOccurred+e );
+            Log.e(TAG, R.string.errorOccurred + e);
         }
     }
 }

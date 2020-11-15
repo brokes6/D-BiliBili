@@ -23,9 +23,6 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentCommentBinding;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
-import com.example.dildil.util.GsonUtil;
-import com.example.dildil.util.SharePreferenceUtil;
-import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -44,6 +41,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jidcoo.android.widget.commentview.callback.CustomCommentItemCallback;
 import com.jidcoo.android.widget.commentview.callback.CustomReplyItemCallback;
 import com.jidcoo.android.widget.commentview.callback.OnItemClickCallback;
+import com.jidcoo.android.widget.commentview.callback.OnPullRefreshCallback;
 import com.jidcoo.android.widget.commentview.callback.OnReplyLoadMoreCallback;
 
 import javax.inject.Inject;
@@ -85,11 +83,9 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
     @Override
     protected void initData() {
-        showDialog();
-        id = (int) SharedPreferencesUtil.getData("id", 0);
-        uid = (int) SharedPreferencesUtil.getData("uid", 0);
-        userBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), UserBean.class);
-        mPresenter.getVideoComment(id, 1, 10, uid);
+        id = getDb().videoDao().getAllVideoId();
+        userBean = getUserData();
+        mPresenter.getVideoComment(id, 1, 10, getUserId());
         isLoad = false;
     }
 
@@ -108,13 +104,10 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     /**
      * 初始化评论和回复列表
      */
-    private void initExpandableListView(final CommentDetailBean commentList) {
-        commentList.setPageSize(1);
-        binding.commentView.loadComplete(commentList);
-    }
-
     private void initCommentList() {
         binding.commentView.setViewStyleConfigurator(new CustomViewStyleConfigurator(getContext()));
+        binding.commentView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.item_comment_empty,null));
+        binding.commentView.setErrorView(LayoutInflater.from(getContext()).inflate(R.layout.item_comment_error,null));
         binding.commentView.callbackBuilder()
                 //自定义评论布局(必须使用ViewHolder机制)--CustomCommentItemCallback<C> 泛型C为自定义评论数据类
                 .customCommentItem(new CustomCommentItemCallback<CommentDetailBean.CommentData>() {
@@ -164,8 +157,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                         return convertView;
                     }
                 })
-//                //下拉刷新回调
-//                .setOnPullRefreshCallback(new MyOnPullRefreshCallback())
+                //下拉刷新回调
+                .setOnPullRefreshCallback(new MyOnPullRefreshCallback())
                 //评论、回复Item的点击回调（点击事件回调）
                 .setOnItemClickCallback(new MyOnItemClickCallback())
                 //回复数据加载更多回调（加载更多回复）
@@ -206,6 +199,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     replyData.setContent(replyContent);
                     replyData.setImg(userBean.getData().getImg());
                     replyData.setUsername(userBean.getData().getUsername());
+                    Log.e(TAG, "onClick: ?????当前输入数据为"+ binding.commentView.getReplyList(0));
                     binding.commentView.addReply(replyData, position);
                     XToastUtils.toast("回复成功");
                 } else {
@@ -275,7 +269,6 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     detailBean.setContent(commentContent);
                     binding.commentView.addComment(detailBean);
                     XToastUtils.toast("评论成功");
-
                 } else {
                     XToastUtils.toast("评论内容不能为空");
                 }
@@ -328,6 +321,24 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         }
     }
 
+    class MyOnPullRefreshCallback implements OnPullRefreshCallback{
+
+        @Override
+        public void refreshing() {
+            mPresenter.getVideoComment(id, 1, 10, uid);
+        }
+
+        @Override
+        public void complete() {
+            XToastUtils.success("刷新成功");
+        }
+
+        @Override
+        public void failure(String msg) {
+            XToastUtils.error(msg);
+        }
+    }
+
     class MyOnItemClickCallback implements OnItemClickCallback<CommentDetailBean.CommentData, CommentDetailBean.CommentData.replyData> {
 
         @Override
@@ -337,7 +348,6 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
         @Override
         public void replyItemOnClick(int c_position, int r_position, CommentDetailBean.CommentData.replyData reply, View view) {
-
         }
     }
 
@@ -387,15 +397,13 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         if (!isLoad) {
             //binding.swipe.finishRefresh(true);
         }
-        commentDetailBean.setPageSize(2);
-        initExpandableListView(commentDetailBean);
-        hideDialog();
+        binding.commentView.loadComplete(commentDetailBean);
     }
 
     @Override
     public void onGetVideoCommentFail(String e) {
-        hideDialog();
         binding.comments.setVisibility(View.GONE);
+        binding.commentView.loadFailed(true);
         XToastUtils.error(R.string.errorOccurred + e);
     }
 

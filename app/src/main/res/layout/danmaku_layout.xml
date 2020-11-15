@@ -235,14 +235,19 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/video_back" />
 
-            <TextView
+            <com.example.dildil.video.rewriting.RollTextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/Sanlians"
+                android:layout_marginRight="@dimen/dp_5"
                 android:layout_toRightOf="@+id/back"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/dp_10"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingLeft="@dimen/dp_5"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
 

@@ -1,4 +1,4 @@
-package com.example.dildil.home_page.fragment.fragment_tab;
+ package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -131,9 +131,10 @@ public class PursueFramgment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        fanRecommendationBeans.clear();
-        fanRecommendationBeans = null;
-        resourcesData = null;
+        if (fanRecommendationBeans!=null){
+            fanRecommendationBeans.clear();
+            fanRecommendationBeans = null;
+        }
         super.onDestroy();
     }
 }

@@ -1,7 +1,6 @@
 package com.example.dildil.dynamic_page.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -43,7 +42,6 @@ public class TypeAdapter extends BaseAdapter<TypeBean.TypeData, RecyclerView.Vie
     @Override
     protected void bindData(@NonNull RecyclerView.ViewHolder holder, int position, TypeBean.TypeData item) {
         if (getItemViewType(position) == RECENT_VISIT) {
-            Log.e("why", ": RECENT_VISIT数据为" + item.getTopicBean());
             LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
             layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             if (adapter == null) {
@@ -53,7 +51,6 @@ public class TypeAdapter extends BaseAdapter<TypeBean.TypeData, RecyclerView.Vie
             ((RecentVisit) holder).Recycler.setAdapter(adapter);
             adapter.loadMore(item.getTopicBean());
         } else if (getItemViewType(position) == PURSUE_VISIT) {
-            Log.e("why", ": PURSUE_VISIT数据为" + item.getPursueBean());
             LinearLayoutManager layoutManagerSecond = new LinearLayoutManager(mContext);
             layoutManagerSecond.setOrientation(LinearLayoutManager.HORIZONTAL);
             if (adapters == null) {

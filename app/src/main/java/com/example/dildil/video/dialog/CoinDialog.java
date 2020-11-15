@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import com.example.dildil.R;
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.api.ApiService;
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.rewriting_view.ClipViewPager;
 import com.example.dildil.rewriting_view.ScalePageTransformer;
 import com.example.dildil.util.SharedPreferencesUtil;
@@ -26,6 +27,7 @@ import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.TubatuAdapter;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
+import com.example.dildil.video.bean.VideoDaoBean;
 import com.example.dildil.video.bean.dto;
 
 import java.util.ArrayList;
@@ -51,12 +53,14 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
     private throwCoinResultListener CoinListener;
     private boolean isThumbsUp = false;
     private ApiService mService;
+    private AppDatabase dp;
     private String url = "http://116.196.105.203/videoservice/video/dynamic_like";
 
-    public CoinDialog(@NonNull Context context, int vid, int coin) {
+    public CoinDialog(@NonNull Context context, int vid, int coin, AppDatabase dp) {
         super(context);
         mContext = context;
         this.vid = vid;
+        this.dp = dp;
         init();
     }
 
@@ -66,7 +70,8 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
         close = view.findViewById(R.id.close);
         CB_thumbsUp = view.findViewById(R.id.CB_thumbsUp);
         CB_thumbsUp.setOnCheckedChangeListener(this);
-        CB_thumbsUp.setChecked((Boolean) SharedPreferencesUtil.getData("isThumbsUp", false));
+        //CB_thumbsUp.setChecked((Boolean) SharedPreferencesUtil.getData("isThumbsUp", false));
+        CB_thumbsUp.setChecked((Boolean) dp.videoDao().isThumbsUp());
         close.setOnClickListener(this);
         mViewPager = view.findViewById(R.id.viewpager);
         /**调节ViewPager的滑动速度**/
@@ -109,7 +114,8 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
     TubatuAdapter.OnItemListener listener = new TubatuAdapter.OnItemListener() {
         @Override
         public void onLikeClick(int position) {
-            boolean key = (boolean) SharedPreferencesUtil.getData("isThumbsUp", false);
+            //boolean key = (boolean) SharedPreferencesUtil.getData("isThumbsUp", false);
+            boolean key = dp.videoDao().isThumbsUp();
             dto dto;
             switch (position) {
                 case 0:
@@ -225,9 +231,11 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
             case R.id.CB_thumbsUp:
                 if (isChecked) {
                     isThumbsUp = true;
-                    SharedPreferencesUtil.putData("isThumbsUp", true);
+                    dp.videoDao().updateVideo(new VideoDaoBean(1,true));
+                    //SharedPreferencesUtil.putData("isThumbsUp", true);
                 } else {
                     isThumbsUp = false;
+                    dp.videoDao().updateVideo(new VideoDaoBean(1,false));
                     SharedPreferencesUtil.putData("isThumbsUp", false);
                 }
                 break;

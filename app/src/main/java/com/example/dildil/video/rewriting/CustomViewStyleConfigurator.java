@@ -34,7 +34,7 @@ public class CustomViewStyleConfigurator extends ViewStyleConfigurator {
         lmv_adjustMarginsBottom = ViewUtil.dpToPx(5, context);//dp
         //*********//回复加载更多控件样式//*************//
         //*********//分割线总样式//*************//
-        dividerColor = "#00000000";
+        dividerColor = "#f0f0f0";
         dividerHeight = ViewUtil.dpToPx(1, context);//dp
         //*********//分割线总样式//*************//
         //*********//回复Item最后一项的下划线//*************//
@@ -47,10 +47,10 @@ public class CustomViewStyleConfigurator extends ViewStyleConfigurator {
 //        //*********//回复Item最后一项的下划线//*************//
 //        //*********//评论Item的分割线//*************//
         f_divider_adjustMargins = true;
-//        f_divider_adjustMarginsLeft = 0;//dp
-//        f_divider_adjustMarginsTop = 0;//dp
-//        f_divider_adjustMarginsRight = 0;//dp
-//        f_divider_adjustMarginsBottom = 0;//dp
+        f_divider_adjustMarginsLeft = 0;//dp
+        f_divider_adjustMarginsTop = 5;//dp
+        f_divider_adjustMarginsRight = 0;//dp
+        f_divider_adjustMarginsBottom = 5;//dp
         //*********//评论Item的分割线//*************//
         //*********//底部上拉加载更多圆形ProgressBar的大小和颜色//*************//
         lm_footerProgressBarSize = ViewUtil.dpToPx(20, context);//dp

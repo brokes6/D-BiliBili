@@ -26,7 +26,6 @@ import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.view.PersonalActivity;
-import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -48,7 +47,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private FragmentIntroductionBinding binding;
     private HotRankingAdapter adapter;
     private int id;
-    private int uid;
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
     private ImageView like_img, Collection, coinImg;
     private boolean isOpen = false;
@@ -228,9 +226,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     protected void initData() {
         userBean = getUserData();
-        id = (int) SharedPreferencesUtil.getData("id", 0);
-        uid = (int) SharedPreferencesUtil.getData("uid", 0);
-        mPresenter.getVideoDetails(id, uid);
+        id = getDb().videoDao().getAllVideoId();
+        mPresenter.getVideoDetails(id, getUserId());
         mPresenter.getRelatedVideos();
     }
 
@@ -261,7 +258,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 XToastUtils.toast("已经投过币拉~");
                 return;
             }
-            CoinDialog coinDialog = new CoinDialog(getContext(), id, userBean.getData().getCoinNum());
+            CoinDialog coinDialog = new CoinDialog(getContext(), id, userBean.getData().getCoinNum(),MyApplication.getDatabase());
             coinDialog.setListener(resultListener);
             coinDialog.show();
         } else if (vId == R.id.like_img) {
@@ -291,7 +288,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         public void throwCoinSuccess(CoinBean coinBean) {
             XToastUtils.success(coinBean.getMessage());
             showDialog();
-            mPresenter.getVideoDetails(id, uid);
+            mPresenter.getVideoDetails(id, getUserId());
         }
 
         @Override
@@ -317,7 +314,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         public void onClick(int position, int vid) {
             Intent intent = new Intent(getContext(), VideoActivity.class);
             intent.putExtra("id", vid);
-            intent.putExtra("uid", 1);
             VideoActivity videoActivity = (VideoActivity) getActivity();
             videoActivity.getPlayPosition();
             GSYVideoManager.onPause();
@@ -373,7 +369,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         XToastUtils.success("操纵成功！");
         XToastUtils.success(thumbsUpBean.getMessage());
         like_img.setImageResource(R.drawable.thumb_up_24);
-        mPresenter.getVideoDetails(id, uid);
+        mPresenter.getVideoDetails(id, getUserId());
         showDialog();
     }
 

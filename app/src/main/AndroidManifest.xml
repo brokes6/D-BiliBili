@@ -23,7 +23,7 @@
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true"
         tools:targetApi="o">
-        <activity android:name=".dynamic_page.view.DynamicDetailsActivity"></activity>
+        <activity android:name=".dynamic_page.view.DynamicDetailsActivity" />
         <activity
             android:name=".my_page.view.PersonalActivity"
             android:screenOrientation="portrait" />

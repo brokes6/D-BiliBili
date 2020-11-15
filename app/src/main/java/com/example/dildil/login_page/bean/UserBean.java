@@ -1,9 +1,30 @@
 package com.example.dildil.login_page.bean;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.RoomWarnings;
+
+@Entity
 public class UserBean {
+
+    @PrimaryKey(autoGenerate = true)
+    private int mainId;
+
     private int code;
+
+    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
+    @Embedded
     private BeanData data;
     private String message;
+
+    public int getMainId() {
+        return mainId;
+    }
+
+    public void setMainId(int id) {
+        this.mainId = id;
+    }
 
     public int getCode() {
         return code;
@@ -29,7 +50,7 @@ public class UserBean {
         this.message = message;
     }
 
-    public class BeanData {
+    public static class BeanData {
         private int id;
         private String account;
         private String password;

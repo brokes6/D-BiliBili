@@ -77,7 +77,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getVideoDynamic(1, 8, 1);
+                mPresenter.getVideoDynamic(1, 8, getUserId());
             }
         });
 

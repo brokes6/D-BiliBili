@@ -6,9 +6,12 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
+import com.example.dildil.databinding.ActivitySplashBinding;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.util.ScreenUtils;
 import com.example.dildil.util.SharePreferenceUtil;
@@ -19,14 +22,14 @@ import java.util.HashSet;
  * 启动页
  */
 public class SplashActivity extends BaseActivity {
+    private ActivitySplashBinding binding;
     private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-
-        setContentView(R.layout.activity_splash);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
     }
 
 
@@ -46,10 +49,12 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void startCountDownTime() {
-        countDownTimer = new CountDownTimer(2000, 1000) {
+        countDownTimer = new CountDownTimer(2500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-
+                if (millisUntilFinished <= 1000) {
+                    binding.Logo.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -57,7 +62,6 @@ public class SplashActivity extends BaseActivity {
                 HashSet<String> authTokens = SharePreferenceUtil.getInstance(SplashActivity.this).getCookies("cookie");
                 if (authTokens == null) {
                     ActivityUtils.startActivity(LoginActivity.class);
-//                    ActivityUtils.startActivity(HomeActivity.class);
                 } else {
                     ActivityUtils.startActivity(HomeActivity.class);
                 }

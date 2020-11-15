@@ -22,6 +22,7 @@
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
         android:layout_toEndOf="@+id/videoImage"
+        android:maxLines="2"
         android:textColor="@color/Black"
         android:textSize="14sp" />
 

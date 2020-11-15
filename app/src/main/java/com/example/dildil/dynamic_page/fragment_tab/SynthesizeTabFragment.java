@@ -101,13 +101,13 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (isFirst) {
-                    mPresenter.getDynamic(1, 8, 1);
+                    mPresenter.getDynamic(1, 8, getUserId());
                     resourcesData = new ResourcesData();
                     resourcesData.initTopicData();
                     adapter_topic.loadMore(resourcesData.getTopicData());
                     isFirst = false;
                 } else {
-                    mPresenter.getDynamic(1, 8, 1);
+                    mPresenter.getDynamic(1, 8, getUserId());
                     adapter_topic.refresh(resourcesData.getTopicData());
                 }
             }

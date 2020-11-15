@@ -10,7 +10,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -49,7 +48,7 @@ import io.reactivex.schedulers.Schedulers;
  * Author:fuxinbo
  * Activity Base类
  */
-public abstract class   BaseActivity<P extends BasePresenter> extends AppCompatActivity implements View.OnClickListener {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements View.OnClickListener {
     protected LoadingsDialog mDialogs;
     public Context mContext;
     private JudgeLoginReceiver judgeLoginReceiver;

@@ -4,7 +4,9 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.room.Room;
 
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.component.app.AppComponent;
 import com.example.dildil.component.app.AppModule;
 import com.example.dildil.component.app.DaggerAppComponent;
@@ -37,6 +39,7 @@ public class MyApplication extends Application {
     private static Context mContext;
     public static MyApplication instance;
     public static AppComponent appComponent;
+    private static AppDatabase db;
 
     static {//使用static代码段可以防止内存泄漏
         //设置全局默认配置（优先级最低，会被其他设置覆盖）
@@ -73,7 +76,22 @@ public class MyApplication extends Application {
         if (BuildConfig.DEBUG) {
             RestHttp.setDebug(true, "network");
         }
+        /**
+         * 初始化数据库
+         */
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "userData")
+                .allowMainThreadQueries()//允许在主线程中查询
+                .build();
 
+    }
+
+    /**
+     * 获取数据库
+     * @return
+     */
+    public static AppDatabase getDatabase(){
+        return db;
     }
 
     public static synchronized MyApplication getInstance() {

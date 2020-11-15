@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
@@ -29,6 +30,7 @@ import javax.inject.Inject;
 public class SettingActivity extends BaseActivity implements MyContract.View {
     private ActivitySettingBinding binding;
     private AppDownloadManager mDownloadManager;
+    private AppDatabase dp;
 
     @Inject
     MyPresenter mPresenter;
@@ -48,6 +50,7 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
+        dp = MyApplication.getDatabase();
     }
 
     @Override
@@ -113,6 +116,7 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     public void onGetLogoutSuccess(LogoutBean logoutBean) {
         hideDialog();
         XToastUtils.success("退出成功！");
+        dp.userDao().delete(dp.userDao().getAll());
         SharePreferenceUtil.getInstance(this).remove("cookie");
         ActivityUtils.startActivity(LoginActivity.class);
         this.finish();

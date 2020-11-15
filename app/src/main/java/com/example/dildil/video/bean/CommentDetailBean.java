@@ -228,6 +228,22 @@ public class CommentDetailBean extends AbstractCommentModel<CommentDetailBean.Co
             public void setFlag(int flag) {
                 this.flag = flag;
             }
+
+            @Override
+            public String toString() {
+                return "replyData{" +
+                        "id=" + id +
+                        ", cid=" + cid +
+                        ", ruid=" + ruid +
+                        ", uid=" + uid +
+                        ", praiseNum=" + praiseNum +
+                        ", username='" + username + '\'' +
+                        ", img='" + img + '\'' +
+                        ", rusername='" + rusername + '\'' +
+                        ", content='" + content + '\'' +
+                        ", flag=" + flag +
+                        '}';
+            }
         }
     }
 

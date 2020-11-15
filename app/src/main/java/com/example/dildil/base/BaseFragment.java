@@ -13,10 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.login_page.bean.UserBean;
-import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.LoadingsDialog;
 import com.example.dildil.util.NetUtil;
-import com.example.dildil.util.SharePreferenceUtil;
 import com.example.dildil.util.XToastUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -66,6 +64,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     public boolean isScroll = true;
 
+    private AppDatabase db;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,6 +122,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             if (forceLoad || isFirstLoad()) {
                 forceLoad = false;
                 isFirstLoad = false;
+                db = MyApplication.getDatabase();
                 if (NetUtil.isNetworkAvailable(getContext())) {
                     initData();
                 } else {
@@ -270,7 +270,16 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     public UserBean getUserData() {
-        return GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), UserBean.class);
+        //return GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), UserBean.class);
+        return  db.userDao().getAll();
+    }
+
+    public int getUserId(){
+        return  db.userDao().getAll().getData().getId();
+    }
+
+    public AppDatabase getDb(){
+        return MyApplication.getDatabase();
     }
 
     /**
