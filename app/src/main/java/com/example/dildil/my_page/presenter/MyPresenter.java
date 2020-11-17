@@ -1,6 +1,7 @@
 package com.example.dildil.my_page.presenter;
 
 import com.example.dildil.home_page.bean.VersionBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.my_page.contract.MyContract;
 import com.example.dildil.my_page.model.MyModel;

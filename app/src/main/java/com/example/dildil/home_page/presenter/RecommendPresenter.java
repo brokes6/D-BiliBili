@@ -1,5 +1,7 @@
 package com.example.dildil.home_page.presenter;
 
+import android.util.Log;
+
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.model.RecommendModel;
@@ -27,6 +29,7 @@ public class RecommendPresenter extends RecommendContract.Presenter {
 
     @Override
     public void getRandomRecommendation() {
+        Log.e("why", "getRandomRecommendation: 当前modelView为"+mView );
         mModel.getRandomRecommendation().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RecommendVideoBean>() {

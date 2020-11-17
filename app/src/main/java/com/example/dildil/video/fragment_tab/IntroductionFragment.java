@@ -61,6 +61,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Inject
     VideoDetailsPresenter mPresenter;
     private UserBean userBean;
+    private int uid;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -276,7 +277,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             dto str1 = new dto(id);
             mPresenter.CollectionVideo(str1);
         } else if (vId == R.id.In_user_img) {
-            ActivityUtils.startActivity(PersonalActivity.class);
+            Intent intent = new Intent(getContext(),PersonalActivity.class);
+            intent.putExtra("uid",uid);
+            getContext().startActivity(intent);
         }
     }
 
@@ -323,6 +326,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
+        uid = videoDetailsBean.getUid();
         binding.InTitle.setText(videoDetailsBean.getTitle());
         Glide.with(this).load(videoDetailsBean.getUpImg()).into(binding.InUserImg);
         binding.InUserName.setText(videoDetailsBean.getUpName());

@@ -39,6 +39,13 @@ public interface VideoDao {
     @Update
     void updateVideo(VideoDaoBean... data);
 
+    /**
+     * 更新对应index的值
+     * @param value
+     * @param index
+     */
+    @Query("update videodaobean set isThumbsUp = :value WHERE `index` = (:index)")
+    void setInThumbsUp(boolean value, int index);
 
     /**
      * 查询数据

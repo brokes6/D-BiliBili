@@ -86,4 +86,7 @@ public interface ApiService {
 
     @GET("videoservice/video/top/{categoryId}/{pageSize}")
     Observable<WholeStationBean> getWholeStation(@Path("categoryId") int categoryId, @Path("pageSize") int pageSize);
+
+    @GET("userservice/user/details/{uid}")
+    Observable<UserBean> findUserDetails(@Path("uid") int uid);
 }

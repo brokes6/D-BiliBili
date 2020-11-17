@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.room.Room;
 
+import com.commonsware.cwac.saferoom.SafeHelperFactory;
 import com.example.dildil.base.AppDatabase;
 import com.example.dildil.component.app.AppComponent;
 import com.example.dildil.component.app.AppModule;
@@ -39,6 +40,8 @@ public class MyApplication extends Application {
     private static Context mContext;
     public static MyApplication instance;
     public static AppComponent appComponent;
+    private static final char[] passphrase = {'m', 'a', 'r', 'k'};
+    private static SafeHelperFactory factory;
     private static AppDatabase db;
 
     static {//使用static代码段可以防止内存泄漏
@@ -79,8 +82,10 @@ public class MyApplication extends Application {
         /**
          * 初始化数据库
          */
+        factory = new SafeHelperFactory(passphrase);
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "userData")
+                .openHelperFactory(factory)  //encrypt
                 .allowMainThreadQueries()//允许在主线程中查询
                 .build();
 
@@ -88,9 +93,10 @@ public class MyApplication extends Application {
 
     /**
      * 获取数据库
+     *
      * @return
      */
-    public static AppDatabase getDatabase(){
+    public static AppDatabase getDatabase() {
         return db;
     }
 

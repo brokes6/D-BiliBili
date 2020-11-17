@@ -32,6 +32,8 @@ import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.ArrayList;
 
+import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+
 public class HomePageFragment extends BaseFragment {
     private FragmentHomepageBinding binding;
     private final String[] TabTitle = {"直播", "推荐", "热门", "追番", "影视", "说唱区", "抗灾区"};
@@ -67,10 +69,10 @@ public class HomePageFragment extends BaseFragment {
         binding.userImg.setOnClickListener(this);
         binding.edText.setOnClickListener(this);
         binding.information.setOnClickListener(this);
-        //adapter = new TabAdapter(getActivity().getSupportFragmentManager(),BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,mFragments);
-        //adapter.setFragmentTitle(TabTitle);
-        binding.viewPager.setAdapter(adapter);
+//        adapter = new TabAdapter(getActivity().getSupportFragmentManager(),mFragments);
+//        binding.viewPager.setAdapter(adapter);
         binding.tab.setViewPager(binding.viewPager, TabTitle,getActivity(),mFragments);
+        //binding.tab.setViewPager(binding.viewPager, TabTitle);
         binding.tab.setCurrentTab(1);
         setCallBackListener(callBackListener);
     }

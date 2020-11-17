@@ -1,6 +1,7 @@
 package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,6 +183,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onDestroy() {
+        Log.e("why", "onDestroy: 当前页面被销毁" );
         mPresenter.detachView();
         super.onDestroy();
     }

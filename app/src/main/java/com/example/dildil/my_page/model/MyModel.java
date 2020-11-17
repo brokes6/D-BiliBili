@@ -2,6 +2,7 @@ package com.example.dildil.my_page.model;
 
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.home_page.bean.VersionBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.my_page.contract.MyContract;
 

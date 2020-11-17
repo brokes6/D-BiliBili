@@ -11,6 +11,7 @@ import com.example.dildil.home_page.fragment.fragment_tab.WholeStationFragment;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.login_page.view.LoginActivity;
 import com.example.dildil.my_page.fragment.MyHomePageFragment;
+import com.example.dildil.my_page.view.MyFragment;
 import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.my_page.view.SettingActivity;
 import com.example.dildil.video.fragment_tab.CommentFragment;
@@ -55,5 +56,6 @@ public interface ActivityComponent {
     void inject(VideoTabFragment videoTabFragment);
 
     void inject(WholeStationFragment wholeStationFragment);
+
     //TODO 后续需要注入的Activity类都可以在这里添加 中像上面一样写就好了
 }

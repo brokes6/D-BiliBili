@@ -3,6 +3,7 @@ package com.example.dildil.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.dildil.MyApplication;
+import com.example.dildil.R;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.LoadingsDialog;
 import com.example.dildil.util.NetUtil;
@@ -66,6 +68,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     private AppDatabase db;
 
+    private View mView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +79,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        isFirstLoad = true;
-        isPrepared = true;
-        View view = initView(inflater, container, savedInstanceState);
-        initView();
-        lazyLoad();
-        return view;
+        if (mView == null) {
+            mView = initView(inflater, container, savedInstanceState);
+            isFirstLoad = true;
+            isPrepared = true;
+            initView();
+            lazyLoad();
+        }
+        return mView;
     }
 
     @Override
@@ -271,14 +277,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     public UserBean getUserData() {
         //return GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), UserBean.class);
-        return  db.userDao().getAll();
+        return db.userDao().getAll();
     }
 
-    public int getUserId(){
-        return  db.userDao().getAll().getData().getId();
+    public int getUserId() {
+        return db.userDao().getAll().getData().getId();
     }
 
-    public AppDatabase getDb(){
+    public AppDatabase getDb() {
         return MyApplication.getDatabase();
     }
 

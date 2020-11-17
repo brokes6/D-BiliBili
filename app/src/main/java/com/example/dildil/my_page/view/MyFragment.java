@@ -1,5 +1,6 @@
 package com.example.dildil.my_page.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,9 @@ public class MyFragment extends BaseFragment {
         if (id == R.id.M_setting) {
             ActivityUtils.startActivity(SettingActivity.class);
         } else if (id == R.id.M_user_img) {
-            ActivityUtils.startActivity(PersonalActivity.class);
+            Intent intent = new Intent(getContext(),PersonalActivity.class);
+            intent.putExtra("uid",getUserData().getData().getId());
+            getContext().startActivity(intent);
         }
     }
 }

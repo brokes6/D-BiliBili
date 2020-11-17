@@ -1,5 +1,6 @@
 package com.example.dildil.my_page.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
     @Inject
     PersonalPresenter mPresenter;
+    private int uid;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -66,6 +68,9 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         binding.tab.setViewPager(binding.viewPager, TabTitle, this, mFragments);
         binding.tab.setCurrentTab(0);
         binding.PBack.setOnClickListener(this);
+
+        Intent intent = getIntent();
+        uid = intent.getIntExtra("uid", 0);
 
         backBackGround = binding.PBack.findViewById(R.id.B_background);
         backImage = binding.PBack.findViewById(R.id.B_back);
@@ -109,13 +114,8 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
     @Override
     protected void initData() {
-        userBean = GsonUtil.fromJSON(SharePreferenceUtil.getInstance(this).getUserInfo(""), UserBean.class);
-        Glide.with(this).load(userBean.getData().getImg()).into(binding.PUserImg);
-        binding.PUserName.setText(userBean.getData().getUsername());
-        binding.PTopUserNmae.setText(userBean.getData().getUsername());
-        binding.PDynamic.setTop_Text(0 + "");
-        binding.PFollow.setTop_Text(userBean.getData().getFollowNum() + "");
-        binding.PFans.setTop_Text(userBean.getData().getFansNum() + "");
+        mPresenter.getFindDetails(uid);
+
     }
 
     @Override
@@ -131,5 +131,20 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         mFragments.clear();
         mFragments = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onGetFindUserDetailsSuccess(UserBean userBean) {
+        Glide.with(this).load(userBean.getData().getImg()).into(binding.PUserImg);
+        binding.PUserName.setText(userBean.getData().getUsername());
+        binding.PTopUserNmae.setText(userBean.getData().getUsername());
+        binding.PDynamic.setTop_Text(0 + "");
+        binding.PFollow.setTop_Text(userBean.getData().getFollowNum() + "");
+        binding.PFans.setTop_Text(userBean.getData().getFansNum() + "");
+    }
+
+    @Override
+    public void onGetFindUserDetailsFail(String e) {
+
     }
 }
