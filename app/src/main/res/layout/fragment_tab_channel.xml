@@ -35,7 +35,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/dp_5"
-                    android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="#c1bfc0"
                     android:textSize="14sp" />

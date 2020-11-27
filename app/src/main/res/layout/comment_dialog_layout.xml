@@ -1,52 +1,43 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:emojicon="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fafafa"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:padding="@dimen/dp_12">
+
+    <hani.momanii.supernova_emoji_library.Helper.EmojiconEditText
+        android:id="@+id/dialog_comment_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/dialog_comment_bt"
+        android:background="@drawable/et_botten_grey"
+        android:hint="@string/EnterComments"
+        android:paddingStart="15dp"
+        android:paddingTop="@dimen/dp_7"
+        android:paddingBottom="@dimen/dp_7"
+        android:textColor="@color/Black"
+        android:textColorHint="#c0c0c0"
+        android:textSize="14sp"
+        emojicon:emojiconSize="14sp" />
+
+    <TextView
+        android:id="@+id/dialog_comment_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/dp_7"
+        android:layout_marginTop="@dimen/dp_7"
+        android:text="发布"
+        android:textColor="#c0c0c0"
+        android:textSize="16sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <hani.momanii.supernova_emoji_library.Helper.EmojiconEditText
-            android:id="@+id/dialog_comment_et"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/et_botten_grey"
-            android:hint="@string/EnterComments"
-            android:paddingStart="15dp"
-            android:paddingTop="@dimen/dp_7"
-            android:paddingBottom="@dimen/dp_7"
-            android:textColor="@color/Black"
-            android:textColorHint="#c0c0c0"
-            android:textSize="14sp"
-            emojicon:emojiconSize="14sp" />
-
-        <TextView
-            android:id="@+id/dialog_comment_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp_7"
-            android:text="发布"
-            android:textColor="#c0c0c0"
-            android:textSize="16sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_12"
-        android:layout_marginBottom="@dimen/dp_12"
+        android:layout_below="@+id/dialog_comment_et"
+        android:layout_marginTop="@dimen/dp_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -84,4 +75,4 @@
     <!--            android:text="@string/Release"/>-->
     <!--    </RelativeLayout>-->
 
-</LinearLayout>
+</RelativeLayout>

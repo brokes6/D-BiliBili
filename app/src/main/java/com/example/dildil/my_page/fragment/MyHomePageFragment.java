@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
@@ -17,7 +16,6 @@ import com.example.dildil.databinding.FragmentMyhomeBinding;
 import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
-import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 
 import javax.inject.Inject;
@@ -45,39 +43,16 @@ public class MyHomePageFragment extends BaseFragment implements RecommendContrac
 
     @Override
     protected void initView() {
-        VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(getContext());
-        videoChoiceDialog.setOnFeedbackClickListener(onFeedbackClickListener);
-
-        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
-        adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 1);
-        binding.ReTopRecy.setLayoutManager(layoutManager1);
-        binding.ReTopRecy.setHasFixedSize(true);
-        binding.ReTopRecy.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
-        mPresenter.getRandomRecommendation();
     }
 
     @Override
     protected void initLocalData() {
 
     }
-
-    private VideoChoiceDialog.OnFeedbackClickListener onFeedbackClickListener = new VideoChoiceDialog.OnFeedbackClickListener() {
-        @Override
-        public void update(int position, int type) {
-            switch (type) {
-                case 1:
-                    adapter.removeItem(position);
-                    break;
-                case 2:
-                    break;
-            }
-
-        }
-    };
 
     @Override
     public void onClick(View v) {
@@ -86,7 +61,6 @@ public class MyHomePageFragment extends BaseFragment implements RecommendContrac
 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
-        adapter.loadMore(videoBean.getData());
     }
 
     @Override

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
@@ -23,6 +23,7 @@
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true"
         tools:targetApi="o">
+        <activity android:name=".my_page.view.HistoryActivity" />
         <activity android:name=".dynamic_page.view.DynamicDetailsActivity" />
         <activity
             android:name=".my_page.view.PersonalActivity"
@@ -59,12 +60,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- <meta-data -->
-        <!-- android:name="design_width_in_dp" -->
-        <!-- android:value="400" /> -->
-        <!-- <meta-data -->
-        <!-- android:name="design_height_in_dp" -->
-        <!-- android:value="640" /> -->
+        </activity>
+
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />

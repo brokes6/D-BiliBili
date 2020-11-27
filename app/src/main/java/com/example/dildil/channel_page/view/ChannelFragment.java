@@ -1,6 +1,7 @@
 package com.example.dildil.channel_page.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class ChannelFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        Log.e("why", "ChannelFragment: ?????这里加载了嘛");
         binding.ChTab.setViewPager(binding.ChViewPager, TabTitle, getActivity(), mFragments);
     }
 

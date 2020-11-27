@@ -4,7 +4,7 @@
     android:id="@+id/IT_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp_15"
+    android:layout_marginBottom="@dimen/dp_10"
     android:background="@drawable/btn_bg"
     android:padding="@dimen/dp_15">
 
@@ -64,15 +64,25 @@
             android:id="@+id/VN_multi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:placeholder="@drawable/skeleton_circular_grey"/>
+            app:placeholder="@drawable/skeleton_circular_grey" />
 
     </LinearLayout>
 
     <include
+        android:id="@+id/function"
         layout="@layout/item_sanlian_layout"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/VN_multiMain" />
+        android:layout_below="@+id/VN_multiMain"
+        android:layout_marginTop="@dimen/dp_10" />
+
+    <com.example.customcontrollibs.viewground.ShowComment
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_below="@+id/function"
+        android:layout_marginTop="@dimen/dp_10"
+        app:isNetWorkUrl="false"
+        app:displayPicture="false"/>
 
 </RelativeLayout>

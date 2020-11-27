@@ -1,7 +1,6 @@
 package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.home_page.view.HomeActivity;
-import com.example.dildil.util.GsonUtil;
 import com.example.dildil.util.XToastUtils;
 import com.next.easynavigation.view.EasyNavigationBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -37,8 +35,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     private FragmentRecommendedBinding binding;
     private RecommendedVideoAdapter adapter;
     private boolean isFirst = true;
-    private VideoChoiceDialog videoChoiceDialog;
-    private ResourcesData mResourcesData;
     private RecommendVideoBean.BeanData mBeanData;
 
     @Inject
@@ -60,14 +56,13 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initView() {
-        videoChoiceDialog = new VideoChoiceDialog(getContext());
+        VideoChoiceDialog videoChoiceDialog = new VideoChoiceDialog(getContext());
         videoChoiceDialog.setOnFeedbackClickListener(onFeedbackClickListener);
 
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         binding.ReRecy.setLayoutManager(layoutManager1);
         binding.ReRecy.setHasFixedSize(true);
         adapter = new RecommendedVideoAdapter(getContext(), videoChoiceDialog, 1);
-        adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_recommended_header, binding.ReRecy, false));
         binding.ReRecy.setAdapter(adapter);
 
         binding.swipe.setEnableLoadMore(true);
@@ -95,9 +90,11 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initData() {
+        adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_recommended_header, binding.ReRecy, false));
+
         binding.swipe.autoRefresh();//自动刷新
         setScanScroll(false);
-        mResourcesData = new ResourcesData();
+        ResourcesData mResourcesData = new ResourcesData();
         mResourcesData.initBanner();
         mBeanData = new RecommendVideoBean.BeanData();
         mBeanData.setBanner(true);
@@ -106,7 +103,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     protected void initLocalData() {
-        adapter.loadMore(GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class).getData());
         binding.swipe.setVisibility(View.GONE);
     }
 
@@ -142,7 +138,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
             adapter.add(datum);
         }
-        save(GsonUtil.toJson(videoBean), offlineData);
         binding.swipe.finishRefresh(true);
         setScanScroll(true);
     }
@@ -183,7 +178,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onDestroy() {
-        Log.e("why", "onDestroy: 当前页面被销毁" );
         mPresenter.detachView();
         super.onDestroy();
     }

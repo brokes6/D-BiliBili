@@ -19,14 +19,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.customcontrollibs.RoundRelativeLayout;
 import com.example.dildil.R;
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.util.BiliDanmukuParser;
+import com.example.dildil.util.NetUtil;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.DanamakuAdapter;
@@ -42,8 +42,6 @@ import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
-import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
-import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -93,14 +91,16 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private ImageView Video_play, mToogleDanmaku;
 
     //滑动小图预览
-    private RelativeLayout mPreviewLayout, UPImage, main;
+    private RelativeLayout mPreviewLayout, UPImage, main, FlowDetection;
+
+    private RoundRelativeLayout playButton, mianLiuButton;
 
     private ImageView mPreView, mSeekBar_play, mCoverImage, Dm_like, Dm_coin, Dm_forward, Dm_more;
     private CircleImageView up_img;
 
-    String mCoverOriginUrl;
-    int mDefaultRes;
-    int mCoverOriginId = 0;
+    private String mCoverOriginUrl;
+    private int mDefaultRes;
+    private int mCoverOriginId = 0;
 
     private int videoType = 0;
     private final int HORIZONTAL_SCREEN = 1;
@@ -158,6 +158,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     private void initView() {
+        FlowDetection = findViewById(R.id.FlowDetection);
+        playButton = findViewById(R.id.play);
+        mianLiuButton = findViewById(R.id.mianLiu);
         mCoverImage = findViewById(R.id.thumbImage);
         mDanmakuView = findViewById(R.id.danmaku_view);
         mSendDanmaku = findViewById(R.id.send_danmaku);
@@ -179,6 +182,8 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         up_name = findViewById(R.id.up_name);
         main = findViewById(R.id.main);
 
+        playButton.setOnClickListener(this);
+        mianLiuButton.setOnClickListener(this);
         Dm_like.setOnClickListener(this);
         Dm_coin.setOnClickListener(this);
         Dm_forward.setOnClickListener(this);
@@ -190,6 +195,19 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mToogleDanmaku.setOnClickListener(this);
         Video_play.setOnClickListener(this);
         resolveTypeUI();
+        JudgeIsTraffic();
+    }
+
+    public void JudgeIsTraffic() {
+        if (!NetUtil.isWifi()) {
+            FlowDetection.setVisibility(View.VISIBLE);
+        } else {
+            if (mUrlList != null) {
+                FlowDetection.setVisibility(View.GONE);
+                Log.e("To", "直接播放");
+                startButtonLogic();
+            }
+        }
     }
 
     public void setVideoDetails(int vid, int uid) {
@@ -231,26 +249,26 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     @Override
     protected void showWifiDialog() {
-        new MaterialDialog.Builder(mContext)
-                .title(R.string.loginWarning)
-                .content(R.string.trafficWarning)
-                .positiveText(R.string.determine)
-                .negativeText(R.string.cancel)
-                .cancelable(false)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                        startPlayLogic();
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        dialog.dismiss();
-                    }
-                })
-                .show();
+//        new MaterialDialog.Builder(mContext)
+//                .title(R.string.loginWarning)
+//                .content(R.string.trafficWarning)
+//                .positiveText(R.string.determine)
+//                .negativeText(R.string.cancel)
+//                .cancelable(false)
+//                .onPositive(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        dialog.dismiss();
+//                        startPlayLogic();
+//                    }
+//                })
+//                .onNegative(new MaterialDialog.SingleButtonCallback() {
+//                    @Override
+//                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .show();
     }
 
     @Override
@@ -260,18 +278,15 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             danmakuOnResume();
             Video_play.setImageResource(R.mipmap.pause);
             mSeekBar_play.setImageResource(R.mipmap.pause);
-            Log.e(TAG, "恢复播放");
         } else if (mCurrentState == CURRENT_STATE_PAUSE) {
             danmakuOnPause();
-            Video_play.setImageResource(R.mipmap.play);
-            mSeekBar_play.setImageResource(R.mipmap.play);
-            Log.e(TAG, "暂停视频");
+            Video_play.setImageResource(R.drawable.ic_play);
+            mSeekBar_play.setImageResource(R.drawable.ic_play);
         }
     }
 
     public void setVideoType(int value) {
         videoType = value;
-        Log.e(TAG, "setVideoType: 当前视频类型为" + videoType);
     }
 
     public int getVideoType() {
@@ -321,6 +336,11 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
         } else if (id == R.id.Dm_more) {
 
+        } else if (id == R.id.play) {
+            FlowDetection.setVisibility(View.GONE);
+            startButtonLogic();
+        } else if (id == R.id.mianLiu) {
+            XToastUtils.warning("暂时不支持免流");
         }
     }
 
@@ -390,13 +410,13 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         } else {
 
         }
-
+        FlowDetection.setVisibility(GONE);
     }
 
     private void resolveTypeUI() {
         if (getCurrentState() == CURRENT_STATE_PREPAREING) {
-            mSeekBar_play.setImageResource(R.mipmap.play);
-            Video_play.setImageResource(R.mipmap.play);
+            mSeekBar_play.setImageResource(R.drawable.ic_play);
+            Video_play.setImageResource(R.drawable.ic_play);
         } else {
             mSeekBar_play.setImageResource(R.mipmap.pause);
             Video_play.setImageResource(R.mipmap.pause);
@@ -627,7 +647,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 if (mDanmaKuShow) {
                     if (!getDanmakuView().isShown())
                         getDanmakuView().show();
-                    mToogleDanmaku.setImageResource(R.mipmap.definition);
+                    mToogleDanmaku.setImageResource(R.drawable.ic_definition);
                 } else {
                     if (getDanmakuView().isShown()) {
                         getDanmakuView().hide();
@@ -810,6 +830,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             setViewShowState(mBottomContainer, INVISIBLE);
             setViewShowState(mStartButton, INVISIBLE);
         }
+        FlowDetection.setVisibility(GONE);
         if (mIfCurrentIsFullscreen && videoType == HORIZONTAL_SCREEN) {
             UPImage.setVisibility(VISIBLE);
             Sanlian.setVisibility(VISIBLE);

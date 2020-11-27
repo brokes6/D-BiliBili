@@ -1,10 +1,10 @@
 package com.example.dildil.video.view;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,25 +17,26 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.example.customcontrollibs.Selector;
 import com.example.customcontrollibs.SelectorGroup;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseActivity;
+import com.example.dildil.base.UserDaoOperation;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityVideoBinding;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.DensityUtil;
-import com.example.dildil.util.ViewWrapper;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SeadDanmuBean;
@@ -65,10 +66,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED;
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
-import static com.shuyu.gsyvideoplayer.utils.GSYVideoType.SCREEN_TYPE_CUSTOM;
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_AUTO_COMPLETE;
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_NORMAL;
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAUSE;
@@ -83,16 +82,17 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     boolean isDestory;
     private int mWhenPlaying;
     private CollapsingToolbarLayoutState state;
-    private ImageView imageView;
-    private int id, uid;
+    //private ImageView imageView;
+    private int id;
+    private int uid;
+    private int timing = 0;
     private List<SwitchVideoBean> urls = new ArrayList<>();
-    private BottomSheetDialog dialog;
     private final SelectorGroup selectorGroup = new SelectorGroup();
     private int textSize;
     private boolean isFunction = true;
     private final String[] definition = {"360p", "480p", "720p", "1080p"};
-    private DrawableCrossFadeFactory factory;
     private AppDatabase dp;
+    private Handler handler;
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -117,7 +117,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
-        dp = MyApplication.getDatabase();
+        dp = MyApplication.getDatabase(this);
         ifGO();
     }
 
@@ -125,23 +125,19 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         Intent intent = getIntent();
         int playtime = intent.getIntExtra("playtime", 0);
         id = intent.getIntExtra("id", 0);
-        if (dp.videoDao().getAll() != null) {
-            dp.videoDao().updateVideo(new VideoDaoBean(1,id));
-        } else {
-            dp.videoDao().insertAll(new VideoDaoBean(1,id));
-        }
+        UserDaoOperation operation = new UserDaoOperation(this);
+        operation.UpVideoDetail(new VideoDaoBean(1, id));
         if (playtime != 0) {
             mWhenPlaying = playtime;
-            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
-            binding.detailPlayer.startPlayLogic();
+            //binding.detailPlayer.onVideoResume();
+
             XToastUtils.info(R.string.saveProgress);
         }
+
     }
 
     @Override
     protected void initView() {
-        //showDialog();
-        imageView = new ImageView(mContext);
         mFragments = new ArrayList<>();
         mFragments.add(new IntroductionFragment());
         mFragments.add(new CommentFragment());
@@ -225,6 +221,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 if (binding.detailPlayer.getVideoType() == 1) {
                     banAppBarScroll(false);
                 }
+                handler.postDelayed(runnable, 10000);
             }
 
             @Override
@@ -235,6 +232,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 if (binding.detailPlayer.getVideoType() == 1) {
                     banAppBarScroll(true);
                 }
+                handler.removeCallbacks(runnable);
             }
 
             @Override
@@ -247,6 +245,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 if (binding.detailPlayer.getVideoType() == 1) {
                     banAppBarScroll(false);
                 }
+                handler.postDelayed(runnable, 10000);
             }
         });
 
@@ -299,44 +298,59 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             if (isFullScreen) {
                 binding.VDanmakuShow.setImageResource(R.mipmap.definition_off);
             } else {
-                binding.VDanmakuShow.setImageResource(R.mipmap.definition);
+                binding.VDanmakuShow.setImageResource(R.drawable.ic_definition);
             }
         }
     };
 
     @Override
     protected void initData() {
-        factory = new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build();
-        binding.VTab.setViewPager(binding.VViewPager, TabTitle, this, mFragments);
+        handler = new Handler();
         binding.detailPlayer.setShrinkImageRes(R.drawable.crop_free_24);
         binding.detailPlayer.setEnlargeImageRes(R.drawable.crop_free_24);
-        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        MyApplication.getDatabase(this).userDao().getAll()
+                .observe(this, new Observer<UserBean>() {
 
-        mPresenter.getDanMu(0, id);
-        mPresenter.getVideoDetails(id, uid);
+                    @Override
+                    public void onChanged(UserBean userBean) {
+                        uid = userBean.getData().getId();
+                        mPresenter.getDanMu(0, id);
+                        mPresenter.getVideoDetails(id, uid);
+                    }
+                });
     }
 
 
     @Override
     public void onClick(View v) {
         int vId = v.getId();
-        if (vId == R.id.V_DanmakuShow) {
-            DanmakuShow();
-        } else if (vId == R.id.V_definition_text) {
-            sendOutDanMu();
-        } else if (vId == R.id.playButton) {
-            binding.detailPlayer.onVideoResume();
-            binding.appbar.setExpanded(true);
-            binding.more.setVisibility(View.GONE);
-            binding.keyboard.setVisibility(View.GONE);
-            banAppBarScroll(false);
-        } else if (vId == R.id.keyboard) {
-            finish();
+        switch (vId) {
+            case R.id.V_DanmakuShow:
+                DanmakuShow();
+                break;
+            case R.id.V_definition_text:
+                sendOutDanMu();
+                break;
+            case R.id.playButton:
+                if (binding.detailPlayer.getCurrentState() == 1) {
+
+                    binding.detailPlayer.startAfterPrepared();
+                } else {
+                    binding.detailPlayer.onVideoResume();
+                    binding.appbar.setExpanded(true);
+                    binding.more.setVisibility(View.GONE);
+                    binding.keyboard.setVisibility(View.GONE);
+                }
+                banAppBarScroll(false);
+                break;
+            case R.id.keyboard:
+                finish();
+                break;
         }
     }
 
     private void sendOutDanMu() {
-        dialog = new BottomSheetDialog(this, R.style.BottomSheetEdit);
+        BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetEdit);
         View commentView = LayoutInflater.from(this).inflate(R.layout.danmu_comment_out, null);
         final EditText commentText = commentView.findViewById(R.id.DM_dialog_comment_et);
         final ImageView send = commentView.findViewById(R.id.DM_send);
@@ -404,7 +418,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             binding.VDanmakuShow.setImageResource(R.mipmap.definition_off);
             binding.detailPlayer.offDanmaku();
         } else {
-            binding.VDanmakuShow.setImageResource(R.mipmap.definition);
+            binding.VDanmakuShow.setImageResource(R.drawable.ic_definition);
             binding.detailPlayer.openDanmaku();
         }
     }
@@ -456,8 +470,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
         JudgeVideoType(videoDetailsBean.getScreenType());
-        Glide.with(mContext).load(videoDetailsBean.getCover()).transition(withCrossFade(factory)).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.skeleton_circular_grey).into(imageView);
-        binding.detailPlayer.setThumbImageView(imageView);
         String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {
             SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i], urlList[i]);
@@ -470,17 +482,22 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private void JudgeVideoType(String valueType) {
         if (valueType.equals("PORTRAIT")) {
             binding.detailPlayer.setAutoFullWithSize(true);
-            binding.videoDanmu.setPadding(60, 0, 60, 0);
-            GSYVideoType.setScreenScaleRatio(16f / 9f);
-            GSYVideoType.setShowType(SCREEN_TYPE_CUSTOM);
+            binding.detailPlayer.setPadding(60, 0, 60, 0);
+//            GSYVideoType.setScreenScaleRatio(4f / 5f);
+//            GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_CUSTOM);
             binding.detailPlayer.setVideoType(2);
-            ViewWrapper wrapper = new ViewWrapper(binding.videoDanmu);
-            ObjectAnimator animator = ObjectAnimator.ofInt(wrapper, "height", DensityUtil.getScreenRelatedInformation(this) * 3 / 4);
-            animator.setDuration(500);
-            animator.start();
+
+            binding.videoDanmu.getLayoutParams().height = DensityUtil.getScreenRelatedInformation(this) * 3 / 4;
+//            ViewWrapper wrapper = new ViewWrapper(binding.videoDanmu);
+//            ObjectAnimator animator = ObjectAnimator.ofInt(wrapper, "height", DensityUtil.getScreenRelatedInformation(this) * 3 / 4);
+//            animator.setDuration(500);
+//            animator.start();
         } else {
             binding.detailPlayer.setVideoType(1);
         }
+        View vg = binding.VViewPager.getViewStub().inflate();
+        ViewPager viewGroup = vg.findViewById(R.id.viewPager);
+        binding.VTab.setViewPager(viewGroup, TabTitle, this, mFragments);
     }
 
     @Override
@@ -534,8 +551,19 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.detailPlayer.setDanmuData(danmuBean.getData());
     }
 
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            timing += 10;
+            mPresenter.getDanMu(timing, id);
+            handler.postDelayed(this, 10000);
+        }
+    };
+
+
     @Override
     public void onGetDanMuFail(String e) {
+        handler.removeCallbacks(runnable);
         XToastUtils.error("获取弹幕出错：" + e);
     }
 
@@ -560,6 +588,16 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     }
 
     @Override
+    public void onGetAddCommentSuccess(CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void onGetAddCommentFail(String e) {
+
+    }
+
+    @Override
     public void onBackPressed() {
         if (GSYVideoManager.backFromWindowFull(this)) {
             return;
@@ -568,20 +606,20 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     }
 
     @Override
-    protected void onDestroy() {
-        mPresenter.detachView();
-        dialog = null;
-        mFragments.clear();
-        mFragments = null;
-        urls.clear();
-        urls = null;
-        if (isPlay) {
-            getCurPlay().release();
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing()) {
+            handler.removeCallbacks(runnable);
+            mPresenter.detachView();
+            mFragments.clear();
+            urls.clear();
+            if (isPlay) {
+                getCurPlay().release();
+            }
+            if (orientationUtils != null)
+                orientationUtils.releaseListener();
+            isDestory = true;
+            GSYVideoManager.releaseAllVideos();
         }
-        if (orientationUtils != null)
-            orientationUtils.releaseListener();
-        isDestory = true;
-        GSYVideoManager.releaseAllVideos();
-        super.onDestroy();
     }
 }

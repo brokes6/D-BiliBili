@@ -1,5 +1,6 @@
 package com.example.dildil.video.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -17,7 +18,7 @@ public interface VideoDao {
      * @param data
      */
     @Insert
-    void insertAll(VideoDaoBean... data);
+    void insertAll(VideoDaoBean data);
 
 //    @Insert
 //    void insertIdDetails()
@@ -28,7 +29,7 @@ public interface VideoDao {
      * @param data
      */
     @Delete
-    void delete(VideoDaoBean data);
+    void deleteAll(VideoDaoBean data);
 
     /**
      * 更新数据
@@ -37,10 +38,11 @@ public interface VideoDao {
      * @param data
      */
     @Update
-    void updateVideo(VideoDaoBean... data);
+    void updateVideo(VideoDaoBean data);
 
     /**
      * 更新对应index的值
+     *
      * @param value
      * @param index
      */
@@ -53,10 +55,10 @@ public interface VideoDao {
      * @return
      */
     @Query("SELECT * FROM videodaobean")
-    VideoDaoBean getAll();
+    LiveData<VideoDaoBean> getAll();
 
     @Query("SELECT videoId FROM videodaobean")
-    int getAllVideoId();
+    LiveData<Integer> getAllVideoId();
 
     @Query("SELECT videoId FROM videodaobean WHERE `index` IN (:index)")
     int getVideoId(int index);

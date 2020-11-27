@@ -12,7 +12,7 @@ public class VideoDaoBean {
     }
 
     @Ignore
-    public VideoDaoBean(int index, int id) {
+    public VideoDaoBean(int index,int id) {
         this.index = index;
         this.videoId = id;
     }

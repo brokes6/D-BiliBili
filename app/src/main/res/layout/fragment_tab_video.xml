@@ -25,11 +25,11 @@
                     android:id="@+id/Search"
                     layout="@layout/item_search_dy" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <ViewStub
                     android:id="@+id/Top_Recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"/>
+                    android:layout="@layout/item_video_tab_view" />
 
                 <TextView
                     android:id="@+id/Ch_Dividing_2"

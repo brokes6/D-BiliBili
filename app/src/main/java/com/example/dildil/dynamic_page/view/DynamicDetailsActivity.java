@@ -41,8 +41,8 @@ public class DynamicDetailsActivity extends BaseActivity {
         setLeftTitleTextColorWhite();
 
         mFragments = new ArrayList<>();
-        mFragments.add(new DetailsCommentFragment());
         mFragments.add(new DetailsForwardFragment());
+        mFragments.add(new DetailsCommentFragment());
 
         imageList.add("https://i0.hdslb.com/bfs/album/69924f3977b9add651b334fc72b507c1c572b41b.png@518w_1e_1c.png");
         imageList.add("https://i0.hdslb.com/bfs/album/064d878a6070c948fec192ff7ff12215ccc0d278.png@518w_1e_1c.png");

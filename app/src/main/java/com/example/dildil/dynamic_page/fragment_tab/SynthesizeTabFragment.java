@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
@@ -24,7 +26,9 @@ import com.example.dildil.dynamic_page.adapter.TopicAdapter;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.ScrollCalculatorHelper;
+import com.example.dildil.video.bean.CommentBean;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
@@ -39,6 +43,7 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
     private boolean isFirst = true;
     private boolean mFull = false;
     private ResourcesData resourcesData;
+    private AppDatabase db;
 
     @Inject
     DynamicPresenter mPresenter;
@@ -57,6 +62,7 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
 
     @Override
     protected void initView() {
+        db = MyApplication.getDatabase(getContext());
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         adapter_topic = new TopicAdapter(getContext());
         binding.RecyTopic.setLayoutManager(layoutManager1);
@@ -100,16 +106,23 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (isFirst) {
-                    mPresenter.getDynamic(1, 8, getUserId());
-                    resourcesData = new ResourcesData();
-                    resourcesData.initTopicData();
-                    adapter_topic.loadMore(resourcesData.getTopicData());
-                    isFirst = false;
-                } else {
-                    mPresenter.getDynamic(1, 8, getUserId());
-                    adapter_topic.refresh(resourcesData.getTopicData());
-                }
+                MyApplication.getDatabase(getContext()).userDao().getAll()
+                        .observe(SynthesizeTabFragment.this, new Observer<UserBean>() {
+
+                            @Override
+                            public void onChanged(UserBean userBean) {
+                                if (isFirst) {
+                                    mPresenter.getDynamic(1, 8, userBean.getData().getId());
+                                    resourcesData = new ResourcesData();
+                                    resourcesData.initTopicData();
+                                    adapter_topic.loadMore(resourcesData.getTopicData());
+                                    isFirst = false;
+                                } else {
+                                    mPresenter.getDynamic(1, 8, userBean.getData().getId());
+                                    adapter_topic.refresh(resourcesData.getTopicData());
+                                }
+                            }
+                        });
             }
         });
     }
@@ -154,6 +167,16 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
 
     @Override
     public void onGetVideoDynamicFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDynamicCommentSuccess(CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void onGetDynamicCommentFail(String e) {
 
     }
 

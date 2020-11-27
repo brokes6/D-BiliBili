@@ -22,7 +22,6 @@ import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.home_page.view.RankingLstActivity;
-import com.example.dildil.util.GsonUtil;
 import com.example.dildil.video.view.VideoActivity;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -59,7 +58,6 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
         binding.HotRecy.setLayoutManager(layoutManager);
         binding.HotRecy.setHasFixedSize(true);
         binding.HotRecy.setAdapter(adapter);
-        adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_hot_header_list, binding.HotRecy, false));
 
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
@@ -77,13 +75,14 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     protected void initData() {
+        adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_hot_header_list, binding.HotRecy, false));
+
         binding.swipe.autoRefresh();//自动刷新
         setScanScroll(false);
     }
 
     @Override
     protected void initLocalData() {
-        adapter.loadMore(GsonUtil.fromJSON(load(offlineData), RecommendVideoBean.class).getData());
         binding.swipe.setVisibility(View.GONE);
     }
 
@@ -107,6 +106,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
         binding.swipe.setVisibility(View.VISIBLE);
+        videoBean.getData().add(0,new RecommendVideoBean.BeanData());
         adapter.loadMore(videoBean.getData());
         binding.swipe.finishRefresh(true);
         setScanScroll(true);

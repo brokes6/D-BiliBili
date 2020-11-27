@@ -11,6 +11,7 @@ import com.example.dildil.login_page.bean.inputDto;
 import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SeadDanmuBean;
@@ -72,7 +73,7 @@ public interface ApiService {
     @GET("userservice/dynamic/unread")
     Observable<DynamicNumBean> getDynamicNum(@Query("uid") int uid);
 
-    @GET()
+    @GET
     Observable<VersionBean> getVersion(@Url String url);
 
     @GET("userservice/dynamic/list/{pageNum}/{pageSize}")
@@ -81,8 +82,8 @@ public interface ApiService {
     @GET("userservice/dynamic/list/video/{pageNum}/{pageSize}")
     Observable<DynamicBean> getVideoDynamic(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
 
-//    @POST("commentservice/comment")
-//    Observable<> addComment(@Body dto dto);
+    @POST("commentservice/comment")
+    Observable<CommentBean> addComment(@Body dto dto, @Query("uid") int uid);
 
     @GET("videoservice/video/top/{categoryId}/{pageSize}")
     Observable<WholeStationBean> getWholeStation(@Path("categoryId") int categoryId, @Path("pageSize") int pageSize);

@@ -1,7 +1,6 @@
 package com.example.dildil.home_page.dialog;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -13,8 +12,9 @@ import androidx.annotation.NonNull;
 
 import com.example.dildil.R;
 import com.example.dildil.util.XToastUtils;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
+public class VideoChoiceDialog extends BottomSheetDialog implements View.OnClickListener {
     private Context context;
     private Activity mContext;
     private View view;
@@ -26,7 +26,7 @@ public class VideoChoiceDialog extends Dialog implements View.OnClickListener {
     private int type;
 
     public VideoChoiceDialog(@NonNull Context context) {
-        super(context, R.style.BottomDialog);
+        super(context);
         this.context = context;
         initView();
     }

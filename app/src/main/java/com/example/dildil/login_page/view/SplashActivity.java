@@ -1,10 +1,9 @@
 package com.example.dildil.login_page.view;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.databinding.DataBindingUtil;
 
@@ -13,8 +12,8 @@ import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.databinding.ActivitySplashBinding;
 import com.example.dildil.home_page.view.HomeActivity;
-import com.example.dildil.util.ScreenUtils;
 import com.example.dildil.util.SharePreferenceUtil;
+import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.HashSet;
 
@@ -27,28 +26,18 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ScreenUtils.setStatusBarColor(this, Color.parseColor("#FFFFFF"));
-    }
-
-    @Override
-    protected void initData() {
-        startCountDownTime();
+        ImmersionBar.with(this).transparentBar();
     }
 
     @Override
     protected void initView() {
+        binding.Logo.setImageResource(R.mipmap.bilibili_logo);
+        binding.LogoBottom.setImageResource(R.mipmap.bilibilis);
     }
 
-    private void startCountDownTime() {
+    @Override
+    protected void initData() {
         countDownTimer = new CountDownTimer(2500, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -72,21 +61,24 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-//        super.onBackPressed();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer = null;
-        }
-    }
-
-    @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    protected void onStop() {
+        if (isFinishing()){
+            if (countDownTimer != null) {
+                Log.e("why", "onStop: 已销毁" );
+                countDownTimer.cancel();
+                countDownTimer = null;
+            }
+        }
+        super.onStop();
     }
 }

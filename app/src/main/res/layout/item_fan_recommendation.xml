@@ -72,7 +72,7 @@
         android:layout_below="@+id/FR_image"
         android:layout_marginTop="@dimen/dp_10"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:singleLine="true"
         android:textColor="@color/Black"
         android:textSize="14sp" />
 

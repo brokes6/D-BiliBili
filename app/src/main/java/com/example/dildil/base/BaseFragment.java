@@ -3,7 +3,6 @@ package com.example.dildil.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,23 +10,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.dildil.MyApplication;
-import com.example.dildil.R;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.LoadingsDialog;
 import com.example.dildil.util.NetUtil;
 import com.example.dildil.util.XToastUtils;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
 
 /**
@@ -66,7 +58,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     public boolean isScroll = true;
 
-    private AppDatabase db;
+    private LiveData<UserBean> userBeanLive;
+
+    private UserBean userBeans;
 
     private View mView;
 
@@ -95,16 +89,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         activity = (Activity) context;
@@ -128,7 +112,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             if (forceLoad || isFirstLoad()) {
                 forceLoad = false;
                 isFirstLoad = false;
-                db = MyApplication.getDatabase();
                 if (NetUtil.isNetworkAvailable(getContext())) {
                     initData();
                 } else {
@@ -138,6 +121,18 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 //                initData();
             }
         }
+    }
+
+    public UserBean getUserBean(){
+        userBeanLive = MyApplication.getDatabase(getContext()).userDao().getAll();
+        userBeanLive.observe(getActivity(), new Observer<UserBean>() {
+
+            @Override
+            public void onChanged(UserBean userBean) {
+                userBeans = userBean;
+            }
+        });
+        return userBeans;
     }
 
     /**
@@ -151,7 +146,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     protected abstract void initData();
 
     protected abstract void initLocalData();
-
 
     /**
      * ViewPager联合使用
@@ -275,77 +269,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         mDialogs.dismiss();
     }
 
-    public UserBean getUserData() {
-        //return GsonUtil.fromJSON(SharePreferenceUtil.getInstance(getContext()).getUserInfo(""), UserBean.class);
-        return db.userDao().getAll();
-    }
-
-    public int getUserId() {
-        return db.userDao().getAll().getData().getId();
-    }
-
     public AppDatabase getDb() {
-        return MyApplication.getDatabase();
+        return MyApplication.getDatabase(getContext());
     }
 
-    /**
-     * 保存数据
-     *
-     * @param data
-     */
-    public void save(String data, String name) {
-        FileOutputStream out = null;
-        BufferedWriter writer = null;
-        try {
-            //设置文件名称，以及存储方式
-            out = MyApplication.getContext().openFileOutput(name, Context.MODE_PRIVATE);
-            //创建一个OutputStreamWriter对象，传入BufferedWriter的构造器中
-            writer = new BufferedWriter(new OutputStreamWriter(out));
-            //向文件中写入数据
-            writer.write(data);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 读取数据
-     *
-     * @return
-     */
-    public String load(String name) {
-        FileInputStream in = null;
-        BufferedReader reader = null;
-        StringBuilder content = new StringBuilder();
-        try {
-            //设置将要打开的存储文件名称
-            in = MyApplication.getContext().openFileInput(name);
-            //FileInputStream -> InputStreamReader ->BufferedReader
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line;
-            //读取每一行数据，并追加到StringBuilder对象中，直到结束
-            while ((line = reader.readLine()) != null) {
-                content.append(line);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return content.toString();
-    }
 }

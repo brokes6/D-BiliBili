@@ -187,4 +187,14 @@ public class UserBean {
             this.readMessageTime = readMessageTime;
         }
     }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "mainId=" + mainId +
+                ", code=" + code +
+                ", data=" + data +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

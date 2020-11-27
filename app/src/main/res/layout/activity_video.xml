@@ -39,8 +39,8 @@
                     android:id="@+id/video_danmu"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_220"
-                    android:fitsSystemWindows="true"
                     android:background="@color/Black"
+                    android:fitsSystemWindows="true"
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7">
 
@@ -73,14 +73,16 @@
                             android:id="@+id/playButton"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:layout_toStartOf="@+id/more"
+                            android:layout_toEndOf="@+id/keyboard"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:visibility="gone">
 
                             <ImageView
-                                android:layout_width="@dimen/dp_35"
-                                android:layout_height="@dimen/dp_35"
-                                android:src="@mipmap/playback_volume" />
+                                android:layout_width="@dimen/dp_23"
+                                android:layout_height="@dimen/dp_26"
+                                android:src="@drawable/ic_small_tv_play" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -88,7 +90,7 @@
                                 android:layout_marginStart="@dimen/dp_5"
                                 android:text="@string/PlayNow"
                                 android:textColor="@color/White"
-                                android:textSize="18sp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <ImageView
@@ -98,14 +100,13 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/dp_10"
-                            android:src="@drawable/more_vert_24" />
+                            android:src="@drawable/more_vert_while_24" />
                     </RelativeLayout>
                 </androidx.appcompat.widget.Toolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,7 +181,7 @@
                             android:layout_centerInParent="true"
                             android:layout_centerVertical="true"
                             android:layout_margin="@dimen/dp_5"
-                            android:src="@mipmap/definition" />
+                            android:src="@drawable/ic_definition" />
                     </RelativeLayout>
                 </com.gcssloop.widget.RCRelativeLayout>
             </LinearLayout>
@@ -191,10 +192,16 @@
                 android:layout_height="@dimen/dp_1"
                 android:background="#e7e7e7" />
 
-            <androidx.viewpager.widget.ViewPager
+            <ViewStub
                 android:id="@+id/V_viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:layout="@layout/item_lntroduction_view" />
+
+<!--            <androidx.viewpager.widget.ViewPager-->
+<!--                android:id="@+id/V_viewPager"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent" />-->
 
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

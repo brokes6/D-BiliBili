@@ -3,6 +3,8 @@ package com.example.dildil.dynamic_page.presenter;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.model.DynamicModel;
+import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.dto;
 
 import javax.inject.Inject;
 
@@ -73,6 +75,33 @@ public class DynamicPresenter extends DynamicContract.Presenter {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mView.onGetVideoDynamicFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getDynamicComment(dto dto, int uid) {
+        mModel.getDynamicComment(dto,uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CommentBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull CommentBean commentBean) {
+                        mView.onGetDynamicCommentSuccess(commentBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetDynamicCommentFail(e.getMessage());
                     }
 
                     @Override

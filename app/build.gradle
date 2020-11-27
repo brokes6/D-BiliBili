@@ -9,13 +9,12 @@ android {
         minSdkVersion 24
         targetSdkVersion 29
         versionCode 1
-        versionName "1.3.5"
+        versionName "1.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation":
-                                     "$projectDir/schemas".toString()]
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
     }
@@ -41,13 +40,12 @@ android {
     }
 }
 
-
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //Loading
@@ -69,20 +67,20 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
     //CookieJar
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    annotationProcessor  'com.github.bumptech.glide:compiler:4.11.0'
 
     //引入XUI ui框架
     //androidx项目(XUI)
     implementation 'com.github.xuexiangjys:XUI:1.1.3'
-    implementation 'com.google.android.material:material:1.3.0-alpha03'
+    implementation 'com.google.android.material:material:1.3.0-alpha04'
 
     //Android开发万能Utils
     implementation 'com.blankj:utilcode:1.22.0'
@@ -93,14 +91,14 @@ dependencies {
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     //视频
-    implementation 'com.shuyu:GSYVideoPlayer:7.1.4'
+    implementation 'com.shuyu:GSYVideoPlayer:7.1.8'
     //弹幕
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.16'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-x86:0.9.21'
     //自己的控件库
-    implementation 'com.github.brokes6:CustomControl:1.3.5'
+    implementation 'com.github.brokes6:CustomControl:1.4.1'
     //Android九宫格显示多图或item
     implementation 'cn.lemon:multiview:1.0.2'
 
@@ -108,10 +106,10 @@ dependencies {
 
     //Dagger(依赖注入)
     implementation 'com.google.dagger:dagger:2.24'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.24'
+    annotationProcessor  'com.google.dagger:dagger-compiler:2.24'
     implementation 'com.google.dagger:dagger-android-support:2.24'
     // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.24'
+    annotationProcessor  'com.google.dagger:dagger-android-processor:2.24'
     //Emoji表情
     implementation 'com.github.hani-momanii:SuperNova-Emoji:1.1'
 
@@ -126,7 +124,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     //Room
     implementation "androidx.room:room-runtime:2.2.5"
-    annotationProcessor "androidx.room:room-compiler:2.2.5"
+    annotationProcessor  "androidx.room:room-compiler:2.2.5"
+    // RxJava support for Room (use 1.1.0-beta2 for latest alpha)
+    implementation "androidx.room:room-rxjava2:2.2.5"
     //加密数据库
     implementation "com.commonsware.cwac:saferoom.x:1.1.3"
+
+    implementation 'org.conscrypt:conscrypt-android:2.2.1'
+    //implementation 'org.apache.httpcomponents:httpclient:4.5.6'
 }

@@ -70,5 +70,7 @@
     <string name="detectUpdates">检测更新</string>
     <string name="logOut">退出登录</string>
     <string name="updateContent">更新内容</string>
+    <string name="newComment">最新评论</string>
+    <string name="accordingToTime">=按时间</string>
 
 </resources>

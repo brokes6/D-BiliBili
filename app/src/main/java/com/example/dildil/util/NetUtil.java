@@ -10,7 +10,6 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 
 public class NetUtil {
 
-    private static final String TAG = "NetUtil";
 
     /**
      * 判断网络是否连接

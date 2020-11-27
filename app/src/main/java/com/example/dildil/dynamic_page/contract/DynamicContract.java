@@ -5,6 +5,8 @@ import com.example.dildil.abstractclass.BaseModel;
 import com.example.dildil.abstractclass.BaseView;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.dto;
 
 import io.reactivex.Observable;
 
@@ -20,6 +22,10 @@ public interface DynamicContract {
 
         void onGetVideoDynamicFail(String e);
 
+        void onGetDynamicCommentSuccess(CommentBean commentBean);
+
+        void onGetDynamicCommentFail(String e);
+
     }
 
     interface Model extends BaseModel {
@@ -28,6 +34,8 @@ public interface DynamicContract {
 
         Observable<DynamicBean> getVideoDynamic(int pageNum, int pageSize, int uid);
 
+        Observable<CommentBean> getDynamicComment(dto dto, int uid);
+
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -35,6 +43,8 @@ public interface DynamicContract {
         public abstract void getDynamic(int pageNum, int pageSize, int uid);
 
         public abstract void getVideoDynamic(int pageNum, int pageSize, int uid);
+
+        public abstract void getDynamicComment(dto dto, int uid);
 
     }
 }

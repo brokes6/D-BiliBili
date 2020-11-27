@@ -39,7 +39,7 @@ import javax.inject.Inject;
  */
 public class HomeActivity extends BaseActivity implements HomeContract.View {
     private static final String TAG = "HomeActivity";
-    ActivityHomeBinding binding;
+    private ActivityHomeBinding binding;
     private final String[] tabText = {"首页", "频道", "动态", "我的"};
     private final int[] normalIcon = {R.mipmap.home, R.mipmap.channel, R.mipmap.dynamic, R.mipmap.my};
     private final int[] selectIcon = {R.mipmap.home_select, R.mipmap.channel_select, R.mipmap.dynamic_select, R.mipmap.my_select};
@@ -95,8 +95,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
                 })
                 .build();
         mPresenter.getVersion("http://116.196.105.203:8183/apk");
-        mPresenter.getDynamicNum(1);
-        showDialog();
+        //mPresenter.getDynamicNum(1);
     }
 
     @Override
@@ -157,13 +156,13 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
         binding.navigationBar.clearMsgPoint(index);
     }
 
-    public void setOnTabClickListener(EasyNavigationBar.OnTabClickListener onTabClick){
+    public void setOnTabClickListener(EasyNavigationBar.OnTabClickListener onTabClick) {
         binding.navigationBar.setOnTabClickListener(onTabClick);
     }
 
     @Override
     public void onGetDynamicNumSuccess(DynamicNumBean dynamicNumBean) {
-        SetRedDot(3,dynamicNumBean.getData());
+        SetRedDot(3, dynamicNumBean.getData());
         hideDialog();
     }
 
@@ -172,7 +171,7 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
         hideDialog();
     }
 
-       @Override
+    @Override
     public void onGetVersionSuccess(VersionBean versionBean) {
         if (versionBean.getData().getVersion().compareTo(getVersionCode()) > 0) {
             downloadApk(versionBean);

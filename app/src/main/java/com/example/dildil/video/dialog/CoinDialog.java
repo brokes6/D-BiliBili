@@ -56,11 +56,10 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
     private AppDatabase dp;
     private String url = "http://116.196.105.203/videoservice/video/dynamic_like";
 
-    public CoinDialog(@NonNull Context context, int vid, int coin, AppDatabase dp) {
+    public CoinDialog(@NonNull Context context, int vid, int coin) {
         super(context);
         mContext = context;
         this.vid = vid;
-        this.dp = dp;
         init();
     }
 
@@ -71,7 +70,7 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
         CB_thumbsUp = view.findViewById(R.id.CB_thumbsUp);
         CB_thumbsUp.setOnCheckedChangeListener(this);
         //CB_thumbsUp.setChecked((Boolean) SharedPreferencesUtil.getData("isThumbsUp", false));
-        CB_thumbsUp.setChecked((Boolean) dp.videoDao().isThumbsUp());
+        //CB_thumbsUp.setChecked((Boolean) dp.videoDao().isThumbsUp());
         close.setOnClickListener(this);
         mViewPager = view.findViewById(R.id.viewpager);
         /**调节ViewPager的滑动速度**/

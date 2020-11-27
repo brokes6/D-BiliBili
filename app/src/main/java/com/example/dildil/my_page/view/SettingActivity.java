@@ -6,22 +6,20 @@ import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseActivity;
+import com.example.dildil.base.UserDaoOperation;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivitySettingBinding;
 import com.example.dildil.home_page.bean.VersionBean;
 import com.example.dildil.home_page.dialog.AppUpdateDialog;
-import com.example.dildil.login_page.view.LoginActivity;
 import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.my_page.contract.MyContract;
 import com.example.dildil.my_page.presenter.MyPresenter;
 import com.example.dildil.util.AppDownloadManager;
-import com.example.dildil.util.SharePreferenceUtil;
 import com.example.dildil.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -50,14 +48,14 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
-        dp = MyApplication.getDatabase();
+        dp = MyApplication.getDatabase(this);
     }
 
     @Override
     protected void initView() {
         setLeftTitleText("设置");
         setBackBtn(getResources().getColor(R.color.While, null));
-        setTitleBG(getResources().getColor(R.color.Pink,null));
+        setTitleBG(getResources().getColor(R.color.Pink, null));
         setLeftTitleTextColorWhite();
         binding.logOut.setOnClickListener(this);
         binding.DetectUpdates.setOnClickListener(this);
@@ -116,10 +114,26 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     public void onGetLogoutSuccess(LogoutBean logoutBean) {
         hideDialog();
         XToastUtils.success("退出成功！");
-        dp.userDao().delete(dp.userDao().getAll());
-        SharePreferenceUtil.getInstance(this).remove("cookie");
-        ActivityUtils.startActivity(LoginActivity.class);
-        this.finish();
+        new UserDaoOperation(this).delUserDetail();
+//        Completable comparable = dp.userDao().deleteAll();
+//        comparable.subscribeOn(Schedulers.io())
+//                .subscribe(new CompletableObserver() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        SharePreferenceUtil.getInstance(SettingActivity.this).remove("cookie");
+//                        ActivityUtils.startActivity(LoginActivity.class);
+//                        SettingActivity.this.finish();
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("why", "出现错误,删除数据失败" + e);
+//                    }
+//                });
     }
 
     @Override
@@ -130,9 +144,9 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     @Override
     public void onGetVersionSuccess(VersionBean versionBean) {
         hideDialog();
-        if (versionBean.getData().getVersion().compareTo(getVersionCode())==1) {
+        if (versionBean.getData().getVersion().compareTo(getVersionCode()) == 1) {
             downloadApk(versionBean);
-        }else{
+        } else {
             XToastUtils.info("当前已是最新版本！");
         }
     }

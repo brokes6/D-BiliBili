@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
@@ -25,8 +27,10 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.bean.TypeBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
+import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.ScrollCalculatorHelper;
 import com.example.dildil.util.XToastUtils;
+import com.example.dildil.video.bean.CommentBean;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -46,6 +50,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
     private boolean mFull = false;
     private boolean isFirst = true;
     private TypeBean typeBean;
+    private AppDatabase db;
 
     @Inject
     DynamicPresenter mPresenter;
@@ -63,6 +68,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
     @Override
     protected void initView() {
+        db = MyApplication.getDatabase(getContext());
         layoutManager = new LinearLayoutManager(getContext());
         mVAdapter = new TabVideoAdapter(getContext());
         binding.VTVideo.setLayoutManager(layoutManager);
@@ -70,14 +76,19 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
         layoutManager1 = new LinearLayoutManager(getContext());
         typeAdapter = new TypeAdapter(getContext());
-        binding.TopRecycler.setLayoutManager(layoutManager1);
-        binding.TopRecycler.setAdapter(typeAdapter);
 
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.getVideoDynamic(1, 8, getUserId());
+                MyApplication.getDatabase(getContext()).userDao().getAll()
+                        .observe(VideoTabFragment.this, new Observer<UserBean>() {
+
+                            @Override
+                            public void onChanged(UserBean userBean) {
+                                mPresenter.getVideoDynamic(1, 8, userBean.getData().getId());
+                            }
+                        });
             }
         });
 
@@ -158,6 +169,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
     @Override
     public void onGetVideoDynamicSuccess(DynamicBean dynamicBean) {
         if (isFirst) {
+            isFirst = false;
             Gson gson = new Gson();
             typeBean = new TypeBean();
             typeBean = gson.fromJson(url, TypeBean.class);
@@ -169,12 +181,14 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
                 @Override
                 public void onFinish() {
-                    binding.TopRecycler.setVisibility(View.VISIBLE);
+                    View ry = binding.TopRecycler.getViewStub().inflate();
+                    RecyclerView recyclerView = ry.findViewById(R.id.Recycler);
+                    recyclerView.setLayoutManager(layoutManager1);
+                    recyclerView.setAdapter(typeAdapter);
                 }
             };
             countDownTimer.start();
             mVAdapter.loadMore(dynamicBean.getData());
-            isFirst = false;
         } else {
             for (DynamicBean.Datas datum : dynamicBean.getData()) {
                 mVAdapter.add(datum);
@@ -187,6 +201,16 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
     public void onGetVideoDynamicFail(String e) {
         binding.swipe.finishRefresh(true);
         XToastUtils.error(R.string.networkError + e);
+    }
+
+    @Override
+    public void onGetDynamicCommentSuccess(CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void onGetDynamicCommentFail(String e) {
+
     }
 
     @Override

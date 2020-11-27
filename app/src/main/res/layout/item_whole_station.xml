@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:rc="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainOnClick"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/dp_10">
@@ -31,7 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/videoImage"
-        android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/videoImage"
         android:textColor="@color/Text_gray"
         android:textSize="13sp" />

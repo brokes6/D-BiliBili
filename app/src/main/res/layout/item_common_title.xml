@@ -49,13 +49,13 @@
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
             android:layout_marginRight="@dimen/dp_15"
-            android:src="@mipmap/information" />
+            android:src="@drawable/ic_information" />
 
         <ImageView
             android:id="@+id/play"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_30"
-            android:src="@mipmap/play_game" />
+            android:src="@drawable/ic_play_game" />
     </LinearLayout>
 
 
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="1"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="@dimen/sp_16" />
 

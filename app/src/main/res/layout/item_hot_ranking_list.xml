@@ -71,7 +71,7 @@
         android:layout_alignBottom="@+id/Ranking_video_img"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/Ranking_video_img"
-        android:src="@mipmap/play_num" />
+        android:src="@drawable/ic_play_num" />
 
     <TextView
         android:id="@+id/Ranking_video_play_num"

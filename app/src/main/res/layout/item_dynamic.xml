@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/tools"
     xmlns:rc="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Dy_main"
     android:layout_width="match_parent"
@@ -31,7 +30,6 @@
         android:layout_below="@+id/Dy_user_name"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_toEndOf="@+id/Dy_user_img"
-        android:text=""
         android:textColor="#a4a4a4"
         android:textSize="13sp" />
 
@@ -123,8 +121,8 @@
             android:layout_marginTop="@dimen/dp_20"
             android:background="@color/While"
             android:visibility="gone"
-            app:divideSpace="8dp"
-            app:placeholder="@drawable/holder" />
+            rc:divideSpace="8dp"
+            rc:placeholder="@drawable/btn_bg" />
 
         <include
             android:id="@+id/sanlian"

@@ -4,6 +4,7 @@ import com.example.dildil.api.ApiEngine;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SeadDanmuBean;
@@ -23,12 +24,12 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
 
     @Override
     public Observable<CoinBean> getCoinOperated(dto bean, int uid) {
-        return ApiEngine.getInstance().getApiService().coin_Operated(bean,uid);
+        return ApiEngine.getInstance().getApiService().coin_Operated(bean, uid);
     }
 
     @Override
     public Observable<ThumbsUpBean> getThumbsUp(String url, dto dto) {
-        return ApiEngine.getInstance().getApiService().thumbsUp(url,dto);
+        return ApiEngine.getInstance().getApiService().thumbsUp(url, dto);
     }
 
     @Override
@@ -38,12 +39,12 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
 
     @Override
     public Observable<CommentDetailBean> getVideoComment(int id, int num, int size, int uid) {
-        return ApiEngine.getInstance().getApiService().getVideoComment(id,num,size,uid);
+        return ApiEngine.getInstance().getApiService().getVideoComment(id, num, size, uid);
     }
 
     @Override
     public Observable<DanmuBean> getDanMu(int value, int uid) {
-        return ApiEngine.getInstance().getApiService().getDanMu(value,uid);
+        return ApiEngine.getInstance().getApiService().getDanMu(value, uid);
     }
 
     @Override
@@ -55,4 +56,10 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
     public Observable<RecommendVideoBean> getRelatedVideos() {
         return ApiEngine.getInstance().getApiService().randomRecommendation();
     }
+
+    @Override
+    public Observable<CommentBean> AddComment(dto dto, int uid) {
+        return ApiEngine.getInstance().getApiService().addComment(dto, uid);
+    }
+
 }

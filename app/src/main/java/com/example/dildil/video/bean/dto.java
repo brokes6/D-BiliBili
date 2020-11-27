@@ -6,18 +6,22 @@ public class dto {
     private String content;
     private int pid;
     private int puid;
-    private String tableNameEnum ="VIDEO";
+    private String tableNameEnum;
 
+    public dto(int vid) {
+        this.vid = vid;
+    }
 
-    public dto(int num,int vid){
+    public dto(int num, int vid) {
         this.num = num;
         this.vid = vid;
     }
 
-    public dto(String  content,int pid,int puid){
+    public dto(String content, int pid, int puid, String type) {
         this.content = content;
         this.pid = pid;
         this.puid = puid;
+        this.tableNameEnum = type;
     }
 
     public String getContent() {
@@ -50,10 +54,6 @@ public class dto {
 
     public void setTableNameEnum(String tableNameEnum) {
         this.tableNameEnum = tableNameEnum;
-    }
-
-    public dto(int vid){
-        this.vid = vid;
     }
 
     public int getNum() {

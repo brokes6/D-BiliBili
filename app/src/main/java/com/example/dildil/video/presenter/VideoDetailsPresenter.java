@@ -3,6 +3,7 @@ package com.example.dildil.video.presenter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SeadDanmuBean;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -243,6 +245,33 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetRelatedVideosFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void AddComment(dto dto, int uid) {
+        mModel.AddComment(dto,uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CommentBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull CommentBean commentBean) {
+                        mView.onGetAddCommentSuccess(commentBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetAddCommentFail(e.getMessage());
                     }
 
                     @Override

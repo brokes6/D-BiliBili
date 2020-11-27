@@ -9,33 +9,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <TextView
             android:id="@+id/top"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp_10"
-            android:orientation="horizontal">
+            android:layout_margin="@dimen/dp_10"
+            android:text="@string/newComment"
+            android:textColor="@color/Black"
+            android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="最新评论"
-                android:textColor="@color/Black"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="=按时间" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/dp_10"
+            android:text="@string/accordingToTime" />
 
         <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/top"
             android:layout_above="@+id/comments"
+            android:layout_below="@+id/top"
             android:orientation="vertical">
 
             <com.jidcoo.android.widget.commentview.CommentView

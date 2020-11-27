@@ -1,8 +1,8 @@
 package com.example.dildil.video.fragment_tab;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.example.customcontrollibs.AnnularProgressButton;
 import com.example.dildil.MyApplication;
@@ -29,10 +29,12 @@ import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
+import com.example.dildil.video.bean.VideoDaoBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
 import com.example.dildil.video.bean.dto;
 import com.example.dildil.video.contract.VideoDetailsContract;
@@ -57,11 +59,13 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private int mCoinNum = 0;
     private boolean isCollection = false;
     private boolean isSanLian = true;
+    private UserBean UserBean;
+    private int uid;
+    private int praiseNum;
 
     @Inject
     VideoDetailsPresenter mPresenter;
-    private UserBean userBean;
-    private int uid;
+
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,7 +92,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         getIncludeView();
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private void getIncludeView() {
         mTime = binding.InVideoData.findViewById(R.id.It_video_time);
         mDanmu = binding.InVideoData.findViewById(R.id.It_barrage_num);
@@ -226,10 +229,26 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     protected void initData() {
-        userBean = getUserData();
-        id = getDb().videoDao().getAllVideoId();
-        mPresenter.getVideoDetails(id, getUserId());
-        mPresenter.getRelatedVideos();
+        MyApplication.getDatabase(getContext()).videoDao().getAll()
+                .observe(this, new Observer<VideoDaoBean>() {
+
+                    @Override
+                    public void onChanged(VideoDaoBean c) {
+                        id = c.getVideoId();
+                        MyApplication.getDatabase(getContext()).userDao().getAll()
+                                .observe(IntroductionFragment.this, new Observer<UserBean>() {
+
+                                    @Override
+                                    public void onChanged(UserBean userBean) {
+                                        UserBean = userBean;
+                                        mPresenter.getVideoDetails(id, userBean.getData().getId());
+                                        mPresenter.getRelatedVideos();
+                                    }
+                                });
+                    }
+                });
+
+
     }
 
     @Override
@@ -246,20 +265,18 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 binding.InNotInterested.setVisibility(View.VISIBLE);
                 binding.openWarning.setImageResource(R.drawable.arrow_up);
                 isOpen = true;
-
             } else {
                 binding.InTitle.setMaxLines(1);
                 binding.InNotInterested.setVisibility(View.GONE);
                 binding.openWarning.setImageResource(R.drawable.arrow_down);
                 isOpen = false;
-
             }
         } else if (vId == R.id.coinImg) {
             if (mCoinNum == 2) {
                 XToastUtils.toast("已经投过币拉~");
                 return;
             }
-            CoinDialog coinDialog = new CoinDialog(getContext(), id, userBean.getData().getCoinNum(),MyApplication.getDatabase());
+            CoinDialog coinDialog = new CoinDialog(getContext(), id, UserBean.getData().getCoinNum());
             coinDialog.setListener(resultListener);
             coinDialog.show();
         } else if (vId == R.id.like_img) {
@@ -268,7 +285,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 return;
             }
             dto str = new dto(id);
-            mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like", str);
+            mPresenter.getThumbsUp("http://116.196.105.203:6380/videoservice/video/dynamic_like", str);
         } else if (vId == R.id.Collection) {
             if (isCollection) {
                 XToastUtils.toast("已经收藏过拉~");
@@ -277,8 +294,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             dto str1 = new dto(id);
             mPresenter.CollectionVideo(str1);
         } else if (vId == R.id.In_user_img) {
-            Intent intent = new Intent(getContext(),PersonalActivity.class);
-            intent.putExtra("uid",uid);
+            Intent intent = new Intent(getContext(), PersonalActivity.class);
+            intent.putExtra("uid", uid);
             getContext().startActivity(intent);
         }
     }
@@ -289,9 +306,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     CoinDialog.throwCoinResultListener resultListener = new CoinDialog.throwCoinResultListener() {
         @Override
         public void throwCoinSuccess(CoinBean coinBean) {
-            XToastUtils.success(coinBean.getMessage());
             showDialog();
-            mPresenter.getVideoDetails(id, getUserId());
+            XToastUtils.success(coinBean.getMessage());
+            mPresenter.getVideoDetails(id, UserBean.getData().getId());
         }
 
         @Override
@@ -326,6 +343,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
+        praiseNum = videoDetailsBean.getPraiseNum();
         uid = videoDetailsBean.getUid();
         binding.InTitle.setText(videoDetailsBean.getTitle());
         Glide.with(this).load(videoDetailsBean.getUpImg()).into(binding.InUserImg);
@@ -353,6 +371,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetVideoDetailsFail(String e) {
+        Log.e("why", "错误为" + e);
         //hideDialog();
         XToastUtils.error(R.string.networkError);
     }
@@ -373,8 +392,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         XToastUtils.success("操纵成功！");
         XToastUtils.success(thumbsUpBean.getMessage());
         like_img.setImageResource(R.drawable.thumb_up_24);
-        mPresenter.getVideoDetails(id, getUserId());
-        showDialog();
+        mPraise.setText(String.valueOf(praiseNum + 1));
+        //mPresenter.getVideoDetails(id, getUserId());
+        //showDialog();
     }
 
     @Override
@@ -432,7 +452,18 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetRelatedVideosFail(String e) {
+        Log.e("why", "错误为---" + e);
         XToastUtils.error(R.string.networkError);
+    }
+
+    @Override
+    public void onGetAddCommentSuccess(CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void onGetAddCommentFail(String e) {
+
     }
 
     @Override

@@ -31,8 +31,8 @@ public class RecommendVideoBean {
         this.data = data;
     }
 
-    public void addData(BeanData datas){
-        data.add(0,datas);
+    public void addData(BeanData datas) {
+        data.add(0, datas);
     }
 
     public static class BeanData {

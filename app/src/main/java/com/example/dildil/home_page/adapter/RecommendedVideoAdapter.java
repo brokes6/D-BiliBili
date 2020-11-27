@@ -68,6 +68,7 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
                         Glide.with(holder.itemView)
                                 .load(data.getImageUrl())
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
+                                .placeholder(R.drawable.skeleton_circular_grey)
                                 .into(holder.imageView);
                     }
                 }, true)
@@ -118,8 +119,8 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
     }
 
     public class RecViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView more,cover;
-        private final TextView play_volume,barrage_volume,title,time;
+        private final ImageView more, cover;
+        private final TextView play_volume, barrage_volume, title, time;
         private final RoundRelativeLayout Re_video;
 
         public RecViewHolder(@NonNull View itemView) {

@@ -53,14 +53,14 @@
                     android:layout_height="@dimen/dp_24"
                     android:layout_marginRight="@dimen/dp_15"
                     android:layout_marginBottom="@dimen/dp_5"
-                    android:src="@mipmap/information" />
+                    android:src="@drawable/ic_information" />
 
                 <ImageView
                     android:id="@+id/play"
                     android:layout_width="@dimen/dp_24"
                     android:layout_height="@dimen/dp_24"
                     android:layout_marginBottom="@dimen/dp_5"
-                    android:src="@mipmap/play_game" />
+                    android:src="@drawable/ic_play_game" />
             </LinearLayout>
 
             <com.flyco.tablayout.SlidingTabLayout

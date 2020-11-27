@@ -39,11 +39,20 @@ public class WholeStationBean {
         private int danmuNum;
         private int length;
         private int fansNum;
+        private String upImg;
         private String upName;
         private String title;
         private String cover;
         private int score;
         private String publishTime;
+
+        public String getUpImg() {
+            return upImg;
+        }
+
+        public void setUpImg(String upImg) {
+            this.upImg = upImg;
+        }
 
         public int getId() {
             return id;

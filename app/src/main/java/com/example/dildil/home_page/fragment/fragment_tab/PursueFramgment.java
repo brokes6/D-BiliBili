@@ -21,8 +21,6 @@ import com.example.dildil.home_page.adapter.FanRecommendationAdapter;
 import com.example.dildil.home_page.adapter.MyPursuitAdapter;
 import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.FanRecommendationBean;
-import com.example.dildil.util.GsonUtil;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.adapter.BannerImageAdapter;
@@ -77,11 +75,6 @@ public class PursueFramgment extends BaseFragment {
     @Override
     protected void initLocalData() {
         binding.main.setVisibility(View.GONE);
-        fanRecommendationBeans.clear();
-        List<FanRecommendationBean> fanRecommendationBean = GsonUtil.fromJSON(load(LocalHua), new TypeToken<List<FanRecommendationBean>>() {
-        }.getType());
-        fanRecommendationAdapter.loadMore(fanRecommendationBean);
-
     }
 
     private void initDates() {
@@ -98,7 +91,6 @@ public class PursueFramgment extends BaseFragment {
             adapter.refresh(resourcesData.getMyPursuitBean());
             fanRecommendationAdapter.refresh(resourcesData.getFanRecommendationBeans());
         }
-        save(GsonUtil.toJson(resourcesData.getFanRecommendationBeans()), LocalHua);
         binding.swipe.finishRefresh(true);
         binding.main.setVisibility(View.VISIBLE);
     }

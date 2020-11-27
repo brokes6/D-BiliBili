@@ -35,7 +35,6 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_5"
-                android:maxLines="1"
                 android:textSize="@dimen/sp_16"
                 android:singleLine="true" />
         </LinearLayout>

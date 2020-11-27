@@ -14,8 +14,8 @@
 
         <ImageView
             android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:src="@mipmap/play_num" />
+            android:layout_height="@dimen/dp_22"
+            android:src="@drawable/ic_play_num" />
 
         <TextView
             android:id="@+id/It_play_num"
@@ -35,8 +35,8 @@
 
         <ImageView
             android:layout_width="@dimen/dp_24"
-            android:layout_height="@dimen/dp_24"
-            android:src="@mipmap/barrage_volume_ash" />
+            android:layout_height="@dimen/dp_22"
+            android:src="@drawable/ic_barrage_volume_ash" />
 
         <TextView
             android:id="@+id/It_barrage_num"

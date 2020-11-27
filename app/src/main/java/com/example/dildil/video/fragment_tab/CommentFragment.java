@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 
 import com.bumptech.glide.Glide;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
+import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
@@ -26,11 +28,13 @@ import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
+import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.DanmuBean;
 import com.example.dildil.video.bean.SeadDanmuBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
 import com.example.dildil.video.bean.VideoDetailsBean;
+import com.example.dildil.video.bean.dto;
 import com.example.dildil.video.contract.VideoDetailsContract;
 import com.example.dildil.video.presenter.VideoDetailsPresenter;
 import com.example.dildil.video.rewriting.CustomCommentViewHolder;
@@ -50,15 +54,15 @@ import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 
 public class CommentFragment extends BaseFragment implements VideoDetailsContract.View {
-    private static final String TAG = "CommentFragment";
     private FragmentCommentBinding binding;
     private BottomSheetDialog dialog;
     private EmojIconActions emojIcon;
     private boolean isLoad = true;
     private int id, uid;
-    private UserBean userBean;
+    private UserBean UserBean;
     private CustomCommentViewHolder holder = null;
     private CustomReplyViewHolder holders = null;
+    private AppDatabase db;
 
     @Inject
     VideoDetailsPresenter mPresenter;
@@ -77,16 +81,30 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
     @Override
     protected void initView() {
+        db = MyApplication.getDatabase(getContext());
         binding.detailPageDoComment.setOnClickListener(this);
         initCommentList();
     }
 
     @Override
     protected void initData() {
-        id = getDb().videoDao().getAllVideoId();
-        userBean = getUserData();
-        mPresenter.getVideoComment(id, 1, 10, getUserId());
-        isLoad = false;
+        MyApplication.getDatabase(getContext()).videoDao().getAllVideoId()
+                .observe(this, new Observer<Integer>() {
+
+                    @Override
+                    public void onChanged(Integer c) {
+                        id = c;
+                        MyApplication.getDatabase(getContext()).userDao().getAll()
+                                .observe(CommentFragment.this, new Observer<UserBean>() {
+
+                                    @Override
+                                    public void onChanged(UserBean userBean) {
+                                        UserBean = userBean;
+                                        mPresenter.getVideoComment(id, 1, 10, userBean.getData().getId());
+                                    }
+                                });
+                    }
+                });
     }
 
     @Override
@@ -106,8 +124,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
      */
     private void initCommentList() {
         binding.commentView.setViewStyleConfigurator(new CustomViewStyleConfigurator(getContext()));
-        binding.commentView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.item_comment_empty,null));
-        binding.commentView.setErrorView(LayoutInflater.from(getContext()).inflate(R.layout.item_comment_error,null));
+        binding.commentView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.item_comment_empty, null));
+        binding.commentView.setErrorView(LayoutInflater.from(getContext()).inflate(R.layout.item_comment_error, null));
         binding.commentView.callbackBuilder()
                 //自定义评论布局(必须使用ViewHolder机制)--CustomCommentItemCallback<C> 泛型C为自定义评论数据类
                 .customCommentItem(new CustomCommentItemCallback<CommentDetailBean.CommentData>() {
@@ -197,9 +215,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     dialog.dismiss();
                     CommentDetailBean.CommentData.replyData replyData = new CommentDetailBean.CommentData.replyData();
                     replyData.setContent(replyContent);
-                    replyData.setImg(userBean.getData().getImg());
-                    replyData.setUsername(userBean.getData().getUsername());
-                    Log.e(TAG, "onClick: ?????当前输入数据为"+ binding.commentView.getReplyList(0));
+                    replyData.setImg(UserBean.getData().getImg());
+                    replyData.setUsername(UserBean.getData().getUsername());
                     binding.commentView.addReply(replyData, position);
                     XToastUtils.toast("回复成功");
                 } else {
@@ -232,7 +249,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     }
 
     /**
-     * by moos on 2018/04/20
+     * by moos on 2020/04/20
      * func:弹出评论框
      */
     private void showCommentDialog() {
@@ -264,11 +281,11 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                 String commentContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(commentContent)) {
                     dialog.dismiss();
-                    detailBean.setUsername(userBean.getData().getUsername());
-                    detailBean.setImg(userBean.getData().getImg());
+                    detailBean.setUsername(UserBean.getData().getUsername());
+                    detailBean.setImg(UserBean.getData().getImg());
                     detailBean.setContent(commentContent);
                     binding.commentView.addComment(detailBean);
-                    XToastUtils.toast("评论成功");
+                    mPresenter.AddComment(new dto(commentContent, id, 0, "VIDEO"), UserBean.getData().getId());
                 } else {
                     XToastUtils.toast("评论内容不能为空");
                 }
@@ -321,7 +338,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         }
     }
 
-    class MyOnPullRefreshCallback implements OnPullRefreshCallback{
+    class MyOnPullRefreshCallback implements OnPullRefreshCallback {
 
         @Override
         public void refreshing() {
@@ -343,7 +360,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
         @Override
         public void commentItemOnClick(int position, CommentDetailBean.CommentData comment, View view) {
-            showReplyDialog(position, comment);
+            XToastUtils.warning("暂时禁止回复~");
+            //showReplyDialog(position, comment);
         }
 
         @Override
@@ -434,6 +452,16 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
     @Override
     public void onGetRelatedVideosFail(String e) {
+
+    }
+
+    @Override
+    public void onGetAddCommentSuccess(CommentBean commentBean) {
+        XToastUtils.toast("评论成功");
+    }
+
+    @Override
+    public void onGetAddCommentFail(String e) {
 
     }
 
