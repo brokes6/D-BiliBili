@@ -98,7 +98,6 @@ public class MyApplication extends Application {
                     db = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "userData")
                             //.openHelperFactory(factory)  //encrypt
-                            //.allowMainThreadQueries()//允许在主线程中查询
                             .fallbackToDestructiveMigration()
                             .build();;
                 }

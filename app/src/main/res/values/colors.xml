@@ -5,6 +5,7 @@
     <color name="ColorAccent">#03DAC5</color>
     <color name="White">#FFFFFF</color>
     <color name="Pink">#fa7298</color>
+    <color name="Dark_pink">#c85b7a</color>
     <color name="Orange">#fed442</color>
     <color name="Oranges">#f3921f</color>
     <color name="White_ash">#f4f4f4</color>
@@ -16,4 +17,5 @@
     <color name="color_6f">#6f6f6f</color>
     <color name="gray_d8">#ffd8d8d8</color>
     <color name="fddce3">#fddce3</color>
+    <color name="c75757">#757575</color>
 </resources>

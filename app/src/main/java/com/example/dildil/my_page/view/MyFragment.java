@@ -2,7 +2,6 @@ package com.example.dildil.my_page.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +31,12 @@ public class MyFragment extends BaseFragment {
     protected void initView() {
         binding.MSetting.setOnClickListener(this);
         binding.MUserImg.setOnClickListener(this);
+        binding.MyHistory.setOnClickListener(this);
+        binding.RightMore.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
-        Log.e("why", "MyFragment: ?????这里加载了嘛");
         showDialog();
         MyApplication.getDatabase(getContext()).userDao().getAll()
                 .observe(this, new Observer<UserBean>() {
@@ -62,7 +62,6 @@ public class MyFragment extends BaseFragment {
                         hideDialog();
                     }
                 });
-
     }
 
     @Override
@@ -77,6 +76,12 @@ public class MyFragment extends BaseFragment {
         if (id == R.id.M_setting) {
             ActivityUtils.startActivity(SettingActivity.class);
         } else if (id == R.id.M_user_img) {
+            Intent intent = new Intent(getContext(), PersonalActivity.class);
+            intent.putExtra("uid", Userbean.getData().getId());
+            getContext().startActivity(intent);
+        } else if (id == R.id.MyHistory) {
+            ActivityUtils.startActivity(HistoryActivity.class);
+        } else if (id == R.id.Right_more) {
             Intent intent = new Intent(getContext(), PersonalActivity.class);
             intent.putExtra("uid", Userbean.getData().getId());
             getContext().startActivity(intent);

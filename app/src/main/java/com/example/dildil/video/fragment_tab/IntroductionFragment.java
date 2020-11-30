@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
@@ -27,6 +27,7 @@ import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.XToastUtils;
+import com.example.dildil.video.adapter.RelevantVideoAdapter;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
 import com.example.dildil.video.bean.CommentBean;
@@ -47,12 +48,12 @@ import javax.inject.Inject;
 
 public class IntroductionFragment extends BaseFragment implements VideoDetailsContract.View {
     private FragmentIntroductionBinding binding;
-    private HotRankingAdapter adapter;
+    private RelevantVideoAdapter adapter;
     private int id;
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
     private ImageView like_img, Collection, coinImg;
     private boolean isOpen = false;
-    private LinearLayout ForwardMain;
+    private RelativeLayout ForwardMain;
     private AnnularProgressButton coin_circleView, Collection_circleView;
     private boolean isLoad = false;
     private boolean mIsPraise = false;
@@ -85,8 +86,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.InRecyclerView.setLayoutManager(layoutManager);
         binding.InUserImg.setOnClickListener(this);
-        adapter = new HotRankingAdapter(getContext());
-        adapter.setListener(listener);
+        adapter = new RelevantVideoAdapter(getContext());
+        //adapter.setListener(listener);
         binding.InRecyclerView.setAdapter(adapter);
 
         getIncludeView();
@@ -346,6 +347,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         praiseNum = videoDetailsBean.getPraiseNum();
         uid = videoDetailsBean.getUid();
         binding.InTitle.setText(videoDetailsBean.getTitle());
+        binding.InFans.setText("0粉丝");
         Glide.with(this).load(videoDetailsBean.getUpImg()).into(binding.InUserImg);
         binding.InUserName.setText(videoDetailsBean.getUpName());
         binding.InWarning.setText(videoDetailsBean.getDescription());

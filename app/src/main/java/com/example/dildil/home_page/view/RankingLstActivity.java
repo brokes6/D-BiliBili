@@ -23,6 +23,7 @@ public class RankingLstActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_ranking);
         ImmersionBar.with(this)
                 .transparentStatusBar()
+                .statusBarDarkFont(false)
                 .statusBarColor(R.color.Pink)
                 .init();
     }

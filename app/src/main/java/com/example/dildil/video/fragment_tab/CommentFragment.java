@@ -25,6 +25,7 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentCommentBinding;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
+import com.example.dildil.util.DateUtils;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -144,7 +145,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                         holder.prizes.setText("0");
                         Glide.with(getContext()).load(item.getImg()).into(holder.ico);
                         holder.userName.setText(item.getUsername());
-                        holder.userData.setText("10-15");
+                        holder.userData.setText(DateUtils.timet(item.getCreateTime()));
                         holder.comment.setText(item.getContent());
                         return convertView;
                     }

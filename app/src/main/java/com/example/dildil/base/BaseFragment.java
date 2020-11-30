@@ -10,11 +10,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
-import com.example.dildil.MyApplication;
-import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.LoadingsDialog;
 import com.example.dildil.util.NetUtil;
 import com.example.dildil.util.XToastUtils;
@@ -57,10 +53,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public static ICallBackListener listener;
 
     public boolean isScroll = true;
-
-    private LiveData<UserBean> userBeanLive;
-
-    private UserBean userBeans;
 
     private View mView;
 
@@ -121,18 +113,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 //                initData();
             }
         }
-    }
-
-    public UserBean getUserBean(){
-        userBeanLive = MyApplication.getDatabase(getContext()).userDao().getAll();
-        userBeanLive.observe(getActivity(), new Observer<UserBean>() {
-
-            @Override
-            public void onChanged(UserBean userBean) {
-                userBeans = userBean;
-            }
-        });
-        return userBeans;
     }
 
     /**
@@ -267,10 +247,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     public void hideDialog() {
         mDialogs.dismiss();
-    }
-
-    public AppDatabase getDb() {
-        return MyApplication.getDatabase(getContext());
     }
 
 }

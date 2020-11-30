@@ -82,7 +82,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     boolean isDestory;
     private int mWhenPlaying;
     private CollapsingToolbarLayoutState state;
-    //private ImageView imageView;
     private int id;
     private int uid;
     private int timing = 0;

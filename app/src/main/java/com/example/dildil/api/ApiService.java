@@ -1,5 +1,6 @@
 package com.example.dildil.api;
 
+import com.example.dildil.channel_page.bean.PartitionBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.home_page.bean.DynamicNumBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
@@ -90,4 +91,8 @@ public interface ApiService {
 
     @GET("userservice/user/details/{uid}")
     Observable<UserBean> findUserDetails(@Path("uid") int uid);
+
+    @GET("videoservice/category/tops")
+    Observable<PartitionBean> getCategory();
+
 }

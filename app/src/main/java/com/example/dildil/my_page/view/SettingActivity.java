@@ -39,6 +39,7 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
 
         ImmersionBar.with(this)
                 .transparentStatusBar()
+                .statusBarDarkFont(false)
                 .statusBarColor(R.color.Pink)
                 .init();
 

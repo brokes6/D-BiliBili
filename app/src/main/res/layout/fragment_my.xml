@@ -52,7 +52,7 @@
             android:paddingLeft="@dimen/dp_10"
             android:paddingTop="@dimen/dp_8"
             android:paddingRight="@dimen/dp_10"
-            android:paddingBottom="@dimen/dp_10">
+            android:paddingBottom="@dimen/dp_5">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/M_user_img"
@@ -182,22 +182,24 @@
                 app:Top_Text_Size="5sp" />
         </LinearLayout>
 
-        <com.gcssloop.widget.RCRelativeLayout
+        <com.example.customcontrollibs.RoundRelativeLayout
             android:id="@+id/M_video_cover"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:layout_below="@+id/function_data"
             android:layout_marginLeft="@dimen/dp_10"
-            android:layout_marginTop="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            android:background="@color/Pink"
-            app:round_corner_top_left="5dp"
-            app:round_corner_top_right="5dp">
+            android:background="@color/Dark_pink"
+            app:rlRadius="@dimen/dp_5">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/White" />
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="-15dp"
+                android:layout_marginBottom="-15dp"
+                android:alpha="0.5"
+                android:src="@mipmap/bigmember" />
 
             <TextView
                 android:id="@+id/member"
@@ -205,18 +207,18 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_20"
-                android:textColor="@color/Text_gray"
+                android:textColor="@color/While"
                 android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dp_10"
-                android:layout_toLeftOf="@+id/Member_Right_more"
-                android:text="2021-01-19到期"
-                android:textColor="@color/Text_gray"
-                android:textSize="12sp" />
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_centerVertical="true"-->
+            <!--                android:layout_marginRight="@dimen/dp_10"-->
+            <!--                android:layout_toLeftOf="@+id/Member_Right_more"-->
+            <!--                android:text="2021-01-19到期"-->
+            <!--                android:textColor="@color/Text_gray"-->
+            <!--                android:textSize="12sp" />-->
 
             <ImageView
                 android:id="@+id/Member_Right_more"
@@ -226,7 +228,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_10"
                 android:src="@drawable/arrow_forward_white" />
-        </com.gcssloop.widget.RCRelativeLayout>
+        </com.example.customcontrollibs.RoundRelativeLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -246,7 +248,46 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
-                    <include layout="@layout/item_myfragment_function" />
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_60"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Text="离线缓存"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
+
+                    <com.example.customcontrollibs.ImageTopView
+                        android:id="@+id/MyHistory"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_60"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/playhistory"
+                        app:Image_Text="历史记录"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
+
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_60"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/mycollection"
+                        app:Image_Text="我的收藏"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
+
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_60"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@mipmap/laterlook"
+                        app:Image_Text="稍后再看"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
 
                 </LinearLayout>
 

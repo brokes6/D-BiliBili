@@ -13,8 +13,8 @@
 
         <RelativeLayout
             android:id="@+id/Ranking_List"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_centerHorizontal="true"
             android:background="@drawable/file_background_circular_pink">
 
@@ -45,8 +45,8 @@
 
         <RelativeLayout
             android:id="@+id/Notice"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_centerHorizontal="true"
             android:background="@drawable/file_background_circular_orange">
 
@@ -76,8 +76,8 @@
 
         <RelativeLayout
             android:id="@+id/Medal"
-            android:layout_width="@dimen/dp_45"
-            android:layout_height="@dimen/dp_45"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_centerHorizontal="true"
             android:background="@drawable/file_background_circular_oranges">
 

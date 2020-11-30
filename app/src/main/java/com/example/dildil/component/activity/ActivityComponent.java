@@ -2,6 +2,7 @@ package com.example.dildil.component.activity;
 
 import android.app.Activity;
 
+import com.example.dildil.channel_page.fragment_tab.PartitionTabFragment;
 import com.example.dildil.component.app.AppComponent;
 import com.example.dildil.dynamic_page.fragment_tab.DetailsCommentFragment;
 import com.example.dildil.dynamic_page.fragment_tab.SynthesizeTabFragment;
@@ -58,6 +59,8 @@ public interface ActivityComponent {
     void inject(WholeStationFragment wholeStationFragment);
 
     void inject(DetailsCommentFragment detailsCommentFragment);
+
+    void inject(PartitionTabFragment partitionTabFragment);
 
     //TODO 后续需要注入的Activity类都可以在这里添加 中像上面一样写就好了
 }

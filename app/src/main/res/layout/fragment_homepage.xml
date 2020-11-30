@@ -47,20 +47,22 @@
                     android:textSize="5sp"
                     app:drawableLeftCompat="@drawable/search_24_ecabbf" />
 
-                <ImageView
-                    android:id="@+id/information"
-                    android:layout_width="@dimen/dp_24"
-                    android:layout_height="@dimen/dp_24"
-                    android:layout_marginRight="@dimen/dp_15"
-                    android:layout_marginBottom="@dimen/dp_5"
-                    android:src="@drawable/ic_information" />
 
                 <ImageView
                     android:id="@+id/play"
                     android:layout_width="@dimen/dp_24"
                     android:layout_height="@dimen/dp_24"
+                    android:layout_marginRight="@dimen/dp_15"
                     android:layout_marginBottom="@dimen/dp_5"
                     android:src="@drawable/ic_play_game" />
+
+
+                <ImageView
+                    android:id="@+id/information"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_24"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    android:src="@drawable/ic_information" />
             </LinearLayout>
 
             <com.flyco.tablayout.SlidingTabLayout

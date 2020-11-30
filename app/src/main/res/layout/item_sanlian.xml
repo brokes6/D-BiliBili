@@ -36,31 +36,34 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/like_img"
                 android:layout_centerHorizontal="true"
-                android:textColor="#757575" />
+                android:textColor="#757575"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/share"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/noLike"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_5"
                 android:src="@drawable/thumb_down_no" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/noLike"
+                android:layout_centerHorizontal="true"
                 android:text="不喜欢"
                 android:textColor="#757575"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/main_coin"
@@ -84,7 +87,7 @@
                 android:layout_height="@dimen/dp_24"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_5"
-                android:src="@mipmap/coin" />
+                android:src="@drawable/ic_coin" />
 
             <TextView
                 android:id="@+id/coin"
@@ -92,7 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/coinImg"
                 android:layout_centerHorizontal="true"
-                android:textColor="#757575" />
+                android:textColor="#757575"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
@@ -118,7 +122,7 @@
                 android:layout_height="@dimen/dp_22"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_5"
-                android:src="@mipmap/collect" />
+                android:src="@drawable/ic_collection" />
 
             <TextView
                 android:id="@+id/CollectionNum"
@@ -126,34 +130,35 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Collection"
                 android:layout_centerHorizontal="true"
-                android:text="1.1万"
+                android:text="0"
                 android:textColor="#757575"
                 android:textSize="12sp" />
 
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ForwardMain"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/Forward"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="@dimen/dp_22"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/dp_5"
-                android:src="@mipmap/forward_black" />
+                android:src="@drawable/ic_forward" />
 
             <TextView
                 android:id="@+id/ForwardNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6967"
+                android:layout_below="@+id/Forward"
+                android:layout_centerHorizontal="true"
+                android:text="0"
                 android:textColor="#757575"
                 android:textSize="12sp" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
