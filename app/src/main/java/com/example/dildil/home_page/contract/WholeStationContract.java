@@ -20,12 +20,12 @@ public interface WholeStationContract {
 
     interface Model extends BaseModel {
 
-        Observable<WholeStationBean> getWholeStation(int categoryId, int pageSize);
+        Observable<WholeStationBean> getWholeStation(String categoryStr, int pageNum, int pageSize);
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
 
-        public abstract void getWholeStation(int categoryId, int pageSize);
+        public abstract void getWholeStation(String categoryStr, int pageNum, int pageSize);
 
     }
 }

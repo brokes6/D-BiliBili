@@ -1,5 +1,6 @@
 package com.example.dildil.dynamic_page.fragment_tab;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 
 import com.bumptech.glide.Glide;
 import com.example.dildil.MyApplication;
@@ -25,6 +27,7 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
 import com.example.dildil.login_page.bean.UserBean;
+import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
@@ -44,16 +47,21 @@ import javax.inject.Inject;
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
 
-public class DetailsCommentFragment extends BaseFragment implements DynamicContract.View{
+public class DetailsCommentFragment extends BaseFragment implements DynamicContract.View {
     private FragmentDetailscommentBinding binding;
     private CustomCommentViewHolder holder = null;
     private CustomReplyViewHolder holders = null;
     private BottomSheetDialog dialog;
     private EmojIconActions emojIcon;
+    private int id;
     private UserBean userBean;
 
     @Inject
     DynamicPresenter mPresenter;
+
+    public DetailsCommentFragment(int id) {
+        this.id = id;
+    }
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +81,15 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
 
     @Override
     protected void initData() {
+        MyApplication.getDatabase(getContext()).userDao().getAll()
+                .observe(DetailsCommentFragment.this, new Observer<UserBean>() {
 
+                    @Override
+                    public void onChanged(UserBean userBeans) {
+                        userBean = userBeans;
+                        mPresenter.getDynamicComment(id, 1, 10, userBeans.getData().getId());
+                    }
+                });
     }
 
     @Override
@@ -84,6 +100,10 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
     @Override
     public void onClick(View v) {
 
+    }
+
+    public void getComment() {
+        mPresenter.getDynamicComment(id, 1, 10, userBean.getData().getId());
     }
 
 
@@ -109,6 +129,14 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
                         } else {
                             holder = (CustomCommentViewHolder) convertView.getTag();
                         }
+                        holder.ico.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getContext(), PersonalActivity.class);
+                                intent.putExtra("uid", item.getUid());
+                                startActivity(intent);
+                            }
+                        });
                         holder.prizes.setText("0");
                         Glide.with(getContext()).load(item.getImg()).into(holder.ico);
                         holder.userName.setText(item.getUsername());
@@ -150,36 +178,6 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
                 //回复数据加载更多回调（加载更多回复）
                 .setOnReplyLoadMoreCallback(new MyOnReplyLoadMoreCallback())
                 .buildCallback();
-    }
-
-    @Override
-    public void onGetDynamicSuccess(DynamicBean dynamicBean) {
-
-    }
-
-    @Override
-    public void onGetDynamicFail(String e) {
-
-    }
-
-    @Override
-    public void onGetVideoDynamicSuccess(DynamicBean dynamicBean) {
-
-    }
-
-    @Override
-    public void onGetVideoDynamicFail(String e) {
-
-    }
-
-    @Override
-    public void onGetDynamicCommentSuccess(CommentBean commentBean) {
-
-    }
-
-    @Override
-    public void onGetDynamicCommentFail(String e) {
-
     }
 
     /**
@@ -300,6 +298,46 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
             }
         });
         dialog.show();
+    }
+
+    @Override
+    public void onGetDynamicSuccess(DynamicBean dynamicBean) {
+
+    }
+
+    @Override
+    public void onGetDynamicFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoDynamicSuccess(DynamicBean dynamicBean) {
+
+    }
+
+    @Override
+    public void onGetVideoDynamicFail(String e) {
+
+    }
+
+    @Override
+    public void onGetAddDynamicCommentSuccess(CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void onGetAddDynamicCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDynamicCommentSuccess(CommentDetailBean commentDetailBean) {
+        binding.commentView.loadComplete(commentDetailBean);
+    }
+
+    @Override
+    public void onGetDynamicCommentFail(String e) {
+        Log.e("why", "获取评论出现错误" + e);
     }
 
 }

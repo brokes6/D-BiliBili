@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class RankingLstActivity extends BaseActivity {
     private ActivityRankingBinding binding;
     private final String[] TabTitle = {"全站", "番剧", "国创", "国创相关", "纪录片", "动画", "音乐"};
+    private ArrayList<Fragment> mFragments;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class RankingLstActivity extends BaseActivity {
         setTitleBG(getResources().getColor(R.color.Pink, null));
         setLeftTitleTextColorWhite();
 
-        ArrayList<Fragment> mFragments = new ArrayList<>();
+        mFragments = new ArrayList<>();
         mFragments.add(new WholeStationFragment());
 
         binding.RLTab.setViewPager(binding.RLViewPager, TabTitle, this, mFragments);

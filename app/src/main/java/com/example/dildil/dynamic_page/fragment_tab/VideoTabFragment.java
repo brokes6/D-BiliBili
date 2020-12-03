@@ -31,6 +31,7 @@ import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.ScrollCalculatorHelper;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -203,8 +204,19 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
         XToastUtils.error(R.string.networkError + e);
     }
 
+
     @Override
-    public void onGetDynamicCommentSuccess(CommentBean commentBean) {
+    public void onGetAddDynamicCommentSuccess(CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void onGetAddDynamicCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDynamicCommentSuccess(CommentDetailBean commentDetailBean) {
 
     }
 

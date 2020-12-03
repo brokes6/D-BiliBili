@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_400"
         android:layout_marginTop="@dimen/dp_50"
-        android:background="@color/white" />
+        android:background="@color/While" />
 
     <RelativeLayout
         android:id="@+id/dialog_bottomsheet_rl_title"
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_52"
         android:layout_below="@+id/dialog_bottomsheet_rv_lists"
-        android:background="@color/white">
+        android:background="@color/While">
 
         <TextView
             android:layout_width="wrap_content"

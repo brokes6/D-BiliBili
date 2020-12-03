@@ -377,6 +377,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                     getGSYVideoManager().start();
                     danmakuOnResume();
                     danmu = new danmu(replyContent, (int) mDanmakuView.getCurrentTime() + 500, uid, vid);
+                    Log.e("why", "onClick: uid为" + uid + ";vid为" + vid);
                     addDanmaku(true, replyContent, 0);
                     addDanmakuServlce(danmu);
                     setStateAndUi(CURRENT_STATE_PLAYING);
@@ -400,6 +401,8 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         ((DanmakuVideoPlayer) to).upImg = ((DanmakuVideoPlayer) from).upImg;
         ((DanmakuVideoPlayer) to).upName = ((DanmakuVideoPlayer) from).upName;
         ((DanmakuVideoPlayer) to).videoType = ((DanmakuVideoPlayer) from).videoType;
+        ((DanmakuVideoPlayer) to).uid = ((DanmakuVideoPlayer) from).uid;
+        ((DanmakuVideoPlayer) to).vid = ((DanmakuVideoPlayer) from).vid;
     }
 
     private void changeUi() {
@@ -1088,6 +1091,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     public void setDanmuData(List<DanmuBean.Datas> list) {
         this.datasList = list;
+        addDanmaKuExternal();
     }
 
 }

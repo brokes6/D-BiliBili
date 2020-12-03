@@ -1,7 +1,5 @@
 package com.example.dildil.video.bean;
 
-import java.util.List;
-
 public class CommentBean {
     private int code;
     private Data data;
@@ -31,10 +29,9 @@ public class CommentBean {
         return data;
     }
 
-    public class Data {
-
+    public static class Data {
         private int total;
-        private List<CommentDetailBean> list;
+        //private List<CommentDetailBean> list;
 
         public void setTotal(int total) {
             this.total = total;
@@ -44,13 +41,13 @@ public class CommentBean {
             return total;
         }
 
-        public void setList(List<CommentDetailBean> list) {
-            this.list = list;
-        }
-
-        public List<CommentDetailBean> getList() {
-            return list;
-        }
+//        public void setList(List<CommentDetailBean> list) {
+//            this.list = list;
+//        }
+//
+//        public List<CommentDetailBean> getList() {
+//            return list;
+//        }
 
     }
 

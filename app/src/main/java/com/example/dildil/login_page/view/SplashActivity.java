@@ -2,7 +2,6 @@ package com.example.dildil.login_page.view;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
@@ -12,7 +11,7 @@ import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.databinding.ActivitySplashBinding;
 import com.example.dildil.home_page.view.HomeActivity;
-import com.example.dildil.util.SharePreferenceUtil;
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.HashSet;
@@ -48,7 +47,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onFinish() {
-                HashSet<String> authTokens = SharePreferenceUtil.getInstance(SplashActivity.this).getCookies("cookie");
+                HashSet<String> authTokens = SharedPreferencesUtil.getCookies("cookie");
                 if (authTokens == null) {
                     ActivityUtils.startActivity(LoginActivity.class);
                 } else {
@@ -74,7 +73,6 @@ public class SplashActivity extends BaseActivity {
     protected void onStop() {
         if (isFinishing()){
             if (countDownTimer != null) {
-                Log.e("why", "onStop: 已销毁" );
                 countDownTimer.cancel();
                 countDownTimer = null;
             }

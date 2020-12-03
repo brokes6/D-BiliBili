@@ -9,6 +9,7 @@
     <color name="Orange">#fed442</color>
     <color name="Oranges">#f3921f</color>
     <color name="White_ash">#f4f4f4</color>
+    <color name="black_alpha_45">#71000000</color>
     <color name="Black">#000000</color>
     <color name="Ash">#535353</color>
     <color name="Text_gray">#a2a2a2</color>
@@ -18,4 +19,7 @@
     <color name="gray_d8">#ffd8d8d8</color>
     <color name="fddce3">#fddce3</color>
     <color name="c75757">#757575</color>
+    <color name="font_normal">#555555</color>
+    <color name="transparent">#00000000</color>
+    <color name="yellow_30">#FEA501</color>
 </resources>

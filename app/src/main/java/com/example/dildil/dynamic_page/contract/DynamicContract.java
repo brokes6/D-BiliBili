@@ -6,6 +6,7 @@ import com.example.dildil.abstractclass.BaseView;
 import com.example.dildil.base.BasePresenter;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.dto;
 
 import io.reactivex.Observable;
@@ -22,7 +23,11 @@ public interface DynamicContract {
 
         void onGetVideoDynamicFail(String e);
 
-        void onGetDynamicCommentSuccess(CommentBean commentBean);
+        void onGetAddDynamicCommentSuccess(CommentBean commentBean);
+
+        void onGetAddDynamicCommentFail(String e);
+
+        void onGetDynamicCommentSuccess(CommentDetailBean commentDetailBean);
 
         void onGetDynamicCommentFail(String e);
 
@@ -34,7 +39,9 @@ public interface DynamicContract {
 
         Observable<DynamicBean> getVideoDynamic(int pageNum, int pageSize, int uid);
 
-        Observable<CommentBean> getDynamicComment(dto dto, int uid);
+        Observable<CommentBean> AddDynamicComment(dto dto, int uid);
+
+        Observable<CommentDetailBean> getDynamicComment(int id, int pageNum, int pageSize, int uid);
 
     }
 
@@ -44,7 +51,9 @@ public interface DynamicContract {
 
         public abstract void getVideoDynamic(int pageNum, int pageSize, int uid);
 
-        public abstract void getDynamicComment(dto dto, int uid);
+        public abstract void AddDynamicComment(dto dto, int uid);
+
+        public abstract void getDynamicComment(int id, int pageNum, int pageSize, int uid);
 
     }
 }

@@ -51,29 +51,25 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/more_vert_24_black" />
 
-
-    <LinearLayout
-        android:id="@+id/VN_multiMain"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
+        android:id="@+id/VN_multi"
+        style="@style/MatchWrap"
         android:layout_below="@+id/VN_Title"
         android:layout_marginTop="@dimen/dp_10"
-        android:orientation="vertical">
-
-        <cn.lemon.multi.MultiView
-            android:id="@+id/VN_multi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:placeholder="@drawable/skeleton_circular_grey" />
-
-    </LinearLayout>
+        app:bga_npl_itemCornerRadius="4dp"
+        app:bga_npl_itemSpanCount="3"
+        app:bga_npl_itemWhiteSpacing="4dp"
+        app:bga_npl_itemWidth="0dp"
+        app:bga_npl_otherWhiteSpacing="64dp"
+        app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
+        app:bga_npl_showAsLargeWhenOnlyOne="true" />
 
     <include
         android:id="@+id/function"
         layout="@layout/item_sanlian_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/VN_multiMain"
+        android:layout_below="@+id/VN_multi"
         android:layout_marginTop="@dimen/dp_10" />
 
     <com.example.customcontrollibs.viewground.ShowComment
@@ -82,7 +78,7 @@
         android:layout_height="@dimen/dp_30"
         android:layout_below="@+id/function"
         android:layout_marginTop="@dimen/dp_10"
-        app:isNetWorkUrl="false"
-        app:displayPicture="false"/>
+        app:displayPicture="false"
+        app:isNetWorkUrl="false" />
 
 </RelativeLayout>

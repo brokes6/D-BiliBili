@@ -51,7 +51,7 @@
 
     <style name="BottomDialog"  parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item><!-- 无标题 -->
-        <item name="android:windowBackground">@color/transparent</item>//背景设置为透明
+        <item name="android:windowBackground">@android:color/transparent</item>//背景设置为透明
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowCloseOnTouchOutside">true</item> <!-- 点外边可以消失  -->
@@ -75,7 +75,11 @@
     <style name="BottomShowAnimation" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/enter_bottom_menu</item>
         <item name="android:windowExitAnimation">@anim/exit_bottom_menu</item>
+    </style>
 
+    <!--ToolBar TextSize style-->
+    <style name="ToolBar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>

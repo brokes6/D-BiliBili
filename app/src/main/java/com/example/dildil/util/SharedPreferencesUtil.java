@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.dildil.abstractclass.Constants;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -12,6 +13,7 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,9 +28,11 @@ public class SharedPreferencesUtil {
 
     private static SharedPreferencesUtil util;
     private static SharedPreferences sp;
+    private static SharedPreferences.Editor editor;
 
     private SharedPreferencesUtil(Context context, String name) {
         sp = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        editor = sp.edit();
     }
 
     /**
@@ -185,6 +189,27 @@ public class SharedPreferencesUtil {
         }
         editor.apply();
         return result;
+    }
+
+    public static void saveHashSet(String name, HashSet<String> cookies){
+        editor.putStringSet(name,cookies).apply();
+    }
+
+    public static HashSet<String> getCookies(String key){
+        return (HashSet<String>) sp.getStringSet(key,null);
+    }
+
+    public static void remove(String key){
+        editor.remove(key).apply();
+    }
+
+
+    private static void saveAccountNum(String phoneNumber) {
+        editor.putString(Constants.SpKey.PHONE_NUMBER, phoneNumber).apply();
+    }
+
+    public static String getAccountNum() {
+        return sp.getString(Constants.SpKey.PHONE_NUMBER,"");
     }
 
     /**

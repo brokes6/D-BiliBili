@@ -11,8 +11,10 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/hideView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:id="@+id/Ch_search"

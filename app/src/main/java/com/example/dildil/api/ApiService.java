@@ -86,8 +86,11 @@ public interface ApiService {
     @POST("commentservice/comment")
     Observable<CommentBean> addComment(@Body dto dto, @Query("uid") int uid);
 
-    @GET("videoservice/video/top/{categoryId}/{pageSize}")
-    Observable<WholeStationBean> getWholeStation(@Path("categoryId") int categoryId, @Path("pageSize") int pageSize);
+    @POST("commentservice/comment")
+    Observable<CommentBean> addDynamicComment(@Body dto dto, @Query("uid") int uid);
+
+    @GET("videoservice/video/top/{categoryStr}/{pageNum}/{pageSize}")
+    Observable<WholeStationBean> getWholeStation(@Path("categoryStr") String categoryStr, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
 
     @GET("userservice/user/details/{uid}")
     Observable<UserBean> findUserDetails(@Path("uid") int uid);
@@ -95,4 +98,9 @@ public interface ApiService {
     @GET("videoservice/category/tops")
     Observable<PartitionBean> getCategory();
 
+    @GET("commentservice/comment/list/praise/DYNAMIC/{id}/{pageNum}/{pageSize}")
+    Observable<CommentDetailBean> getDynamicDetailComment(@Path("id") int id, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
+
+    @GET("userservice/user/info/coin/{pageNum}/{pageSize}")
+    Observable<RecommendVideoBean> findHasCoinVideo(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
 }

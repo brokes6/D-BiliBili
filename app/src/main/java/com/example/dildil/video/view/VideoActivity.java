@@ -24,7 +24,6 @@ import com.example.customcontrollibs.Selector;
 import com.example.customcontrollibs.SelectorGroup;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.UserDaoOperation;
 import com.example.dildil.component.activity.ActivityModule;
@@ -90,7 +89,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private int textSize;
     private boolean isFunction = true;
     private final String[] definition = {"360p", "480p", "720p", "1080p"};
-    private AppDatabase dp;
     private Handler handler;
 
     private enum CollapsingToolbarLayoutState {
@@ -116,7 +114,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
-        dp = MyApplication.getDatabase(this);
         ifGO();
     }
 
@@ -159,13 +156,11 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.detailPlayer.setSeekRatio(1.5f);
 
         binding.detailPlayer.setIsTouchWiget(true);
-        binding.detailPlayer.setVideoDetails(uid, id);
         //关闭自动旋转
         binding.detailPlayer.setRotateViewAuto(false);
         binding.detailPlayer.setNeedAutoAdaptation(true);
-        binding.detailPlayer.setLockLand(false);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_16_9);
-        binding.detailPlayer.setShowFullAnimation(false);
+        binding.detailPlayer.setShowFullAnimation(true);
         binding.detailPlayer.setNeedLockFull(true);
         binding.detailPlayer.setListener(listener);
 
@@ -313,6 +308,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                     @Override
                     public void onChanged(UserBean userBean) {
                         uid = userBean.getData().getId();
+                        binding.detailPlayer.setVideoDetails(id, uid);
                         mPresenter.getDanMu(0, id);
                         mPresenter.getVideoDetails(id, uid);
                     }
@@ -553,7 +549,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            timing += 10;
+            timing += 10000;
             mPresenter.getDanMu(timing, id);
             handler.postDelayed(this, 10000);
         }

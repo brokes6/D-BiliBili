@@ -1,7 +1,6 @@
 package com.example.dildil.dynamic_page.view;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +38,6 @@ public class DynamicFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        Log.e("why", "DynamicFragment: ?????这里加载了嘛");
         binding.DyTab.setViewPager(binding.DyViewPager, TabTitle, getActivity(), mFragments);
         binding.DyTab.setCurrentTab(0);
         ((HomeActivity) getActivity()).ClearRedDot(2);

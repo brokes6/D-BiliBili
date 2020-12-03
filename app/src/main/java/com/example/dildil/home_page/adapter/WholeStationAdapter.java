@@ -39,6 +39,7 @@ public class WholeStationAdapter extends BaseAdapter<WholeStationBean.Detail, Wh
         Glide.with(mContext).load(item.getUpImg()).into(holder.upImage);
         holder.danmu.setText(String.valueOf(item.getDanmuNum())+"弹幕");
         holder.score.setText("综合评分:"+String.valueOf(item.getScore()));
+        holder.follow.setText("粉丝数:"+String.valueOf(item.getFansNum()));
         holder.mainOnClick.setTag(position);
     }
 

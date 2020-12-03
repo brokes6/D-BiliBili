@@ -88,7 +88,9 @@ public class HomePageFragment extends BaseFragment {
 
                     @Override
                     public void onChanged(UserBean userBean) {
-                        Glide.with(HomePageFragment.this).load(userBean.getData().getImg()).into(binding.userImg);
+                        if (userBean != null){
+                            Glide.with(HomePageFragment.this).load(userBean.getData().getImg()).into(binding.userImg);
+                        }
                     }
                 });
     }

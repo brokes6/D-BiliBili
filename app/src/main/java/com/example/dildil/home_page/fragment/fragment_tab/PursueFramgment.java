@@ -1,4 +1,4 @@
- package com.example.dildil.home_page.fragment.fragment_tab;
+package com.example.dildil.home_page.fragment.fragment_tab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -47,17 +47,6 @@ public class PursueFramgment extends BaseFragment {
 
     @Override
     protected void initView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        adapter = new MyPursuitAdapter(getContext());
-        binding.PuMyPursuit.setLayoutManager(layoutManager);
-        binding.PuMyPursuit.setAdapter(adapter);
-
-        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
-        fanRecommendationAdapter = new FanRecommendationAdapter(getContext());
-        binding.PuFanOperaRecommendation.setLayoutManager(layoutManager1);
-        binding.PuFanOperaRecommendation.setAdapter(fanRecommendationAdapter);
-
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -69,6 +58,17 @@ public class PursueFramgment extends BaseFragment {
 
     @Override
     protected void initData() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        adapter = new MyPursuitAdapter(getContext());
+        binding.PuMyPursuit.setLayoutManager(layoutManager);
+        binding.PuMyPursuit.setAdapter(adapter);
+
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
+        fanRecommendationAdapter = new FanRecommendationAdapter(getContext());
+        binding.PuFanOperaRecommendation.setLayoutManager(layoutManager1);
+        binding.PuFanOperaRecommendation.setAdapter(fanRecommendationAdapter);
+
         binding.swipe.autoRefresh();//自动刷新
     }
 
@@ -99,7 +99,6 @@ public class PursueFramgment extends BaseFragment {
         binding.PuBanner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT);
         binding.PuBanner.setBannerRound(15);
         binding.PuBanner.setClipToOutline(true);
-        binding.PuBanner.start();
         binding.PuBanner.setAdapter(new BannerImageAdapter<BannerBean>(imageUrls) {
 
             @Override
@@ -113,6 +112,7 @@ public class PursueFramgment extends BaseFragment {
         })
                 .addBannerLifecycleObserver(this)//添加生命周期观察者
                 .setIndicator(new CircleIndicator(getContext()));
+        binding.PuBanner.start();
     }
 
 
@@ -123,7 +123,7 @@ public class PursueFramgment extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        if (fanRecommendationBeans!=null){
+        if (fanRecommendationBeans != null) {
             fanRecommendationBeans.clear();
             fanRecommendationBeans = null;
         }

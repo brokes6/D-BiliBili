@@ -4,17 +4,202 @@
     <data>
 
     </data>
-
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#f4f4f4"
+        android:paddingBottom="@dimen/dp_10">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Re_TopRecy"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_5" />
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:layout_margin="@dimen/dp_10"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/While"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="0dp">
+
+                <ImageView
+                    android:id="@+id/live_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dp_20" />
+
+
+                <TextView
+                    android:id="@+id/live_status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dp_50"
+                    android:text="@string/live_message"
+                    android:textSize="14sp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <RelativeLayout
+                android:id="@+id/contribute_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/contribute_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/all_contribute"
+                    android:textColor="#555555"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/contribute_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@id/contribute_tv"
+                    android:textColor="#71000000"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/contribute_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/go_to_look"
+                    android:textColor="@color/font_normal"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/contribute_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+
+            <RelativeLayout
+                android:id="@+id/coins_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/coins_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/coins_video"
+                    android:textColor="#555555"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/coins_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@id/coins_tv"
+                    android:textColor="#71000000"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/coins_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/go_to_look"
+                    android:textColor="@color/font_normal"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/coins_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+
+            <RelativeLayout
+                android:id="@+id/play_game_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/play_game_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/ta_play_game"
+                    android:textColor="#555555"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/play_game_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@id/play_game_tv"
+                    android:textColor="#71000000"
+                    android:textSize="12sp" />
+
+
+                <TextView
+                    android:id="@+id/play_game_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:padding="@dimen/dp_5"
+                    android:text="@string/go_to_look"
+                    android:textColor="@color/font_normal"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/player_game_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

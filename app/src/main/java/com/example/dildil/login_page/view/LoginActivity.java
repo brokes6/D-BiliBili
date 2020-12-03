@@ -24,7 +24,7 @@ import com.example.dildil.login_page.bean.inputDto;
 import com.example.dildil.login_page.contract.LoginContract;
 import com.example.dildil.login_page.presenter.LoginPresenter;
 import com.example.dildil.util.InputUtil;
-import com.example.dildil.util.SharePreferenceUtil;
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.VideoDaoBean;
 import com.gyf.immersionbar.ImmersionBar;
@@ -71,8 +71,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     protected void initData() {
         operation = new UserDaoOperation(this);
-        if (!TextUtils.isEmpty(SharePreferenceUtil.getInstance(this).getAccountNum())) {
-            account = SharePreferenceUtil.getInstance(this).getAccountNum();
+        if (!TextUtils.isEmpty(SharedPreferencesUtil.getAccountNum())) {
+            account = SharedPreferencesUtil.getAccountNum();
             binding.LoUserAccount.setText(account);
         }
     }

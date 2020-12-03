@@ -33,6 +33,7 @@ public class MyFragment extends BaseFragment {
         binding.MUserImg.setOnClickListener(this);
         binding.MyHistory.setOnClickListener(this);
         binding.RightMore.setOnClickListener(this);
+        binding.MVideoCover.setOnClickListener(this);
     }
 
     @Override
@@ -85,6 +86,8 @@ public class MyFragment extends BaseFragment {
             Intent intent = new Intent(getContext(), PersonalActivity.class);
             intent.putExtra("uid", Userbean.getData().getId());
             getContext().startActivity(intent);
+        } else if (id == R.id.M_video_cover) {
+            ActivityUtils.startActivity(VipActivity.class);
         }
     }
 }

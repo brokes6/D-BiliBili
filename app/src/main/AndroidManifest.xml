@@ -5,8 +5,7 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
@@ -23,6 +22,9 @@
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true"
         tools:targetApi="o">
+        <activity android:name=".home_page.view.BangumiDetailsActivity"></activity>
+        <activity android:name=".home_page.view.BannerActivity" />
+        <activity android:name=".my_page.view.VipActivity" />
         <activity android:name=".my_page.view.HistoryActivity" />
         <activity android:name=".dynamic_page.view.DynamicDetailsActivity" />
         <activity

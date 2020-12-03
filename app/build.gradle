@@ -93,14 +93,12 @@ dependencies {
     //视频
     implementation 'com.shuyu:GSYVideoPlayer:7.1.8'
     //弹幕
-    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.16'
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
     implementation 'com.github.ctiao:ndkbitmap-x86:0.9.21'
     //自己的控件库
     implementation 'com.github.brokes6:CustomControl:1.4.1'
-    //Android九宫格显示多图或item
-    implementation 'cn.lemon:multiview:1.0.2'
 
     implementation 'org.yczbj:YCRefreshViewLib:2.5.8'
 
@@ -114,8 +112,8 @@ dependencies {
     implementation 'com.github.hani-momanii:SuperNova-Emoji:1.1'
 
     //下拉刷新
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.3'
 
     implementation 'com.jidcoo.android.widget.commentview:CommentView:1.0.0'
 
@@ -130,6 +128,12 @@ dependencies {
     //加密数据库
     implementation "com.commonsware.cwac:saferoom.x:1.1.3"
 
-    implementation 'org.conscrypt:conscrypt-android:2.2.1'
-    //implementation 'org.apache.httpcomponents:httpclient:4.5.6'
+    implementation 'org.conscrypt:conscrypt-android:2.5.1'
+
+    //图片处理(九宫格)
+    implementation 'cn.bingoogolapple:bga-photopicker:2.0.2'
+    implementation 'cn.bingoogolapple:bga-baseadapter:2.0.0@aar'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //申请权限
+    implementation 'pub.devrel:easypermissions:1.0.1'
 }

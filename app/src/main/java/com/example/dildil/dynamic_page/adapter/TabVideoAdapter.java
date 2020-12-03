@@ -1,11 +1,13 @@
 package com.example.dildil.dynamic_page.adapter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,19 +22,28 @@ import com.example.dildil.R;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.view.DynamicDetailsActivity;
 import com.example.dildil.dynamic_page.view.SwitchVideo;
+import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.DensityUtil;
 import com.example.dildil.video.view.VideoActivity;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 
-import cn.lemon.multi.MultiView;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView.ViewHolder> {
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView.ViewHolder> implements BGANinePhotoLayout.Delegate {
     public static final String TAG = "TabVideoAdapter";
-    private Context mContext;
+    private final Context mContext;
     private static final int IMAGE_TEXT = 1;
     private static final int VIDEO_TEXT = 2;
-    private Intent intent;
+    private BGANinePhotoLayout mCurrentClickNpl;
 
     public TabVideoAdapter(Context context) {
         mContext = context;
@@ -61,9 +72,10 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 ((TabImageHolder) holder).VN_userName.setText(item.getUpName());
                 ((TabImageHolder) holder).VN_Title.setText(item.getContent());
                 ((TabImageHolder) holder).VN_date.setText(item.getCreateTime().substring(5, 10));
-                ((TabImageHolder) holder).multiView.setLayoutParams(new LinearLayout.LayoutParams(900, ViewGroup.LayoutParams.WRAP_CONTENT));
-                ((TabImageHolder) holder).multiView.setImages(item.getImgs().split(","));
+                ((TabImageHolder) holder).multiView.setData(new ArrayList<>(Arrays.asList(item.getImgs().split(","))));
+                ((TabImageHolder) holder).multiView.setDelegate(this);
                 ((TabImageHolder) holder).VN_main.setTag(position);
+                ((TabImageHolder) holder).VNImage.setTag(position);
                 ((TabImageHolder) holder).comment.setUserName("fuxinbo:");
                 ((TabImageHolder) holder).comment.setUserComment("热门评论");
                 break;
@@ -96,6 +108,7 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                         .load(item.getUpImg())
                         .into(((TabVideoHolder) holder).VNImage);
                 ((TabVideoHolder) holder).VN_userName.setText(item.getUpName());
+                ((TabVideoHolder) holder).VNImage.setTag(position);
 
                 ((TabVideoHolder) holder).videoTime.setText(DensityUtil.timeParse(item.getObject().getLength()));
                 ((TabVideoHolder) holder).videoDanmu.setText(item.getObject().getDanmuNum() + "弹幕");
@@ -119,6 +132,39 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 return IMAGE_TEXT;
         }
         return 0;
+    }
+
+    @Override
+    public void onClickNinePhotoItem(BGANinePhotoLayout ninePhotoLayout, View view, int position, String model, List<String> models) {
+        mCurrentClickNpl = ninePhotoLayout;
+        photoPreviewWrapper();
+    }
+
+    @Override
+    public void onClickExpand(BGANinePhotoLayout ninePhotoLayout, View view, int position, String model, List<String> models) {
+
+    }
+
+    @AfterPermissionGranted(1)
+    private void photoPreviewWrapper() {
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(mContext, perms)) {
+            File downloadDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerDownload");
+            BGAPhotoPreviewActivity.IntentBuilder photoPreviewIntentBuilder = new BGAPhotoPreviewActivity.IntentBuilder(mContext)
+                    .saveImgDir(downloadDir); // 保存图片的目录，如果传 null，则没有保存图片功能
+
+            if (mCurrentClickNpl.getItemCount() == 1) {
+                // 预览单张图片
+                photoPreviewIntentBuilder.previewPhoto(mCurrentClickNpl.getCurrentClickItem());
+            } else if (mCurrentClickNpl.getItemCount() > 1) {
+                // 预览多张图片
+                photoPreviewIntentBuilder.previewPhotos(mCurrentClickNpl.getData())
+                        .currentPosition(mCurrentClickNpl.getCurrentClickItemPosition()); // 当前预览图片的索引
+            }
+            mContext.startActivity(photoPreviewIntentBuilder.build());
+        } else {
+            EasyPermissions.requestPermissions((Activity) mContext, "图片预览需要以下权限:\n\n1.访问设备上的照片", 1, perms);
+        }
     }
 
     public class TabVideoHolder extends RecyclerView.ViewHolder {
@@ -157,12 +203,19 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 public void onClick(View v) {
                     GSYVideoManager.onPause();
                     int playtime = VNideo.getVideoTime();
-                    intent = new Intent(mContext, VideoActivity.class);
+                    Intent intent = new Intent(mContext, VideoActivity.class);
                     intent.putExtra("id", getData().get((int) v.getTag()).getObject().getId());
                     intent.putExtra("uid", getData().get((int) v.getTag()).getObject().getUid());
                     intent.putExtra("playtime", playtime);
                     mContext.startActivity(intent);
-                    intent = null;
+                }
+            });
+            VNImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PersonalActivity.class);
+                    intent.putExtra("uid", getData().get((int) v.getTag()).getUid());
+                    mContext.startActivity(intent);
                 }
             });
         }
@@ -173,7 +226,7 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
         private TextView VN_userName, VN_Title, VN_date;
         private ImageView VN_more;
         private RelativeLayout VN_main;
-        private MultiView multiView;
+        private BGANinePhotoLayout multiView;
         private ShowComment comment;
 
         public TabImageHolder(@NonNull View itemView) {
@@ -188,11 +241,18 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
             VN_main.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    intent = new Intent(mContext, DynamicDetailsActivity.class);
-                    intent.putExtra("id",getData().get((int) v.getTag()).getId());
-                    intent.putExtra("uid",getData().get((int) v.getTag()).getUid());
+                    Intent intent = new Intent(mContext, DynamicDetailsActivity.class);
+                    intent.putExtra("id", getData().get((int) v.getTag()).getId());
+                    intent.putExtra("uid", getData().get((int) v.getTag()).getUid());
                     mContext.startActivity(intent);
-                    intent = null;
+                }
+            });
+            VNImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PersonalActivity.class);
+                    intent.putExtra("uid", getData().get((int) v.getTag()).getUid());
+                    mContext.startActivity(intent);
                 }
             });
         }

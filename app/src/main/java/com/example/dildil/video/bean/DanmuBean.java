@@ -31,7 +31,7 @@ public class DanmuBean {
         this.message = message;
     }
 
-    public class Datas{
+    public class Datas {
         private int id;
         private int vid;
         private int showSecond;
@@ -95,5 +95,13 @@ public class DanmuBean {
         public void setContent(String content) {
             this.content = content;
         }
+    }
+
+    public String toString() {
+        return "DanmuBean{" +
+                "code=" + code +
+                ", data=" + data +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

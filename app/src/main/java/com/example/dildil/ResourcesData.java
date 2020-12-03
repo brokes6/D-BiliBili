@@ -14,7 +14,6 @@ import com.example.dildil.search.bean.HotSearchBean;
 import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.SwitchVideoBean;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,11 +133,11 @@ public class ResourcesData {
 
     public void initBanner() {
         BannerBean bannerBean = new BannerBean();
-        bannerBean.setImageUrl("https://i0.hdslb.com/bfs/archive/20a25dc84739a3852c125d55b9223d6bd70c34bb.png@880w_388h_1c_95q");
+        bannerBean.setImageUrl("https://i0.hdslb.com/bfs/archive/a256e3d2614cf8be7476a376bc0dec828cd38e14.png@880w_388h_1c_95q");
         BannerBean bannerBean1 = new BannerBean();
-        bannerBean1.setImageUrl("https://i0.hdslb.com/bfs/sycp/creative_img/202007/82e1e1a0fd91537c6d1c30c80fe60e6c.jpg@880w_388h_1c_95q");
+        bannerBean1.setImageUrl("https://i0.hdslb.com/bfs/archive/02ebd0ec305f95f3f6e557fe5660fe2309d3a981.png@880w_388h_1c_95q");
         BannerBean bannerBean2 = new BannerBean();
-        bannerBean2.setImageUrl("https://i0.hdslb.com/bfs/bangumi/image/f46ccf197313641b62d44430a9ebd3a63266d117.jpg@2320w_664h.jpg");
+        bannerBean2.setImageUrl("https://i0.hdslb.com/bfs/archive/545a20d626e5e57ca0745a2458b798821fc1a0df.jpg@880w_388h_1c_95q");
         bannerImageList.add(bannerBean);
         bannerImageList.add(bannerBean1);
         bannerImageList.add(bannerBean2);
@@ -422,104 +421,17 @@ public class ResourcesData {
         return fanRecommendationBeans;
     }
 
-    private String testJson = "{\n" +
-            "\t\"code\": 1000,\n" +
-            "\t\"message\": \"查看评论成功\",\n" +
-            "\t\"data\": {\n" +
-            "\t\t\"total\": 3,\n" +
-            "\t\t\"list\": [{\n" +
-            "\t\t\t\t\"id\": 42,\n" +
-            "\t\t\t\t\"nickName\": \"逆风笑\",\n" +
-            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/f7cb40c40b013eebbbde6eaacd977c042f1a199f.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\"content\": \"时间是一切财富中最宝贵的财富。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"三分钟前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"阿狸才不是受\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/ae89ae056d631cbb7ff7ea759ce8876e757e52ef.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\t\"id\": 40,\n" +
-            "\t\t\t\t\t\"commentId\": \"42\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"一个小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"id\": 41,\n" +
-            "\t\t\t\t\"nickName\": \"视角姬\",\n" +
-            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/851025ed4bc57ad6ae82a6314e72e249fd21d604.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\"content\": \"这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"一天前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"用户1\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\t\"commentId\": \"41\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"id\": 39,\n" +
-            "\t\t\t\t\"nickName\": \"用户1\",\n" +
-            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\"content\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"一天前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"用户2\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\t\"commentId\": \"41\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹sssss.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"nickName\": \"用户1\",\n" +
-            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\"content\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxx。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"一天前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"用户2\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\t\"commentId\": \"41\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹sssss.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"id\": 40,\n" +
-            "\t\t\t\t\"nickName\": \"用户1\",\n" +
-            "\t\t\t\t\"userLogo\": \"https://i0.hdslb.com/bfs/face/b0502bc7116f5c226d8a5e20762e656b80adba1a.jpg_64x64.jpg\",\n" +
-            "\t\t\t\t\"content\": \"笨蛋自以为聪明，聪明人才知道自己是笨蛋。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 0,\n" +
-            "\t\t\t\t\"createDate\": \"三天前\",\n" +
-            "\t\t\t\t\"replyList\": []\n" +
-            "\t\t\t}\n" +
-            "\t\t]\n" +
-            "\t}\n" +
-            "}";
-
     /**
      * by moos on 2018/04/20
      * func:生成测试数据
      *
      * @return 评论数据
      */
-    public List<CommentDetailBean> generateTestData() {
-        Gson gson = new Gson();
-        commentBean = gson.fromJson(testJson, CommentBean.class);
-        List<CommentDetailBean> commentList = commentBean.getData().getList();
-        return commentList;
-    }
+//    public List<CommentDetailBean> generateTestData() {
+//        Gson gson = new Gson();
+//        commentBean = gson.fromJson(testJson, CommentBean.class);
+//        List<CommentDetailBean> commentList = commentBean.getData().getList();
+//        return commentList;
+//    }
 
 }

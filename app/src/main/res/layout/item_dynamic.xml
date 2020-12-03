@@ -114,15 +114,15 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <cn.lemon.multi.MultiView
-            android:id="@+id/multi_view"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_160"
-            android:layout_marginTop="@dimen/dp_20"
-            android:background="@color/While"
-            android:visibility="gone"
-            rc:divideSpace="8dp"
-            rc:placeholder="@drawable/btn_bg" />
+<!--        <cn.lemon.multi.MultiView-->
+<!--            android:id="@+id/multi_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/dp_160"-->
+<!--            android:layout_marginTop="@dimen/dp_20"-->
+<!--            android:background="@color/While"-->
+<!--            android:visibility="gone"-->
+<!--            rc:divideSpace="8dp"-->
+<!--            rc:placeholder="@drawable/btn_bg" />-->
 
         <include
             android:id="@+id/sanlian"

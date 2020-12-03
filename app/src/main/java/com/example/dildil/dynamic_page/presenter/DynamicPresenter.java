@@ -4,6 +4,7 @@ import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.model.DynamicModel;
 import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.dto;
 
 import javax.inject.Inject;
@@ -59,7 +60,7 @@ public class DynamicPresenter extends DynamicContract.Presenter {
 
     @Override
     public void getVideoDynamic(int pageNum, int pageSize, int uid) {
-        mModel.getVideoDynamic(pageNum,pageSize,uid).subscribeOn(Schedulers.io())
+        mModel.getVideoDynamic(pageNum, pageSize, uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<DynamicBean>() {
                     @Override
@@ -85,8 +86,8 @@ public class DynamicPresenter extends DynamicContract.Presenter {
     }
 
     @Override
-    public void getDynamicComment(dto dto, int uid) {
-        mModel.getDynamicComment(dto,uid).subscribeOn(Schedulers.io())
+    public void AddDynamicComment(dto dto, int uid) {
+        mModel.AddDynamicComment(dto, uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentBean>() {
                     @Override
@@ -96,7 +97,35 @@ public class DynamicPresenter extends DynamicContract.Presenter {
 
                     @Override
                     public void onNext(@NonNull CommentBean commentBean) {
-                        mView.onGetDynamicCommentSuccess(commentBean);
+                        mView.onGetAddDynamicCommentSuccess(commentBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetAddDynamicCommentFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getDynamicComment(int id, int pageNum, int pageSize, int uid) {
+        mModel.getDynamicComment(id, pageNum, pageSize, uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<CommentDetailBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull CommentDetailBean commentDetailBean) {
+                        mView.onGetDynamicCommentSuccess(commentDetailBean);
                     }
 
                     @Override

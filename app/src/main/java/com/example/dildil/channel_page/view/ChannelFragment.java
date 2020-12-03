@@ -37,7 +37,6 @@ public class ChannelFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        Log.e("why", "ChannelFragment: ?????这里加载了嘛");
         binding.ChTab.setViewPager(binding.ChViewPager, TabTitle, getActivity(), mFragments);
     }
 

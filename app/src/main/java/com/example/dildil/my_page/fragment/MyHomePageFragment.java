@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
@@ -13,19 +14,20 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentMyhomeBinding;
-import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
-import com.example.dildil.home_page.contract.RecommendContract;
-import com.example.dildil.home_page.presenter.RecommendPresenter;
+import com.example.dildil.login_page.bean.UserBean;
+import com.example.dildil.my_page.adapter.UserHomePagerContributeAdapter;
+import com.example.dildil.my_page.contract.PersonalContract;
+import com.example.dildil.my_page.presenter.PersonalPresenter;
 
 import javax.inject.Inject;
 
-public class MyHomePageFragment extends BaseFragment implements RecommendContract.View{
+public class MyHomePageFragment extends BaseFragment implements PersonalContract.View {
     private FragmentMyhomeBinding binding;
-    private RecommendedVideoAdapter adapter;
+    private UserHomePagerContributeAdapter adapter;
 
     @Inject
-    RecommendPresenter mPresenter;
+    PersonalPresenter mPresenter;
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,10 +45,16 @@ public class MyHomePageFragment extends BaseFragment implements RecommendContrac
 
     @Override
     protected void initView() {
+        binding.contributeRecycler.setHasFixedSize(false);
+        binding.contributeRecycler.setNestedScrollingEnabled(false);
+        binding.contributeRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        adapter = new UserHomePagerContributeAdapter(getContext());
+        binding.contributeRecycler.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
+        mPresenter.findHasCoinVideo(1, 2, 1);
     }
 
     @Override
@@ -60,31 +68,22 @@ public class MyHomePageFragment extends BaseFragment implements RecommendContrac
     }
 
     @Override
-    public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
-    }
-
-    @Override
-    public void onGetRecommendVideoFail(String e) {
+    public void onGetFindUserDetailsSuccess(UserBean userBean) {
 
     }
 
     @Override
-    public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
+    public void onGetFindUserDetailsFail(String e) {
 
     }
 
     @Override
-    public void onGetRefreshRecommendVideoFail(String e) {
-
+    public void onGetFindHasCoinVideoSuccess(RecommendVideoBean recommendVideoBean) {
+        adapter.loadMore(recommendVideoBean.getData());
     }
 
     @Override
-    public void onGetVideoLoadSuccess(RecommendVideoBean videoBean) {
-
-    }
-
-    @Override
-    public void onGetVideoLoadFail(String e) {
+    public void onGetFindHasCoinVideoFail(String e) {
 
     }
 }

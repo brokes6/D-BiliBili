@@ -170,4 +170,10 @@
 #---------------------------------------------------------------------------------------------------
 #---------------------------------实体类---------------------------------
 #修改成你对应的包名
--keep class com.example.dildil.** { *; }
+-keep class com.example.dildil.channel_page.bean** { *; }
+-keep class com.example.dildil.dynamic_page.bean** { *; }
+-keep class com.example.dildil.home_page.bean** { *; }
+-keep class com.example.dildil.my_page.bean** { *; }
+-keep class com.example.dildil.video.bean** { *; }
+-keep class com.example.dildil.search.bean** { *; }
+-keep class com.example.dildil.login_page.bean** { *; }

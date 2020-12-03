@@ -2,69 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/While"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/main_forward"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_height="wrap_content">
+        android:gravity="center_horizontal|center_vertical">
 
         <ImageView
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
-            android:src="@mipmap/forward"/>
+            android:src="@mipmap/forward" />
+
         <TextView
-            android:layout_marginStart="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_5"
             android:text="@string/forward"
-            android:textSize="12sp"
-            android:textColor="#747474"/>
+            android:textColor="#747474"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/main_comment"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_height="wrap_content">
+        android:gravity="center_horizontal|center_vertical">
 
         <ImageView
             android:layout_width="@dimen/dp_20"
             android:layout_height="@dimen/dp_20"
-            android:src="@mipmap/comment"/>
+            android:src="@mipmap/comment" />
 
         <TextView
             android:id="@+id/comment_number"
-            android:layout_marginStart="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="#747474"/>
+            android:layout_marginStart="@dimen/dp_5"
+            android:textColor="#747474"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/main_thumbs"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_height="wrap_content">
+        android:gravity="center_horizontal|center_vertical">
 
         <ImageView
             android:id="@+id/thumbs_img"
             android:layout_width="@dimen/dp_18"
             android:layout_height="@dimen/dp_18"
-            android:src="@mipmap/thumbs_up"/>
+            android:src="@mipmap/thumbs_up" />
 
         <TextView
             android:id="@+id/thumbs_number"
-            android:layout_marginStart="@dimen/dp_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="#747474"/>
+            android:layout_marginStart="@dimen/dp_5"
+            android:textColor="#747474"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

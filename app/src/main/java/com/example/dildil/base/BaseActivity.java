@@ -32,7 +32,7 @@ import com.example.dildil.api.ApiService;
 import com.example.dildil.login_page.view.LoginActivity;
 import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.util.LoadingsDialog;
-import com.example.dildil.util.SharePreferenceUtil;
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.widget.dialog.materialdialog.DialogAction;
@@ -109,7 +109,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
                                         @Override
                                         public void onNext(@io.reactivex.annotations.NonNull LogoutBean logoutBean) {
-                                            SharePreferenceUtil.getInstance(context).remove("cookie");
+                                            SharedPreferencesUtil.remove("cookie");
                                             ActivityUtils.startActivity(LoginActivity.class);
                                         }
 

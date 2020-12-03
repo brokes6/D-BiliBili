@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
-import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
@@ -29,6 +28,7 @@ import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.util.ScrollCalculatorHelper;
 import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
@@ -43,7 +43,6 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
     private boolean isFirst = true;
     private boolean mFull = false;
     private ResourcesData resourcesData;
-    private AppDatabase db;
 
     @Inject
     DynamicPresenter mPresenter;
@@ -62,7 +61,6 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
 
     @Override
     protected void initView() {
-        db = MyApplication.getDatabase(getContext());
         GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 2);
         adapter_topic = new TopicAdapter(getContext());
         binding.RecyTopic.setLayoutManager(layoutManager1);
@@ -171,7 +169,17 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
     }
 
     @Override
-    public void onGetDynamicCommentSuccess(CommentBean commentBean) {
+    public void onGetAddDynamicCommentSuccess(CommentBean commentBean) {
+
+    }
+
+    @Override
+    public void onGetAddDynamicCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDynamicCommentSuccess(CommentDetailBean commentDetailBean) {
 
     }
 

@@ -53,7 +53,7 @@ public class WholeStationFragment extends BaseFragment implements WholeStationCo
 
     @Override
     protected void initData() {
-        mPresenter.getWholeStation(1,1);
+        mPresenter.getWholeStation("ALL", 1, 8);
     }
 
     @Override
@@ -73,6 +73,6 @@ public class WholeStationFragment extends BaseFragment implements WholeStationCo
 
     @Override
     public void onGetWholeStationFail(String e) {
-        Log.e("why", "onGetWholeStationFail: 出现错误"+e );
+        Log.e("why", "onGetWholeStationFail: 出现错误" + e);
     }
 }

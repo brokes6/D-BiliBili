@@ -225,18 +225,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/While"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
             <com.flyco.tablayout.SlidingTabLayout
                 android:id="@+id/tab"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_40"
-                android:layout_centerHorizontal="true"
+                android:background="@color/While"
                 app:tl_indicator_bounce_enable="true"
                 app:tl_indicator_color="@color/Pink"
                 app:tl_indicator_width_equal_title="true"
+                app:tl_tab_space_equal="true"
                 app:tl_textSelectColor="@color/Pink"
                 app:tl_textUnselectColor="#838080"
                 app:tl_textsize="14sp"

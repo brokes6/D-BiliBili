@@ -15,6 +15,7 @@ import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityPersonalBinding;
+import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.contract.PersonalContract;
 import com.example.dildil.my_page.fragment.MyCollectionFragment;
@@ -22,8 +23,6 @@ import com.example.dildil.my_page.fragment.MyDynamicFragment;
 import com.example.dildil.my_page.fragment.MyHomePageFragment;
 import com.example.dildil.my_page.fragment.MyTrackingFragment;
 import com.example.dildil.my_page.presenter.PersonalPresenter;
-import com.example.dildil.util.GsonUtil;
-import com.example.dildil.util.SharePreferenceUtil;
 import com.google.android.material.appbar.AppBarLayout;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -126,14 +125,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     }
 
     @Override
-    protected void onDestroy() {
-        mPresenter.detachView();
-        mFragments.clear();
-        mFragments = null;
-        super.onDestroy();
-    }
-
-    @Override
     public void onGetFindUserDetailsSuccess(UserBean userBean) {
         Glide.with(this).load(userBean.getData().getImg()).into(binding.PUserImg);
         binding.PUserName.setText(userBean.getData().getUsername());
@@ -147,4 +138,25 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     public void onGetFindUserDetailsFail(String e) {
 
     }
+
+    @Override
+    public void onGetFindHasCoinVideoSuccess(RecommendVideoBean recommendVideoBean) {
+
+    }
+
+    @Override
+    public void onGetFindHasCoinVideoFail(String e) {
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (isFinishing()){
+            mPresenter.detachView();
+            mFragments.clear();
+            mFragments = null;
+        }
+    }
+
 }

@@ -28,13 +28,35 @@ public class ChannelTabFragment extends BaseFragment {
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_channel,container,false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tab_channel, container, false);
         return binding.getRoot();
     }
 
     @Override
     protected void initView() {
-        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(),5);
+//        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 5);
+//        adapter = new BeInterestedChannerAdapter(getContext());
+//        binding.ChBeInterested.setLayoutManager(layoutManager1);
+//        binding.ChBeInterested.setAdapter(adapter);
+//
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        HV_adapter = new HaveViewedAdapter(getContext());
+//        binding.CHHaveViewed.setLayoutManager(layoutManager);
+//        binding.CHHaveViewed.setAdapter(HV_adapter);
+        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initDates();
+                binding.hideView.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 5);
         adapter = new BeInterestedChannerAdapter(getContext());
         binding.ChBeInterested.setLayoutManager(layoutManager1);
         binding.ChBeInterested.setAdapter(adapter);
@@ -44,17 +66,7 @@ public class ChannelTabFragment extends BaseFragment {
         HV_adapter = new HaveViewedAdapter(getContext());
         binding.CHHaveViewed.setLayoutManager(layoutManager);
         binding.CHHaveViewed.setAdapter(HV_adapter);
-        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initDates();
-            }
-        });
-    }
-
-    @Override
-    protected void initData() {
         binding.swipe.autoRefresh();//自动刷新
 
     }
@@ -69,15 +81,15 @@ public class ChannelTabFragment extends BaseFragment {
 
     }
 
-    private void initDates(){
-        if (isFirst){
+    private void initDates() {
+        if (isFirst) {
             resourcesData = new ResourcesData();
             resourcesData.initBeInterestedData();
             resourcesData.initHaveViewedData();
             adapter.loadMore(resourcesData.getBeInterestedBeans());
             HV_adapter.loadMore(resourcesData.getHaveViewedBeans());
             isFirst = false;
-        }else{
+        } else {
             adapter.refresh(resourcesData.getBeInterestedBeans());
             HV_adapter.refresh(resourcesData.getHaveViewedBeans());
         }

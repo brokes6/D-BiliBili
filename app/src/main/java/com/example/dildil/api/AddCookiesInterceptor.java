@@ -1,7 +1,6 @@
 package com.example.dildil.api;
 
-import com.example.dildil.MyApplication;
-import com.example.dildil.util.SharePreferenceUtil;
+import com.example.dildil.util.SharedPreferencesUtil;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,11 +21,13 @@ public class AddCookiesInterceptor implements Interceptor {
     @Override
     public Response intercept(@NotNull Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        HashSet<String> preferences = SharePreferenceUtil.getInstance(MyApplication.getContext()).getCookies("cookie");
+        //HashSet<String> preferences = SharePreferenceUtil.getInstance(MyApplication.getContext()).getCookies("cookie");
+        HashSet<String> preferences = SharedPreferencesUtil.getCookies("cookie");
         if (preferences != null) {
-            for (String cookie : preferences) {
+/*            for (String cookie : preferences) {
                 builder.addHeader("Cookie", cookie);
-            }
+            }*/
+            builder.addHeader("Cookie",preferences.iterator().next());
         }
         return chain.proceed(builder.build());
     }

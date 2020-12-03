@@ -51,6 +51,7 @@ public class CommentDetailBean extends AbstractCommentModel<CommentDetailBean.Co
         private long createTime;
         private List<replyData> replyList;
         private int flag;
+        //private int pageSize;
 
         public int getId() {
             return id;
@@ -131,6 +132,14 @@ public class CommentDetailBean extends AbstractCommentModel<CommentDetailBean.Co
         public void setFlag(int flag) {
             this.flag = flag;
         }
+
+//        public int getPageSize() {
+//            return pageSize;
+//        }
+//
+//        public void setPageSize(int pageSize) {
+//            this.pageSize = pageSize;
+//        }
 
         @Override
         public List<replyData> getReplies() {

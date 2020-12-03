@@ -17,15 +17,13 @@ import com.example.dildil.video.view.VideoActivity;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
 import com.xuexiang.xui.adapter.recyclerview.RecyclerViewHolder;
 
-import cn.lemon.multi.MultiView;
-
 public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean.Datas> implements View.OnClickListener {
     private Context mContext;
     private CircleImageView userimg;
     private TextView comment_num, thmbus_num;
     private RoundCornerImageView video_cover;
     private RelativeLayout video_introduce, main;
-    private MultiView multi_view;
+//    private MultiView multi_view;
 
     public DynamicAdapter(Context context) {
         mContext = context;
@@ -39,7 +37,7 @@ public class DynamicAdapter extends BaseRecyclerAdapter<DynamicBean.Datas> imple
     @Override
     protected void bindData(@NonNull RecyclerViewHolder holder, int position, DynamicBean.Datas item) {
         userimg = holder.findViewById(R.id.Dy_user_img);
-        multi_view = holder.findViewById(R.id.multi_view);
+        //multi_view = holder.findViewById(R.id.multi_view);
         video_cover = holder.findViewById(R.id.Dy_video_cover);
         video_introduce = holder.findViewById(R.id.video_introduce);
         comment_num = holder.findViewById(R.id.comment_number);

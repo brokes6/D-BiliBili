@@ -71,6 +71,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/upName"
         android:layout_alignBottom="@+id/upImage"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_toEndOf="@+id/upImage"
         android:textColor="@color/Text_gray"
         android:textSize="12sp" />
 

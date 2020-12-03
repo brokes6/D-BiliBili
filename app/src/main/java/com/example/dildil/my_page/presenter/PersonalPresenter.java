@@ -1,5 +1,6 @@
 package com.example.dildil.my_page.presenter;
 
+import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.contract.PersonalContract;
 import com.example.dildil.my_page.model.PersonalModel;
@@ -8,13 +9,14 @@ import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class PersonalPresenter extends PersonalContract.Presenter {
 
     @Inject
-    public PersonalPresenter(){
+    public PersonalPresenter() {
 
     }
 
@@ -45,6 +47,34 @@ public class PersonalPresenter extends PersonalContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetFindUserDetailsFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void findHasCoinVideo(int pageNum, int pageSize, int uid) {
+        mModel.findHasCoinVideo(pageNum, pageSize, uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RecommendVideoBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull RecommendVideoBean recommendVideoBean) {
+                        mView.onGetFindHasCoinVideoSuccess(recommendVideoBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetFindHasCoinVideoFail(e.getMessage());
                     }
 
                     @Override

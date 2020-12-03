@@ -1,8 +1,8 @@
 package com.example.dildil.home_page.presenter;
 
+import com.example.dildil.home_page.bean.WholeStationBean;
 import com.example.dildil.home_page.contract.WholeStationContract;
 import com.example.dildil.home_page.model.WholeStationModel;
-import com.example.dildil.home_page.bean.WholeStationBean;
 
 import javax.inject.Inject;
 
@@ -29,8 +29,8 @@ public class WholeStationPresenter extends WholeStationContract.Presenter {
     }
 
     @Override
-    public void getWholeStation(int categoryId, int pageSize) {
-        mModel.getWholeStation(categoryId, pageSize).subscribeOn(Schedulers.io())
+    public void getWholeStation(String categoryStr, int pageNum, int pageSize) {
+        mModel.getWholeStation(categoryStr, pageNum, pageSize).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<WholeStationBean>() {
                     @Override

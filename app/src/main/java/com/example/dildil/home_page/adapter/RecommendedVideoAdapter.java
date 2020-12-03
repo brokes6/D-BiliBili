@@ -28,6 +28,7 @@ import com.youth.banner.Banner;
 import com.youth.banner.config.IndicatorConfig;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
+import com.youth.banner.listener.OnBannerListener;
 
 public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.BeanData, RecyclerView.ViewHolder> {
     private final Context mContext;
@@ -68,10 +69,18 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
                         Glide.with(holder.itemView)
                                 .load(data.getImageUrl())
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
-                                .placeholder(R.drawable.skeleton_circular_grey)
+                                //.placeholder(R.drawable.skeleton_circular_grey)
                                 .into(holder.imageView);
                     }
                 }, true)
+                        .setOnBannerListener(new OnBannerListener() {
+                            @Override
+                            public void OnBannerClick(Object data, int position) {
+//                                Intent intent = new Intent(mContext, BannerActivity.class);
+//                                intent.putExtra("type", position);
+//                                mContext.startActivity(intent);
+                            }
+                        })
                         .addBannerLifecycleObserver((LifecycleOwner) mContext)//添加生命周期观察者
                         .setIndicator(new CircleIndicator(mContext));
                 isLoad = true;
@@ -167,12 +176,20 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
         }
     }
 
-    public static class RecHeaderHolder extends RecyclerView.ViewHolder {
+    public class RecHeaderHolder extends RecyclerView.ViewHolder {
         private final Banner banner;
 
         public RecHeaderHolder(@NonNull View itemView) {
             super(itemView);
             banner = itemView.findViewById(R.id.Re_banner);
+//            banner.setOnBannerListener(new OnBannerListener() {
+//                @Override
+//                public void OnBannerClick(Object data, int position) {
+//                    Intent intent = new Intent(mContext, BannerActivity.class);
+//                    intent.putExtra("type", position);
+//                    mContext.startActivity(intent);
+//                }
+//            });
         }
     }
 }

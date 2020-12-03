@@ -24,6 +24,8 @@ import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.home_page.view.RankingLstActivity;
 import com.example.dildil.video.view.VideoActivity;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import javax.inject.Inject;
@@ -32,6 +34,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
     private FragmentHotBinding binding;
     private HotRankingAdapter adapter;
     private boolean isFirst = true;
+    private int HotVideoIndex = 0;
 
     @Inject
     RecommendPresenter mPresenter;
@@ -52,12 +55,12 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     protected void initView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        adapter = new HotRankingAdapter(getContext());
-        adapter.setListener(listener);
-        binding.HotRecy.setLayoutManager(layoutManager);
-        binding.HotRecy.setHasFixedSize(true);
-        binding.HotRecy.setAdapter(adapter);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        adapter = new HotRankingAdapter(getContext());
+//        adapter.setListener(listener);
+//        binding.HotRecy.setLayoutManager(layoutManager);
+//        binding.HotRecy.setHasFixedSize(true);
+//        binding.HotRecy.setAdapter(adapter);
 
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
@@ -71,10 +74,25 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
                 }
             }
         });
+        binding.swipe.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.LoadVideo();
+                HotVideoIndex += 1;
+            }
+        });
     }
 
     @Override
     protected void initData() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        adapter = new HotRankingAdapter(getContext());
+        adapter.setListener(listener);
+        binding.HotRecy.setLayoutManager(layoutManager);
+        binding.HotRecy.setHasFixedSize(true);
+        binding.HotRecy.setAdapter(adapter);
+        binding.swipe.setEnableLoadMore(true);
+        binding.swipe.setRefreshFooter(new BallPulseFooter(getContext()));
         adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_hot_header_list, binding.HotRecy, false));
 
         binding.swipe.autoRefresh();//自动刷新
@@ -106,7 +124,7 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
         binding.swipe.setVisibility(View.VISIBLE);
-        videoBean.getData().add(0,new RecommendVideoBean.BeanData());
+        videoBean.getData().add(0, new RecommendVideoBean.BeanData());
         adapter.loadMore(videoBean.getData());
         binding.swipe.finishRefresh(true);
         setScanScroll(true);
@@ -130,7 +148,14 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     public void onGetVideoLoadSuccess(RecommendVideoBean videoBean) {
-
+        if (HotVideoIndex > 3) {
+            binding.swipe.finishLoadMoreWithNoMoreData();
+        } else {
+            binding.swipe.finishLoadMore(true);
+            for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
+                adapter.add(datum);
+            }
+        }
     }
 
     @Override

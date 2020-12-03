@@ -20,6 +20,7 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_function"
             android:layout_below="@+id/DD_titles">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -69,20 +70,19 @@
                         android:textColor="#212121"
                         android:textSize="14sp" />
 
-                    <LinearLayout
-                        android:id="@+id/DD_multiMain"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
+                        android:id="@+id/DD_multi"
+                        style="@style/MatchWrap"
                         android:layout_below="@+id/DD_Title"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:orientation="vertical">
+                        app:bga_npl_itemCornerRadius="4dp"
+                        app:bga_npl_itemSpanCount="3"
+                        app:bga_npl_itemWhiteSpacing="4dp"
+                        app:bga_npl_itemWidth="0dp"
+                        app:bga_npl_otherWhiteSpacing="64dp"
+                        app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
+                        app:bga_npl_showAsLargeWhenOnlyOne="true" />
 
-                        <cn.lemon.multi.MultiView
-                            android:id="@+id/DD_multi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:placeholder="@drawable/skeleton_circular_grey" />
-                    </LinearLayout>
                 </RelativeLayout>
 
                 <com.flyco.tablayout.SlidingTabLayout
@@ -109,20 +109,12 @@
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_1"
-            android:layout_above="@+id/bottom_function"
-            android:background="@color/Grey_9" />
-
         <include
             android:id="@+id/bottom_function"
             layout="@layout/item_sanlian_layout"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_10" />
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 </layout>

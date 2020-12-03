@@ -5,6 +5,7 @@ import com.example.dildil.api.ApiEngine;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.video.bean.CommentBean;
+import com.example.dildil.video.bean.CommentDetailBean;
 import com.example.dildil.video.bean.dto;
 
 import io.reactivex.Observable;
@@ -21,7 +22,12 @@ public class DynamicModel implements DynamicContract.Model {
     }
 
     @Override
-    public Observable<CommentBean> getDynamicComment(dto dto, int uid) {
-        return ApiEngine.getInstance().getApiService().addComment(dto,uid);
+    public Observable<CommentBean> AddDynamicComment(dto dto, int uid) {
+        return ApiEngine.getInstance().getApiService().addDynamicComment(dto, uid);
+    }
+
+    @Override
+    public Observable<CommentDetailBean> getDynamicComment(int id, int pageNum, int pageSize, int uid) {
+        return ApiEngine.getInstance().getApiService().getDynamicDetailComment(id, pageNum, pageSize, uid);
     }
 }

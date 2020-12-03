@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseActivity;
 import com.example.dildil.base.UserDaoOperation;
 import com.example.dildil.component.activity.ActivityModule;
@@ -28,7 +27,6 @@ import javax.inject.Inject;
 public class SettingActivity extends BaseActivity implements MyContract.View {
     private ActivitySettingBinding binding;
     private AppDownloadManager mDownloadManager;
-    private AppDatabase dp;
 
     @Inject
     MyPresenter mPresenter;
@@ -49,7 +47,6 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
-        dp = MyApplication.getDatabase(this);
     }
 
     @Override
@@ -116,25 +113,6 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
         hideDialog();
         XToastUtils.success("退出成功！");
         new UserDaoOperation(this).delUserDetail();
-//        Completable comparable = dp.userDao().deleteAll();
-//        comparable.subscribeOn(Schedulers.io())
-//                .subscribe(new CompletableObserver() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        SharePreferenceUtil.getInstance(SettingActivity.this).remove("cookie");
-//                        ActivityUtils.startActivity(LoginActivity.class);
-//                        SettingActivity.this.finish();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("why", "出现错误,删除数据失败" + e);
-//                    }
-//                });
     }
 
     @Override

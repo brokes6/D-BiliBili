@@ -1,5 +1,6 @@
 package com.example.dildil.video.fragment_tab;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -25,6 +26,7 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentCommentBinding;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
+import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.util.DateUtils;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
@@ -60,7 +62,7 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     private EmojIconActions emojIcon;
     private boolean isLoad = true;
     private int id, uid;
-    private UserBean UserBean;
+    private UserBean userBean;
     private CustomCommentViewHolder holder = null;
     private CustomReplyViewHolder holders = null;
     private AppDatabase db;
@@ -84,7 +86,6 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
     protected void initView() {
         db = MyApplication.getDatabase(getContext());
         binding.detailPageDoComment.setOnClickListener(this);
-        initCommentList();
     }
 
     @Override
@@ -99,8 +100,10 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                                 .observe(CommentFragment.this, new Observer<UserBean>() {
 
                                     @Override
-                                    public void onChanged(UserBean userBean) {
-                                        UserBean = userBean;
+                                    public void onChanged(UserBean userBeans) {
+                                        userBean = userBeans;
+                                        uid = userBean.getData().getId();
+                                        initCommentList();
                                         mPresenter.getVideoComment(id, 1, 10, userBean.getData().getId());
                                     }
                                 });
@@ -142,6 +145,14 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                         } else {
                             holder = (CustomCommentViewHolder) convertView.getTag();
                         }
+                        holder.ico.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getContext(), PersonalActivity.class);
+                                intent.putExtra("uid", item.getUid());
+                                startActivity(intent);
+                            }
+                        });
                         holder.prizes.setText("0");
                         Glide.with(getContext()).load(item.getImg()).into(holder.ico);
                         holder.userName.setText(item.getUsername());
@@ -216,8 +227,8 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                     dialog.dismiss();
                     CommentDetailBean.CommentData.replyData replyData = new CommentDetailBean.CommentData.replyData();
                     replyData.setContent(replyContent);
-                    replyData.setImg(UserBean.getData().getImg());
-                    replyData.setUsername(UserBean.getData().getUsername());
+                    replyData.setImg(userBean.getData().getImg());
+                    replyData.setUsername(userBean.getData().getUsername());
                     binding.commentView.addReply(replyData, position);
                     XToastUtils.toast("回复成功");
                 } else {
@@ -282,11 +293,11 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
                 String commentContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(commentContent)) {
                     dialog.dismiss();
-                    detailBean.setUsername(UserBean.getData().getUsername());
-                    detailBean.setImg(UserBean.getData().getImg());
+                    detailBean.setUsername(userBean.getData().getUsername());
+                    detailBean.setImg(userBean.getData().getImg());
                     detailBean.setContent(commentContent);
                     binding.commentView.addComment(detailBean);
-                    mPresenter.AddComment(new dto(commentContent, id, 0, "VIDEO"), UserBean.getData().getId());
+                    mPresenter.AddComment(new dto(commentContent, id, userBean.getData().getId(), "VIDEO"), userBean.getData().getId());
                 } else {
                     XToastUtils.toast("评论内容不能为空");
                 }

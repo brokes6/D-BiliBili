@@ -18,10 +18,7 @@ import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshInitializer;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.xuexiang.xui.BuildConfig;
 import com.xuexiang.xui.XUI;
-
-import cn.alien95.resthttp.request.RestHttp;
 
 
 /**
@@ -73,15 +70,7 @@ public class MyApplication extends Application {
         instance = this;
         mContext = getApplicationContext();
         XUI.init(this);
-        XUI.debug(MyApplication.isDebug());
         SharedPreferencesUtil.getInstance(this, "SPy");
-        RestHttp.initialize(this);
-        if (BuildConfig.DEBUG) {
-            RestHttp.setDebug(true, "network");
-        }
-        /**
-         * 初始化数据库
-         */
         factory = new SafeHelperFactory(passphrase);
 
     }
@@ -92,22 +81,18 @@ public class MyApplication extends Application {
      * @return
      */
     public static AppDatabase getDatabase(Context context) {
-        if (db == null){
-            synchronized (AppDatabase.class){
+        if (db == null) {
+            synchronized (AppDatabase.class) {
                 if (db == null) {
                     db = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, "userData")
                             //.openHelperFactory(factory)  //encrypt
                             .fallbackToDestructiveMigration()
-                            .build();;
+                            .build();
                 }
             }
         }
         return db;
-    }
-
-    public static synchronized MyApplication getInstance() {
-        return instance;
     }
 
     public static AppComponent getAppComponent() {
@@ -117,10 +102,6 @@ public class MyApplication extends Application {
                     .build();
         }
         return appComponent;
-    }
-
-    public static boolean isDebug() {
-        return BuildConfig.DEBUG;
     }
 
     public static Context getContext() {
