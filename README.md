@@ -2,13 +2,13 @@
 [![](https://img.shields.io/badge/个人博客-Android笔记-green.svg)](https://brokes6.github.io)<br>
 个人学习，练习制作的软件
 ## 项目介绍<br>
-apk在Releases附件里<br>
+Apk在Releases附件里<br>
 这是一款仿造B站的软件，现在正在与 "chenzijia12300"的 仿哔哩哔哩的后台系统 对接（ https://github.com/chenzijia12300/dalidali ） <br>
 目前使用的数据，都来自chenzijia12300的 仿哔哩哔哩的后台系统 <br>
 <br>
-## 自产自销（xswl）<br>
+## 使用了自己写的工具类<br>
 [![](https://jitpack.io/v/brokes6/CustomControl.svg)](https://jitpack.io/#brokes6/CustomControl)<br>
-一些小的效果，我都写成了自定义控件，方便直接使用<br>
+一些小的效果，我都写成了自定义控件，方便直接使用，欢迎使用和star<br>
 CustomControl: https://github.com/brokes6/CustomControl<br>
 ```Java
 implementation 'com.github.brokes6:CustomControl:1.1.7'
@@ -27,6 +27,7 @@ implementation 'com.github.brokes6:CustomControl:1.1.7'
 10.内存占用很小
 11.采取MVP模式来进行的开发
 12.软件可在线更新
+13.保存数据采用了Room+LiveDate
 ```
 
 ## 视频介绍:（GIF的效果会没这么好，实际效果更棒）<br>
