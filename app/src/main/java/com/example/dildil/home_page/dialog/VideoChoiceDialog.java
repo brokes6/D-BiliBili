@@ -1,8 +1,9 @@
 package com.example.dildil.home_page.dialog;
 
-import android.app.Activity;
 import android.content.Context;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -15,11 +16,8 @@ import com.example.dildil.util.XToastUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class VideoChoiceDialog extends BottomSheetDialog implements View.OnClickListener {
-    private Context context;
-    private Activity mContext;
-    private View view;
-    private TextView AddLater, pornographyVulgarity, bloodyAwful, coverDisgusting, TitleParty,
-            UP_name, classification, cancel;
+    private Context mContext;
+    private TextView UP_name;
     private String upName;
     private OnFeedbackClickListener onFeedbackClickListener;
     private int position;
@@ -27,7 +25,7 @@ public class VideoChoiceDialog extends BottomSheetDialog implements View.OnClick
 
     public VideoChoiceDialog(@NonNull Context context) {
         super(context);
-        this.context = context;
+        this.mContext = context;
         initView();
     }
 
@@ -43,21 +41,21 @@ public class VideoChoiceDialog extends BottomSheetDialog implements View.OnClick
     }
 
     private void initView() {
-        mContext = (Activity) context;
-        view = mContext.getLayoutInflater().inflate(R.layout.item_video_choice_dialog, null);
-        AddLater = view.findViewById(R.id.AddLater);
-        pornographyVulgarity = view.findViewById(R.id.pornographyVulgarity);
-        bloodyAwful = view.findViewById(R.id.bloodyAwful);
-        coverDisgusting = view.findViewById(R.id.coverDisgusting);
-        TitleParty = view.findViewById(R.id.TitleParty);
+        ContextThemeWrapper ctx = new ContextThemeWrapper(mContext, R.style.AppThemes);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.item_video_choice_dialog, null);
+        TextView addLater = view.findViewById(R.id.AddLater);
+        TextView pornographyVulgarity = view.findViewById(R.id.pornographyVulgarity);
+        TextView bloodyAwful = view.findViewById(R.id.bloodyAwful);
+        TextView coverDisgusting = view.findViewById(R.id.coverDisgusting);
+        TextView titleParty = view.findViewById(R.id.TitleParty);
         UP_name = view.findViewById(R.id.UP_name);
-        classification = view.findViewById(R.id.classification);
-        cancel = view.findViewById(R.id.cancel);
-        AddLater.setOnClickListener(this);
+        TextView classification = view.findViewById(R.id.classification);
+        TextView cancel = view.findViewById(R.id.cancel);
+        addLater.setOnClickListener(this);
         pornographyVulgarity.setOnClickListener(this);
         bloodyAwful.setOnClickListener(this);
         coverDisgusting.setOnClickListener(this);
-        TitleParty.setOnClickListener(this);
+        titleParty.setOnClickListener(this);
         UP_name.setOnClickListener(this);
         classification.setOnClickListener(this);
         cancel.setOnClickListener(this);

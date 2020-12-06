@@ -1,6 +1,7 @@
 package com.example.dildil.home_page.model;
 
 import com.example.dildil.api.ApiEngine;
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 
@@ -20,5 +21,10 @@ public class RecommendModel implements RecommendContract.Model {
     @Override
     public Observable<RecommendVideoBean> LoadVideo() {
         return ApiEngine.getInstance().getApiService().randomRecommendation();
+    }
+
+    @Override
+    public Observable<BannerBean> findBanner() {
+        return ApiEngine.getInstance().getApiService().findBanner();
     }
 }

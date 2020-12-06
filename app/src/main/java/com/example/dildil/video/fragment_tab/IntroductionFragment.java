@@ -22,6 +22,8 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentIntroductionBinding;
+import com.example.dildil.dynamic_page.bean.AttentionBean;
+import com.example.dildil.dynamic_page.bean.params;
 import com.example.dildil.home_page.adapter.HotRankingAdapter;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
@@ -49,7 +51,6 @@ import javax.inject.Inject;
 public class IntroductionFragment extends BaseFragment implements VideoDetailsContract.View {
     private FragmentIntroductionBinding binding;
     private RelevantVideoAdapter adapter;
-    private int id;
     private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
     private ImageView like_img, Collection, coinImg;
     private boolean isOpen = false;
@@ -61,7 +62,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private boolean isCollection = false;
     private boolean isSanLian = true;
     private UserBean UserBean;
-    private int uid;
+    private int uid, vid;
     private int praiseNum;
 
     @Inject
@@ -87,8 +88,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         binding.InRecyclerView.setLayoutManager(layoutManager);
         binding.InUserImg.setOnClickListener(this);
         adapter = new RelevantVideoAdapter(getContext());
-        //adapter.setListener(listener);
         binding.InRecyclerView.setAdapter(adapter);
+        binding.InAttention.setOnClickListener(this);
 
         getIncludeView();
     }
@@ -150,83 +151,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 return false;
             }
         });
-
-        /**
-         * 这里是因为setOnTouchListener最好在自定义View来覆写
-         * 但是我为了达到统一的效果，只能写在这里
-         * 上面已经加了@SuppressLint("ClickableViewAccessibility")用来取消警告
-         */
-
-//        like_img.setOnTouchListener(new View.OnTouchListener() {
-//            private long downTime;
-//            private long upTime;
-//            private boolean mIsLongPressed = false;
-//            private float mLastMotionX, mLastMotionY;
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        downTime = System.currentTimeMillis();
-//                        Log.e(TAG, "onTouch: 按下" + downTime);
-//                        mLastMotionX = event.getX();
-//                        mLastMotionY = event.getX();
-//                        if (mIsPraise) {
-//                            XToastUtils.toast("已经点过赞拉~");
-//                        } else {
-//                            dto str = new dto(id);
-//                            mPresenter.getThumbsUp("http://116.196.105.203/videoservice/video/dynamic_like", str);
-//                        }
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        Log.e(TAG, "onTouch: 抬起");
-//                        if (coin_circleView.mProgress >= 300) {
-//                            //完成长按
-//                            like_img.setImageResource(R.drawable.thumb_up_24);
-//                            Collection.setImageResource(R.mipmap.collect_on);
-//                            coinImg.setImageResource(R.mipmap.coin_on);
-//                            /**
-//                             * 这里进行三连操作
-//                             */
-//                            return false;
-//                        }
-//                        //取消长按
-//                        coin_circleView.stopAnimationProgress(coin_circleView.mProgress);
-//                        Collection_circleView.stopAnimationProgress(Collection_circleView.mProgress);
-//
-//                        break;
-//                    case MotionEvent.ACTION_MOVE:
-//                        Log.e(TAG, "onTouch: 移动");
-//                        upTime = System.currentTimeMillis();
-//                        if (!mIsLongPressed) {
-//                            mIsLongPressed = isLongPressed(mLastMotionX, mLastMotionY, event.getX(), event.getY(), downTime, upTime, 500);
-//                        }
-//                        if (mIsLongPressed) {
-//                            //长按模式所做的事
-//                            coin_circleView.startAnimationProgress(300);
-//                            Collection_circleView.startAnimationProgress(300);
-//
-//                        } else {
-//                            //移动模式所做的事
-//                        }
-//                        break;
-//                }
-//                return true;
-//            }
-//        });
     }
-
-//    private static boolean isLongPressed(float lastX, float lastY, float thisX,
-//                                         float thisY, long lastDownTime, long thisEventTime,
-//                                         long longPressTime) {
-//        float offsetX = Math.abs(thisX - lastX);
-//        float offsetY = Math.abs(thisY - lastY);
-//        long intervalTime = thisEventTime - lastDownTime;
-//        if (offsetX <= 10 && offsetY <= 10 && intervalTime >= longPressTime) {
-//            return true;
-//        }
-//        return false;
-//    }
 
     @Override
     protected void initData() {
@@ -235,14 +160,14 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
                     @Override
                     public void onChanged(VideoDaoBean c) {
-                        id = c.getVideoId();
+                        vid = c.getVideoId();
                         MyApplication.getDatabase(getContext()).userDao().getAll()
                                 .observe(IntroductionFragment.this, new Observer<UserBean>() {
 
                                     @Override
                                     public void onChanged(UserBean userBean) {
                                         UserBean = userBean;
-                                        mPresenter.getVideoDetails(id, userBean.getData().getId());
+                                        mPresenter.getVideoDetails(vid, userBean.getData().getId());
                                         mPresenter.getRelatedVideos();
                                     }
                                 });
@@ -254,7 +179,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     protected void initLocalData() {
-        //binding.top.setVisibility(View.VISIBLE);
+        binding.top.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -277,7 +202,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 XToastUtils.toast("已经投过币拉~");
                 return;
             }
-            CoinDialog coinDialog = new CoinDialog(getContext(), id, UserBean.getData().getCoinNum());
+            CoinDialog coinDialog = new CoinDialog(getContext(), vid, UserBean.getData().getCoinNum());
             coinDialog.setListener(resultListener);
             coinDialog.show();
         } else if (vId == R.id.like_img) {
@@ -285,19 +210,21 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 XToastUtils.toast("已经点过赞拉~");
                 return;
             }
-            dto str = new dto(id);
+            dto str = new dto(vid);
             mPresenter.getThumbsUp("http://116.196.105.203:6380/videoservice/video/dynamic_like", str);
         } else if (vId == R.id.Collection) {
             if (isCollection) {
                 XToastUtils.toast("已经收藏过拉~");
                 return;
             }
-            dto str1 = new dto(id);
-            mPresenter.CollectionVideo(str1);
+            dto str1 = new dto(vid);
+            mPresenter.CollectionVideo(str1, UserBean.getData().getId());
         } else if (vId == R.id.In_user_img) {
             Intent intent = new Intent(getContext(), PersonalActivity.class);
             intent.putExtra("uid", uid);
             getContext().startActivity(intent);
+        } else if (vId == R.id.In_Attention) {
+            mPresenter.Attention(new params(vid), uid);
         }
     }
 
@@ -307,9 +234,9 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     CoinDialog.throwCoinResultListener resultListener = new CoinDialog.throwCoinResultListener() {
         @Override
         public void throwCoinSuccess(CoinBean coinBean) {
-            showDialog();
+//            showDialog();
             XToastUtils.success(coinBean.getMessage());
-            mPresenter.getVideoDetails(id, UserBean.getData().getId());
+            mPresenter.getVideoDetails(vid, UserBean.getData().getId());
         }
 
         @Override
@@ -324,6 +251,8 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
         @Override
         public void ThumbsUpFail(String e) {
+            Log.e("why", "ThumbsUpFail: 出错了" + e);
+            XToastUtils.error("操作失败：" + e);
         }
     };
 
@@ -350,7 +279,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         binding.InFans.setText("0粉丝");
         Glide.with(this).load(videoDetailsBean.getUpImg()).into(binding.InUserImg);
         binding.InUserName.setText(videoDetailsBean.getUpName());
-        binding.InWarning.setText(videoDetailsBean.getDescription());
+        binding.InIntroduce.setText(videoDetailsBean.getDescription());
         mPlayNum.setText(String.valueOf(videoDetailsBean.getPlayNum()));
         mDanmu.setText(String.valueOf(videoDetailsBean.getDanmuNum()));
         mPraise.setText(String.valueOf(videoDetailsBean.getPraiseNum()));
@@ -367,6 +296,10 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
                 Collection.setImageResource(R.mipmap.collect_on);
             if (videoDetailsBean.getLog().getCoinNum() == 2)
                 coinImg.setImageResource(R.mipmap.coin_on);
+        }
+        if (videoDetailsBean.isFollow()) {
+            binding.InAttention.setText("已关注");
+            binding.InAttention.setBackgroundResource(R.drawable.file_background_follow_gray);
         }
         isLoad = true;
     }
@@ -408,6 +341,10 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     public void onGetCollectionVideoSuccess(CollectionBean collectionBean) {
         isCollection = true;
         Collection.setImageResource(R.mipmap.collect_on);
+        /**
+         * 这里的收藏数量有问题，需改进
+         */
+        CollectionNum.setText(String.valueOf(praiseNum + 1));
         XToastUtils.success("收藏成功！");
     }
 
@@ -466,6 +403,18 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     @Override
     public void onGetAddCommentFail(String e) {
 
+    }
+
+    @Override
+    public void onAttentionSuccess(AttentionBean attentionBean) {
+        binding.InAttention.setText("已关注");
+        binding.InAttention.setBackgroundResource(R.drawable.file_background_follow_gray);
+    }
+
+    @Override
+    public void onAttentionFail(String e) {
+        Log.e("why", "错误为---" + e);
+        XToastUtils.error(R.string.networkError);
     }
 
     @Override

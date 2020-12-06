@@ -22,7 +22,9 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentTabSynthesizeBinding;
 import com.example.dildil.dynamic_page.adapter.TabVideoAdapter;
 import com.example.dildil.dynamic_page.adapter.TopicAdapter;
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.DynamicDetailsBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
 import com.example.dildil.login_page.bean.UserBean;
@@ -185,6 +187,26 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
 
     @Override
     public void onGetDynamicCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDynamicDetailsSuccess(DynamicDetailsBean dynamicDetailsBean) {
+
+    }
+
+    @Override
+    public void onGetDynamicDetailsFail(String e) {
+
+    }
+
+    @Override
+    public void onGetAttentionDetailsSuccess(AttentionDetailsBean attentionDetailsBean) {
+
+    }
+
+    @Override
+    public void onGetAttentionDetailsFail(String e) {
 
     }
 

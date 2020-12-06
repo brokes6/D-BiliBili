@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "25673c40a48c464e1f7bb9d6dbf2f466",
+    "identityHash": "81ea69f5eccbe31fab0f1600307c6e7f",
     "entities": [
       {
         "tableName": "UserBean",
@@ -181,12 +181,80 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "HistoryBean",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vid` INTEGER NOT NULL, `VImg` TEXT, `VTitle` TEXT, `VTime` TEXT, `VUpName` TEXT, `totalDuration` INTEGER NOT NULL, `playTime` INTEGER NOT NULL, `currentTime` INTEGER NOT NULL, `VProgress` INTEGER NOT NULL, PRIMARY KEY(`vid`))",
+        "fields": [
+          {
+            "fieldPath": "vid",
+            "columnName": "vid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "VImg",
+            "columnName": "VImg",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "VTitle",
+            "columnName": "VTitle",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "VTime",
+            "columnName": "VTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "VUpName",
+            "columnName": "VUpName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "totalDuration",
+            "columnName": "totalDuration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playTime",
+            "columnName": "playTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentTime",
+            "columnName": "currentTime",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "VProgress",
+            "columnName": "VProgress",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "vid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '25673c40a48c464e1f7bb9d6dbf2f466')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '81ea69f5eccbe31fab0f1600307c6e7f')"
     ]
   }
 }

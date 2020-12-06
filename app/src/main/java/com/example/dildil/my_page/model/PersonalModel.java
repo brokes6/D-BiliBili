@@ -17,4 +17,9 @@ public class PersonalModel implements PersonalContract.Model {
     public Observable<RecommendVideoBean> findHasCoinVideo(int pageNum, int pageSize, int uid) {
         return ApiEngine.getInstance().getApiService().findHasCoinVideo(pageNum, pageSize, uid);
     }
+
+    @Override
+    public Observable<RecommendVideoBean> findPublishVideo(int pageNum, int pageSize, int uid) {
+        return ApiEngine.getInstance().getApiService().findPublishVideo(pageNum, pageSize, uid);
+    }
 }

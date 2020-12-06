@@ -1,7 +1,7 @@
 package com.example.dildil;
 
-import com.example.dildil.channel_page.bean.BeInterestedBean;
 import com.example.dildil.channel_page.bean.HaveViewedBean;
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
 import com.example.dildil.dynamic_page.bean.PursueBean;
 import com.example.dildil.dynamic_page.bean.TopicBean;
@@ -31,7 +31,7 @@ public class ResourcesData {
     private static List<SwitchVideoBean> urls = new ArrayList<>();
     private static List<HotSearchBean> hotSearchBeans = new ArrayList<>();
     private static List<BannerBean> bannerImageList = new ArrayList<>();
-    private static List<BeInterestedBean> beInterestedBeans = new ArrayList<>();
+    private static List<AttentionDetailsBean.Data> beInterestedBeans = new ArrayList<>();
     private static List<HaveViewedBean> haveViewedBeans = new ArrayList<>();
     private static List<PursueBean> pursueBeans = new ArrayList<>();
     private static List<MyPursuitBean> myPursuitBeans = new ArrayList<>();
@@ -131,21 +131,21 @@ public class ResourcesData {
         return urls;
     }
 
-    public void initBanner() {
-        BannerBean bannerBean = new BannerBean();
-        bannerBean.setImageUrl("https://i0.hdslb.com/bfs/archive/a256e3d2614cf8be7476a376bc0dec828cd38e14.png@880w_388h_1c_95q");
-        BannerBean bannerBean1 = new BannerBean();
-        bannerBean1.setImageUrl("https://i0.hdslb.com/bfs/archive/02ebd0ec305f95f3f6e557fe5660fe2309d3a981.png@880w_388h_1c_95q");
-        BannerBean bannerBean2 = new BannerBean();
-        bannerBean2.setImageUrl("https://i0.hdslb.com/bfs/archive/545a20d626e5e57ca0745a2458b798821fc1a0df.jpg@880w_388h_1c_95q");
-        bannerImageList.add(bannerBean);
-        bannerImageList.add(bannerBean1);
-        bannerImageList.add(bannerBean2);
-    }
-
-    public List<BannerBean> getBeannerUrl() {
-        return bannerImageList;
-    }
+//    public void initBanner() {
+//        BannerBean bannerBean = new BannerBean();
+//        bannerBean.setImageUrl("https://i0.hdslb.com/bfs/archive/a256e3d2614cf8be7476a376bc0dec828cd38e14.png@880w_388h_1c_95q");
+//        BannerBean bannerBean1 = new BannerBean();
+//        bannerBean1.setImageUrl("https://i0.hdslb.com/bfs/archive/02ebd0ec305f95f3f6e557fe5660fe2309d3a981.png@880w_388h_1c_95q");
+//        BannerBean bannerBean2 = new BannerBean();
+//        bannerBean2.setImageUrl("https://i0.hdslb.com/bfs/archive/545a20d626e5e57ca0745a2458b798821fc1a0df.jpg@880w_388h_1c_95q");
+//        bannerImageList.add(bannerBean);
+//        bannerImageList.add(bannerBean1);
+//        bannerImageList.add(bannerBean2);
+//    }
+//
+//    public List<BannerBean> getBeannerUrl() {
+//        return bannerImageList;
+//    }
 
     public void initMyData() {
         mMyDataBean = new MyDataBean();
@@ -238,25 +238,25 @@ public class ResourcesData {
 
     public void initBeInterestedData() {
         beInterestedBeans.clear();
-        BeInterestedBean beInterestedBean = new BeInterestedBean();
-        beInterestedBean.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/a92c19dbc4335fd553e50e187d759b2fafee9a64.jpg@115w_115h_1c_100q.webp");
-        beInterestedBean.setBeInterestedTitle("COSPLAY");
+        AttentionDetailsBean.Data beInterestedBean = new AttentionDetailsBean.Data();
+        beInterestedBean.setImg("https://i0.hdslb.com/bfs/tag/a92c19dbc4335fd553e50e187d759b2fafee9a64.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean.setUsername("COSPLAY");
 
-        BeInterestedBean beInterestedBean1 = new BeInterestedBean();
-        beInterestedBean1.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/c47710d730162f1e1c49d23e68aa0bf42b83b0e9.jpg@115w_115h_1c_100q.webp");
-        beInterestedBean1.setBeInterestedTitle("游戏集锦");
+        AttentionDetailsBean.Data beInterestedBean1 = new AttentionDetailsBean.Data();
+        beInterestedBean1.setImg("https://i0.hdslb.com/bfs/tag/c47710d730162f1e1c49d23e68aa0bf42b83b0e9.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean1.setUsername("游戏集锦");
 
-        BeInterestedBean beInterestedBean2 = new BeInterestedBean();
-        beInterestedBean2.setBeInterestedImage("https://i0.hdslb.com/bfs/archive/4afb90b88597f226d22fdaed28a5c4769b372fdc.png@115w_115h_1c_100q.webp");
-        beInterestedBean2.setBeInterestedTitle("搞笑");
+        AttentionDetailsBean.Data beInterestedBean2 = new AttentionDetailsBean.Data();
+        beInterestedBean2.setImg("https://i0.hdslb.com/bfs/archive/4afb90b88597f226d22fdaed28a5c4769b372fdc.png@115w_115h_1c_100q.webp");
+        beInterestedBean2.setUsername("搞笑");
 
-        BeInterestedBean beInterestedBean3 = new BeInterestedBean();
-        beInterestedBean3.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/db30d74add4aafeaf4faa1d2ddca120d1d89c52a.jpg@115w_115h_1c_100q.webp");
-        beInterestedBean3.setBeInterestedTitle("风暴英雄");
+        AttentionDetailsBean.Data beInterestedBean3 = new AttentionDetailsBean.Data();
+        beInterestedBean3.setImg("https://i0.hdslb.com/bfs/tag/db30d74add4aafeaf4faa1d2ddca120d1d89c52a.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean3.setUsername("风暴英雄");
 
-        BeInterestedBean beInterestedBean4 = new BeInterestedBean();
-        beInterestedBean4.setBeInterestedImage("https://i0.hdslb.com/bfs/tag/0f7b6c8c3d38382e677c1d137986a11fed8075ac.jpg@115w_115h_1c_100q.webp");
-        beInterestedBean4.setBeInterestedTitle("星际争霸2");
+        AttentionDetailsBean.Data beInterestedBean4 = new AttentionDetailsBean.Data();
+        beInterestedBean4.setImg("https://i0.hdslb.com/bfs/tag/0f7b6c8c3d38382e677c1d137986a11fed8075ac.jpg@115w_115h_1c_100q.webp");
+        beInterestedBean4.setUsername("星际争霸2");
 
         beInterestedBeans.add(beInterestedBean);
         beInterestedBeans.add(beInterestedBean1);
@@ -265,7 +265,7 @@ public class ResourcesData {
         beInterestedBeans.add(beInterestedBean4);
     }
 
-    public List<BeInterestedBean> getBeInterestedBeans() {
+    public List<AttentionDetailsBean.Data> getBeInterestedBeans() {
         return beInterestedBeans;
     }
 

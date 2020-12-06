@@ -2,7 +2,9 @@ package com.example.dildil.dynamic_page.model;
 
 
 import com.example.dildil.api.ApiEngine;
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.DynamicDetailsBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.video.bean.CommentBean;
 import com.example.dildil.video.bean.CommentDetailBean;
@@ -29,5 +31,15 @@ public class DynamicModel implements DynamicContract.Model {
     @Override
     public Observable<CommentDetailBean> getDynamicComment(int id, int pageNum, int pageSize, int uid) {
         return ApiEngine.getInstance().getApiService().getDynamicDetailComment(id, pageNum, pageSize, uid);
+    }
+
+    @Override
+    public Observable<DynamicDetailsBean> getDynamicDetails(int did, int uid) {
+        return ApiEngine.getInstance().getApiService().findDynamicDetails(did, uid);
+    }
+
+    @Override
+    public Observable<AttentionDetailsBean> getAttentionDetails(int uid) {
+        return ApiEngine.getInstance().getApiService().getAttentionDetails(uid);
     }
 }

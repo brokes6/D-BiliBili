@@ -9,6 +9,7 @@ import com.example.dildil.dynamic_page.fragment_tab.SynthesizeTabFragment;
 import com.example.dildil.dynamic_page.fragment_tab.VideoTabFragment;
 import com.example.dildil.dynamic_page.view.DynamicDetailsActivity;
 import com.example.dildil.home_page.fragment.fragment_tab.HotFragment;
+import com.example.dildil.home_page.fragment.fragment_tab.PursueFramgment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.WholeStationFragment;
 import com.example.dildil.home_page.view.HomeActivity;
@@ -64,6 +65,8 @@ public interface ActivityComponent {
     void inject(PartitionTabFragment partitionTabFragment);
 
     void inject(DynamicDetailsActivity dynamicDetailsActivity);
+
+    void inject(PursueFramgment pursueFramgment);
 
     //TODO 后续需要注入的Activity类都可以在这里添加 中像上面一样写就好了
 }

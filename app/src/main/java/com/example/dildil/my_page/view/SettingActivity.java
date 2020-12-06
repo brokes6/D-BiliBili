@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.base.BaseActivity;
@@ -15,10 +16,12 @@ import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivitySettingBinding;
 import com.example.dildil.home_page.bean.VersionBean;
 import com.example.dildil.home_page.dialog.AppUpdateDialog;
+import com.example.dildil.login_page.view.LoginActivity;
 import com.example.dildil.my_page.bean.LogoutBean;
 import com.example.dildil.my_page.contract.MyContract;
 import com.example.dildil.my_page.presenter.MyPresenter;
 import com.example.dildil.util.AppDownloadManager;
+import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -112,7 +115,11 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     public void onGetLogoutSuccess(LogoutBean logoutBean) {
         hideDialog();
         XToastUtils.success("退出成功！");
-        new UserDaoOperation(this).delUserDetail();
+        UserDaoOperation.getDatabase(this).delUserDetail();
+        UserDaoOperation.getDatabase(this).dellHistory();
+        SharedPreferencesUtil.remove("cookie");
+        ActivityUtils.startActivity(LoginActivity.class);
+        this.finish();
     }
 
     @Override
@@ -123,7 +130,7 @@ public class SettingActivity extends BaseActivity implements MyContract.View {
     @Override
     public void onGetVersionSuccess(VersionBean versionBean) {
         hideDialog();
-        if (versionBean.getData().getVersion().compareTo(getVersionCode()) == 1) {
+        if (versionBean.getData().getVersion().compareTo(getVersionCode()) > 0) {
             downloadApk(versionBean);
         } else {
             XToastUtils.info("当前已是最新版本！");

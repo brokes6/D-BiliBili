@@ -94,15 +94,12 @@
 #继承activity,application,service,broadcastReceiver,contentprovider....不进行混淆
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
--keep public class * extends android.support.multidex.MultiDexApplication
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 -keep public class * extends android.view.View
--keep public class com.android.vending.licensing.ILicensingService
--keep class android.support.** {*;}
 
 -keep public class * extends android.view.View{
     *** get*();
@@ -128,9 +125,9 @@
     java.lang.Object writeReplace();
     java.lang.Object readResolve();
 }
--keep class **.R$* {
- *;
-}
+#-keep class **.R$* {
+# *;
+#}
 
 -keepclassmembers class * {
     void *(*Event);
@@ -156,9 +153,9 @@
 #----------------------------------------------------------------------------
 
 #---------------------------------webview------------------------------------
--keepclassmembers class fqcn.of.javascript.interface.for.Webview {
-   public *;
-}
+#-keepclassmembers class fqcn.of.javascript.interface.for.Webview {
+#   public *;
+#}
 -keepclassmembers class * extends android.webkit.WebViewClient {
     public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
     public boolean *(android.webkit.WebView, java.lang.String);

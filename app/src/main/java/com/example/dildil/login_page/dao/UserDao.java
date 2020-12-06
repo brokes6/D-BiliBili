@@ -41,6 +41,14 @@ public interface UserDao {
     void updateUsers(UserBean users);
 
     /**
+     * 更新对应index的值
+     *
+     * @param coin
+     */
+    @Query("update userbean set coinNum = (:coin)")
+    void setCoin(int coin);
+
+    /**
      * 查询数据
      *
      * @return

@@ -41,22 +41,6 @@ public class DensityUtil {
         return (int)(dpValue*scale+0.5f);
     }
 
-    public static String timeParse(long duration) {
-        String time = "";
-        long minute = duration / 60;
-        long seconds = duration % 60;
-        long second = Math.round((float) seconds);
-        if (minute < 10) {
-            time += "0";
-        }
-        time += minute + ":";
-        if (second < 10) {
-            time += "0";
-        }
-        time += second;
-        return time;
-    }
-
     public static int  getScreenRelatedInformation(Context context) {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         if (windowManager != null) {

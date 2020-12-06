@@ -1,6 +1,7 @@
 package com.example.dildil.my_page.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,15 @@ import javax.inject.Inject;
 
 public class MyHomePageFragment extends BaseFragment implements PersonalContract.View {
     private FragmentMyhomeBinding binding;
-    private UserHomePagerContributeAdapter adapter;
+    private UserHomePagerContributeAdapter adapter,adapter2;
+    private final int uid;
 
     @Inject
     PersonalPresenter mPresenter;
+
+    public MyHomePageFragment(int uid) {
+        this.uid = uid;
+    }
 
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,16 +51,20 @@ public class MyHomePageFragment extends BaseFragment implements PersonalContract
 
     @Override
     protected void initView() {
-        binding.contributeRecycler.setHasFixedSize(false);
-        binding.contributeRecycler.setNestedScrollingEnabled(false);
         binding.contributeRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        adapter2 = new UserHomePagerContributeAdapter(getContext());
+        binding.contributeRecycler.setAdapter(adapter2);
+
+        binding.coinsRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         adapter = new UserHomePagerContributeAdapter(getContext());
-        binding.contributeRecycler.setAdapter(adapter);
+        binding.coinsRecycler.setAdapter(adapter);
     }
 
     @Override
     protected void initData() {
-        mPresenter.findHasCoinVideo(1, 2, 1);
+        Log.e("why", "initData: 当前用户id为===>"+uid );
+        mPresenter.findPublishVideo(1, 2, uid);
+        mPresenter.findHasCoinVideo(1, 2, uid);
     }
 
     @Override
@@ -69,7 +79,6 @@ public class MyHomePageFragment extends BaseFragment implements PersonalContract
 
     @Override
     public void onGetFindUserDetailsSuccess(UserBean userBean) {
-
     }
 
     @Override
@@ -84,6 +93,14 @@ public class MyHomePageFragment extends BaseFragment implements PersonalContract
 
     @Override
     public void onGetFindHasCoinVideoFail(String e) {
+    }
 
+    @Override
+    public void onGetPublishVideoSuccess(RecommendVideoBean recommendVideoBean) {
+        adapter2.loadMore(recommendVideoBean.getData());
+    }
+
+    @Override
+    public void onGetPublishVideoFail(String e) {
     }
 }

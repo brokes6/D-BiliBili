@@ -1,8 +1,8 @@
 package com.example.dildil.video.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,15 +19,13 @@ import androidx.annotation.NonNull;
 import com.example.dildil.R;
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.api.ApiService;
-import com.example.dildil.base.AppDatabase;
+import com.example.dildil.base.UserDaoOperation;
 import com.example.dildil.rewriting_view.ClipViewPager;
 import com.example.dildil.rewriting_view.ScalePageTransformer;
-import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.TubatuAdapter;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.ThumbsUpBean;
-import com.example.dildil.video.bean.VideoDaoBean;
 import com.example.dildil.video.bean.dto;
 
 import java.util.ArrayList;
@@ -40,37 +38,37 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class CoinDialog extends Dialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-    private Context mContext;
-    private Activity mActivity;
-    private View view;
+    private final Context mContext;
     private TubatuAdapter mPagerAdapter;
     private ClipViewPager mViewPager;
-    private ImageView close;
-    private RelativeLayout page_container;
     private CheckBox CB_thumbsUp;
-    private int vid, coin;
-    private TextView Da_CoicNum;
+    private final int vid, coin;
     private throwCoinResultListener CoinListener;
-    private boolean isThumbsUp = false;
     private ApiService mService;
-    private AppDatabase dp;
-    private String url = "http://116.196.105.203/videoservice/video/dynamic_like";
+    private boolean key;
 
     public CoinDialog(@NonNull Context context, int vid, int coin) {
         super(context);
         mContext = context;
         this.vid = vid;
+        this.coin = coin;
         init();
     }
 
     private void init() {
-        mActivity = (Activity) mContext;
-        view = LayoutInflater.from(mContext).inflate(R.layout.item_coin, null);
-        close = view.findViewById(R.id.close);
+        ContextThemeWrapper ctx = new ContextThemeWrapper(mContext, R.style.AppThemes);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.item_coin, null);
+        ImageView close = view.findViewById(R.id.close);
         CB_thumbsUp = view.findViewById(R.id.CB_thumbsUp);
         CB_thumbsUp.setOnCheckedChangeListener(this);
-        //CB_thumbsUp.setChecked((Boolean) SharedPreferencesUtil.getData("isThumbsUp", false));
-        //CB_thumbsUp.setChecked((Boolean) dp.videoDao().isThumbsUp());
+//        MyApplication.getDatabase(getContext()).videoDao().getAll()
+//                .observe((LifecycleOwner) mContext, new androidx.lifecycle.Observer<VideoDaoBean>() {
+//                    @Override
+//                    public void onChanged(VideoDaoBean videoDaoBean) {
+//                        CB_thumbsUp.setChecked(videoDaoBean.isThumbsUp());
+//                        key = CB_thumbsUp.isChecked();
+//                    }
+//                });
         close.setOnClickListener(this);
         mViewPager = view.findViewById(R.id.viewpager);
         /**调节ViewPager的滑动速度**/
@@ -83,9 +81,9 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
          * 需要将整个页面的事件分发给ViewPager，不然的话只有ViewPager中间的view能滑动，其他的都不能滑动，
          * 这是肯定的，因为ViewPager总体布局就是中间那一块大小，其他的子布局都跑到ViewPager外面来了
          */
-        Da_CoicNum = view.findViewById(R.id.Da_CoicNum);
-        Da_CoicNum.setText(String.valueOf(coin));
-        page_container = view.findViewById(R.id.page_container);
+        TextView da_CoicNum = view.findViewById(R.id.Da_CoicNum);
+        da_CoicNum.setText(String.valueOf(coin));
+        RelativeLayout page_container = view.findViewById(R.id.page_container);
         page_container.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -113,9 +111,8 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
     TubatuAdapter.OnItemListener listener = new TubatuAdapter.OnItemListener() {
         @Override
         public void onLikeClick(int position) {
-            //boolean key = (boolean) SharedPreferencesUtil.getData("isThumbsUp", false);
-            boolean key = dp.videoDao().isThumbsUp();
             dto dto;
+            String url = "http://116.196.105.203/videoservice/video/dynamic_like";
             switch (position) {
                 case 0:
                     if (coin < 1) {
@@ -131,6 +128,7 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
                     } else {
                         throwCoin(dto, 1);
                     }
+                    UserDaoOperation.getDatabase(mContext).UpdateCoin(coin - 1);
                     break;
                 case 1:
                     if (coin < 2) {
@@ -146,6 +144,7 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
                     } else {
                         throwCoin(dto, 1);
                     }
+                    UserDaoOperation.getDatabase(mContext).UpdateCoin(coin - 2);
                     break;
             }
             dismiss();
@@ -226,19 +225,28 @@ public class CoinDialog extends Dialog implements View.OnClickListener, Compound
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()) {
-            case R.id.CB_thumbsUp:
-                if (isChecked) {
-                    isThumbsUp = true;
-                    dp.videoDao().updateVideo(new VideoDaoBean(1,true));
-                    //SharedPreferencesUtil.putData("isThumbsUp", true);
-                } else {
-                    isThumbsUp = false;
-                    dp.videoDao().updateVideo(new VideoDaoBean(1,false));
-                    SharedPreferencesUtil.putData("isThumbsUp", false);
-                }
-                break;
-        }
+        key = CB_thumbsUp.isChecked();
+//        if (buttonView.getId() == R.id.CB_thumbsUp) {
+//            if (isChecked) {
+//                MyApplication.getDatabase(getContext()).videoDao().getAll()
+//                        .observe((LifecycleOwner) mContext, new androidx.lifecycle.Observer<VideoDaoBean>() {
+//                            @Override
+//                            public void onChanged(VideoDaoBean videoDaoBean) {
+//                                videoDaoBean.setThumbsUp(true);
+//                                new UserDaoOperation(mContext).UpVideoDetail(videoDaoBean);
+//                            }
+//                        });
+//            } else {
+//                MyApplication.getDatabase(getContext()).videoDao().getAll()
+//                        .observe((LifecycleOwner) mContext, new androidx.lifecycle.Observer<VideoDaoBean>() {
+//                            @Override
+//                            public void onChanged(VideoDaoBean videoDaoBean) {
+//                                videoDaoBean.setThumbsUp(false);
+//                                new UserDaoOperation(mContext).UpVideoDetail(videoDaoBean);
+//                            }
+//                        });
+//            }
+//        }
     }
 
     public interface throwCoinResultListener {

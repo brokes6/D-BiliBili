@@ -6,34 +6,34 @@ public class VideoDetailsBean {
     private String message;
 
     /**
-     *  {
-     *         "code": 200,
-     *             "data": {
-     *         "id": 43,
-     *                 "uid": 1,
-     *                 "playNum": 1,
-     *                 "danmuNum": 0,
-     *                 "commentNum": 0,
-     *                 "praiseNum": 0,
-     *                 "coinNum": 0,
-     *                 "categoryPId": 1,
-     *                 "categoryId": 2,
-     *                 "length": 213,
-     *                 "upImg": null,
-     *                 "upName": null,
-     *                 "categoryPName": "音乐",
-     *                 "categoryName": "原创音乐",
-     *                 "title": "【罗翔】Despacito",
-     *                 "urls": "http://116.196.105.203:9000/dalidali/43c93530-6df9-4938-87ed-ca97d811c516.mp4,http://116.196.105.203:9000/dalidali//43c93530-6df9-4938-87ed-ca97d811c516360.mp4,http://116.196.105.203:9000/dalidali//43c93530-6df9-4938-87ed-ca97d811c516480.mp4,http://116.196.105.203:9000/dalidali//43c93530-6df9-4938-87ed-ca97d811c516720.mp4",
-     *                 "cover": "http://116.196.105.203:9000/dalidali/43c93530-6df9-4938-87ed-ca97d811c516.jpg",
-     *                 "description": "该视频通过爬虫爬取下来，作为测试数据，如果侵权请联系我，我立马删~",
-     *                 "tags": "测试,热门",
-     *                 "resolutionState": null,
-     *                 "updateTime": "2020-08-27T13:28:15.000+0000",
-     *                 "log": null
-     *     },
-     *         "message": "操作成功！"
-     *     }
+     * {
+     * "code": 200,
+     * "data": {
+     * "id": 43,
+     * "uid": 1,
+     * "playNum": 1,
+     * "danmuNum": 0,
+     * "commentNum": 0,
+     * "praiseNum": 0,
+     * "coinNum": 0,
+     * "categoryPId": 1,
+     * "categoryId": 2,
+     * "length": 213,
+     * "upImg": null,
+     * "upName": null,
+     * "categoryPName": "音乐",
+     * "categoryName": "原创音乐",
+     * "title": "【罗翔】Despacito",
+     * "urls": "http://116.196.105.203:9000/dalidali/43c93530-6df9-4938-87ed-ca97d811c516.mp4,http://116.196.105.203:9000/dalidali//43c93530-6df9-4938-87ed-ca97d811c516360.mp4,http://116.196.105.203:9000/dalidali//43c93530-6df9-4938-87ed-ca97d811c516480.mp4,http://116.196.105.203:9000/dalidali//43c93530-6df9-4938-87ed-ca97d811c516720.mp4",
+     * "cover": "http://116.196.105.203:9000/dalidali/43c93530-6df9-4938-87ed-ca97d811c516.jpg",
+     * "description": "该视频通过爬虫爬取下来，作为测试数据，如果侵权请联系我，我立马删~",
+     * "tags": "测试,热门",
+     * "resolutionState": null,
+     * "updateTime": "2020-08-27T13:28:15.000+0000",
+     * "log": null
+     * },
+     * "message": "操作成功！"
+     * }
      */
 
     public int getCode() {
@@ -60,7 +60,7 @@ public class VideoDetailsBean {
         this.message = message;
     }
 
-    public static class BeanData{
+    public static class BeanData {
         private int id;
         private int uid;
         private int playNum;
@@ -85,6 +85,7 @@ public class VideoDetailsBean {
         private String resolutionState;
         private String updateTime;
         private LogData log;
+        private boolean follow;
 
         public String getScreenType() {
             return screenType;
@@ -278,7 +279,15 @@ public class VideoDetailsBean {
             this.updateTime = updateTime;
         }
 
-        public class LogData{
+        public boolean isFollow() {
+            return follow;
+        }
+
+        public void setFollow(boolean follow) {
+            this.follow = follow;
+        }
+
+        public class LogData {
             private int id;
             private int uid;
             private int vid;

@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.base.AppDatabase;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentTabVideoBinding;
 import com.example.dildil.dynamic_page.adapter.TabVideoAdapter;
 import com.example.dildil.dynamic_page.adapter.TypeAdapter;
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.DynamicDetailsBean;
 import com.example.dildil.dynamic_page.bean.TypeBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
@@ -41,7 +43,7 @@ import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import javax.inject.Inject;
 
 public class VideoTabFragment extends BaseFragment implements DynamicContract.View {
-    private final String url = "{\"date\":[{\"mFull\":false,\"title\":\"最近访问\",\"type\":3},{\"mFull\":false,\"topicBean\":[{\"beInterestedImage\":\"https://i0.hdslb.com/bfs/tag/a92c19dbc4335fd553e50e187d759b2fafee9a64.jpg@115w_115h_1c_100q.webp\",\"beInterestedTitle\":\"COSPLAY\"},{\"beInterestedImage\":\"https://i0.hdslb.com/bfs/tag/c47710d730162f1e1c49d23e68aa0bf42b83b0e9.jpg@115w_115h_1c_100q.webp\",\"beInterestedTitle\":\"游戏集锦\"},{\"beInterestedImage\":\"https://i0.hdslb.com/bfs/archive/4afb90b88597f226d22fdaed28a5c4769b372fdc.png@115w_115h_1c_100q.webp\",\"beInterestedTitle\":\"搞笑\"},{\"beInterestedImage\":\"https://i0.hdslb.com/bfs/tag/db30d74add4aafeaf4faa1d2ddca120d1d89c52a.jpg@115w_115h_1c_100q.webp\",\"beInterestedTitle\":\"风暴英雄\"},{\"beInterestedImage\":\"https://i0.hdslb.com/bfs/tag/0f7b6c8c3d38382e677c1d137986a11fed8075ac.jpg@115w_115h_1c_100q.webp\",\"beInterestedTitle\":\"星际争霸2\"}],\"type\":1},{\"mFull\":false,\"title\":\"我的追番：追剧\",\"type\":3},{\"mFull\":false,\"pursueBean\":[{\"PursueImage\":\"https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp\",\"PursueName\":\"刀剑神域 爱丽丝篇 异界战争 -终章-\",\"toUpdate_word\":18},{\"PursueImage\":\"https://i0.hdslb.com/bfs/archive/5894df7f7e8ccea3acbc33f124b0cbc9a24f1f22.jpg@120w_75h.webp\",\"PursueName\":\"某科学的超电磁炮T\",\"toUpdate_word\":19},{\"PursueImage\":\"https://i0.hdslb.com/bfs/archive/89c839e9be005ed074a8efb2afeb1e0fb53c7850.jpg@120w_75h.webp\",\"PursueName\":\"关于我转生变成史莱姆这档事\",\"toUpdate_word\":28},{\"PursueImage\":\"https://i0.hdslb.com/bfs/bangumi/3883837b7458fe93799591a59175d3fb26497b06.png@120w_75h.webp\",\"PursueName\":\"我的脑内选项正在全力妨碍学园恋爱喜剧\",\"toUpdate_word\":10}],\"type\":2}]}";
+    private final String url = "{\"date\":[{\"mFull\":false,\"title\":\"最近访问\",\"type\":3},{\"mFull\":false,\"title\":\"我的追番：追剧\",\"type\":3},{\"mFull\":false,\"pursueBean\":[{\"PursueImage\":\"https://i0.hdslb.com/bfs/archive/0fe50fefc0def68b88a32b2be67f3b63791419a3.jpg@120w_75h.webp\",\"PursueName\":\"刀剑神域 爱丽丝篇 异界战争 -终章-\",\"toUpdate_word\":18},{\"PursueImage\":\"https://i0.hdslb.com/bfs/archive/5894df7f7e8ccea3acbc33f124b0cbc9a24f1f22.jpg@120w_75h.webp\",\"PursueName\":\"某科学的超电磁炮T\",\"toUpdate_word\":19},{\"PursueImage\":\"https://i0.hdslb.com/bfs/archive/89c839e9be005ed074a8efb2afeb1e0fb53c7850.jpg@120w_75h.webp\",\"PursueName\":\"关于我转生变成史莱姆这档事\",\"toUpdate_word\":28},{\"PursueImage\":\"https://i0.hdslb.com/bfs/bangumi/3883837b7458fe93799591a59175d3fb26497b06.png@120w_75h.webp\",\"PursueName\":\"我的脑内选项正在全力妨碍学园恋爱喜剧\",\"toUpdate_word\":10}],\"type\":2}]}";
     private FragmentTabVideoBinding binding;
     private TabVideoAdapter mVAdapter;
     private TypeAdapter typeAdapter;
@@ -50,8 +52,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
     private CountDownTimer countDownTimer;
     private boolean mFull = false;
     private boolean isFirst = true;
-    private TypeBean typeBean;
-    private AppDatabase db;
+    public int uid;
 
     @Inject
     DynamicPresenter mPresenter;
@@ -69,7 +70,6 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
     @Override
     protected void initView() {
-        db = MyApplication.getDatabase(getContext());
         layoutManager = new LinearLayoutManager(getContext());
         mVAdapter = new TabVideoAdapter(getContext());
         binding.VTVideo.setLayoutManager(layoutManager);
@@ -87,6 +87,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
                             @Override
                             public void onChanged(UserBean userBean) {
+                                uid = userBean.getData().getId();
                                 mPresenter.getVideoDynamic(1, 8, userBean.getData().getId());
                             }
                         });
@@ -171,10 +172,6 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
     public void onGetVideoDynamicSuccess(DynamicBean dynamicBean) {
         if (isFirst) {
             isFirst = false;
-            Gson gson = new Gson();
-            typeBean = new TypeBean();
-            typeBean = gson.fromJson(url, TypeBean.class);
-            typeAdapter.loadMore(typeBean.getDate());
             countDownTimer = new CountDownTimer(500, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -182,10 +179,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
                 @Override
                 public void onFinish() {
-                    View ry = binding.TopRecycler.getViewStub().inflate();
-                    RecyclerView recyclerView = ry.findViewById(R.id.Recycler);
-                    recyclerView.setLayoutManager(layoutManager1);
-                    recyclerView.setAdapter(typeAdapter);
+                    mPresenter.getAttentionDetails(uid);
                 }
             };
             countDownTimer.start();
@@ -202,6 +196,7 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
     public void onGetVideoDynamicFail(String e) {
         binding.swipe.finishRefresh(true);
         XToastUtils.error(R.string.networkError + e);
+        Log.e("why", "onGetVideoDynamicFail: ????错误为"+e );
     }
 
 
@@ -226,12 +221,40 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (isFirst) {
-            binding.swipe.autoRefresh();
-        }
+    public void onGetDynamicDetailsSuccess(DynamicDetailsBean dynamicDetailsBean) {
+
     }
+
+    @Override
+    public void onGetDynamicDetailsFail(String e) {
+
+    }
+
+    @Override
+    public void onGetAttentionDetailsSuccess(AttentionDetailsBean attentionDetailsBean) {
+        Gson gson = new Gson();
+        TypeBean typeBean = gson.fromJson(url, TypeBean.class);
+        typeBean.addDate(attentionDetailsBean.getData());
+
+        View ry = binding.TopRecycler.getViewStub().inflate();
+        RecyclerView recyclerView = ry.findViewById(R.id.Recycler);
+        recyclerView.setLayoutManager(layoutManager1);
+        recyclerView.setAdapter(typeAdapter);
+        typeAdapter.loadMore(typeBean.getDate());
+    }
+
+    @Override
+    public void onGetAttentionDetailsFail(String e) {
+
+    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (isFirst) {
+//            binding.swipe.autoRefresh();
+//        }
+//    }
 
     @Override
     public void onDestroy() {

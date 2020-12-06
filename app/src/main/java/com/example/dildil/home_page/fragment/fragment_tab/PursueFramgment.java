@@ -11,16 +11,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
+import com.example.dildil.MyApplication;
 import com.example.dildil.R;
 import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
+import com.example.dildil.component.activity.ActivityModule;
+import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FramgmentPursueBinding;
 import com.example.dildil.home_page.adapter.FanRecommendationAdapter;
 import com.example.dildil.home_page.adapter.MyPursuitAdapter;
 import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.FanRecommendationBean;
+import com.example.dildil.home_page.bean.RecommendVideoBean;
+import com.example.dildil.home_page.contract.RecommendContract;
+import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.adapter.BannerImageAdapter;
@@ -31,33 +35,35 @@ import com.youth.banner.indicator.CircleIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PursueFramgment extends BaseFragment {
-    FramgmentPursueBinding binding;
+import javax.inject.Inject;
+
+public class PursueFramgment extends BaseFragment implements RecommendContract.View {
+    private FramgmentPursueBinding binding;
     private MyPursuitAdapter adapter;
     private FanRecommendationAdapter fanRecommendationAdapter;
     private List<FanRecommendationBean> fanRecommendationBeans = new ArrayList<>();
     private boolean isFirst = true;
     private ResourcesData resourcesData;
 
+    @Inject
+    RecommendPresenter mPresenter;
+
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.framgment_pursue, container, false);
+
+        DaggerActivityComponent.builder()
+                .appComponent(MyApplication.getAppComponent())
+                .activityModule(new ActivityModule(getActivity()))
+                .build()
+                .inject(this);
+        mPresenter.attachView(this);
+
         return binding.getRoot();
     }
 
     @Override
     protected void initView() {
-        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initDates();
-            }
-        });
-    }
-
-    @Override
-    protected void initData() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         adapter = new MyPursuitAdapter(getContext());
@@ -69,6 +75,18 @@ public class PursueFramgment extends BaseFragment {
         binding.PuFanOperaRecommendation.setLayoutManager(layoutManager1);
         binding.PuFanOperaRecommendation.setAdapter(fanRecommendationAdapter);
 
+        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initDates();
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        mPresenter.findBanner();
         binding.swipe.autoRefresh();//自动刷新
     }
 
@@ -80,10 +98,8 @@ public class PursueFramgment extends BaseFragment {
     private void initDates() {
         if (isFirst) {
             resourcesData = new ResourcesData();
-            resourcesData.initBanner();
             resourcesData.initMyPursue();
             resourcesData.initFanRecommendation();
-            initBanner(resourcesData.getBeannerUrl());
             adapter.loadMore(resourcesData.getMyPursuitBean());
             fanRecommendationAdapter.loadMore(resourcesData.getFanRecommendationBeans());
             isFirst = false;
@@ -95,23 +111,20 @@ public class PursueFramgment extends BaseFragment {
         binding.main.setVisibility(View.VISIBLE);
     }
 
-    private void initBanner(List<BannerBean> imageUrls) {
+    private void initBanner(List<BannerBean.BannerList> imageUrls) {
         binding.PuBanner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT);
-        binding.PuBanner.setBannerRound(15);
+        binding.PuBanner.setBannerRound2(15);
         binding.PuBanner.setClipToOutline(true);
-        binding.PuBanner.setAdapter(new BannerImageAdapter<BannerBean>(imageUrls) {
+        binding.PuBanner.setAdapter(new BannerImageAdapter<BannerBean.BannerList>(imageUrls) {
 
             @Override
-            public void onBindView(BannerImageHolder holder, BannerBean data, int position, int size) {
+            public void onBindView(BannerImageHolder holder, BannerBean.BannerList data, int position, int size) {
                 //图片加载自己实现
                 Glide.with(holder.itemView)
-                        .load(data.getImageUrl())
-                        .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
+                        .load(data.getImage())
                         .into(holder.imageView);
             }
-        })
-                .addBannerLifecycleObserver(this)//添加生命周期观察者
-                .setIndicator(new CircleIndicator(getContext()));
+        }).setIndicator(new CircleIndicator(getContext()));
         binding.PuBanner.start();
     }
 
@@ -122,7 +135,63 @@ public class PursueFramgment extends BaseFragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        //开始轮播
+        binding.PuBanner.start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //停止轮播
+        binding.PuBanner.stop();
+    }
+
+
+    @Override
+    public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
+
+    }
+
+    @Override
+    public void onGetRecommendVideoFail(String e) {
+
+    }
+
+    @Override
+    public void onGetRefreshRecommendVideoSuccess(RecommendVideoBean videoBean) {
+
+    }
+
+    @Override
+    public void onGetRefreshRecommendVideoFail(String e) {
+
+    }
+
+    @Override
+    public void onGetVideoLoadSuccess(RecommendVideoBean videoBean) {
+
+    }
+
+    @Override
+    public void onGetVideoLoadFail(String e) {
+
+    }
+
+    @Override
+    public void onGetBannerSuccess(BannerBean bannerBean) {
+        initBanner(bannerBean.getData());
+    }
+
+    @Override
+    public void onGetBannerFail(String e) {
+
+    }
+
+    @Override
     public void onDestroy() {
+        binding.PuBanner.destroy();
         if (fanRecommendationBeans != null) {
             fanRecommendationBeans.clear();
             fanRecommendationBeans = null;

@@ -15,5 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/H_RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/Title" />
+
     </RelativeLayout>
 </layout>

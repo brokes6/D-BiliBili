@@ -13,22 +13,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.customcontrollibs.BaseAdapter;
-import com.example.customcontrollibs.RoundRelativeLayout;
+import com.example.customcontrollibs.viewground.RoundRelativeLayout;
 import com.example.dildil.R;
-import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.dialog.VideoChoiceDialog;
-import com.example.dildil.util.BannerImageAdapter;
-import com.example.dildil.util.DensityUtil;
+import com.example.dildil.util.DateUtils;
 import com.example.dildil.video.view.VideoActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.config.IndicatorConfig;
-import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.indicator.CircleIndicator;
-import com.youth.banner.listener.OnBannerListener;
 
 public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.BeanData, RecyclerView.ViewHolder> {
     private final Context mContext;
@@ -58,42 +53,25 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
         if (getItemViewType(position) == TYPE_HEADER) {
             if (!isLoad) {
                 ((RecHeaderHolder) holder).banner.setIndicatorGravity(IndicatorConfig.Direction.RIGHT);
-                ((RecHeaderHolder) holder).banner.setBannerRound(15);
+                ((RecHeaderHolder) holder).banner.setBannerRound2(15);
                 ((RecHeaderHolder) holder).banner.setClipToOutline(true);
-                ((RecHeaderHolder) holder).banner.start();
-                ((RecHeaderHolder) holder).banner.setAdapter(new BannerImageAdapter<BannerBean>(getData().get(position).getBannerUrl()) {
-
-                    @Override
-                    public void onBindView(BannerImageHolder holder, BannerBean data, int position, int size) {
-                        //图片加载自己实现
-                        Glide.with(holder.itemView)
-                                .load(data.getImageUrl())
-                                .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
-                                //.placeholder(R.drawable.skeleton_circular_grey)
-                                .into(holder.imageView);
-                    }
-                }, true)
-                        .setOnBannerListener(new OnBannerListener() {
-                            @Override
-                            public void OnBannerClick(Object data, int position) {
-//                                Intent intent = new Intent(mContext, BannerActivity.class);
-//                                intent.putExtra("type", position);
-//                                mContext.startActivity(intent);
-                            }
-                        })
+                ((RecHeaderHolder) holder).banner.setScrollTime(400);
+                ((RecHeaderHolder) holder).banner.setAdapter(new ImageTitleNumAdapter(item.getBannerUrl()), true)
                         .addBannerLifecycleObserver((LifecycleOwner) mContext)//添加生命周期观察者
                         .setIndicator(new CircleIndicator(mContext));
+                ((RecHeaderHolder) holder).banner.start();
                 isLoad = true;
             }
         } else {
             Glide.with(mContext)
                     .load(item.getCover())
-                    .placeholder(R.drawable.skeleton_circular_grey)
+                    .apply(((RecViewHolder)holder).requestOptions)
                     .into(((RecViewHolder) holder).cover);
             ((RecViewHolder) holder).play_volume.setText(String.valueOf(item.getPlayNum()));
-            ((RecViewHolder) holder).time.setText(DensityUtil.timeParse(item.getLength()));
+            ((RecViewHolder) holder).time.setText(DateUtils.timeParse(item.getLength()));
             ((RecViewHolder) holder).barrage_volume.setText(String.valueOf(item.getDanmunum()));
             ((RecViewHolder) holder).title.setText(item.getTitle());
+            ((RecViewHolder) holder).classification.setText(item.getCategoryPName() + " · " + item.getCategoryName());
             ((RecViewHolder) holder).Re_video.setTag(position);
             ((RecViewHolder) holder).more.setTag(position);
         }
@@ -128,8 +106,9 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
     }
 
     public class RecViewHolder extends RecyclerView.ViewHolder {
+        private final RequestOptions requestOptions= new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
         private final ImageView more, cover;
-        private final TextView play_volume, barrage_volume, title, time;
+        private final TextView play_volume, barrage_volume, title, time, classification;
         private final RoundRelativeLayout Re_video;
 
         public RecViewHolder(@NonNull View itemView) {
@@ -141,6 +120,7 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
             title = itemView.findViewById(R.id.Re_title);
             more = itemView.findViewById(R.id.Re_more);
             time = itemView.findViewById(R.id.Re_video_time);
+            classification = itemView.findViewById(R.id.Re_classification);
 
             Re_video.setOnClickListener(new View.OnClickListener() {
                 @Override

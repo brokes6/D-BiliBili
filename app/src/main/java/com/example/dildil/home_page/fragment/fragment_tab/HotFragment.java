@@ -18,6 +18,7 @@ import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentHotBinding;
 import com.example.dildil.home_page.adapter.HotRankingAdapter;
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
@@ -55,12 +56,12 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     protected void initView() {
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        adapter = new HotRankingAdapter(getContext());
-//        adapter.setListener(listener);
-//        binding.HotRecy.setLayoutManager(layoutManager);
-//        binding.HotRecy.setHasFixedSize(true);
-//        binding.HotRecy.setAdapter(adapter);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        adapter = new HotRankingAdapter(getContext());
+        adapter.setListener(listener);
+        binding.HotRecy.setLayoutManager(layoutManager);
+        binding.HotRecy.setHasFixedSize(true);
+        binding.HotRecy.setAdapter(adapter);
 
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
@@ -85,12 +86,12 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     protected void initData() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        adapter = new HotRankingAdapter(getContext());
-        adapter.setListener(listener);
-        binding.HotRecy.setLayoutManager(layoutManager);
-        binding.HotRecy.setHasFixedSize(true);
-        binding.HotRecy.setAdapter(adapter);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        adapter = new HotRankingAdapter(getContext());
+//        adapter.setListener(listener);
+//        binding.HotRecy.setLayoutManager(layoutManager);
+//        binding.HotRecy.setHasFixedSize(true);
+//        binding.HotRecy.setAdapter(adapter);
         binding.swipe.setEnableLoadMore(true);
         binding.swipe.setRefreshFooter(new BallPulseFooter(getContext()));
         adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_hot_header_list, binding.HotRecy, false));
@@ -160,6 +161,16 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     public void onGetVideoLoadFail(String e) {
+
+    }
+
+    @Override
+    public void onGetBannerSuccess(BannerBean bannerBean) {
+
+    }
+
+    @Override
+    public void onGetBannerFail(String e) {
 
     }
 

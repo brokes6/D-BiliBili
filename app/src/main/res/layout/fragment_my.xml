@@ -182,7 +182,7 @@
                 app:Top_Text_Size="5sp" />
         </LinearLayout>
 
-        <com.example.customcontrollibs.RoundRelativeLayout
+        <com.example.customcontrollibs.viewground.RoundRelativeLayout
             android:id="@+id/M_video_cover"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
@@ -228,7 +228,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dp_10"
                 android:src="@drawable/arrow_forward_white" />
-        </com.example.customcontrollibs.RoundRelativeLayout>
+        </com.example.customcontrollibs.viewground.RoundRelativeLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -245,12 +245,12 @@
                     android:id="@+id/function_three"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/offline_caching"
@@ -261,7 +261,7 @@
                     <com.example.customcontrollibs.ImageTopView
                         android:id="@+id/MyHistory"
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/playhistory"
@@ -271,7 +271,7 @@
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/mycollection"
@@ -281,7 +281,7 @@
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="@dimen/dp_60"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/laterlook"

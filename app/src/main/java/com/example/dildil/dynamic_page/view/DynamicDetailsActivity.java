@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.dildil.MyApplication;
@@ -26,7 +27,9 @@ import com.example.dildil.base.BaseActivity;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityDynamicDetailsBinding;
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.DynamicDetailsBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.fragment_tab.DetailsCommentFragment;
 import com.example.dildil.dynamic_page.fragment_tab.DetailsForwardFragment;
@@ -43,6 +46,7 @@ import com.gyf.immersionbar.ImmersionBar;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,16 +60,15 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class DynamicDetailsActivity extends BaseActivity implements DynamicContract.View, BGANinePhotoLayout.Delegate {
     private ActivityDynamicDetailsBinding binding;
-    private final String[] TabTitle = {"转发", "评论"};
-    private ArrayList<Fragment> mFragments;
-    private ArrayList<String> imageList = new ArrayList<>();
     private UserBean userBean;
     private DetailsCommentFragment detailsCommentFragment;
     private BGANinePhotoLayout mCurrentClickNpl;
+    private int uid;
 
     @Inject
     DynamicPresenter mPresenter;
     private int id;
+    private ArrayList<Fragment> mFragments;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -98,12 +101,6 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
         binding.DDUserImg.setOnClickListener(this);
         binding.bottomFunction.findViewById(R.id.main_comment).setOnClickListener(this);
 
-        imageList.add("https://i0.hdslb.com/bfs/album/69924f3977b9add651b334fc72b507c1c572b41b.png@518w_1e_1c.png");
-        imageList.add("https://i0.hdslb.com/bfs/album/064d878a6070c948fec192ff7ff12215ccc0d278.png@518w_1e_1c.png");
-
-        binding.tab.setViewPager(binding.viewPager, TabTitle, this, mFragments);
-        binding.tab.setCurrentTab(1);
-
         setMargins(binding.main, 0, getStatusBarHeight(this), 0, 0);
     }
 
@@ -115,20 +112,9 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
                     @Override
                     public void onChanged(UserBean userBeans) {
                         userBean = userBeans;
+                        mPresenter.getDynamicDetails(id, userBeans.getData().getId());
                     }
                 });
-
-        Glide.with(this).load("https://i2.hdslb.com/bfs/face/cb620bbb9071974f37843134875d472b47532a97.jpg@50w_50h_1c.webp").into(binding.DDUserImg);
-        binding.DDUserName.setText("哔哩哔哩英雄联盟赛事");
-        binding.DDDate.setText("2小时前");
-        binding.DDTitle.setText("【SN 1-3 DWG】\n" +
-                "前期DWG补刀压制，率先控到第一条小龙和先锋！15分钟破掉上路一血塔，经济领先2000块！\n" +
-                "17分钟DWG仅仅以一个辅助人头的代价，拿下火龙完成听牌！2分钟后下路团战，DWG完成对SN的伪团灭，Canyon千珏拿下7个人头！\n" +
-                "22分钟DWG轻松收下火龙魂，经济领先5000块！24分钟阿Bin船长抓到机会击杀辛德拉，但无奈对手DWG经济优势过大，反手团灭SN，拿下大龙！\n" +
-                "25分半DWG轻松破掉SN上路高地，1分钟后中路推进，击杀对手三人后团灭SN，DWG顺势一波拿下比赛胜利！\n" +
-                "恭喜DWG夺得2020全球总决赛冠军！");
-        binding.DDMulti.setData(imageList);
-        binding.DDMulti.setDelegate(this);
     }
 
     @Override
@@ -137,7 +123,7 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
             showCommentDialog();
         } else if (v.getId() == R.id.DD_user_img) {
             Intent intent = new Intent(this, PersonalActivity.class);
-            intent.putExtra("uid", userBean.getData().getId());
+            intent.putExtra("uid", uid);
             startActivity(intent);
         }
     }
@@ -265,6 +251,39 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
 
     @Override
     public void onGetDynamicCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onGetDynamicDetailsSuccess(DynamicDetailsBean dynamicDetailsBean) {
+        binding.main.setVisibility(View.VISIBLE);
+        uid = dynamicDetailsBean.getData().getUid();
+        binding.DDTitle.setText(dynamicDetailsBean.getData().getContent());
+        binding.DDUserName.setText(dynamicDetailsBean.getData().getUpName());
+        binding.DDDate.setText(dynamicDetailsBean.getData().getCreateTime().substring(5, 10));
+        Glide.with(this).load(dynamicDetailsBean.getData().getUpImg()).into(binding.DDUserImg);
+        binding.DDMulti.setData(new ArrayList<>(Arrays.asList(dynamicDetailsBean.getData().getImgs().split(","))));
+        binding.DDMulti.setDelegate(this);
+
+        View ry = binding.DYViewPager.getViewStub().inflate();
+        ViewPager viewPager = ry.findViewById(R.id.viewPager);
+        binding.tab.setViewPager(viewPager, new String[]{"转发", "评论" + dynamicDetailsBean.getData().getCommentNum()}, this, mFragments);
+        binding.tab.setCurrentTab(1);
+    }
+
+    @Override
+    public void onGetDynamicDetailsFail(String e) {
+        binding.main.setVisibility(View.GONE);
+        XToastUtils.error(R.string.networkError);
+    }
+
+    @Override
+    public void onGetAttentionDetailsSuccess(AttentionDetailsBean attentionDetailsBean) {
+
+    }
+
+    @Override
+    public void onGetAttentionDetailsFail(String e) {
 
     }
 

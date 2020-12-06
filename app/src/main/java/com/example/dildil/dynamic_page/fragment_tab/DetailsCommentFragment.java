@@ -23,7 +23,9 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentDetailscommentBinding;
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.DynamicDetailsBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.presenter.DynamicPresenter;
 import com.example.dildil.login_page.bean.UserBean;
@@ -52,7 +54,6 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
     private CustomCommentViewHolder holder = null;
     private CustomReplyViewHolder holders = null;
     private BottomSheetDialog dialog;
-    private EmojIconActions emojIcon;
     private int id;
     private UserBean userBean;
 
@@ -248,7 +249,7 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
         commentText.setFocusableInTouchMode(true);
         commentText.requestFocus();
         dialog.setContentView(commentView);
-        emojIcon = new EmojIconActions(getContext(), commentView, commentText, emoji);
+        EmojIconActions emojIcon = new EmojIconActions(getContext(), commentView, commentText, emoji);
         emojIcon.ShowEmojIcon();
         emojIcon.setIconsIds(R.drawable.ic_action_keyboard, R.drawable.smiley);
         /**
@@ -338,6 +339,26 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
     @Override
     public void onGetDynamicCommentFail(String e) {
         Log.e("why", "获取评论出现错误" + e);
+    }
+
+    @Override
+    public void onGetDynamicDetailsSuccess(DynamicDetailsBean dynamicDetailsBean) {
+
+    }
+
+    @Override
+    public void onGetDynamicDetailsFail(String e) {
+
+    }
+
+    @Override
+    public void onGetAttentionDetailsSuccess(AttentionDetailsBean attentionDetailsBean) {
+
+    }
+
+    @Override
+    public void onGetAttentionDetailsFail(String e) {
+
     }
 
 }

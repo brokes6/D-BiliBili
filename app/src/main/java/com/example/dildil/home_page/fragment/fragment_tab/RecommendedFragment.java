@@ -11,19 +11,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.dildil.MyApplication;
 import com.example.dildil.R;
-import com.example.dildil.ResourcesData;
 import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentRecommendedBinding;
 import com.example.dildil.home_page.adapter.RecommendedVideoAdapter;
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
 import com.example.dildil.home_page.view.HomeActivity;
+import com.example.dildil.rewriting_view.EasyNavigationBar;
 import com.example.dildil.util.XToastUtils;
-import com.next.easynavigation.view.EasyNavigationBar;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -72,10 +72,12 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (isFirst) {
-                    mPresenter.getRandomRecommendation();
+                    mPresenter.findBanner();
+//                    mPresenter.getRandomRecommendation();
                     isFirst = false;
                 } else {
-                    mPresenter.getRefreshRecommendVideo();
+                    mPresenter.findBanner();
+//                    mPresenter.getRefreshRecommendVideo();
                 }
             }
         });
@@ -91,14 +93,8 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     @Override
     protected void initData() {
         adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_recommended_header, binding.ReRecy, false));
-
         binding.swipe.autoRefresh();//自动刷新
         setScanScroll(false);
-        ResourcesData mResourcesData = new ResourcesData();
-        mResourcesData.initBanner();
-        mBeanData = new RecommendVideoBean.BeanData();
-        mBeanData.setBanner(true);
-        mBeanData.setBannerUrl(mResourcesData.getBeannerUrl());
     }
 
     @Override
@@ -135,9 +131,7 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
         binding.swipe.setVisibility(View.VISIBLE);
         videoBean.addData(mBeanData);
-        for (RecommendVideoBean.BeanData datum : videoBean.getData()) {
-            adapter.add(datum);
-        }
+        adapter.loadMore(videoBean.getData());
         binding.swipe.finishRefresh(true);
         setScanScroll(true);
     }
@@ -173,6 +167,19 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetVideoLoadFail(String e) {
+
+    }
+
+    @Override
+    public void onGetBannerSuccess(BannerBean bannerBean) {
+        mBeanData = new RecommendVideoBean.BeanData();
+        mBeanData.setBanner(true);
+        mBeanData.setBannerUrl(bannerBean.getData());
+        mPresenter.getRandomRecommendation();
+    }
+
+    @Override
+    public void onGetBannerFail(String e) {
 
     }
 

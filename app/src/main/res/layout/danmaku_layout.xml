@@ -400,7 +400,7 @@
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <com.example.customcontrollibs.RoundRelativeLayout
+            <com.example.customcontrollibs.viewground.RoundRelativeLayout
                 android:id="@+id/play"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_30"
@@ -425,9 +425,9 @@
                     android:text="继续播放"
                     android:textColor="@color/While" />
 
-            </com.example.customcontrollibs.RoundRelativeLayout>
+            </com.example.customcontrollibs.viewground.RoundRelativeLayout>
 
-            <com.example.customcontrollibs.RoundRelativeLayout
+            <com.example.customcontrollibs.viewground.RoundRelativeLayout
                 android:id="@+id/mianLiu"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp_30"
@@ -446,7 +446,7 @@
                     android:text="我要免流"
                     android:textColor="@color/While" />
 
-            </com.example.customcontrollibs.RoundRelativeLayout>
+            </com.example.customcontrollibs.viewground.RoundRelativeLayout>
 
         </LinearLayout>
     </RelativeLayout>

@@ -12,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.customcontrollibs.BaseAdapter;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
-import com.example.dildil.util.DensityUtil;
+import com.example.dildil.util.DateUtils;
 import com.example.dildil.video.view.VideoActivity;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 public class RelevantVideoAdapter extends BaseAdapter<RecommendVideoBean.BeanData, RelevantVideoAdapter.RelevantVideoViewHolder> {
-    private Context mContext;
+    private final Context mContext;
 
     public RelevantVideoAdapter(Context context) {
         mContext = context;
@@ -36,17 +37,18 @@ public class RelevantVideoAdapter extends BaseAdapter<RecommendVideoBean.BeanDat
     protected void bindData(@NonNull RelevantVideoViewHolder holder, int position, RecommendVideoBean.BeanData item) {
         Glide.with(mContext)
                 .load(item.getCover())
-                .placeholder(R.drawable.skeleton_circular_grey)
+                .apply(holder.requestOptions)
                 .into(holder.video_cover);
         holder.title.setText(item.getTitle());
         holder.danmu_num.setText(String.valueOf(item.getDanmunum()));
         holder.up.setText(item.getUpName());
-        holder.time.setText(DensityUtil.timeParse(item.getLength()));
+        holder.time.setText(DateUtils.timeParse(item.getLength()));
         holder.playNum.setText(String.valueOf(item.getPlayNum()));
         holder.hot_video_cover.setTag(position);
     }
 
     public class RelevantVideoViewHolder extends RecyclerView.ViewHolder {
+        private final RequestOptions requestOptions= new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
         private final RoundCornerImageView video_cover;
         private final RelativeLayout hot_video_cover;
         private final TextView time, title, up;

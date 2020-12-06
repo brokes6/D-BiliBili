@@ -20,6 +20,10 @@ public interface PersonalContract {
 
         void onGetFindHasCoinVideoFail(String e);
 
+        void onGetPublishVideoSuccess(RecommendVideoBean recommendVideoBean);
+
+        void onGetPublishVideoFail(String e);
+
     }
 
     interface Model extends BaseModel {
@@ -27,6 +31,8 @@ public interface PersonalContract {
         Observable<UserBean> getFindDetails(int uid);
 
         Observable<RecommendVideoBean> findHasCoinVideo(int pageNum, int pageSize, int uid);
+
+        Observable<RecommendVideoBean> findPublishVideo(int pageNum, int pageSize, int uid);
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -34,6 +40,8 @@ public interface PersonalContract {
         public abstract void getFindDetails(int uid);
 
         public abstract void findHasCoinVideo(int pageNum, int pageSize, int uid);
+
+        public abstract void findPublishVideo(int pageNum, int pageSize, int uid);
 
     }
 }

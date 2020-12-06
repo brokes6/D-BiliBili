@@ -2,7 +2,6 @@ package com.example.dildil.search.view;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,24 +13,28 @@ import com.example.dildil.databinding.ActivitySearchBinding;
 import com.example.dildil.search.adapter.HistoryFlowTagAdapter;
 import com.example.dildil.search.adapter.HotSearchAdapter;
 import com.example.dildil.util.XToastUtils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.xuexiang.xui.widget.flowlayout.FlowTagLayout;
 
 public class SearchActivity extends BaseActivity {
     ActivitySearchBinding binding;
-    private TextView mSearchButton;
     private HistoryFlowTagAdapter adapter;
     private HotSearchAdapter hadapter;
-    private ResourcesData resourcesData;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+
+        ImmersionBar.with(this)
+                .transparentStatusBar()
+                .statusBarDarkFont(false)
+                .statusBarColor(R.color.Pink)
+                .init();
     }
 
     @Override
     protected void initView() {
-        mSearchButton = findViewById(R.id.search_button);
-        mSearchButton.setOnClickListener(this);
+        binding.SeSearch.findViewById(R.id.search_button).setOnClickListener(this);
         GridLayoutManager layoutManager1 = new GridLayoutManager(this, 2);
         hadapter = new HotSearchAdapter(this);
         binding.SeHotSearch.setLayoutManager(layoutManager1);
@@ -61,15 +64,10 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void initDatas() {
-        resourcesData = new ResourcesData();
+        ResourcesData resourcesData = new ResourcesData();
         resourcesData.initHotSearch();
         adapter.addTags(resourcesData.getSearchTag());
         hadapter.loadMore(resourcesData.getHotSearchBeans());
     }
 
-    @Override
-    protected void onDestroy() {
-        resourcesData = null;
-        super.onDestroy();
-    }
 }

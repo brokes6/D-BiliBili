@@ -1,6 +1,8 @@
 package com.example.dildil.dynamic_page.presenter;
 
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.DynamicDetailsBean;
 import com.example.dildil.dynamic_page.contract.DynamicContract;
 import com.example.dildil.dynamic_page.model.DynamicModel;
 import com.example.dildil.video.bean.CommentBean;
@@ -131,6 +133,61 @@ public class DynamicPresenter extends DynamicContract.Presenter {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mView.onGetDynamicCommentFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getDynamicDetails(int did, int uid) {
+        mModel.getDynamicDetails(did, uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DynamicDetailsBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull DynamicDetailsBean dynamicDetailsBean) {
+                        mView.onGetDynamicDetailsSuccess(dynamicDetailsBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetDynamicDetailsFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getAttentionDetails(int uid) {
+        mModel.getAttentionDetails(uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<AttentionDetailsBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull AttentionDetailsBean attentionDetailsBean) {
+                        mView.onGetAttentionDetailsSuccess(attentionDetailsBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetAttentionDetailsFail(e.getMessage());
                     }
 
                     @Override

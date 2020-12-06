@@ -41,5 +41,10 @@
       <option name="name" value="maven3" />
       <option name="url" value="https://s3.amazonaws.com/repo.commonsware.com" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven4" />
+      <option name="name" value="maven4" />
+      <option name="url" value="https://storage.googleapis.com/r8-releases/raw" />
+    </remote-repository>
   </component>
 </project>

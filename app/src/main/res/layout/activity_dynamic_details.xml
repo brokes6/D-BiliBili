@@ -9,7 +9,8 @@
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/While">
 
         <include
             android:id="@+id/DD_titles"
@@ -37,8 +38,8 @@
 
                     <com.android.liuzhuang.rcimageview.CircleImageView
                         android:id="@+id/DD_user_img"
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40" />
+                        android:layout_width="@dimen/dp_35"
+                        android:layout_height="@dimen/dp_35" />
 
                     <TextView
                         android:id="@+id/DD_user_name"
@@ -100,11 +101,11 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
+            <ViewStub
+                android:id="@+id/DY_ViewPager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/While"
+                android:layout_height="wrap_content"
+                android:layout="@layout/item_dynamic_viewpager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -115,6 +116,5 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true" />
-
     </RelativeLayout>
 </layout>

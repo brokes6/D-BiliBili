@@ -1,5 +1,7 @@
 package com.example.dildil.video.presenter;
 
+import com.example.dildil.dynamic_page.bean.AttentionBean;
+import com.example.dildil.dynamic_page.bean.params;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -120,8 +122,8 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
     }
 
     @Override
-    public void CollectionVideo(dto dto) {
-        mModel.CollectionVideo(dto).subscribeOn(Schedulers.io())
+    public void CollectionVideo(dto dto, int uid) {
+        mModel.CollectionVideo(dto, uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CollectionBean>() {
                     @Override
@@ -256,7 +258,7 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
 
     @Override
     public void AddComment(dto dto, int uid) {
-        mModel.AddComment(dto,uid).subscribeOn(Schedulers.io())
+        mModel.AddComment(dto, uid).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<CommentBean>() {
                     @Override
@@ -272,6 +274,33 @@ public class VideoDetailsPresenter extends VideoDetailsContract.Presenter {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mView.onGetAddCommentFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void Attention(params params, int uid) {
+        mModel.Attention(params, uid).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<AttentionBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull AttentionBean attentionBean) {
+                        mView.onAttentionSuccess(attentionBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onAttentionFail(e.getMessage());
                     }
 
                     @Override

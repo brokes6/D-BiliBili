@@ -42,13 +42,16 @@ public class RecommendVideoBean {
         private int praiseNum;
         private int danmunum;
         private int length;
+        private int commentNum;
         private String upImg;
         private String upName;
         private String title;
         private String cover;
         private String previewUrl;
+        private String categoryPName;
+        private String categoryName;
         private boolean isBanner = false;
-        private List<BannerBean> bannerUrl;
+        private List<BannerBean.BannerList> bannerUrl;
 
         public int getId() {
             return id;
@@ -146,12 +149,36 @@ public class RecommendVideoBean {
             isBanner = banner;
         }
 
-        public List<BannerBean> getBannerUrl() {
+        public List<BannerBean.BannerList> getBannerUrl() {
             return bannerUrl;
         }
 
-        public void setBannerUrl(List<BannerBean> bannerUrl) {
+        public void setBannerUrl(List<BannerBean.BannerList> bannerUrl) {
             this.bannerUrl = bannerUrl;
+        }
+
+        public int getCommentNum() {
+            return commentNum;
+        }
+
+        public void setCommentNum(int commentNum) {
+            this.commentNum = commentNum;
+        }
+
+        public String getCategoryPName() {
+            return categoryPName;
+        }
+
+        public void setCategoryPName(String categoryPName) {
+            this.categoryPName = categoryPName;
+        }
+
+        public String getCategoryName() {
+            return categoryName;
+        }
+
+        public void setCategoryName(String categoryName) {
+            this.categoryName = categoryName;
         }
 
         @Override
@@ -163,11 +190,16 @@ public class RecommendVideoBean {
                     ", praiseNum=" + praiseNum +
                     ", danmunum=" + danmunum +
                     ", length=" + length +
+                    ", commentNum=" + commentNum +
                     ", upImg='" + upImg + '\'' +
                     ", upName='" + upName + '\'' +
                     ", title='" + title + '\'' +
                     ", cover='" + cover + '\'' +
                     ", previewUrl='" + previewUrl + '\'' +
+                    ", categoryPName='" + categoryPName + '\'' +
+                    ", categoryName='" + categoryName + '\'' +
+                    ", isBanner=" + isBanner +
+                    ", bannerUrl=" + bannerUrl +
                     '}';
         }
     }

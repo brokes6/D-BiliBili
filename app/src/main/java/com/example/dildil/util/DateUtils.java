@@ -73,6 +73,22 @@ public class DateUtils {
         return times;
     }
 
+    public static String timeParse(long duration) {
+        String time = "";
+        long minute = duration / 60;
+        long seconds = duration % 60;
+        long second = Math.round((float) seconds);
+        if (minute < 10) {
+            time += "0";
+        }
+        time += minute + ":";
+        if (second < 10) {
+            time += "0";
+        }
+        time += second;
+        return time;
+    }
+
     public static String getTimestamp(String time, String type) {
         SimpleDateFormat sdr = new SimpleDateFormat(type, Locale.CHINA);
         Date date;
@@ -489,6 +505,11 @@ public class DateUtils {
         }
         return week;
     }
+
+    public static long getCurrentTimestamp(){
+        return System.currentTimeMillis();
+    }
+
 }
 
 

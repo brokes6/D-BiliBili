@@ -23,9 +23,9 @@ import com.example.dildil.home_page.dialog.AppUpdateDialog;
 import com.example.dildil.home_page.fragment.HomePageFragment;
 import com.example.dildil.home_page.presenter.HomePresenter;
 import com.example.dildil.my_page.view.MyFragment;
+import com.example.dildil.rewriting_view.EasyNavigationBar;
 import com.example.dildil.util.AppDownloadManager;
 import com.gyf.immersionbar.ImmersionBar;
-import com.next.easynavigation.view.EasyNavigationBar;
 import com.xuexiang.xui.utils.SnackbarUtils;
 
 import java.util.ArrayList;
@@ -190,7 +190,8 @@ public class HomeActivity extends BaseActivity implements HomeContract.View {
             SnackbarUtils.Short(binding.main, "再按一次退出").info().show();
             firstTime = secondTime;
         } else {
-            System.exit(0);// 完全退出应用
+            this.finish();
+            //System.exit(0);// 完全退出应用
         }
     }
 

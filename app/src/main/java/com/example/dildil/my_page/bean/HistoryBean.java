@@ -1,28 +1,36 @@
 package com.example.dildil.my_page.bean;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class HistoryBean {
-    @PrimaryKey(autoGenerate = true)
-    private int index;
+
+    public HistoryBean() {
+
+    }
+
+    @Ignore
+    public HistoryBean(int vid, String VImg, String VTitle, long currentTime, int playTime, int totalDuration) {
+        this.vid = vid;
+        this.VImg = VImg;
+        this.VTitle = VTitle;
+        this.currentTime = currentTime;
+        this.playTime = playTime;
+        this.totalDuration = totalDuration;
+    }
+
+    @PrimaryKey()
     private int vid;
-    private String vImg;
-    private String vTitle;
-    private String vTime;
-    private String vUpName;
+    private String VImg;
+    private String VTitle;
+    private String VTime;
+    private String VUpName;
     private int totalDuration;
-    private int currentTime;
-    private int vProgress;
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
+    private int playTime;
+    private long currentTime;
+    private int VProgress;
 
     public int getVid() {
         return vid;
@@ -32,36 +40,36 @@ public class HistoryBean {
         this.vid = vid;
     }
 
-    public String getvImg() {
-        return vImg;
+    public String getVImg() {
+        return VImg;
     }
 
-    public void setvImg(String vImg) {
-        this.vImg = vImg;
+    public void setVImg(String VImg) {
+        this.VImg = VImg;
     }
 
-    public String getvTitle() {
-        return vTitle;
+    public String getVTitle() {
+        return VTitle;
     }
 
-    public void setvTitle(String vTitle) {
-        this.vTitle = vTitle;
+    public void setVTitle(String VTitle) {
+        this.VTitle = VTitle;
     }
 
-    public String getvTime() {
-        return vTime;
+    public String getVTime() {
+        return VTime;
     }
 
-    public void setvTime(String vTime) {
-        this.vTime = vTime;
+    public void setVTime(String VTime) {
+        this.VTime = VTime;
     }
 
-    public String getvUpName() {
-        return vUpName;
+    public String getVUpName() {
+        return VUpName;
     }
 
-    public void setvUpName(String vUpName) {
-        this.vUpName = vUpName;
+    public void setVUpName(String VUpName) {
+        this.VUpName = VUpName;
     }
 
     public int getTotalDuration() {
@@ -72,19 +80,27 @@ public class HistoryBean {
         this.totalDuration = totalDuration;
     }
 
-    public int getCurrentTime() {
+    public long getCurrentTime() {
         return currentTime;
     }
 
-    public void setCurrentTime(int currentTime) {
+    public void setCurrentTime(long currentTime) {
         this.currentTime = currentTime;
     }
 
-    public int getvProgress() {
-        return vProgress;
+    public int getVProgress() {
+        return VProgress;
     }
 
-    public void setvProgress(int vProgress) {
-        this.vProgress = vProgress;
+    public void setVProgress(int VProgress) {
+        this.VProgress = VProgress;
+    }
+
+    public int getPlayTime() {
+        return playTime;
+    }
+
+    public void setPlayTime(int playTime) {
+        this.playTime = playTime;
     }
 }

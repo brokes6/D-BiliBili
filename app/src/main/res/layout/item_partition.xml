@@ -8,15 +8,16 @@
 
     <ImageView
         android:id="@+id/Partition_image"
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24" />
+        android:layout_width="@dimen/dp_28"
+        android:layout_height="@dimen/dp_28" />
 
     <TextView
         android:id="@+id/Partition_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5"
-        android:textSize="12sp"
-        android:textColor="@color/Text_gray" />
+        android:lines="1"
+        android:textColor="@color/Text_gray"
+        android:textSize="14sp" />
 
 </LinearLayout>

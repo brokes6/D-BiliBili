@@ -1,7 +1,12 @@
 package com.example.dildil.api;
 
 import com.example.dildil.channel_page.bean.PartitionBean;
+import com.example.dildil.dynamic_page.bean.AttentionBean;
+import com.example.dildil.dynamic_page.bean.AttentionDetailsBean;
 import com.example.dildil.dynamic_page.bean.DynamicBean;
+import com.example.dildil.dynamic_page.bean.DynamicDetailsBean;
+import com.example.dildil.dynamic_page.bean.params;
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.DynamicNumBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.bean.VersionBean;
@@ -56,8 +61,8 @@ public interface ApiService {
     @POST("userservice/user")
     Observable<RegisterBean> Register(@Body inputDto inputDto);
 
-    @POST("videoservice/video/dynamic_like")
-    Observable<CollectionBean> CollectionVideo(@Body dto dto);
+    @POST("videoservice/video/collection")
+    Observable<CollectionBean> CollectionVideo(@Body dto dto, @Query("uid") int uid);
 
     @GET("commentservice/comment/list/praise/VIDEO/{id}/{pageNum}/{pageSize}")
     Observable<CommentDetailBean> getVideoComment(@Path("id") int vid, @Path("pageNum") int num, @Path("pageSize") int size, @Query("uid") int uid);
@@ -101,6 +106,24 @@ public interface ApiService {
     @GET("commentservice/comment/list/praise/DYNAMIC/{id}/{pageNum}/{pageSize}")
     Observable<CommentDetailBean> getDynamicDetailComment(@Path("id") int id, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
 
-    @GET("userservice/user/info/coin/{pageNum}/{pageSize}")
-    Observable<RecommendVideoBean> findHasCoinVideo(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Query("uid") int uid);
+    @GET("userservice/user/info/coin/{uid}/{pageNum}/{pageSize}")
+    Observable<RecommendVideoBean> findHasCoinVideo(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Path("uid") int uid);
+
+    @GET("userservice/user/info/publish/{uid}/{pageNum}/{pageSize}")
+    Observable<RecommendVideoBean> findPublishVideo(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Path("uid") int uid);
+
+    @GET("userservice/user/info/collect/{uid}/{pageNum}/{pageSize}")
+    Observable<RecommendVideoBean> findCollectVideo(@Path("pageNum") int pageNum, @Path("pageSize") int pageSize, @Path("uid") int uid);
+
+    @GET("videoservice/banner/list")
+    Observable<BannerBean> findBanner();
+
+    @GET("userservice/dynamic/{did}")
+    Observable<DynamicDetailsBean> findDynamicDetails(@Path("did") int did, @Query("uid") int uid);
+
+    @GET("userservice/follow/user")
+    Observable<AttentionDetailsBean> getAttentionDetails(@Query("uid") int uid);
+
+    @POST("userservice/dynamic_follow")
+    Observable<AttentionBean> Attention(@Body params params, @Query("uid") int uid);
 }

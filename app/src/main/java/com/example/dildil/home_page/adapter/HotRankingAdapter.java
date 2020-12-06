@@ -16,7 +16,7 @@ import com.example.customcontrollibs.BaseAdapter;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.view.RankingLstActivity;
-import com.example.dildil.util.DensityUtil;
+import com.example.dildil.util.DateUtils;
 
 public class HotRankingAdapter extends BaseAdapter<RecommendVideoBean.BeanData, RecyclerView.ViewHolder> {
     private final Context mContext;
@@ -53,7 +53,7 @@ public class HotRankingAdapter extends BaseAdapter<RecommendVideoBean.BeanData, 
                     .into(((HotViewHolder) holder).video_cover);
             ((HotViewHolder) holder).title.setText(item.getTitle());
             ((HotViewHolder) holder).up.setText(item.getUpName());
-            ((HotViewHolder) holder).time.setText(DensityUtil.timeParse(item.getLength()));
+            ((HotViewHolder) holder).time.setText(DateUtils.timeParse(item.getLength()));
             ((HotViewHolder) holder).playNum.setText(String.valueOf(item.getPlayNum()));
             ((HotViewHolder) holder).hot_video_cover.setTag(position);
         }

@@ -34,7 +34,6 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     private ActivityPersonalBinding binding;
     private final String[] TabTitle = {"主页", "动态", "收藏", "追番"};
     private ArrayList<Fragment> mFragments;
-    private UserBean userBean;
     private final int While = 0xFFFFFF, grey = 0x999999;
     private ImageView backBackGround, backImage, searchBackGround, searchImage, moreBackGround, moreImage;
 
@@ -59,17 +58,9 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
     @Override
     protected void initView() {
-        mFragments = new ArrayList<>();
-        mFragments.add(new MyHomePageFragment());
-        mFragments.add(new MyDynamicFragment());
-        mFragments.add(new MyCollectionFragment());
-        mFragments.add(new MyTrackingFragment());
-        binding.tab.setViewPager(binding.viewPager, TabTitle, this, mFragments);
-        binding.tab.setCurrentTab(0);
-        binding.PBack.setOnClickListener(this);
-
         Intent intent = getIntent();
         uid = intent.getIntExtra("uid", 0);
+        binding.PBack.setOnClickListener(this);
 
         backBackGround = binding.PBack.findViewById(R.id.B_background);
         backImage = binding.PBack.findViewById(R.id.B_back);
@@ -113,8 +104,15 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
 
     @Override
     protected void initData() {
-        mPresenter.getFindDetails(uid);
+        mFragments = new ArrayList<>();
+        mFragments.add(new MyHomePageFragment(uid));
+        mFragments.add(new MyDynamicFragment());
+        mFragments.add(new MyCollectionFragment());
+        mFragments.add(new MyTrackingFragment());
+        binding.tab.setViewPager(binding.viewPager, TabTitle, this, mFragments);
+        binding.tab.setCurrentTab(0);
 
+        mPresenter.getFindDetails(uid);
     }
 
     @Override
@@ -129,6 +127,7 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
         Glide.with(this).load(userBean.getData().getImg()).into(binding.PUserImg);
         binding.PUserName.setText(userBean.getData().getUsername());
         binding.PTopUserNmae.setText(userBean.getData().getUsername());
+        binding.PUserIntroduce.setText(userBean.getData().getDescription());
         binding.PDynamic.setTop_Text(0 + "");
         binding.PFollow.setTop_Text(userBean.getData().getFollowNum() + "");
         binding.PFans.setTop_Text(userBean.getData().getFansNum() + "");
@@ -150,9 +149,19 @@ public class PersonalActivity extends BaseActivity implements PersonalContract.V
     }
 
     @Override
+    public void onGetPublishVideoSuccess(RecommendVideoBean recommendVideoBean) {
+
+    }
+
+    @Override
+    public void onGetPublishVideoFail(String e) {
+
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-        if (isFinishing()){
+        if (isFinishing()) {
             mPresenter.detachView();
             mFragments.clear();
             mFragments = null;

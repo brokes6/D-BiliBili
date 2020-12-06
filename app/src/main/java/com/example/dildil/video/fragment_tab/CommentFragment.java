@@ -24,6 +24,7 @@ import com.example.dildil.base.BaseFragment;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.FragmentCommentBinding;
+import com.example.dildil.dynamic_page.bean.AttentionBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
 import com.example.dildil.my_page.view.PersonalActivity;
@@ -474,6 +475,16 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
 
     @Override
     public void onGetAddCommentFail(String e) {
+
+    }
+
+    @Override
+    public void onAttentionSuccess(AttentionBean attentionBean) {
+
+    }
+
+    @Override
+    public void onAttentionFail(String e) {
 
     }
 

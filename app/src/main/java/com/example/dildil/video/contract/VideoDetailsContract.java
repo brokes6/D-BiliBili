@@ -3,6 +3,8 @@ package com.example.dildil.video.contract;
 import com.example.dildil.abstractclass.BaseModel;
 import com.example.dildil.abstractclass.BaseView;
 import com.example.dildil.base.BasePresenter;
+import com.example.dildil.dynamic_page.bean.AttentionBean;
+import com.example.dildil.dynamic_page.bean.params;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -57,6 +59,10 @@ public interface VideoDetailsContract {
 
         void onGetAddCommentFail(String e);
 
+        void onAttentionSuccess(AttentionBean attentionBean);
+
+        void onAttentionFail(String e);
+
     }
 
     interface Model extends BaseModel {
@@ -67,7 +73,7 @@ public interface VideoDetailsContract {
 
         Observable<ThumbsUpBean> getThumbsUp(String url, dto dto);
 
-        Observable<CollectionBean> CollectionVideo(dto dto);
+        Observable<CollectionBean> CollectionVideo(dto dto, int uid);
 
         Observable<CommentDetailBean> getVideoComment(int id, int num, int size, int uid);
 
@@ -79,6 +85,8 @@ public interface VideoDetailsContract {
 
         Observable<CommentBean> AddComment(dto dto, int uid);
 
+        Observable<AttentionBean> Attention(params params, int uid);
+
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -89,7 +97,7 @@ public interface VideoDetailsContract {
 
         public abstract void getThumbsUp(String url, dto dto);
 
-        public abstract void CollectionVideo(dto dto);
+        public abstract void CollectionVideo(dto dto, int uid);
 
         public abstract void getVideoComment(int id, int num, int size, int uid);
 
@@ -100,5 +108,7 @@ public interface VideoDetailsContract {
         public abstract void getRelatedVideos();
 
         public abstract void AddComment(dto dto, int uid);
+
+        public abstract void Attention(params params, int uid);
     }
 }

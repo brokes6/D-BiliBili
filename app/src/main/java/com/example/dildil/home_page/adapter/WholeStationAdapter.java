@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.customcontrollibs.BaseAdapter;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.WholeStationBean;
+import com.example.dildil.my_page.view.PersonalActivity;
 import com.example.dildil.video.view.VideoActivity;
 
 public class WholeStationAdapter extends BaseAdapter<WholeStationBean.Detail, WholeStationAdapter.WholeViewHolder> {
@@ -37,10 +38,11 @@ public class WholeStationAdapter extends BaseAdapter<WholeStationBean.Detail, Wh
         holder.title.setText(item.getTitle());
         holder.upName.setText(item.getUpName());
         Glide.with(mContext).load(item.getUpImg()).into(holder.upImage);
-        holder.danmu.setText(String.valueOf(item.getDanmuNum())+"弹幕");
-        holder.score.setText("综合评分:"+String.valueOf(item.getScore()));
-        holder.follow.setText("粉丝数:"+String.valueOf(item.getFansNum()));
+        holder.danmu.setText(String.valueOf(item.getDanmuNum()) + "弹幕");
+        holder.score.setText("综合评分:" + String.valueOf(item.getScore()));
+        holder.follow.setText("粉丝数:" + String.valueOf(item.getFansNum()));
         holder.mainOnClick.setTag(position);
+        holder.upImage.setTag(position);
     }
 
     public class WholeViewHolder extends RecyclerView.ViewHolder {
@@ -69,6 +71,14 @@ public class WholeStationAdapter extends BaseAdapter<WholeStationBean.Detail, Wh
                     intent.putExtra("uid", getData().get(positions).getUid());
                     mContext.startActivity(intent);
 
+                }
+            });
+            upImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PersonalActivity.class);
+                    intent.putExtra("uid", getData().get((Integer) v.getTag()).getUid());
+                    mContext.startActivity(intent);
                 }
             });
         }

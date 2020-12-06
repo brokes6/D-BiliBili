@@ -32,7 +32,7 @@ public class InputUtil {
         if (TextUtils.isEmpty(password)) {
             XToastUtils.warning(R.string.please_input_pwd);
             return false;
-        } else if (password.length() >= 30) {
+        } else if (password.length() >= 20) {
             XToastUtils.warning(R.string.pwd_must_less_than_30);
             return false;
         }

@@ -29,9 +29,13 @@ import com.example.dildil.base.UserDaoOperation;
 import com.example.dildil.component.activity.ActivityModule;
 import com.example.dildil.component.activity.DaggerActivityComponent;
 import com.example.dildil.databinding.ActivityVideoBinding;
+import com.example.dildil.dynamic_page.bean.AttentionBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.login_page.bean.UserBean;
+import com.example.dildil.my_page.bean.HistoryBean;
+import com.example.dildil.util.DateUtils;
 import com.example.dildil.util.DensityUtil;
+import com.example.dildil.util.NetUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -62,6 +66,7 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -74,22 +79,22 @@ import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAU
 public class VideoActivity extends BaseActivity implements VideoDetailsContract.View, Selector.OnSelectorStateListener {
     private static final String TAG = "VideoActivity";
     private ActivityVideoBinding binding;
-    private final String[] TabTitle = {"简介", "评论"};
+    private String[] TabTitle = {};
     private ArrayList<Fragment> mFragments;
     private OrientationUtils orientationUtils;
-    boolean isPlay;
-    boolean isDestory;
     private int mWhenPlaying;
     private CollapsingToolbarLayoutState state;
     private int id;
     private int uid;
     private int timing = 0;
-    private List<SwitchVideoBean> urls = new ArrayList<>();
+    private final List<SwitchVideoBean> urls = new ArrayList<>();
     private final SelectorGroup selectorGroup = new SelectorGroup();
     private int textSize;
     private boolean isFunction = true;
     private final String[] definition = {"360p", "480p", "720p", "1080p"};
     private Handler handler;
+    private String imageUrl, Title;
+    private int playtime;
 
     private enum CollapsingToolbarLayoutState {
         EXPANDED,
@@ -119,17 +124,10 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     private void ifGO() {
         Intent intent = getIntent();
-        int playtime = intent.getIntExtra("playtime", 0);
+        playtime = intent.getIntExtra("playtime", 0);
         id = intent.getIntExtra("id", 0);
-        UserDaoOperation operation = new UserDaoOperation(this);
+        UserDaoOperation operation = UserDaoOperation.getDatabase(this);
         operation.UpVideoDetail(new VideoDaoBean(1, id));
-        if (playtime != 0) {
-            mWhenPlaying = playtime;
-            //binding.detailPlayer.onVideoResume();
-
-            XToastUtils.info(R.string.saveProgress);
-        }
-
     }
 
     @Override
@@ -181,7 +179,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 super.onPrepared(url, objects);
                 //开始播放了才能旋转和全屏
                 orientationUtils.setEnable(true);
-                isPlay = true;
                 DanmakuVideoPlayer currentPlayer = (DanmakuVideoPlayer) binding.detailPlayer.getCurrentPlayer();
                 currentPlayer.setDanmaKuStream();
             }
@@ -424,16 +421,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         binding.detailPlayer.getBackButton().setVisibility(View.GONE);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        int play = binding.detailPlayer.getCurrentState();
-        if (play == CURRENT_STATE_PAUSE) {
-            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
-            binding.detailPlayer.startPlayLogic();
-        }
-    }
-
     public void getPlayPosition() {
         mWhenPlaying = binding.detailPlayer.getCurrentPositionWhenPlaying();
         Log.e(TAG, "当前播放位置为:" + mWhenPlaying);
@@ -464,7 +451,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
-        JudgeVideoType(videoDetailsBean.getScreenType());
+        imageUrl = videoDetailsBean.getCover();
+        Title = videoDetailsBean.getTitle();
+        TabTitle = new String[]{"简介", "评论" + videoDetailsBean.getCommentNum()};
         String[] urlList = videoDetailsBean.getUrls().split(",");
         for (int i = 0; i < urlList.length; i++) {
             SwitchVideoBean switchVideoBean = new SwitchVideoBean(definition[i], urlList[i]);
@@ -472,27 +461,33 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         }
         binding.detailPlayer.setUPData(videoDetailsBean.getUpImg(), videoDetailsBean.getUpName());
         binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
+        JudgeVideoType(videoDetailsBean.getScreenType());
     }
 
     private void JudgeVideoType(String valueType) {
         if (valueType.equals("PORTRAIT")) {
             binding.detailPlayer.setAutoFullWithSize(true);
             binding.detailPlayer.setPadding(60, 0, 60, 0);
-//            GSYVideoType.setScreenScaleRatio(4f / 5f);
-//            GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_CUSTOM);
             binding.detailPlayer.setVideoType(2);
-
             binding.videoDanmu.getLayoutParams().height = DensityUtil.getScreenRelatedInformation(this) * 3 / 4;
-//            ViewWrapper wrapper = new ViewWrapper(binding.videoDanmu);
-//            ObjectAnimator animator = ObjectAnimator.ofInt(wrapper, "height", DensityUtil.getScreenRelatedInformation(this) * 3 / 4);
-//            animator.setDuration(500);
-//            animator.start();
         } else {
             binding.detailPlayer.setVideoType(1);
         }
-        View vg = binding.VViewPager.getViewStub().inflate();
+        View vg = Objects.requireNonNull(binding.VViewPager.getViewStub()).inflate();
         ViewPager viewGroup = vg.findViewById(R.id.viewPager);
         binding.VTab.setViewPager(viewGroup, TabTitle, this, mFragments);
+
+        if (playtime != 0) {
+            mWhenPlaying = playtime;
+            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
+            binding.detailPlayer.startPlayLogic();
+            banAppBarScroll(false);
+            XToastUtils.info(R.string.saveProgress);
+        } else if (NetUtil.isWifi()) {
+            binding.detailPlayer.startPlayLogic();
+            banAppBarScroll(false);
+        }
+
     }
 
     @Override
@@ -593,6 +588,26 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     }
 
     @Override
+    public void onAttentionSuccess(AttentionBean attentionBean) {
+
+    }
+
+    @Override
+    public void onAttentionFail(String e) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int play = binding.detailPlayer.getCurrentState();
+        if (play == CURRENT_STATE_PAUSE) {
+            binding.detailPlayer.setSeekOnStart(mWhenPlaying);
+            binding.detailPlayer.startPlayLogic();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (GSYVideoManager.backFromWindowFull(this)) {
             return;
@@ -603,18 +618,25 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     protected void onStop() {
         super.onStop();
+        UserDaoOperation.getDatabase(this).insertHistory(new HistoryBean(id,
+                imageUrl, Title,
+                DateUtils.getCurrentTimestamp(),
+                binding.detailPlayer.getCurrentPositionWhenPlaying(),
+                binding.detailPlayer.getDuration()));
         if (isFinishing()) {
             handler.removeCallbacks(runnable);
+            GSYVideoManager.releaseAllVideos();
             mPresenter.detachView();
             mFragments.clear();
             urls.clear();
-            if (isPlay) {
-                getCurPlay().release();
-            }
+//            if (isPlay) {
+//                getCurPlay().release();
+//            }
             if (orientationUtils != null)
                 orientationUtils.releaseListener();
-            isDestory = true;
-            GSYVideoManager.releaseAllVideos();
+        } else {
+            GSYVideoManager.onPause();
+            getPlayPosition();
         }
     }
 }

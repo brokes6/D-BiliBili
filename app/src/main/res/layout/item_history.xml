@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rc="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/H_video_cover"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_10"
+    android:paddingEnd="@dimen/dp_10">
+
+    <com.android.liuzhuang.rcimageview.RoundCornerImageView
+        android:id="@+id/H_video_img"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_70"
+        android:scaleType="centerCrop"
+        rc:rciv_radius="@dimen/dp_5" />
+
+    <TextView
+        android:id="@+id/H_video_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/H_video_img"
+        android:layout_alignBottom="@+id/H_video_img"
+        android:layout_margin="@dimen/dp_5"
+        android:background="@drawable/file_background_black_transparent"
+        android:paddingLeft="@dimen/dp_2"
+        android:paddingTop="@dimen/dp_1"
+        android:paddingRight="@dimen/dp_2"
+        android:paddingBottom="@dimen/dp_1"
+        android:textColor="#fff"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/H_video_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toEndOf="@+id/H_video_img"
+        android:maxLines="2"
+        android:textColor="#000000"
+        android:textSize="13sp" />
+
+
+    <TextView
+        android:id="@+id/HTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/H_video_img"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_toEndOf="@+id/H_video_img"
+        android:text="今天"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/HTimeDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/H_video_img"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_2"
+        android:layout_toEndOf="@+id/HTime"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_below="@+id/H_video_img"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="#e7e7e7" />
+
+</RelativeLayout>

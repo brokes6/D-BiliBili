@@ -1,10 +1,9 @@
 package com.example.dildil.dynamic_page.bean;
 
-import com.example.dildil.channel_page.bean.BeInterestedBean;
-
 import java.util.List;
 
 public class TypeBean {
+
     private List<TypeData> date;
 
     public List<TypeData> getDate() {
@@ -15,21 +14,30 @@ public class TypeBean {
         this.date = date;
     }
 
+    public void addDate(List<AttentionDetailsBean.Data> topicBean) {
+        this.date.add(1, new TypeData(topicBean));
+    }
+
     public static class TypeData {
+
         private int type;
         private String title;
         private boolean mFull;
         private List<PursueBean> pursueBean;
-        private List<BeInterestedBean> topicBean;
+        private List<AttentionDetailsBean.Data> topicBean;
+
+        public TypeData(List<AttentionDetailsBean.Data> topicBean) {
+            this.topicBean = topicBean;
+            this.type = 1;
+        }
 
         public void addPursueBean(List<PursueBean> pursueBean) {
             this.pursueBean = pursueBean;
         }
 
-        public void addBeInterestedBean(List<BeInterestedBean> topicBean) {
+        public void setTopicBean(List<AttentionDetailsBean.Data> topicBean) {
             this.topicBean = topicBean;
         }
-
 
         public String getTitle() {
             return title;
@@ -63,12 +71,19 @@ public class TypeBean {
             this.pursueBean = pursueBean;
         }
 
-        public List<BeInterestedBean> getTopicBean() {
+        public List<AttentionDetailsBean.Data> getTopicBean() {
             return topicBean;
         }
 
-        public void setTopicBean(List<BeInterestedBean> topicBean) {
-            this.topicBean = topicBean;
+        @Override
+        public String toString() {
+            return "TypeData{" +
+                    "type=" + type +
+                    ", title='" + title + '\'' +
+                    ", mFull=" + mFull +
+                    ", pursueBean=" + pursueBean +
+                    ", topicBean=" + topicBean +
+                    '}';
         }
     }
 

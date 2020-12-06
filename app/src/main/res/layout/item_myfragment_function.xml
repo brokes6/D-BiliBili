@@ -6,42 +6,42 @@
 
     <com.example.customcontrollibs.ImageTopView
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_10"
         android:layout_weight="1"
-        app:Image_Drawable="@mipmap/offline_caching"
-        app:Image_Text="离线缓存"
+        app:Image_Drawable="@drawable/ic_inspiration"
+        app:Image_Text="创作首页"
         app:Image_Text_Spacing="20"
         app:Text_Color="@color/Ash" />
 
     <com.example.customcontrollibs.ImageTopView
         android:id="@+id/MyHistory"
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_10"
         android:layout_weight="1"
-        app:Image_Drawable="@mipmap/playhistory"
-        app:Image_Text="历史记录"
+        app:Image_Drawable="@drawable/ic_creation"
+        app:Image_Text="创作学院"
         app:Image_Text_Spacing="20"
         app:Text_Color="@color/Ash" />
 
     <com.example.customcontrollibs.ImageTopView
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_10"
         android:layout_weight="1"
-        app:Image_Drawable="@mipmap/mycollection"
-        app:Image_Text="我的收藏"
+        app:Image_Drawable="@drawable/ic_contribution"
+        app:Image_Text="投稿邻大会员"
         app:Image_Text_Spacing="20"
         app:Text_Color="@color/Ash" />
 
     <com.example.customcontrollibs.ImageTopView
         android:layout_width="0dp"
-        android:layout_height="@dimen/dp_60"
+        android:layout_height="@dimen/dp_45"
         android:layout_margin="@dimen/dp_10"
         android:layout_weight="1"
-        app:Image_Drawable="@mipmap/laterlook"
-        app:Image_Text="稍后再看"
+        app:Image_Drawable="@drawable/ic_activity"
+        app:Image_Text="有将活动"
         app:Image_Text_Spacing="20"
         app:Text_Color="@color/Ash" />
 </merge>

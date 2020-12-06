@@ -22,8 +22,7 @@
         android:theme="@style/AppThemes"
         android:usesCleartextTraffic="true"
         tools:targetApi="o">
-        <activity android:name=".home_page.view.BangumiDetailsActivity"></activity>
-        <activity android:name=".home_page.view.BannerActivity" />
+        <activity android:name=".home_page.view.BangumiDetailsActivity" />
         <activity android:name=".my_page.view.VipActivity" />
         <activity android:name=".my_page.view.HistoryActivity" />
         <activity android:name=".dynamic_page.view.DynamicDetailsActivity" />
@@ -41,13 +40,11 @@
             android:name=".login_page.view.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="cn.lemon.multi.ui.ViewImageActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".search.view.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".home_page.view.HomeActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".home_page.view.RankingLstActivity"

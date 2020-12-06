@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_container"
+    android:layout_width="match_parent"
+    android:clipChildren="false"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/add_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:layout_alignParentBottom="true"
+        android:clickable="false">
+
+
+        <View
+            android:id="@+id/common_horizontal_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_above="@+id/navigation_ll"
+            android:background="#f7f7f7" />
+
+        <LinearLayout
+            android:id="@+id/navigation_ll"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clipChildren="false"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal" />
+
+
+        <View
+            android:id="@+id/empty_line"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="false"
+            android:background="@android:color/transparent"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/add_view_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -34,16 +34,16 @@ public class ChannelTabFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-//        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 5);
-//        adapter = new BeInterestedChannerAdapter(getContext());
-//        binding.ChBeInterested.setLayoutManager(layoutManager1);
-//        binding.ChBeInterested.setAdapter(adapter);
-//
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        HV_adapter = new HaveViewedAdapter(getContext());
-//        binding.CHHaveViewed.setLayoutManager(layoutManager);
-//        binding.CHHaveViewed.setAdapter(HV_adapter);
+        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 5);
+        adapter = new BeInterestedChannerAdapter(getContext());
+        binding.ChBeInterested.setLayoutManager(layoutManager1);
+        binding.ChBeInterested.setAdapter(adapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        HV_adapter = new HaveViewedAdapter(getContext());
+        binding.CHHaveViewed.setLayoutManager(layoutManager);
+        binding.CHHaveViewed.setAdapter(HV_adapter);
         binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -56,17 +56,6 @@ public class ChannelTabFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        GridLayoutManager layoutManager1 = new GridLayoutManager(getContext(), 5);
-        adapter = new BeInterestedChannerAdapter(getContext());
-        binding.ChBeInterested.setLayoutManager(layoutManager1);
-        binding.ChBeInterested.setAdapter(adapter);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        HV_adapter = new HaveViewedAdapter(getContext());
-        binding.CHHaveViewed.setLayoutManager(layoutManager);
-        binding.CHHaveViewed.setAdapter(HV_adapter);
-
         binding.swipe.autoRefresh();//自动刷新
 
     }

@@ -70,7 +70,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     protected void initData() {
-        operation = new UserDaoOperation(this);
+        operation = UserDaoOperation.getDatabase(this);
         if (!TextUtils.isEmpty(SharedPreferencesUtil.getAccountNum())) {
             account = SharedPreferencesUtil.getAccountNum();
             binding.LoUserAccount.setText(account);
@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
             case R.id.Lo_login:
                 account = binding.LoUserAccount.getText().toString().trim();
                 password = binding.LoUserPassword.getText().toString().trim();
-                if (InputUtil.checkMobileLegal(account) && InputUtil.checkPasswordLegal(password)) {
+                if (InputUtil.checkPasswordLegal(password)) {
                     showDialog();
                     inputDto inputDto = new inputDto(account, password);
                     mPresenter.userLogin(inputDto);
@@ -109,7 +109,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void onGetLoginSuccess(UserBean userBean) {
         hideDialog();
         operation.setUserDetail(userBean);
-        operation.setVideo(new VideoDaoBean(1, 1));
+        operation.setVideoDetail(new VideoDaoBean(1, 1));
         XToastUtils.success("登录成功!");
         ActivityUtils.startActivity(HomeActivity.class);
         finish();
@@ -121,8 +121,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         if (e.equals("HTTP 500")) {
             XToastUtils.error(R.string.enter_correct_password);
         } else {
-            XToastUtils.error(e);
-            Log.e(TAG, R.string.errorOccurred + e);
+            XToastUtils.error(R.string.errorOccurred);
+            Log.e(TAG, e);
         }
     }
 }

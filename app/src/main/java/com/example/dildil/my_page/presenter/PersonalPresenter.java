@@ -83,4 +83,32 @@ public class PersonalPresenter extends PersonalContract.Presenter {
                     }
                 });
     }
+
+    @Override
+    public void findPublishVideo(int pageNum, int pageSize, int uid) {
+        mModel.findPublishVideo(pageNum, pageSize, uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RecommendVideoBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull RecommendVideoBean recommendVideoBean) {
+                        mView.onGetPublishVideoSuccess(recommendVideoBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetPublishVideoFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

@@ -3,6 +3,7 @@ package com.example.dildil.home_page.contract;
 import com.example.dildil.abstractclass.BaseModel;
 import com.example.dildil.abstractclass.BaseView;
 import com.example.dildil.base.BasePresenter;
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 
 import io.reactivex.Observable;
@@ -23,6 +24,10 @@ public interface RecommendContract {
 
         void onGetVideoLoadFail(String e);
 
+        void onGetBannerSuccess(BannerBean bannerBean);
+
+        void onGetBannerFail(String e);
+
     }
 
     interface Model extends BaseModel {
@@ -33,6 +38,8 @@ public interface RecommendContract {
 
         Observable<RecommendVideoBean> LoadVideo();
 
+        Observable<BannerBean> findBanner();
+
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -42,5 +49,7 @@ public interface RecommendContract {
         public abstract void getRefreshRecommendVideo();
 
         public abstract void LoadVideo();
+
+        public abstract void findBanner();
     }
 }

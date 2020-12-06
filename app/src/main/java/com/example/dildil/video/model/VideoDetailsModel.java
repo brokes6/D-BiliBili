@@ -1,6 +1,8 @@
 package com.example.dildil.video.model;
 
 import com.example.dildil.api.ApiEngine;
+import com.example.dildil.dynamic_page.bean.AttentionBean;
+import com.example.dildil.dynamic_page.bean.params;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.video.bean.CoinBean;
 import com.example.dildil.video.bean.CollectionBean;
@@ -33,8 +35,8 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
     }
 
     @Override
-    public Observable<CollectionBean> CollectionVideo(dto dto) {
-        return ApiEngine.getInstance().getApiService().CollectionVideo(dto);
+    public Observable<CollectionBean> CollectionVideo(dto dto, int uid) {
+        return ApiEngine.getInstance().getApiService().CollectionVideo(dto, uid);
     }
 
     @Override
@@ -60,6 +62,11 @@ public class VideoDetailsModel implements VideoDetailsContract.Model {
     @Override
     public Observable<CommentBean> AddComment(dto dto, int uid) {
         return ApiEngine.getInstance().getApiService().addComment(dto, uid);
+    }
+
+    @Override
+    public Observable<AttentionBean> Attention(params params, int uid) {
+        return ApiEngine.getInstance().getApiService().Attention(params, uid);
     }
 
 }

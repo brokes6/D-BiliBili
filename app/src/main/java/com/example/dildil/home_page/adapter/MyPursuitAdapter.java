@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.liuzhuang.rcimageview.RoundCornerImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.customcontrollibs.BaseAdapter;
 import com.example.dildil.R;
 import com.example.dildil.home_page.bean.MyPursuitBean;
@@ -32,7 +33,7 @@ public class MyPursuitAdapter extends BaseAdapter<MyPursuitBean, MyPursuitAdapte
 
     @Override
     protected void bindData(@NonNull PursuitViewHolder holder, int position, MyPursuitBean item) {
-        Glide.with(mContext).load(item.getMyPursueImage()).placeholder(R.drawable.skeleton_circular_grey).into(holder.image);
+        Glide.with(mContext).load(item.getMyPursueImage()).apply(holder.requestOptions).into(holder.image);
         holder.image_text.setText("更新至第" + item.getToUpdate_word() + "话");
         holder.title.setText(item.getMyPursueName());
         if (!item.getWatch_Situation().equals("尚未观看")) {
@@ -43,6 +44,7 @@ public class MyPursuitAdapter extends BaseAdapter<MyPursuitBean, MyPursuitAdapte
     }
 
     public class PursuitViewHolder extends RecyclerView.ViewHolder {
+        private final RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
         private final RoundCornerImageView image;
         private final TextView image_text;
         private final TextView title;

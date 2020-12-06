@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.android.liuzhuang.rcimageview.CircleImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.customcontrollibs.RoundRelativeLayout;
+import com.example.customcontrollibs.viewground.RoundRelativeLayout;
 import com.example.dildil.R;
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.util.BiliDanmukuParser;
@@ -195,7 +195,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mToogleDanmaku.setOnClickListener(this);
         Video_play.setOnClickListener(this);
         resolveTypeUI();
-        JudgeIsTraffic();
+        //JudgeIsTraffic();
     }
 
     public void JudgeIsTraffic() {
@@ -808,7 +808,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         setViewShowState(mThumbImageViewLayout, INVISIBLE);
         setViewShowState(mBottomProgressBar, INVISIBLE);
         setViewShowState(mLockScreen, GONE);
-
+        FlowDetection.setVisibility(GONE);
         if (mLoadingProgressBar instanceof ENDownloadView) {
             ENDownloadView enDownloadView = (ENDownloadView) mLoadingProgressBar;
             if (enDownloadView.getCurrentState() == ENDownloadView.STATE_PRE) {

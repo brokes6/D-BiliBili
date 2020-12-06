@@ -1,5 +1,6 @@
 package com.example.dildil.home_page.presenter;
 
+import com.example.dildil.home_page.bean.BannerBean;
 import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.model.RecommendModel;
@@ -8,13 +9,15 @@ import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class RecommendPresenter extends RecommendContract.Presenter {
 
     @Inject
-    public RecommendPresenter() { }
+    public RecommendPresenter() {
+    }
 
     public void attachView(RecommendContract.View view) {
         this.mView = view;
@@ -97,6 +100,33 @@ public class RecommendPresenter extends RecommendContract.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         mView.onGetVideoLoadFail(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void findBanner() {
+        mModel.findBanner().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BannerBean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@NonNull BannerBean bannerBean) {
+                        mView.onGetBannerSuccess(bannerBean);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mView.onGetBannerFail(e.getMessage());
                     }
 
                     @Override
