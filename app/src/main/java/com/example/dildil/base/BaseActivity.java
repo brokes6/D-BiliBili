@@ -263,6 +263,21 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     /**
+     * 在标题栏添加删除按钮
+     */
+    public void setDelete() {
+        ImageView delete = findViewById(R.id.delete);
+        delete.setVisibility(View.VISIBLE);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserDaoOperation.getDatabase(mContext).dellHistory();
+                XToastUtils.success("成功清空~");
+            }
+        });
+    }
+
+    /**
      * 设置标题栏文字的透明度
      *
      * @param alpha

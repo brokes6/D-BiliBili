@@ -21,7 +21,7 @@
         android:layout_toEndOf="@+id/VN_user_img"
         android:text=""
         android:textColor="#fa7296"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/VN_date"
@@ -32,7 +32,7 @@
         android:layout_toEndOf="@+id/VN_user_img"
         android:text=""
         android:textColor="#a4a4a4"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/VN_Title"
@@ -72,13 +72,13 @@
         android:layout_below="@+id/VN_multi"
         android:layout_marginTop="@dimen/dp_10" />
 
-    <com.example.customcontrollibs.viewground.ShowComment
-        android:id="@+id/comment"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
-        android:layout_below="@+id/function"
-        android:layout_marginTop="@dimen/dp_10"
-        app:displayPicture="false"
-        app:isNetWorkUrl="false" />
+<!--    <com.example.customcontrollibs.viewground.ShowComment-->
+<!--        android:id="@+id/comment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/dp_30"-->
+<!--        android:layout_below="@+id/function"-->
+<!--        android:layout_marginTop="@dimen/dp_10"-->
+<!--        app:displayPicture="false"-->
+<!--        app:isNetWorkUrl="false" />-->
 
 </RelativeLayout>

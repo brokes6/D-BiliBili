@@ -123,12 +123,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/VN_videoTitle" />
 
-    <com.example.customcontrollibs.viewground.ShowComment
-        android:id="@+id/comment"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
-        android:layout_below="@+id/function"
-        android:layout_marginTop="@dimen/dp_10"
-        app:isNetWorkUrl="false" />
+<!--    <com.example.customcontrollibs.viewground.ShowComment-->
+<!--        android:id="@+id/comment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/dp_30"-->
+<!--        android:layout_below="@+id/function"-->
+<!--        android:layout_marginTop="@dimen/dp_10"-->
+<!--        app:isNetWorkUrl="false" />-->
 
 </RelativeLayout>

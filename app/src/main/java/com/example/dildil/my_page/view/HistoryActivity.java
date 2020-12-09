@@ -20,6 +20,7 @@ import java.util.List;
 public class HistoryActivity extends BaseActivity {
     private ActivityHistoryBinding binding;
     private HistoryAdapter adapter;
+    private boolean isFirst = true;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class HistoryActivity extends BaseActivity {
         setBackBtn(getResources().getColor(R.color.While, null));
         setTitleBG(getResources().getColor(R.color.Pink, null));
         setLeftTitleTextColorWhite();
+        setDelete();
+
         setMargins(binding.Title, 0, getStatusBarHeight(this), 0, 0);
     }
 
@@ -49,8 +52,13 @@ public class HistoryActivity extends BaseActivity {
         MyApplication.getDatabase(this).historyDao().getAll().observe(this, new Observer<List<HistoryBean>>() {
             @Override
             public void onChanged(List<HistoryBean> historyBean) {
-                historyBean.add(0,new HistoryBean());
-                adapter.loadMore(historyBean);
+                if (isFirst) {
+                    historyBean.add(0, new HistoryBean());
+                    adapter.loadMore(historyBean);
+                    isFirst = false;
+                } else {
+                    adapter.refresh(historyBean);
+                }
             }
         });
     }

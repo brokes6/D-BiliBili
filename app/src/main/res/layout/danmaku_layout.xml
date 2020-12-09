@@ -45,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/video_bottom_bg"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:visibility="invisible">
@@ -167,8 +168,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/dp_20"
                     android:gravity="center|left"
-                    android:singleLine="true"
                     android:paddingStart="@dimen/dp_5"
+                    android:singleLine="true"
                     android:text="@string/BulletScreenTips"
                     android:textColor="#A1A1A3"
                     android:textSize="14sp" />
@@ -362,19 +363,19 @@
 
 
     <!--    小图预览-->
-    <RelativeLayout
-        android:id="@+id/preview_layout"
-        android:layout_width="@dimen/seek_bar_image"
-        android:layout_height="@dimen/dp_100"
-        android:layout_above="@+id/layout_bottom"
-        android:visibility="gone">
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/preview_layout"-->
+    <!--        android:layout_width="@dimen/seek_bar_image"-->
+    <!--        android:layout_height="@dimen/dp_100"-->
+    <!--        android:layout_above="@+id/layout_bottom"-->
+    <!--        android:visibility="gone">-->
 
-        <ImageView
-            android:id="@+id/preview_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#000000" />
-    </RelativeLayout>
+    <!--        <ImageView-->
+    <!--            android:id="@+id/preview_image"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="#000000" />-->
+    <!--    </RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/FlowDetection"

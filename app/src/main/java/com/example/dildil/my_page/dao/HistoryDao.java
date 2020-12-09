@@ -26,7 +26,7 @@ public interface HistoryDao {
      * 删除数据
      */
     //删全部
-    @Query("DELETE FROM HistoryBean")
+    @Query("DELETE FROM historybean")
     void deleteAll();
 
     /**

@@ -43,7 +43,7 @@ public class UserDaoOperation {
     }
 
     public void delUserDetail() {
-        new DeleteUser();
+        new DeleteUser().execute();
     }
 
     public void UpdateCoin(int coin) {
@@ -55,7 +55,7 @@ public class UserDaoOperation {
     }
 
     public void dellHistory() {
-        new dellHistory();
+        new dellHistory().execute();
     }
 
     public void upHistory(HistoryBean historyBean) {

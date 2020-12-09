@@ -43,7 +43,7 @@ public class ApiEngine {
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
-                .addNetworkInterceptor(netWorkInterceptor)
+                //.addNetworkInterceptor(netWorkInterceptor)
                 .addInterceptor(responseInterceptor)
                 .addInterceptor(new AddCookiesInterceptor())
                 .addInterceptor(new ReceivedCookiesInterceptor())

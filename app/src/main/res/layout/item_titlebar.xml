@@ -16,8 +16,8 @@
             android:layout_width="@dimen/dp_24"
             android:layout_height="@dimen/dp_24"
             android:layout_marginStart="@dimen/dp_15"
-            android:background="@drawable/shape_back"
-            android:scaleY="0.9" />
+            android:scaleY="0.9"
+            android:src="@drawable/shape_back" />
 
         <TextView
             android:id="@+id/tv_left_title"
@@ -28,5 +28,15 @@
             android:textSize="16sp"
             android:typeface="monospace" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="@dimen/dp_24"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:src="@drawable/ic_baseline_delete"
+        android:visibility="gone" />
 
 </RelativeLayout>

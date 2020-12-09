@@ -58,17 +58,21 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+import com.shuyu.gsyvideoplayer.cache.CacheFactory;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
+import com.shuyu.gsyvideoplayer.player.PlayerFactory;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
-import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
+
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
+import tv.danmaku.ijk.media.exo2.ExoPlayerCacheManager;
 
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED;
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
@@ -157,10 +161,25 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         //关闭自动旋转
         binding.detailPlayer.setRotateViewAuto(false);
         binding.detailPlayer.setNeedAutoAdaptation(true);
+        binding.detailPlayer.setShowFullAnimation(false);
         GSYVideoType.setShowType(GSYVideoType.SCREEN_TYPE_16_9);
-        binding.detailPlayer.setShowFullAnimation(true);
         binding.detailPlayer.setNeedLockFull(true);
         binding.detailPlayer.setListener(listener);
+
+        PlayerFactory.setPlayManager(Exo2PlayerManager.class);
+        CacheFactory.setCacheManager(ExoPlayerCacheManager.class);
+
+//        List<VideoOptionModel> list = new ArrayList<>();
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-hevc", 1));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "rtsp_transport", "tcp"));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "reconnect", 5));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_clear", 1));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_timeout", -1));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 100 * 1024));
+//        IjkPlayerManager.setLogLevel(IjkMediaPlayer.IJK_LOG_SILENT);
+//        GSYVideoManager.instance().setOptionModelList(list);
+
 
         binding.detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -304,6 +323,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
                     @Override
                     public void onChanged(UserBean userBean) {
+                        Log.e(TAG, "onChanged: 第一次加载呢");
                         uid = userBean.getData().getId();
                         binding.detailPlayer.setVideoDetails(id, uid);
                         mPresenter.getDanMu(0, id);
@@ -316,28 +336,22 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     public void onClick(View v) {
         int vId = v.getId();
-        switch (vId) {
-            case R.id.V_DanmakuShow:
-                DanmakuShow();
-                break;
-            case R.id.V_definition_text:
-                sendOutDanMu();
-                break;
-            case R.id.playButton:
-                if (binding.detailPlayer.getCurrentState() == 1) {
-
-                    binding.detailPlayer.startAfterPrepared();
-                } else {
-                    binding.detailPlayer.onVideoResume();
-                    binding.appbar.setExpanded(true);
-                    binding.more.setVisibility(View.GONE);
-                    binding.keyboard.setVisibility(View.GONE);
-                }
-                banAppBarScroll(false);
-                break;
-            case R.id.keyboard:
-                finish();
-                break;
+        if (vId == R.id.V_DanmakuShow) {
+            DanmakuShow();
+        } else if (vId == R.id.V_definition_text) {
+            sendOutDanMu();
+        } else if (vId == R.id.playButton) {
+            if (binding.detailPlayer.getCurrentState() == 1) {
+                binding.detailPlayer.startAfterPrepared();
+            } else {
+                binding.detailPlayer.onVideoResume();
+                binding.appbar.setExpanded(true);
+                binding.more.setVisibility(View.GONE);
+                binding.keyboard.setVisibility(View.GONE);
+            }
+            banAppBarScroll(false);
+        } else if (vId == R.id.keyboard) {
+            finish();
         }
     }
 
@@ -378,9 +392,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
-                    binding.detailPlayer.addDanmaku(true, replyContent, textSize);
-                    danmu danmu = new danmu(replyContent, binding.detailPlayer.getCurrentPositionWhenPlaying(), uid, id);
-                    mPresenter.seadDanMu(danmu, id);
+                    binding.detailPlayer.addDanmaku(false, replyContent, textSize);
+                    mPresenter.seadDanMu(new danmu(replyContent, binding.detailPlayer.getCurrentPositionWhenPlaying(), uid, id), id);
                 } else {
                     XToastUtils.toast("弹幕内容不能为空");
                 }
@@ -426,13 +439,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         Log.e(TAG, "当前播放位置为:" + mWhenPlaying);
     }
 
-    public GSYVideoPlayer getCurPlay() {
-        if (binding.detailPlayer.getFullWindowPlayer() != null) {
-            return binding.detailPlayer.getFullWindowPlayer();
-        }
-        return binding.detailPlayer;
-    }
-
     /**
      * 控制appbar的滑动
      *
@@ -460,7 +466,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
             urls.add(switchVideoBean);
         }
         binding.detailPlayer.setUPData(videoDetailsBean.getUpImg(), videoDetailsBean.getUpName());
-        binding.detailPlayer.setUp(urls, true, null, videoDetailsBean.getTitle());
+        binding.detailPlayer.setUp(urls, false, videoDetailsBean.getTitle());
         JudgeVideoType(videoDetailsBean.getScreenType());
     }
 
@@ -538,10 +544,10 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetDanMuSuccess(DanmuBean danmuBean) {
-        binding.detailPlayer.setDanmuData(danmuBean.getData());
+        binding.detailPlayer.addDanmaKuExternal(danmuBean.getData());
     }
 
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             timing += 10000;
@@ -600,6 +606,8 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     @Override
     protected void onResume() {
         super.onResume();
+        //GSYVideoManager.onResume();
+        Log.e(TAG, "onResume: 当前url为"+urls.toString() );
         int play = binding.detailPlayer.getCurrentState();
         if (play == CURRENT_STATE_PAUSE) {
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
@@ -616,6 +624,12 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         UserDaoOperation.getDatabase(this).insertHistory(new HistoryBean(id,
@@ -625,15 +639,9 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 binding.detailPlayer.getDuration()));
         if (isFinishing()) {
             handler.removeCallbacks(runnable);
-            GSYVideoManager.releaseAllVideos();
             mPresenter.detachView();
-            mFragments.clear();
-            urls.clear();
-//            if (isPlay) {
-//                getCurPlay().release();
-//            }
-            if (orientationUtils != null)
-                orientationUtils.releaseListener();
+            GSYVideoManager.releaseAllVideos();
+            if (orientationUtils != null) orientationUtils.releaseListener();
         } else {
             GSYVideoManager.onPause();
             getPlayPosition();

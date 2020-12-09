@@ -56,7 +56,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
     private boolean isOpen = false;
     private RelativeLayout ForwardMain;
     private AnnularProgressButton coin_circleView, Collection_circleView;
-    private boolean isLoad = false;
     private boolean mIsPraise = false;
     private int mCoinNum = 0;
     private boolean isCollection = false;
@@ -166,9 +165,11 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
                                     @Override
                                     public void onChanged(UserBean userBean) {
-                                        UserBean = userBean;
-                                        mPresenter.getVideoDetails(vid, userBean.getData().getId());
-                                        mPresenter.getRelatedVideos();
+                                        if (UserBean == null){
+                                            UserBean = userBean;
+                                            mPresenter.getVideoDetails(vid, userBean.getData().getId());
+                                            mPresenter.getRelatedVideos();
+                                        }
                                     }
                                 });
                     }
@@ -301,7 +302,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             binding.InAttention.setText("已关注");
             binding.InAttention.setBackgroundResource(R.drawable.file_background_follow_gray);
         }
-        isLoad = true;
+        boolean isLoad = true;
     }
 
     @Override

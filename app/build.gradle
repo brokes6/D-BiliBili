@@ -17,6 +17,14 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+        ndk {//APP的build.gradle设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
+        sourceSets {
+            main {
+                jniLibs.srcDirs = ['libs']
+            }
+        }
     }
     buildFeatures{
         dataBinding = true
@@ -89,7 +97,7 @@ dependencies {
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     //视频
-    implementation 'com.shuyu:GSYVideoPlayer:7.1.8'
+    implementation 'com.shuyu:GSYVideoPlayer:8.0.0'
     //弹幕
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'

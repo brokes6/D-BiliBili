@@ -65,7 +65,7 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
         } else {
             Glide.with(mContext)
                     .load(item.getCover())
-                    .apply(((RecViewHolder)holder).requestOptions)
+                    .apply(((RecViewHolder) holder).requestOptions)
                     .into(((RecViewHolder) holder).cover);
             ((RecViewHolder) holder).play_volume.setText(String.valueOf(item.getPlayNum()));
             ((RecViewHolder) holder).time.setText(DateUtils.timeParse(item.getLength()));
@@ -106,7 +106,7 @@ public class RecommendedVideoAdapter extends BaseAdapter<RecommendVideoBean.Bean
     }
 
     public class RecViewHolder extends RecyclerView.ViewHolder {
-        private final RequestOptions requestOptions= new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
+        private final RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
         private final ImageView more, cover;
         private final TextView play_volume, barrage_volume, title, time, classification;
         private final RoundRelativeLayout Re_video;

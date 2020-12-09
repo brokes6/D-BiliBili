@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rc="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/dp_140"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/dp_5"
-    xmlns:rc="http://schemas.android.com/apk/res-auto">
+    android:layout_marginStart="@dimen/dp_5">
 
     <com.android.liuzhuang.rcimageview.RoundCornerImageView
         android:id="@+id/IP_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_80"
         android:scaleType="centerCrop"
-        rc:rciv_radius="5dp"/>
+        rc:rciv_radius="5dp" />
 
     <RelativeLayout
-        android:layout_alignBottom="@+id/IP_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_25">
+        android:layout_height="@dimen/dp_25"
+        android:layout_alignBottom="@+id/IP_image">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_25"
-            android:background="@drawable/file_background_white_gradient"
-            android:alpha="0.3"/>
+            android:alpha="0.3"
+            android:background="@drawable/file_background_white_gradient" />
 
         <TextView
             android:id="@+id/IP_image_text"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:gravity="center_vertical"
             android:textColor="@color/While"
             android:textSize="12sp" />
     </RelativeLayout>
@@ -36,13 +36,13 @@
 
     <TextView
         android:id="@+id/IP_title"
-        android:layout_marginTop="@dimen/dp_5"
-        android:layout_below="@+id/IP_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/IP_image"
+        android:layout_marginTop="@dimen/dp_5"
+        android:ellipsize="end"
         android:singleLine="true"
-        android:textSize="14sp"
         android:textColor="@color/Black"
-        android:ellipsize="end"/>
+        android:textSize="14sp" />
 
 </RelativeLayout>
