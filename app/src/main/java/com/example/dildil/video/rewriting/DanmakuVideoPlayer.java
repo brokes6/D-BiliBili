@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.example.customcontrollibs.viewground.RoundRelativeLayout;
 import com.example.dildil.R;
 import com.example.dildil.api.ApiEngine;
 import com.example.dildil.util.BiliDanmukuParser;
-import com.example.dildil.util.NetUtil;
 import com.example.dildil.util.SharedPreferencesUtil;
 import com.example.dildil.util.XToastUtils;
 import com.example.dildil.video.adapter.DanamakuAdapter;
@@ -71,7 +69,6 @@ import master.flame.danmaku.danmaku.parser.IDataSource;
 import moe.codeest.enviews.ENDownloadView;
 
 public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
-    private static final String TAG = "DanmakuVideoPlayer";
     private BaseDanmakuParser mParser;//解析器对象
     private IDanmakuView mDanmakuView;//弹幕view
     private DanmakuContext mDanmakuContext;
@@ -98,7 +95,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     private String mCoverOriginUrl;
     private int mDefaultRes;
-    private int mCoverOriginId = 0;
+    private final int mCoverOriginId = 0;
 
     private int videoType = 0;
     private final int HORIZONTAL_SCREEN = 1;
@@ -110,7 +107,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     //是否打开滑动预览
     private boolean mOpenPreView = true;
 
-    private int mPreProgress = -2;
+    private final int mPreProgress = -2;
 
     private List<SwitchVideoBean> mUrlList = new ArrayList<>();
 
@@ -129,7 +126,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     private List<DanmuBean.Datas> datasList = new ArrayList<>();
     private int vid, uid;
     private String upImg, upName;
-    private BaseDanmaku danmaku;
 
     public DanmakuVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -194,19 +190,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         mToogleDanmaku.setOnClickListener(this);
         Video_play.setOnClickListener(this);
         resolveTypeUI();
-        //JudgeIsTraffic();
-    }
-
-    public void JudgeIsTraffic() {
-        if (!NetUtil.isWifi()) {
-            FlowDetection.setVisibility(View.VISIBLE);
-        } else {
-            if (mUrlList != null) {
-                FlowDetection.setVisibility(View.GONE);
-                Log.e("To", "直接播放");
-                startButtonLogic();
-            }
-        }
     }
 
     public void setVideoDetails(int vid, int uid) {
@@ -231,7 +214,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             Bottom_controller.setVisibility(View.GONE);
             mSeekBar_play.setVisibility(View.VISIBLE);
         }
-        //startDownFrame(mOriginUrl);
     }
 
     @Override
@@ -381,7 +363,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         ((DanmakuVideoPlayer) to).videoType = ((DanmakuVideoPlayer) from).videoType;
         ((DanmakuVideoPlayer) to).uid = ((DanmakuVideoPlayer) from).uid;
         ((DanmakuVideoPlayer) to).vid = ((DanmakuVideoPlayer) from).vid;
-        ((DanmakuVideoPlayer) to).danmaku = ((DanmakuVideoPlayer) from).danmaku;
     }
 
     private void changeUi() {
@@ -538,7 +519,6 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair);
 
-        danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         if (mDanmakuView != null) {
 
             //todo 这是为了demo效果，实际上需要去掉这个，外部传输文件进来
@@ -568,7 +548,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                         }
                         resolveDanmakuShow();
                         if (datasList != null) {
-                            addDanmaKuExternal(datasList);
+                            addDanmaKuExternal();
                         }
                     }
                 }
@@ -980,9 +960,9 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
         switchVideoTypeDialog.show();
     }
 
-    public void addDanmaKuExternal(List<DanmuBean.Datas> list) {
-        this.datasList = list;
-        for (int i = 0; i < list.size(); i++) {
+    public void addDanmaKuExternal() {
+        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        for (int i = 0; i < datasList.size(); i++) {
             if (danmaku == null || mDanmakuView == null) {
                 return;
             }
@@ -1025,6 +1005,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
      * 模拟添加弹幕数据
      */
     public void addDanmaku(boolean islive, String content, int textSize) {
+        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         if (danmaku == null || mDanmakuView == null) {
             return;
         }
@@ -1048,6 +1029,11 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
                 break;
         }
         mDanmakuView.addDanmaku(danmaku);
+    }
+
+    public void setDanmuData(List<DanmuBean.Datas> list) {
+        this.datasList = list;
+        addDanmaKuExternal();
     }
 
 }

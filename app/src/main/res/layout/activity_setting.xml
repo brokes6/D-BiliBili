@@ -17,13 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40" />
 
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/Title"
-            android:background="#eaeaea">
 
             <RelativeLayout
+                android:layout_below="@+id/Title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -53,8 +49,6 @@
                     android:textColor="@color/Black"
                     android:textSize="14sp" />
             </RelativeLayout>
-
-        </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
 </layout>

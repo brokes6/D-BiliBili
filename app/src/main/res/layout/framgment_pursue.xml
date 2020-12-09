@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -18,10 +17,10 @@
 
             <RelativeLayout
                 android:id="@+id/main"
-                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:animateLayoutChanges="true">
+                android:animateLayoutChanges="true"
+                android:visibility="invisible">
 
                 <com.youth.banner.Banner
                     android:id="@+id/Pu_banner"
@@ -31,10 +30,10 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     app:banner_indicator_gravity="right"
+                    app:banner_indicator_marginBottom="@dimen/dp_7"
+                    app:banner_indicator_marginRight="@dimen/dp_15"
                     app:banner_indicator_normal_color="@color/White"
                     app:banner_indicator_selected_color="@color/Pink"
-                    app:banner_indicator_marginRight="@dimen/dp_15"
-                    app:banner_indicator_marginBottom="@dimen/dp_7"
                     app:layout_scrollFlags="scroll" />
 
                 <LinearLayout
@@ -49,7 +48,7 @@
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/offline_caching"
@@ -59,7 +58,7 @@
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/offline_caching"
@@ -69,7 +68,7 @@
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/offline_caching"
@@ -79,7 +78,7 @@
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/offline_caching"
@@ -89,7 +88,7 @@
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
                         app:Image_Drawable="@mipmap/offline_caching"
@@ -129,8 +128,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="更新 3 部"
                         android:gravity="center"
+                        android:text="更新 3 部"
                         android:textSize="14sp"
                         app:drawableEndCompat="@drawable/more_right_24" />
                 </LinearLayout>
@@ -140,8 +139,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/Pu_title_one"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_5" />
 
                 <TextView
@@ -175,8 +174,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Seemore"
                         android:gravity="center"
+                        android:text="@string/Seemore"
                         android:textSize="14sp"
                         app:drawableEndCompat="@drawable/more_right_24" />
                 </LinearLayout>

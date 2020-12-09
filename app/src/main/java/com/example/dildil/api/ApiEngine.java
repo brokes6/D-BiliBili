@@ -43,7 +43,7 @@ public class ApiEngine {
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
                 .writeTimeout(20, TimeUnit.SECONDS)
-                //.addNetworkInterceptor(netWorkInterceptor)
+                .addNetworkInterceptor(netWorkInterceptor)
                 .addInterceptor(responseInterceptor)
                 .addInterceptor(new AddCookiesInterceptor())
                 .addInterceptor(new ReceivedCookiesInterceptor())
@@ -52,9 +52,6 @@ public class ApiEngine {
                 .build();
 
         Gson gson = new Gson();
-        if (ApiService.BASE_URL==null){
-            throw new IllegalArgumentException("请检查api文件夹中的ApiService的BASE_URL地址是否正确，如果是使用本地服务，请确保在同一个WLAN（不能是手机端的热点）下");
-        }
         //开启retrofit
         retrofit = new Retrofit.Builder()
                 //指定主url

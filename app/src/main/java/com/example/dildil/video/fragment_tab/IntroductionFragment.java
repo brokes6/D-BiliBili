@@ -165,7 +165,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
                                     @Override
                                     public void onChanged(UserBean userBean) {
-                                        if (UserBean == null){
+                                        if (UserBean == null) {
                                             UserBean = userBean;
                                             mPresenter.getVideoDetails(vid, userBean.getData().getId());
                                             mPresenter.getRelatedVideos();
@@ -274,11 +274,14 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
 
     @Override
     public void onGetVideoDetailsSuccess(VideoDetailsBean.BeanData videoDetailsBean) {
+        Glide.with(this)
+                .load(videoDetailsBean.getUpImg())
+                .placeholder(R.drawable.skeleton_circular_grey)
+                .into(binding.InUserImg);
         praiseNum = videoDetailsBean.getPraiseNum();
         uid = videoDetailsBean.getUid();
         binding.InTitle.setText(videoDetailsBean.getTitle());
         binding.InFans.setText("0粉丝");
-        Glide.with(this).load(videoDetailsBean.getUpImg()).into(binding.InUserImg);
         binding.InUserName.setText(videoDetailsBean.getUpName());
         binding.InIntroduce.setText(videoDetailsBean.getDescription());
         mPlayNum.setText(String.valueOf(videoDetailsBean.getPlayNum()));
@@ -302,7 +305,6 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
             binding.InAttention.setText("已关注");
             binding.InAttention.setBackgroundResource(R.drawable.file_background_follow_gray);
         }
-        boolean isLoad = true;
     }
 
     @Override

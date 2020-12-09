@@ -36,7 +36,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     private RecommendedVideoAdapter adapter;
     private boolean isFirst = true;
     private RecommendVideoBean.BeanData mBeanData;
-    private RecommendVideoBean recommendVideoBean;
 
     @Inject
     RecommendPresenter mPresenter;
@@ -74,10 +73,8 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (isFirst) {
                     mPresenter.findBanner();
-                    //mPresenter.getRandomRecommendation();
                     isFirst = false;
                 } else {
-                    //mPresenter.findBanner();
                     mPresenter.getRefreshRecommendVideo();
                 }
             }
@@ -130,7 +127,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {
-        recommendVideoBean = videoBean;
         binding.swipe.setVisibility(View.VISIBLE);
         videoBean.addData(mBeanData);
         adapter.loadMore(videoBean.getData());

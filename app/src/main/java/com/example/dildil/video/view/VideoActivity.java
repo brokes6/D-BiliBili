@@ -78,7 +78,6 @@ import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROL
 import static com.google.android.material.appbar.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL;
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_AUTO_COMPLETE;
 import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_NORMAL;
-import static com.shuyu.gsyvideoplayer.video.base.GSYVideoView.CURRENT_STATE_PAUSE;
 
 public class VideoActivity extends BaseActivity implements VideoDetailsContract.View, Selector.OnSelectorStateListener {
     private static final String TAG = "VideoActivity";
@@ -169,18 +168,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         PlayerFactory.setPlayManager(Exo2PlayerManager.class);
         CacheFactory.setCacheManager(ExoPlayerCacheManager.class);
 
-//        List<VideoOptionModel> list = new ArrayList<>();
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-hevc", 1));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "rtsp_transport", "tcp"));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "reconnect", 5));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_clear", 1));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_timeout", -1));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 100 * 1024));
-//        IjkPlayerManager.setLogLevel(IjkMediaPlayer.IJK_LOG_SILENT);
-//        GSYVideoManager.instance().setOptionModelList(list);
-
-
         binding.detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,8 +185,10 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 super.onPrepared(url, objects);
                 //开始播放了才能旋转和全屏
                 orientationUtils.setEnable(true);
-                DanmakuVideoPlayer currentPlayer = (DanmakuVideoPlayer) binding.detailPlayer.getCurrentPlayer();
-                currentPlayer.setDanmaKuStream();
+                binding.detailPlayer.setDanmaKuStream();
+                if (binding.detailPlayer.getVideoType() == 1) {
+                    banAppBarScroll(false);
+                }
             }
 
             @Override
@@ -228,10 +217,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 super.onClickStartIcon(url, objects);
                 binding.keyboard.setVisibility(View.GONE);
                 binding.more.setVisibility(View.GONE);
-                if (binding.detailPlayer.getVideoType() == 1) {
-                    banAppBarScroll(false);
-                }
-                handler.postDelayed(runnable, 10000);
+//                handler.postDelayed(runnable, 10000);
             }
 
             @Override
@@ -283,7 +269,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                         binding.playButton.setVisibility(View.VISIBLE);//隐藏播放按钮
                         state = CollapsingToolbarLayoutState.COLLAPSED;//修改状态标记为折叠
                         if (binding.detailPlayer.getVideoType() == 2) {
-                            GSYVideoManager.onPause();
+                            binding.detailPlayer.getCurrentPlayer().onVideoPause();
                         }
                     }
                 } else {
@@ -291,7 +277,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                         if (state == CollapsingToolbarLayoutState.COLLAPSED) {
                             binding.playButton.setVisibility(View.GONE);//由折叠变为中间状态时隐藏播放按钮
                             if (binding.detailPlayer.getVideoType() == 2) {
-                                GSYVideoManager.onResume();
+                                binding.detailPlayer.getCurrentPlayer().onVideoResume();
                             }
                         }
                         state = CollapsingToolbarLayoutState.INTERNEDIATE;//修改状态标记为中间
@@ -392,7 +378,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
                 String replyContent = commentText.getText().toString().trim();
                 if (!TextUtils.isEmpty(replyContent)) {
                     dialog.dismiss();
-                    binding.detailPlayer.addDanmaku(false, replyContent, textSize);
+                    binding.detailPlayer.addDanmaku(false, replyContent, 0);
                     mPresenter.seadDanMu(new danmu(replyContent, binding.detailPlayer.getCurrentPositionWhenPlaying(), uid, id), id);
                 } else {
                     XToastUtils.toast("弹幕内容不能为空");
@@ -436,7 +422,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     public void getPlayPosition() {
         mWhenPlaying = binding.detailPlayer.getCurrentPositionWhenPlaying();
-        Log.e(TAG, "当前播放位置为:" + mWhenPlaying);
+        binding.detailPlayer.getCurrentPlayer().onVideoPause();
     }
 
     /**
@@ -544,7 +530,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
 
     @Override
     public void onGetDanMuSuccess(DanmuBean danmuBean) {
-        binding.detailPlayer.addDanmaKuExternal(danmuBean.getData());
+        binding.detailPlayer.setDanmuData(danmuBean.getData());
     }
 
     private final Runnable runnable = new Runnable() {
@@ -604,14 +590,13 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //GSYVideoManager.onResume();
-        Log.e(TAG, "onResume: 当前url为"+urls.toString() );
-        int play = binding.detailPlayer.getCurrentState();
-        if (play == CURRENT_STATE_PAUSE) {
+    protected void onRestart() {
+        super.onRestart();
+        if (mWhenPlaying != 0) {
             binding.detailPlayer.setSeekOnStart(mWhenPlaying);
             binding.detailPlayer.startPlayLogic();
+        } else {
+            binding.detailPlayer.getCurrentPlayer().onVideoResume(false);
         }
     }
 
@@ -624,26 +609,20 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        GSYVideoManager.onPause();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-        UserDaoOperation.getDatabase(this).insertHistory(new HistoryBean(id,
-                imageUrl, Title,
-                DateUtils.getCurrentTimestamp(),
-                binding.detailPlayer.getCurrentPositionWhenPlaying(),
-                binding.detailPlayer.getDuration()));
+        UserDaoOperation.getDatabase(this).insertHistory(
+                new HistoryBean(id, imageUrl, Title,
+                        DateUtils.getCurrentTimestamp(),
+                        binding.detailPlayer.getCurrentPositionWhenPlaying(),
+                        binding.detailPlayer.getDuration()));
         if (isFinishing()) {
             handler.removeCallbacks(runnable);
             mPresenter.detachView();
-            GSYVideoManager.releaseAllVideos();
+            binding.detailPlayer.getCurrentPlayer().release();
             if (orientationUtils != null) orientationUtils.releaseListener();
         } else {
-            GSYVideoManager.onPause();
+            binding.detailPlayer.getCurrentPlayer().onVideoPause();
             getPlayPosition();
         }
     }
