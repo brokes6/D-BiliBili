@@ -86,12 +86,6 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
 
     @Override
     protected void initData() {
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        adapter = new HotRankingAdapter(getContext());
-//        adapter.setListener(listener);
-//        binding.HotRecy.setLayoutManager(layoutManager);
-//        binding.HotRecy.setHasFixedSize(true);
-//        binding.HotRecy.setAdapter(adapter);
         binding.swipe.setEnableLoadMore(true);
         binding.swipe.setRefreshFooter(new BallPulseFooter(getContext()));
         adapter.setHeaderView(LayoutInflater.from(getContext()).inflate(R.layout.item_hot_header_list, binding.HotRecy, false));
@@ -103,6 +97,11 @@ public class HotFragment extends BaseFragment implements RecommendContract.View 
     @Override
     protected void initLocalData() {
         binding.swipe.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onRefresh() {
+        binding.swipe.autoRefresh();
     }
 
     @Override

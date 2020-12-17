@@ -36,6 +36,11 @@ public class MyTrackingFragment extends BaseFragment {
     }
 
     @Override
+    protected void onRefresh() {
+
+    }
+
+    @Override
     public void onClick(View v) {
 
     }

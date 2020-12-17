@@ -6,115 +6,122 @@
 
     </data>
 
-    <RelativeLayout
-        android:id="@+id/main"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/While">
 
-        <include
-            android:id="@+id/DD_titles"
-            layout="@layout/item_titlebar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50" />
+            android:layout_height="match_parent">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_function"
-            android:layout_below="@+id/DD_titles">
-
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/appbar"
+            <include
+                android:id="@+id/DD_titles"
+                layout="@layout/item_titlebar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:elevation="0dp">
+                android:layout_height="@dimen/dp_50" />
 
-                <RelativeLayout
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/main"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/bottom_function"
+                android:layout_below="@+id/DD_titles">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_10"
-                    app:layout_scrollFlags="scroll|enterAlways">
+                    app:elevation="0dp">
 
-                    <com.android.liuzhuang.rcimageview.CircleImageView
-                        android:id="@+id/DD_user_img"
-                        android:layout_width="@dimen/dp_35"
-                        android:layout_height="@dimen/dp_35" />
-
-                    <TextView
-                        android:id="@+id/DD_user_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_toEndOf="@+id/DD_user_img"
-                        android:text=""
-                        android:textColor="#fa7296"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/DD_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/DD_user_name"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_toEndOf="@+id/DD_user_img"
-                        android:text=""
-                        android:textColor="#a4a4a4"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/DD_Title"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/DD_user_img"
-                        android:layout_marginTop="@dimen/dp_5"
-                        android:textColor="#212121"
-                        android:textSize="14sp" />
+                        android:padding="@dimen/dp_10"
+                        app:layout_scrollFlags="scroll|enterAlways">
 
-                    <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
-                        android:id="@+id/DD_multi"
-                        style="@style/MatchWrap"
-                        android:layout_below="@+id/DD_Title"
-                        android:layout_marginTop="@dimen/dp_10"
-                        app:bga_npl_itemCornerRadius="4dp"
-                        app:bga_npl_itemSpanCount="3"
-                        app:bga_npl_itemWhiteSpacing="4dp"
-                        app:bga_npl_itemWidth="0dp"
-                        app:bga_npl_otherWhiteSpacing="64dp"
-                        app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
-                        app:bga_npl_showAsLargeWhenOnlyOne="true" />
+                        <com.android.liuzhuang.rcimageview.CircleImageView
+                            android:id="@+id/DD_user_img"
+                            android:layout_width="@dimen/dp_35"
+                            android:layout_height="@dimen/dp_35" />
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/DD_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toEndOf="@+id/DD_user_img"
+                            android:text=""
+                            android:textColor="#fa7296"
+                            android:textSize="16sp" />
 
-                <com.flyco.tablayout.SlidingTabLayout
-                    android:id="@+id/tab"
+                        <TextView
+                            android:id="@+id/DD_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/DD_user_name"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_toEndOf="@+id/DD_user_img"
+                            android:text=""
+                            android:textColor="#a4a4a4"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/DD_Title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/DD_user_img"
+                            android:layout_marginTop="@dimen/dp_5"
+                            android:textColor="#212121"
+                            android:textSize="14sp" />
+
+                        <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
+                            android:id="@+id/DD_multi"
+                            style="@style/MatchWrap"
+                            android:layout_below="@+id/DD_Title"
+                            android:layout_marginTop="@dimen/dp_10"
+                            app:bga_npl_itemCornerRadius="4dp"
+                            app:bga_npl_itemSpanCount="3"
+                            app:bga_npl_itemWhiteSpacing="4dp"
+                            app:bga_npl_itemWidth="0dp"
+                            app:bga_npl_otherWhiteSpacing="64dp"
+                            app:bga_npl_placeholderDrawable="@mipmap/bga_pp_ic_holder_light"
+                            app:bga_npl_showAsLargeWhenOnlyOne="true" />
+
+                    </RelativeLayout>
+
+                    <com.flyco.tablayout.SlidingTabLayout
+                        android:id="@+id/tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:background="@color/While"
+                        app:tl_indicator_bounce_enable="true"
+                        app:tl_indicator_color="@color/Pink"
+                        app:tl_indicator_width_equal_title="true"
+                        app:tl_textSelectColor="@color/Pink"
+                        app:tl_textUnselectColor="#838080"
+                        app:tl_textsize="16sp"
+                        app:tl_underline_height="1dp" />
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <ViewStub
+                    android:id="@+id/DY_ViewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_30"
-                    android:background="@color/While"
-                    app:tl_indicator_bounce_enable="true"
-                    app:tl_indicator_color="@color/Pink"
-                    app:tl_indicator_width_equal_title="true"
-                    app:tl_textSelectColor="@color/Pink"
-                    app:tl_textUnselectColor="#838080"
-                    app:tl_textsize="16sp"
-                    app:tl_underline_height="1dp" />
+                    android:layout_height="wrap_content"
+                    android:layout="@layout/item_dynamic_viewpager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            </com.google.android.material.appbar.AppBarLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            <ViewStub
-                android:id="@+id/DY_ViewPager"
+            <include
+                android:id="@+id/bottom_function"
+                layout="@layout/item_sanlian_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout="@layout/item_dynamic_viewpager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <include
-            android:id="@+id/bottom_function"
-            layout="@layout/item_sanlian_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </layout>

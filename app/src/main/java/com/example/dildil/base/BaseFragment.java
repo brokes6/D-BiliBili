@@ -127,6 +127,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     protected abstract void initLocalData();
 
+    protected abstract void onRefresh();
+
+    public void onRefreshMain(){
+        onRefresh();
+    }
+
+
     /**
      * ViewPager联合使用
      * isVisibleToUser表示是否显示出来了
@@ -154,6 +161,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      */
     protected void onInvisible() {
         isFragmentVisible = false;
+    }
+
+    public boolean getVisible(){
+        return isFragmentVisible;
     }
 
     /**

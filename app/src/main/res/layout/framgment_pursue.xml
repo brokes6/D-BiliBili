@@ -44,14 +44,15 @@
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
-                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Drawable="@drawable/ic_offline_caching"
                         app:Image_Text="番剧"
                         app:Image_Text_Spacing="15"
                         app:Text_Color="@color/Ash" />
@@ -61,7 +62,7 @@
                         android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
-                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Drawable="@drawable/ic_offline_caching"
                         app:Image_Text="国创"
                         app:Image_Text_Spacing="15"
                         app:Text_Color="@color/Ash" />
@@ -71,7 +72,7 @@
                         android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
-                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Drawable="@drawable/ic_offline_caching"
                         app:Image_Text="时间表"
                         app:Image_Text_Spacing="15"
                         app:Text_Color="@color/Ash" />
@@ -81,7 +82,7 @@
                         android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
-                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Drawable="@drawable/ic_offline_caching"
                         app:Image_Text="索引"
                         app:Image_Text_Spacing="15"
                         app:Text_Color="@color/Ash" />
@@ -91,7 +92,7 @@
                         android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
-                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Drawable="@drawable/ic_offline_caching"
                         app:Image_Text="7月新番"
                         app:Image_Text_Spacing="15"
                         app:Text_Color="@color/Ash" />

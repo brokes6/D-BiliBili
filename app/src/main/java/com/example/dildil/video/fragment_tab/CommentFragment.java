@@ -124,6 +124,11 @@ public class CommentFragment extends BaseFragment implements VideoDetailsContrac
         }
     }
 
+    @Override
+    protected void onRefresh() {
+
+    }
+
     /**
      * 初始化评论和回复列表
      */

@@ -66,6 +66,11 @@ public class PartitionTabFragment extends BaseFragment implements PartitionContr
     }
 
     @Override
+    protected void onRefresh() {
+
+    }
+
+    @Override
     public void onGetCategorySuccess(PartitionBean partitionBean) {
         adapter.loadMore(partitionBean.getData());
     }

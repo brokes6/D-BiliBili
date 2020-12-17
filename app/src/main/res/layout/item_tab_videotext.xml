@@ -17,11 +17,11 @@
         android:id="@+id/VN_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/VN_user_img"
-        android:text=""
         android:textColor="#fa7296"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/VN_date"
@@ -48,63 +48,56 @@
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
         android:layout_alignBottom="@+id/VN_date"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/more_vert_24_black" />
 
-    <androidx.cardview.widget.CardView
+    <com.example.customcontrollibs.viewground.RoundRelativeLayout
         android:id="@+id/VN_video"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_190"
         android:layout_below="@+id/VN_Title"
         android:layout_marginTop="@dimen/dp_10"
-        app:cardCornerRadius="@dimen/dp_5">
+        app:rlRadius="@dimen/dp_5">
 
-        <RelativeLayout
+        <com.example.dildil.dynamic_page.view.SwitchVideo
+            android:id="@+id/video_item_player"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_160">
+            android:layout_height="match_parent" />
 
-            <com.example.dildil.dynamic_page.view.SwitchVideo
-                android:id="@+id/video_item_player"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/videoTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:background="@drawable/skeleton_circular_grey"
+            android:includeFontPadding="false"
+            android:paddingLeft="@dimen/dp_3"
+            android:paddingRight="@dimen/dp_3"
+            android:textColor="@color/While"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/videoTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:background="@drawable/skeleton_circular_grey"
-                android:includeFontPadding="false"
-                android:paddingLeft="@dimen/dp_3"
-                android:paddingRight="@dimen/dp_3"
-                android:textColor="@color/While"
-                android:textSize="12sp" />
+        <TextView
+            android:id="@+id/videoPlayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/videoTime"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toEndOf="@+id/videoTime"
+            android:textColor="@color/While"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/videoPlayer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/videoTime"
-                android:layout_marginStart="@dimen/dp_5"
-                android:layout_toEndOf="@+id/videoTime"
-                android:textColor="@color/While"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/videoDanmu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/videoTime"
-                android:layout_marginStart="@dimen/dp_5"
-                android:layout_toEndOf="@+id/videoPlayer"
-                android:textColor="@color/While"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/videoDanmu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/videoTime"
+            android:layout_marginStart="@dimen/dp_5"
+            android:layout_toEndOf="@+id/videoPlayer"
+            android:textColor="@color/While"
+            android:textSize="12sp" />
+    </com.example.customcontrollibs.viewground.RoundRelativeLayout>
 
     <TextView
         android:id="@+id/VN_videoTitle"
@@ -118,17 +111,17 @@
     <include
         android:id="@+id/function"
         layout="@layout/item_sanlian_layout"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/VN_videoTitle" />
+        android:layout_below="@+id/VN_videoTitle"
+        android:layout_marginTop="@dimen/dp_10" />
 
-<!--    <com.example.customcontrollibs.viewground.ShowComment-->
-<!--        android:id="@+id/comment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/dp_30"-->
-<!--        android:layout_below="@+id/function"-->
-<!--        android:layout_marginTop="@dimen/dp_10"-->
-<!--        app:isNetWorkUrl="false" />-->
+    <!--    <com.example.customcontrollibs.viewground.ShowComment-->
+    <!--        android:id="@+id/comment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="@dimen/dp_30"-->
+    <!--        android:layout_below="@+id/function"-->
+    <!--        android:layout_marginTop="@dimen/dp_10"-->
+    <!--        app:isNetWorkUrl="false" />-->
 
 </RelativeLayout>

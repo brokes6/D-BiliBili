@@ -17,9 +17,9 @@
         android:id="@+id/VN_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/VN_user_img"
-        android:text=""
+        android:textStyle="bold"
         android:textColor="#fa7296"
         android:textSize="14sp" />
 
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/VN_user_name"
-        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_10"
         android:layout_toEndOf="@+id/VN_user_img"
         android:text=""
         android:textColor="#a4a4a4"
@@ -48,7 +48,7 @@
         android:layout_width="@dimen/dp_24"
         android:layout_height="@dimen/dp_24"
         android:layout_alignBottom="@+id/VN_date"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/more_vert_24_black" />
 
     <cn.bingoogolapple.photopicker.widget.BGANinePhotoLayout
@@ -71,14 +71,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/VN_multi"
         android:layout_marginTop="@dimen/dp_10" />
-
-<!--    <com.example.customcontrollibs.viewground.ShowComment-->
-<!--        android:id="@+id/comment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/dp_30"-->
-<!--        android:layout_below="@+id/function"-->
-<!--        android:layout_marginTop="@dimen/dp_10"-->
-<!--        app:displayPicture="false"-->
-<!--        app:isNetWorkUrl="false" />-->
 
 </RelativeLayout>

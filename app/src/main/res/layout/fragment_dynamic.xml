@@ -21,15 +21,16 @@
             app:tl_indicator_bounce_enable="true"
             app:tl_indicator_color="@color/While"
             app:tl_indicator_width_equal_title="true"
+            app:tl_textBold="BOTH"
             app:tl_textSelectColor="@color/While"
             app:tl_textUnselectColor="#D5D5D5"
             app:tl_textsize="16sp" />
 
         <com.example.dildil.rewriting_view.CustomViewPager
             android:id="@+id/Dy_viewPager"
-            android:layout_marginTop="@dimen/dp_5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/Dy_tab" />
+            android:layout_below="@+id/Dy_tab"
+            android:layout_marginTop="@dimen/dp_5" />
     </RelativeLayout>
 </layout>

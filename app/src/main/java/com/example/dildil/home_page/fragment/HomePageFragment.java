@@ -28,6 +28,7 @@ import com.example.dildil.home_page.fragment.fragment_tab.RapFragment;
 import com.example.dildil.home_page.fragment.fragment_tab.RecommendedFragment;
 import com.example.dildil.home_page.view.HomeActivity;
 import com.example.dildil.login_page.bean.UserBean;
+import com.example.dildil.rewriting_view.EasyNavigationBar;
 import com.example.dildil.search.view.SearchActivity;
 import com.gyf.immersionbar.ImmersionBar;
 
@@ -72,6 +73,7 @@ public class HomePageFragment extends BaseFragment {
         //binding.tab.setViewPager(binding.viewPager, TabTitle);
         binding.tab.setCurrentTab(1);
         setCallBackListener(callBackListener);
+        ((HomeActivity) getActivity()).setOnTabClickListener(onTabClickListener);
     }
 
     ICallBackListener callBackListener = new ICallBackListener() {
@@ -101,6 +103,11 @@ public class HomePageFragment extends BaseFragment {
     }
 
     @Override
+    protected void onRefresh() {
+
+    }
+
+    @Override
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.user_img) {
@@ -113,6 +120,21 @@ public class HomePageFragment extends BaseFragment {
             getContext().sendBroadcast(intent);
         }
     }
+
+    EasyNavigationBar.OnTabClickListener onTabClickListener = new EasyNavigationBar.OnTabClickListener() {
+        @Override
+        public boolean onTabSelectEvent(View view, int position) {
+            return false;
+        }
+
+        @Override
+        public boolean onTabReSelectEvent(View view, int position) {
+            if (mFragments.get(binding.tab.getCurrentTab()).isVisible()) {
+                ((BaseFragment)mFragments.get(binding.tab.getCurrentTab())).onRefreshMain();
+            }
+            return false;
+        }
+    };
 
     public void setTitleBackGround(@ColorInt int value) {
         binding.main.setBackgroundColor(value);

@@ -62,6 +62,11 @@ public class WholeStationFragment extends BaseFragment implements WholeStationCo
     }
 
     @Override
+    protected void onRefresh() {
+
+    }
+
+    @Override
     public void onClick(View v) {
 
     }

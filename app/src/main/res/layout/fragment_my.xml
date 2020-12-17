@@ -196,9 +196,9 @@
                 android:layout_width="@dimen/dp_50"
                 android:layout_height="@dimen/dp_50"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="-15dp"
+                android:layout_marginStart="-15dp"
                 android:layout_marginBottom="-15dp"
-                android:alpha="0.5"
+                android:alpha="0.3"
                 android:src="@mipmap/bigmember" />
 
             <TextView
@@ -206,27 +206,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_20"
                 android:textColor="@color/While"
                 android:textSize="14sp" />
-
-            <!--            <TextView-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_centerVertical="true"-->
-            <!--                android:layout_marginRight="@dimen/dp_10"-->
-            <!--                android:layout_toLeftOf="@+id/Member_Right_more"-->
-            <!--                android:text="2021-01-19到期"-->
-            <!--                android:textColor="@color/Text_gray"-->
-            <!--                android:textSize="12sp" />-->
 
             <ImageView
                 android:id="@+id/Member_Right_more"
                 android:layout_width="@dimen/dp_18"
                 android:layout_height="@dimen/dp_18"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
                 android:src="@drawable/arrow_forward_white" />
         </com.example.customcontrollibs.viewground.RoundRelativeLayout>
 
@@ -234,7 +224,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/M_video_cover"
-
             android:background="@color/While">
 
             <RelativeLayout
@@ -246,14 +235,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
 
                     <com.example.customcontrollibs.ImageTopView
                         android:layout_width="0dp"
                         android:layout_height="@dimen/dp_45"
                         android:layout_margin="@dimen/dp_10"
                         android:layout_weight="1"
-                        app:Image_Drawable="@mipmap/offline_caching"
+                        app:Image_Drawable="@drawable/ic_offline_caching"
                         app:Image_Text="离线缓存"
                         app:Image_Text_Spacing="20"
                         app:Text_Color="@color/Ash" />
@@ -291,22 +281,17 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
                     android:id="@+id/function_four"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/function_three"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="创作中心"
-                        android:textColor="#212121"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                    android:text="@string/creativeCenter"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/function_five"
@@ -314,34 +299,93 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/function_four"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
 
                     <include layout="@layout/item_myfragment_function" />
 
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
                     android:id="@+id/function_six"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/function_five"
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
-                    android:orientation="horizontal">
+                    android:text="@string/recommendationService"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="推荐服务"
-                        android:textColor="#212121"
-                        android:textSize="14sp" />
+                <LinearLayout
+                    android:id="@+id/function_Four"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/function_six"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dp_10">
+
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_45"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@drawable/ic_game_center"
+                        app:Image_Text="游戏中心"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
+
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_45"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@drawable/ic_wallet"
+                        app:Image_Text="我的钱包"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
+
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_45"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@drawable/ic_personalized_dress"
+                        app:Image_Text="个性装扮"
+                        app:Image_Text_Spacing="20"
+                        app:Text_Color="@color/Ash" />
+
+                    <com.example.customcontrollibs.ImageTopView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_45"
+                        android:layout_margin="@dimen/dp_10"
+                        android:layout_weight="1"
+                        app:Image_Drawable="@drawable/ic_forum"
+                        app:Image_Text="反馈论坛"
+                        app:Image_Text_Spacing="25"
+                        app:Text_Color="@color/Ash" />
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/title_Three"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/function_Four"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:text="@string/moreService"
+                    android:textColor="@color/Black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <com.example.customcontrollibs.MenuItemLayout
                     android:id="@+id/M_Customer_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/function_six"
+                    android:layout_below="@+id/title_Three"
                     android:layout_marginTop="@dimen/dp_10"
                     app:ImageLeftMargin="50"
                     app:TitleImg="@mipmap/customer_service"

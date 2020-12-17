@@ -60,7 +60,11 @@ public class TypeAdapter extends BaseAdapter<TypeBean.TypeData, RecyclerView.Vie
             ((PursueVisit) holder).Recycler.setAdapter(adapters);
             adapters.loadMore(item.getPursueBean());
         } else if (getItemViewType(position) == TITLE) {
-            ((TitleVisit) holder).textView.setText(item.getTitle());
+            if (item.getTitle().equals("最近访问")) {
+                ((TitleVisit) holder).views.setVisibility(View.GONE);
+            } else {
+                ((TitleVisit) holder).textView.setText(item.getTitle());
+            }
         }
     }
 
@@ -78,7 +82,7 @@ public class TypeAdapter extends BaseAdapter<TypeBean.TypeData, RecyclerView.Vie
     }
 
     public static class RecentVisit extends RecyclerView.ViewHolder {
-        private RecyclerView Recycler;
+        private final RecyclerView Recycler;
 
         public RecentVisit(@NonNull View itemView) {
             super(itemView);
@@ -87,7 +91,7 @@ public class TypeAdapter extends BaseAdapter<TypeBean.TypeData, RecyclerView.Vie
     }
 
     public static class PursueVisit extends RecyclerView.ViewHolder {
-        private RecyclerView Recycler;
+        private final RecyclerView Recycler;
 
         public PursueVisit(@NonNull View itemView) {
             super(itemView);
@@ -96,10 +100,11 @@ public class TypeAdapter extends BaseAdapter<TypeBean.TypeData, RecyclerView.Vie
     }
 
     public static class TitleVisit extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private final TextView textView, views;
 
         public TitleVisit(@NonNull View itemView) {
             super(itemView);
+            views = itemView.findViewById(R.id.views);
             textView = itemView.findViewById(R.id.text_1);
         }
     }

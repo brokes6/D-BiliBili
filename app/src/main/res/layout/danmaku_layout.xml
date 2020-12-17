@@ -317,6 +317,7 @@
                 android:layout_marginStart="@dimen/dp_5"
                 android:layout_toEndOf="@+id/up_img"
                 android:gravity="center_vertical"
+                android:maxLines="1"
                 android:paddingEnd="@dimen/dp_10"
                 android:textColor="@color/White"
                 android:textSize="14sp" />

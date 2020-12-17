@@ -15,7 +15,7 @@ import com.example.dildil.R;
 import com.example.dildil.channel_page.bean.PartitionBean;
 
 public class PartitionAdapter extends BaseAdapter<PartitionBean.Data, PartitionAdapter.PartitionViewHolder> {
-    private Context mContext;
+    private final Context mContext;
 
     public PartitionAdapter(Context context) {
         mContext = context;
@@ -34,8 +34,8 @@ public class PartitionAdapter extends BaseAdapter<PartitionBean.Data, PartitionA
     }
 
     public static class PartitionViewHolder extends RecyclerView.ViewHolder {
-        private ImageView image;
-        private TextView title;
+        private final ImageView image;
+        private final TextView title;
 
         public PartitionViewHolder(@NonNull View itemView) {
             super(itemView);

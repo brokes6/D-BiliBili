@@ -13,9 +13,10 @@
 
     <TextView
         android:id="@+id/Partition_Title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_5"
+        android:gravity="center"
         android:lines="1"
         android:textColor="@color/Text_gray"
         android:textSize="14sp" />

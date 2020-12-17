@@ -134,6 +134,11 @@ public class VideoTabFragment extends BaseFragment implements DynamicContract.Vi
 
     }
 
+    @Override
+    protected void onRefresh() {
+
+    }
+
 
     @Override
     public void onClick(View v) {

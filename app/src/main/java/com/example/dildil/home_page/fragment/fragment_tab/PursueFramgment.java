@@ -95,6 +95,11 @@ public class PursueFramgment extends BaseFragment implements RecommendContract.V
         binding.main.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onRefresh() {
+        binding.swipe.autoRefresh();
+    }
+
     private void initDates() {
         if (isFirst) {
             resourcesData = new ResourcesData();
@@ -104,7 +109,7 @@ public class PursueFramgment extends BaseFragment implements RecommendContract.V
             fanRecommendationAdapter.loadMore(resourcesData.getFanRecommendationBeans());
             isFirst = false;
         } else {
-            adapter.refresh(resourcesData.getMyPursuitBean());
+            //adapter.refresh(resourcesData.getMyPursuitBean());
             fanRecommendationAdapter.refresh(resourcesData.getFanRecommendationBeans());
         }
         binding.swipe.finishRefresh(true);

@@ -21,8 +21,6 @@ import com.example.dildil.home_page.bean.RecommendVideoBean;
 import com.example.dildil.home_page.contract.RecommendContract;
 import com.example.dildil.home_page.dialog.VideoChoiceDialog;
 import com.example.dildil.home_page.presenter.RecommendPresenter;
-import com.example.dildil.home_page.view.HomeActivity;
-import com.example.dildil.rewriting_view.EasyNavigationBar;
 import com.example.dildil.util.XToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
@@ -85,7 +83,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
                 mPresenter.LoadVideo();
             }
         });
-        ((HomeActivity) getActivity()).setOnTabClickListener(onTabClickListener);
     }
 
     @Override
@@ -100,6 +97,11 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
         binding.swipe.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onRefresh() {
+        binding.swipe.autoRefresh();
+    }
+
     private final VideoChoiceDialog.OnFeedbackClickListener onFeedbackClickListener = new VideoChoiceDialog.OnFeedbackClickListener() {
         @Override
         public void update(int position, int type) {
@@ -111,19 +113,6 @@ public class RecommendedFragment extends BaseFragment implements RecommendContra
     public void onClick(View v) {
 
     }
-
-    EasyNavigationBar.OnTabClickListener onTabClickListener = new EasyNavigationBar.OnTabClickListener() {
-        @Override
-        public boolean onTabSelectEvent(View view, int position) {
-            return false;
-        }
-
-        @Override
-        public boolean onTabReSelectEvent(View view, int position) {
-            binding.swipe.autoRefresh();
-            return false;
-        }
-    };
 
     @Override
     public void onGetRecommendVideoSuccess(RecommendVideoBean videoBean) {

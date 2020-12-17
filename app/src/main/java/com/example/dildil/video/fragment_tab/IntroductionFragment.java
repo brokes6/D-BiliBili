@@ -51,10 +51,9 @@ import javax.inject.Inject;
 public class IntroductionFragment extends BaseFragment implements VideoDetailsContract.View {
     private FragmentIntroductionBinding binding;
     private RelevantVideoAdapter adapter;
-    private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum;
+    private TextView mTime, mDanmu, mPlayNum, mPraise, mCoin, CollectionNum, It_video_id;
     private ImageView like_img, Collection, coinImg;
     private boolean isOpen = false;
-    private RelativeLayout ForwardMain;
     private AnnularProgressButton coin_circleView, Collection_circleView;
     private boolean mIsPraise = false;
     private int mCoinNum = 0;
@@ -97,12 +96,13 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mTime = binding.InVideoData.findViewById(R.id.It_video_time);
         mDanmu = binding.InVideoData.findViewById(R.id.It_barrage_num);
         mPlayNum = binding.InVideoData.findViewById(R.id.It_play_num);
+        It_video_id = binding.InVideoData.findViewById(R.id.It_video_id);
         mPraise = binding.Sanlian.findViewById(R.id.praise);
         mCoin = binding.Sanlian.findViewById(R.id.coin);
         like_img = binding.Sanlian.findViewById(R.id.like_img);
         Collection = binding.Sanlian.findViewById(R.id.Collection);
         CollectionNum = binding.Sanlian.findViewById(R.id.CollectionNum);
-        ForwardMain = binding.Sanlian.findViewById(R.id.ForwardMain);
+        RelativeLayout forwardMain = binding.Sanlian.findViewById(R.id.ForwardMain);
         coinImg = binding.Sanlian.findViewById(R.id.coinImg);
         coin_circleView = binding.Sanlian.findViewById(R.id.coin_circleView);
         Collection_circleView = binding.Sanlian.findViewById(R.id.Collection_circleView);
@@ -111,7 +111,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         like_img.setOnClickListener(this);
         coinImg.setOnClickListener(this);
         Collection.setOnClickListener(this);
-        ForwardMain.setOnClickListener(this);
+        forwardMain.setOnClickListener(this);
         coin_circleView.setListener(new AnnularProgressButton.ProgressButtonFinishCallback() {
             @Override
             public void onFinish() {
@@ -229,6 +229,11 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         }
     }
 
+    @Override
+    protected void onRefresh() {
+
+    }
+
     /**
      * 投币外部监听
      */
@@ -288,6 +293,7 @@ public class IntroductionFragment extends BaseFragment implements VideoDetailsCo
         mDanmu.setText(String.valueOf(videoDetailsBean.getDanmuNum()));
         mPraise.setText(String.valueOf(videoDetailsBean.getPraiseNum()));
         mCoin.setText(String.valueOf(videoDetailsBean.getCoinNum()));
+        It_video_id.setText("BV" + videoDetailsBean.getId());
         String times = videoDetailsBean.getUpdateTime();
         mTime.setText(times.substring(5, 10));
         if (videoDetailsBean.getLog() != null) {

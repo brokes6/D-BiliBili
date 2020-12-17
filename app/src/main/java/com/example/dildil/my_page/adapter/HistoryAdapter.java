@@ -2,6 +2,7 @@ package com.example.dildil.my_page.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -20,8 +21,8 @@ import com.example.dildil.util.DateUtils;
 import com.example.dildil.video.view.VideoActivity;
 
 public class HistoryAdapter extends BaseAdapter<HistoryBean, RecyclerView.ViewHolder> {
-    private Context mContext;
-    private boolean isOne, isSecond, isThree;
+    private final Context mContext;
+    private boolean isOne = true, isSecond = true, isThree;
     private final int NORMAL = 1;
     private final int TIMETITLE = 2;
 
@@ -32,12 +33,15 @@ public class HistoryAdapter extends BaseAdapter<HistoryBean, RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
+            Log.e("why", "getItemViewType: 1创建Title" + position);
             return TIMETITLE;
-        } else if (DateUtils.getCurrentTimestamp() - getData().get(position).getCurrentTime() > 86400000 && DateUtils.getCurrentTimestamp() - getData().get(position).getCurrentTime() <= 172800000 && isOne) {
+        } else if ((DateUtils.getCurrentTimestamp() - getData().get(position).getCurrentTime() > 86400000) && (DateUtils.getCurrentTimestamp() - getData().get(position).getCurrentTime() <= 172800000) && isOne) {
             isOne = false;
+            Log.e("why", "getItemViewType: 2创建Title" + position);
             return TIMETITLE;
-        } else if (DateUtils.getCurrentTimestamp() - getData().get(position).getCurrentTime() > 172800000 && isSecond) {
+        } else if ((DateUtils.getCurrentTimestamp() - getData().get(position).getCurrentTime() > 172800000) && isSecond) {
             isSecond = false;
+            Log.e("why", "getItemViewType: 3创建Title" + position);
             return TIMETITLE;
         } else {
             return NORMAL;
@@ -116,7 +120,7 @@ public class HistoryAdapter extends BaseAdapter<HistoryBean, RecyclerView.ViewHo
     }
 
     public class HistoryTimeViewHolder extends RecyclerView.ViewHolder {
-        private TextView HTimeTitle;
+        private final TextView HTimeTitle;
 
         public HistoryTimeViewHolder(@NonNull View itemView) {
             super(itemView);

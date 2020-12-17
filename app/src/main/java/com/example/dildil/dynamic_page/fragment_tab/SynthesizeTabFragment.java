@@ -138,6 +138,11 @@ public class SynthesizeTabFragment extends BaseFragment implements DynamicContra
     }
 
     @Override
+    protected void onRefresh() {
+
+    }
+
+    @Override
     public void onClick(View v) {
 
     }

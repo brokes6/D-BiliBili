@@ -92,7 +92,6 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
     private int timing = 0;
     private final List<SwitchVideoBean> urls = new ArrayList<>();
     private final SelectorGroup selectorGroup = new SelectorGroup();
-    private int textSize;
     private boolean isFunction = true;
     private final String[] definition = {"360p", "480p", "720p", "1080p"};
     private Handler handler;
@@ -396,7 +395,7 @@ public class VideoActivity extends BaseActivity implements VideoDetailsContract.
         int LARGEFONT = 1;
         switch (tag) {
             case "text_up":
-                textSize = LARGEFONT;
+                int textSize = LARGEFONT;
                 break;
             case "text_no":
                 textSize = FINEPRINT;

@@ -41,7 +41,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jidcoo.android.widget.commentview.callback.CustomCommentItemCallback;
 import com.jidcoo.android.widget.commentview.callback.CustomReplyItemCallback;
 import com.jidcoo.android.widget.commentview.callback.OnItemClickCallback;
-import com.jidcoo.android.widget.commentview.callback.OnPullRefreshCallback;
 import com.jidcoo.android.widget.commentview.callback.OnReplyLoadMoreCallback;
 
 import javax.inject.Inject;
@@ -95,6 +94,11 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
 
     @Override
     protected void initLocalData() {
+
+    }
+
+    @Override
+    protected void onRefresh() {
 
     }
 
@@ -172,8 +176,6 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
                         return convertView;
                     }
                 })
-                //下拉刷新回调
-                .setOnPullRefreshCallback(new MyOnPullRefreshCallback())
                 //评论、回复Item的点击回调（点击事件回调）
                 .setOnItemClickCallback(new MyOnItemClickCallback())
                 //回复数据加载更多回调（加载更多回复）
@@ -202,24 +204,6 @@ public class DetailsCommentFragment extends BaseFragment implements DynamicContr
         @Override
         public void failure(String msg) {
 
-        }
-    }
-
-    class MyOnPullRefreshCallback implements OnPullRefreshCallback {
-
-        @Override
-        public void refreshing() {
-
-        }
-
-        @Override
-        public void complete() {
-            XToastUtils.success("刷新成功");
-        }
-
-        @Override
-        public void failure(String msg) {
-            XToastUtils.error(msg);
         }
     }
 

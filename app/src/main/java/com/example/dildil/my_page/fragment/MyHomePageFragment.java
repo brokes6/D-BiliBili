@@ -1,7 +1,6 @@
 package com.example.dildil.my_page.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ import javax.inject.Inject;
 
 public class MyHomePageFragment extends BaseFragment implements PersonalContract.View {
     private FragmentMyhomeBinding binding;
-    private UserHomePagerContributeAdapter adapter,adapter2;
+    private UserHomePagerContributeAdapter adapter, adapter2;
     private final int uid;
 
     @Inject
@@ -62,13 +61,17 @@ public class MyHomePageFragment extends BaseFragment implements PersonalContract
 
     @Override
     protected void initData() {
-        Log.e("why", "initData: 当前用户id为===>"+uid );
         mPresenter.findPublishVideo(1, 2, uid);
         mPresenter.findHasCoinVideo(1, 2, uid);
     }
 
     @Override
     protected void initLocalData() {
+
+    }
+
+    @Override
+    protected void onRefresh() {
 
     }
 
@@ -102,5 +105,7 @@ public class MyHomePageFragment extends BaseFragment implements PersonalContract
 
     @Override
     public void onGetPublishVideoFail(String e) {
+        binding.contributeLayout.setVisibility(View.GONE);
+        binding.contributeRecycler.setVisibility(View.GONE);
     }
 }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -43,6 +44,9 @@ import com.example.dildil.video.bean.dto;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.gyf.immersionbar.ImmersionBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,12 +67,11 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
     private UserBean userBean;
     private DetailsCommentFragment detailsCommentFragment;
     private BGANinePhotoLayout mCurrentClickNpl;
-    private int uid;
+    private int uid, id;
+    private ArrayList<Fragment> mFragments;
 
     @Inject
     DynamicPresenter mPresenter;
-    private int id;
-    private ArrayList<Fragment> mFragments;
 
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
@@ -97,11 +100,18 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
         mFragments = new ArrayList<>();
         mFragments.add(new DetailsForwardFragment());
         mFragments.add(detailsCommentFragment = new DetailsCommentFragment(id));
-
         binding.DDUserImg.setOnClickListener(this);
         binding.bottomFunction.findViewById(R.id.main_comment).setOnClickListener(this);
+        binding.swipe.setRefreshFooter(new BallPulseFooter(this));
+        binding.swipe.setOnRefreshListener(new OnRefreshListener() {
 
-        setMargins(binding.main, 0, getStatusBarHeight(this), 0, 0);
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.getDynamicDetails(id, userBean.getData().getId());
+            }
+        });
+
+        setMargins(binding.swipe, 0, getStatusBarHeight(this), 0, 0);
     }
 
     @Override
@@ -112,7 +122,7 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
                     @Override
                     public void onChanged(UserBean userBeans) {
                         userBean = userBeans;
-                        mPresenter.getDynamicDetails(id, userBeans.getData().getId());
+                        binding.swipe.autoRefresh();
                     }
                 });
     }
@@ -257,6 +267,7 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
     @Override
     public void onGetDynamicDetailsSuccess(DynamicDetailsBean dynamicDetailsBean) {
         binding.main.setVisibility(View.VISIBLE);
+        binding.swipe.finishRefresh(true);
         uid = dynamicDetailsBean.getData().getUid();
         binding.DDTitle.setText(dynamicDetailsBean.getData().getContent());
         binding.DDUserName.setText(dynamicDetailsBean.getData().getUpName());
@@ -265,15 +276,18 @@ public class DynamicDetailsActivity extends BaseActivity implements DynamicContr
         binding.DDMulti.setData(new ArrayList<>(Arrays.asList(dynamicDetailsBean.getData().getImgs().split(","))));
         binding.DDMulti.setDelegate(this);
 
-        View ry = binding.DYViewPager.getViewStub().inflate();
-        ViewPager viewPager = ry.findViewById(R.id.viewPager);
-        binding.tab.setViewPager(viewPager, new String[]{"转发", "评论" + dynamicDetailsBean.getData().getCommentNum()}, this, mFragments);
-        binding.tab.setCurrentTab(1);
+        if (!binding.DYViewPager.isInflated()) {
+            View ry = binding.DYViewPager.getViewStub().inflate();
+            ViewPager viewPager = ry.findViewById(R.id.viewPager);
+            binding.tab.setViewPager(viewPager, new String[]{"转发", "评论" + dynamicDetailsBean.getData().getCommentNum()}, this, mFragments);
+            binding.tab.setCurrentTab(1);
+        }
     }
 
     @Override
     public void onGetDynamicDetailsFail(String e) {
         binding.main.setVisibility(View.GONE);
+        binding.swipe.finishRefresh(true);
         XToastUtils.error(R.string.networkError);
     }
 

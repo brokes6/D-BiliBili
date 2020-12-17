@@ -95,5 +95,8 @@
     <string name="introduction">简介</string>
     <string name="more">更多</string>
     <string name="bangumi_recommend">番剧推荐</string>
+    <string name="creativeCenter">创作中心</string>
+    <string name="recommendationService">推荐服务</string>
+    <string name="moreService">更多服务</string>
 
 </resources>

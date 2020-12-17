@@ -67,7 +67,7 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
             case IMAGE_TEXT:
                 Glide.with(mContext)
                         .load(item.getUpImg())
-                        .apply(((TabImageHolder)holder).requestOptions)
+                        .apply(((TabImageHolder) holder).requestOptions)
                         .into(((TabImageHolder) holder).VNImage);
                 ((TabImageHolder) holder).VN_userName.setText(item.getUpName());
                 ((TabImageHolder) holder).VN_Title.setText(item.getContent());
@@ -76,8 +76,8 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 ((TabImageHolder) holder).multiView.setDelegate(this);
                 ((TabImageHolder) holder).VN_main.setTag(position);
                 ((TabImageHolder) holder).VNImage.setTag(position);
-//                ((TabImageHolder) holder).comment.setUserName("fuxinbo:");
-//                ((TabImageHolder) holder).comment.setUserComment("热门评论");
+                ((TabImageHolder) holder).comment_number.setText(String.valueOf(item.getCommentNum()));
+                ((TabImageHolder) holder).thumbs_number.setText(String.valueOf(item.getPraiseNum()));
                 break;
             case VIDEO_TEXT:
                 ((TabVideoHolder) holder).VN_main.setTag(position);
@@ -89,7 +89,7 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 ((TabVideoHolder) holder).imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(mContext)
                         .load(item.getObject().getPreviewUrl())
-                        .apply(((TabVideoHolder)holder).requestOptions)
+                        .apply(((TabVideoHolder) holder).requestOptions)
                         .into(((TabVideoHolder) holder).imageView);
                 if (((TabVideoHolder) holder).imageView.getParent() != null) {
                     ViewGroup viewGroup = (ViewGroup) ((TabVideoHolder) holder).imageView.getParent();
@@ -116,8 +116,8 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
                 ((TabVideoHolder) holder).VN_videoTitle.setText(item.getObject().getTitle());
                 ((TabVideoHolder) holder).VN_Title.setText(item.getContent());
                 ((TabVideoHolder) holder).VN_date.setText(item.getCreateTime().substring(5, 10));
-//                ((TabVideoHolder) holder).comment.setUserName("fuxinbo:");
-//                ((TabVideoHolder) holder).comment.setUserComment("热门评论");
+                ((TabVideoHolder) holder).comment_number.setText(String.valueOf(item.getCommentNum()));
+                ((TabVideoHolder) holder).thumbs_number.setText(String.valueOf(item.getPraiseNum()));
                 break;
         }
     }
@@ -168,13 +168,12 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
     }
 
     public class TabVideoHolder extends RecyclerView.ViewHolder {
-        private final RequestOptions requestOptions= new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
+        private final RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
         private final SwitchVideo VNideo;
         private final CircleImageView VNImage;
-        private final TextView VN_userName, VN_Title, VN_date, VN_videoTitle, videoTime, videoPlayer, videoDanmu;
+        private final TextView VN_userName, VN_Title, VN_date, VN_videoTitle, videoTime, videoPlayer, videoDanmu, comment_number, thumbs_number;
         private ImageView VN_more, imageView;
         private final RelativeLayout VN_main;
-        //private final ShowComment comment;
 
         public TabVideoHolder(@NonNull View itemView) {
             super(itemView);
@@ -188,7 +187,8 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
             videoTime = itemView.findViewById(R.id.videoTime);
             videoPlayer = itemView.findViewById(R.id.videoPlayer);
             videoDanmu = itemView.findViewById(R.id.videoDanmu);
-            //comment = itemView.findViewById(R.id.comment);
+            comment_number = itemView.findViewById(R.id.comment_number);
+            thumbs_number = itemView.findViewById(R.id.thumbs_number);
             imageView = new ImageView(mContext);
             VNideo.setVideoAllCallBack(new GSYSampleCallBack() {
                 @Override
@@ -223,13 +223,12 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
     }
 
     public class TabImageHolder extends RecyclerView.ViewHolder {
-        private final RequestOptions requestOptions= new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
+        private final RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.skeleton_circular_grey);
         private final CircleImageView VNImage;
-        private final TextView VN_userName, VN_Title, VN_date;
+        private final TextView VN_userName, VN_Title, VN_date, comment_number, thumbs_number;
         private ImageView VN_more;
         private final RelativeLayout VN_main;
         private final BGANinePhotoLayout multiView;
-        //private final ShowComment comment;
 
         public TabImageHolder(@NonNull View itemView) {
             super(itemView);
@@ -238,7 +237,8 @@ public class TabVideoAdapter extends BaseAdapter<DynamicBean.Datas, RecyclerView
             VNImage = itemView.findViewById(R.id.VN_user_img);
             VN_userName = itemView.findViewById(R.id.VN_user_name);
             VN_Title = itemView.findViewById(R.id.VN_Title);
-            //comment = itemView.findViewById(R.id.comment);
+            comment_number = itemView.findViewById(R.id.comment_number);
+            thumbs_number = itemView.findViewById(R.id.thumbs_number);
             VN_date = itemView.findViewById(R.id.VN_date);
             VN_main.setOnClickListener(new View.OnClickListener() {
                 @Override
