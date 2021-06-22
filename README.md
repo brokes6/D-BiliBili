@@ -4,7 +4,7 @@
 ## 项目介绍<br>
 Apk在Releases附件里<br>
 这是一款仿造B站的软件，现在正在与 "chenzijia12300"的 仿哔哩哔哩的后台系统 对接（ https://github.com/chenzijia12300/dalidali ） <br>
-目前使用的数据，都来自chenzijia12300的 仿哔哩哔哩的后台系统 <br>
+目前使用的数据，都来自chenzijia12300的 仿哔哩哔哩的后台系统  /ps 现在服务器已经关闭啦，暂且没有数据<br>
 <br>
 ## 使用了自己写的工具类<br>
 [![](https://jitpack.io/v/brokes6/CustomControl.svg)](https://jitpack.io/#brokes6/CustomControl)<br>
