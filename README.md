@@ -1,15 +1,16 @@
 # DaliDali<br>
 [![](https://img.shields.io/badge/个人博客-Android笔记-green.svg)](https://brokes6.github.io)<br>
-个人学习，练习制作的软件
+个人学习，练习制作的软件 后续可能会用Kotlin重构一遍
 ## 项目介绍<br>
 Apk在Releases附件里<br>
-这是一款仿造B站的软件，现在正在与 "chenzijia12300"的 仿哔哩哔哩的后台系统 对接（ https://github.com/chenzijia12300/dalidali ） <br>
-目前使用的数据，都来自chenzijia12300的 仿哔哩哔哩的后台系统  /ps 现在服务器已经关闭啦，暂且没有数据<br>
+这是一款仿造B站的软件，后台数据来自 "chenzijia12300"的 仿哔哩哔哩的后台系统（ https://github.com/chenzijia12300/dalidali ） <br>
+/ps 现在服务器已经关闭啦，暂且没有数据<br>
 <br>
 ## 使用了自己写的工具类<br>
 [![](https://jitpack.io/v/brokes6/CustomControl.svg)](https://jitpack.io/#brokes6/CustomControl)<br>
 一些小的效果，我都写成了自定义控件，方便直接使用，欢迎使用和star<br>
 CustomControl: https://github.com/brokes6/CustomControl<br>
+/ps 已停止维护<br>
 ```Java
 implementation 'com.github.brokes6:CustomControl:1.1.7'
 ```
